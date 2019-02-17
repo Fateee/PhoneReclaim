@@ -1,4 +1,4 @@
-package com.ps.phonereclaim
+package com.ps.phonerecycle
 
 import org.junit.Test
 
