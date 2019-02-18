@@ -1,8 +1,9 @@
-package com.yc.phonerecycle
+package com.yc.phonerecycle.activity
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import com.yc.phonerecycle.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
