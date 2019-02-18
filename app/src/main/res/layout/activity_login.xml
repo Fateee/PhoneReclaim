@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent" android:layout_height="match_parent"
               android:orientation="vertical"
               android:gravity="center_horizontal"
               android:background="@android:color/white">
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:text="用户登录"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginTop="208px"
-    android:textSize="60px"
-    android:textColor="@color/c333333"/>
+              android:text="用户登录"
+              android:layout_gravity="center_horizontal"
+              android:layout_marginTop="208px"
+              android:textSize="60px"
+              android:textColor="@color/c333333"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:text="未注册的手机，先注册再登录使用"
@@ -24,22 +24,22 @@
                   android:layout_marginTop="60px"
                   android:layout_gravity="center_horizontal"
                   android:background="@drawable/login_edit_bg"
-    android:orientation="vertical">
-            <EditText
-                    android:id="@+id/login_phone_et"
-                    android:layout_width="match_parent" android:layout_height="0dp"
-            android:layout_weight="1"
-                    android:layout_marginLeft="40px"
-                    android:layout_marginRight="40px"
-            android:background="@null"
-            android:drawableLeft="@drawable/ic_login_phone"
-            android:hint="手机号码"
-                    android:inputType="phone"
-            android:textColorHint="@color/cb3b3b3"
-                    android:textSize="32px"
-            android:drawablePadding="30px"/>
-            <View android:layout_width="match_parent" android:layout_height="2px"
-                  android:background="@color/cc1c1c1"/>
+                  android:orientation="vertical">
+        <EditText
+                android:id="@+id/login_phone_et"
+                android:layout_width="match_parent" android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="40px"
+                android:layout_marginRight="40px"
+                android:background="@null"
+                android:drawableLeft="@drawable/ic_login_phone"
+                android:hint="手机号码"
+                android:inputType="phone"
+                android:textColorHint="@color/cb3b3b3"
+                android:textSize="32px"
+                android:drawablePadding="30px"/>
+        <View android:layout_width="match_parent" android:layout_height="2px"
+              android:background="@color/cc1c1c1"/>
         <EditText
                 android:id="@+id/login_pwd_et"
                 android:layout_width="match_parent" android:layout_height="0dp"
@@ -58,59 +58,59 @@
     <TextView
             android:id="@+id/tv_login_forget_pwd"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="忘记密码"
+            android:text="忘记密码"
             android:layout_marginRight="40px"
-              android:layout_gravity="right"
-              android:layout_marginTop="30px"
+            android:layout_gravity="right"
+            android:layout_marginTop="30px"
             android:layout_marginBottom="64px"
-              android:textSize="28px"
-              android:textColor="@color/c898989"/>
+            android:textSize="28px"
+            android:textColor="@color/c898989"/>
 
     <com.yc.phonerecycle.widget.SimpleCornerTextView
             android:id="@+id/tv_login_action"
             android:layout_width="670px" android:layout_height="88px"
-    app:bgColor="@color/c0168b7"
-    app:radius="5px"
-    android:text="登录"
-    android:textSize="32px"
-    android:textColor="@color/white"
-    android:gravity="center"/>
+            app:bgColor="@color/c0168b7"
+            app:radius="5px"
+            android:text="登录"
+            android:textSize="32px"
+            android:textColor="@color/white"
+            android:gravity="center"/>
 
     <com.yc.phonerecycle.widget.SimpleCornerTextView
             android:id="@+id/tv_sign_up"
             android:layout_width="670px" android:layout_height="88px"
             android:layout_marginTop="20px"
-                                                     app:bgColor="@color/white"
-                                                     app:radius="5px"
-                                                     android:text="创建账号"
-                                                     android:textSize="32px"
-                                                     android:textColor="@color/cb3b3b3"
-                                                     android:gravity="center"
-    app:borderColor="@color/cd8d8d8"
-    app:borderWidth="1px"/>
+            app:bgColor="@color/white"
+            app:radius="5px"
+            android:text="创建账号"
+            android:textSize="32px"
+            android:textColor="@color/cb3b3b3"
+            android:gravity="center"
+            app:borderColor="@color/cd8d8d8"
+            app:borderWidth="1px"/>
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:layout_marginTop="88px"
+                  android:layout_marginTop="88px"
                   android:layout_marginLeft="110px"
                   android:layout_marginRight="110px"
-    android:gravity="center">
+                  android:gravity="center">
         <View android:layout_width="175px" android:layout_height="1px"
               android:background="@color/ccbcbcb"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:layout_marginLeft="30px"
                   android:layout_marginRight="30px"
-        android:textColor="@color/c898989"
-        android:text="第三方登录"
-        android:textSize="26px"/>
+                  android:textColor="@color/c898989"
+                  android:text="第三方登录"
+                  android:textSize="26px"/>
         <View android:layout_width="175px" android:layout_height="1px"
               android:background="@color/ccbcbcb"/>
     </LinearLayout>
 
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:layout_marginTop="40px">
+                  android:layout_marginTop="40px">
         <ImageView
                 android:id="@+id/iv_login_wx"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:src="@drawable/ic_login_wx"/>
+                android:src="@drawable/ic_login_wx"/>
         <ImageView
                 android:id="@+id/iv_login_qq"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"

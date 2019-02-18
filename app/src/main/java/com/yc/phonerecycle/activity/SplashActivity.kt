@@ -19,7 +19,7 @@ class SplashActivity : BaseActivity<CommonPresenter>(){
     override fun initBundle() {
     }
 
-    override fun getContentView(): Int = R.layout.activity_splash
+    override fun getContentView(): Int = R.layout.activity_sign_up
 
     override fun initView() {
     }
@@ -29,15 +29,15 @@ class SplashActivity : BaseActivity<CommonPresenter>(){
     }
 
     override fun initDatas() {
-        if (UserInfoUtils.isGuideShown()) {
-            splash_img.postDelayed({
-                ActivityToActivity.toActivity(
-                    this@SplashActivity, MainActivity::class.java)
-                finish()
-            },loadingTime)
-        } else {
-            initViewPager()
-        }
+//        if (UserInfoUtils.isGuideShown()) {
+//            splash_img.postDelayed({
+//                ActivityToActivity.toActivity(
+//                    this@SplashActivity, MainActivity::class.java)
+//                finish()
+//            },loadingTime)
+//        } else {
+//            initViewPager()
+//        }
     }
 
 
