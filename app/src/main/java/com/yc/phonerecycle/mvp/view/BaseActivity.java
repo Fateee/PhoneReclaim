@@ -27,8 +27,7 @@ public abstract class BaseActivity <P extends BasePresenter> extends AppCompatAc
 //        PushAgent.getInstance(this).onAppStart();
         initView();
         mP = getPresenter();
-        if (mP == null) return;
-        mP.attach(this);
+        if (mP != null) mP.attach(this);
         initDatas();
     }
 
