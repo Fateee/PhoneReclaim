@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.health.publichealth.widget.SimpleToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/simple_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
+    android:background="@color/cfdfdfd"
     android:fitsSystemWindows="true"
     android:minHeight="?attr/actionBarSize"
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp">
-    <!--android:drawableLeft="@mipmap/icon_back"-->
     <TextView
         android:id="@+id/txt_left_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-
+        android:drawableLeft="@drawable/icon_back"
         android:gravity="center"
-        android:padding="10dp"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:singleLine="true"
-        android:textColor="#ffffff"
+        android:textColor="@color/c333333"
         android:textSize="16sp"
         android:visibility="visible" />
 
@@ -29,19 +32,23 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:singleLine="true"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textColor="@color/c333333"
+        android:textSize="18sp"
         android:visibility="visible"
-        tools:text="" />
+        tools:text="修改密码" />
 
     <TextView
         android:id="@+id/txt_right_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginRight="10dp"
+        android:layout_gravity="right|center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="19sp"
+        android:textColor="@color/c333333"
+        android:textSize="16sp"
+        tools:text="完成"
         android:visibility="visible" />
-</com.health.publichealth.widget.SimpleToolbar>
+</FrameLayout>

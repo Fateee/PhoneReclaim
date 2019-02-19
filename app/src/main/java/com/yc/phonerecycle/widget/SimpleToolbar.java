@@ -1,10 +1,13 @@
 package com.yc.phonerecycle.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import com.yc.phonerecycle.R;
@@ -38,14 +41,39 @@ public class SimpleToolbar extends Toolbar {
 
     public SimpleToolbar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        LayoutInflater.from(context).inflate(R.layout.titleview, this);
+        mTxtLeftTitle = (TextView) findViewById(R.id.txt_left_title);
+        mTxtMiddleTitle = (TextView) findViewById(R.id.txt_main_title);
+        mTxtRightTitle = (TextView) findViewById(R.id.txt_right_title);
+
+        final TypedArray a = context.obtainStyledAttributes(
+                attrs, R.styleable.titleView, defStyleAttr, 0);
+
+        int lefticon = a.getResourceId(R.styleable.titleView_lefticon,0);
+        if (lefticon != 0) {
+            setLeftTitleDrawable(lefticon);
+        }
+        String lefttitle = a.getString(R.styleable.titleView_lefttitle);
+        if (!TextUtils.isEmpty(lefttitle)) {
+            setLeftTitleText(lefttitle);
+        }
+
+        String title = a.getString(R.styleable.titleView_toolbar_title);
+        if (!TextUtils.isEmpty(title)) setMainTitle(title);
+
+        int righticon = a.getResourceId(R.styleable.titleView_righticon,0);
+        if (righticon != 0) {
+            setRightTitleDrawable(righticon);
+        }
+        String righttitle = a.getString(R.styleable.titleView_righttitle);
+        if (!TextUtils.isEmpty(righttitle)) {
+            setRightTitleText(righttitle);
+        }
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mTxtLeftTitle = (TextView) findViewById(R.id.txt_left_title);
-        mTxtMiddleTitle = (TextView) findViewById(R.id.txt_main_title);
-        mTxtRightTitle = (TextView) findViewById(R.id.txt_right_title);
     }
 
     //设置中间title的内容

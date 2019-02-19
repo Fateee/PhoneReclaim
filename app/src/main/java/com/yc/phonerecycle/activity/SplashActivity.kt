@@ -19,7 +19,7 @@ class SplashActivity : BaseActivity<CommonPresenter>(){
     override fun initBundle() {
     }
 
-    override fun getContentView(): Int = R.layout.activity_login
+    override fun getContentView(): Int = R.layout.activity_forget_pwd
 
     override fun initView() {
     }

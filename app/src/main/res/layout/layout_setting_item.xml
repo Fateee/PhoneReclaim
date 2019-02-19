@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent" android:layout_height="0.5dp"
+            android:background="@color/ceeeeee"
+            android:layout_alignParentBottom="true"/>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/divider"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp">
+
+        <ImageView
+                android:id="@+id/item_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:visibility="gone"/>
+
+        <TextView
+                android:id="@+id/item_name"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/item_icon"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                tools:text="手机号码"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+        <LinearLayout
+                android:id="@+id/right_views"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+            <TextView
+                    android:id="@+id/signup_verfy_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="获取验证码"
+                    android:layout_gravity="right|center_vertical"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="20dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/c0168b7"
+                    android:visibility="gone"/>
+
+            <TextView
+                    android:id="@+id/sub_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    tools:text="240M"
+                    android:textColor="@color/c999999"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+            <com.yc.phonerecycle.widget.SimpleCornerTextView
+                    android:id="@+id/sub_title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    app:bgColor="@color/white"
+                    app:radius="8.5dp"
+                    app:borderWidth="0.5dp"
+                    app:borderColor="@color/c0168b7"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:text="更换"
+                    android:textSize="11sp"
+                    android:textColor="@color/c0168b7"
+                    android:gravity="center"
+                    android:visibility="gone"/>
+
+            <!--&lt;!&ndash; 切换按钮 &ndash;&gt;-->
+            <!--<com.jm.jiediancabinet.widget.SwitchButton-->
+            <!--android:id="@+id/item_switch"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:visibility="gone" />-->
+            <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/item_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="20dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/c0168b7"
+                    android:visibility="gone"/>
+
+            <ImageView
+                    android:id="@+id/iv_detail_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/ic_list_item_new_arrow"
+                    android:visibility="gone"/>
+        </LinearLayout>
+
+        <EditText
+                android:id="@+id/item_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/item_name"
+                android:layout_toLeftOf="@id/right_views"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                tools:hint="请输入新的手机号码"
+                android:textColorHint="@color/cbbbbbb"
+                android:textSize="14sp"
+                android:visibility="gone"/>
+    </RelativeLayout>
+</RelativeLayout>
