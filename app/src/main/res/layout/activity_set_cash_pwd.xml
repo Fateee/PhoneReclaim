@@ -11,21 +11,15 @@
     <com.yc.phonerecycle.widget.SimpleToolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:toolbar_title="修改提现密码"/>
+            app:toolbar_title="提现密码"/>
 
-    <com.yc.phonerecycle.widget.SetItemLayout
-            android:id="@+id/reset_pwd_old"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            app:title="旧密码"
-            app:edit_hint="请输入旧密码"/>
     <com.yc.phonerecycle.widget.SetItemLayout
             android:id="@+id/card_bind_owner"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="10dp"
             app:title="提现密码"
-            app:edit_hint="请输入新密码(6位数字)"/>
+            app:edit_hint="请输入密码(6位数字)"/>
     <com.yc.phonerecycle.widget.SetItemLayout
             android:id="@+id/card_bind_card_num"
             android:layout_width="match_parent"
