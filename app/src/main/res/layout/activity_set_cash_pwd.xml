@@ -14,20 +14,20 @@
             app:toolbar_title="提现密码"/>
 
     <com.yc.phonerecycle.widget.SetItemLayout
-            android:id="@+id/card_bind_owner"
+            android:id="@+id/set_cash_pwd"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             app:title="提现密码"
             app:edit_hint="请输入密码(6位数字)"/>
     <com.yc.phonerecycle.widget.SetItemLayout
-            android:id="@+id/card_bind_card_num"
+            android:id="@+id/set_cash_pwd_comfirm"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:title="确认密码"
             app:edit_hint="请再次输入密码"/>
     <com.yc.phonerecycle.widget.SimpleCornerTextView
-            android:id="@+id/card_submit"
+            android:id="@+id/submit"
             android:layout_width="match_parent" android:layout_height="44dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"

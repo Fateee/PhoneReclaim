@@ -27,7 +27,7 @@
             app:edit_hint="请输入收到的验证码"
             app:sub_title_code="获取验证码"/>
     <com.yc.phonerecycle.widget.SimpleCornerTextView
-            android:id="@+id/card_submit"
+            android:id="@+id/submit"
             android:layout_width="match_parent" android:layout_height="44dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"

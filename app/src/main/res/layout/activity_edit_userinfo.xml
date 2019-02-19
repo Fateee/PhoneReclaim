@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" xmlns:tool="http://schemas.android.com/tools"
+              android:background="@color/ceeeeee"
+              android:orientation="vertical">
+
+    <!--<include-->
+    <!--layout="@layout/titleview"/>-->
+    <com.yc.phonerecycle.widget.SimpleToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:toolbar_title="修改资料"
+    />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+        <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="70dp"
+                android:layout_height="70dp"/>
+        <TextView
+                android:id="@+id/user_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                tool:text="ID:4546454"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"/>
+    </LinearLayout>
+    
+    <com.yc.phonerecycle.widget.SetItemLayout
+            android:id="@+id/userinfo_nick"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            app:title="昵称修改"
+            app:sub_title="昵称修改"
+            app:show_arraw="true"/>
+    <com.yc.phonerecycle.widget.SetItemLayout
+            android:id="@+id/userinfo_sign"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:title="个性签名"
+            app:sub_title="个性签名"
+            app:hide_divider="true"
+            app:show_arraw="true"/>
+</LinearLayout>
