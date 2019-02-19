@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/ceeeeee"
+              android:orientation="vertical">
+
+    <!--<include-->
+    <!--layout="@layout/titleview"/>-->
+    <com.yc.phonerecycle.widget.SimpleToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:toolbar_title="用户信息"
+    />
+    <com.yc.phonerecycle.widget.SetItemLayout
+            android:id="@+id/recycle_username"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:title="姓名"
+            app:edit_hint="请输入您的姓名"/>
+    <com.yc.phonerecycle.widget.SetItemLayout
+            android:id="@+id/recycle_phone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:title="手机号码"
+            app:edit_hint="请输入您的手机号码"
+            app:hide_divider="true"/>
+
+    <com.yc.phonerecycle.widget.SetItemLayout
+            android:id="@+id/recycle_addr_city"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            app:title="选择城市"
+            app:sub_title="请选择"
+            app:show_arraw="true"/>
+    <com.yc.phonerecycle.widget.SetItemLayout
+            android:id="@+id/recycle_addr_area"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:title="选择地区"
+            app:sub_title="请选择"
+            app:hide_divider="true"
+            app:show_arraw="true"/>
+    <EditText
+            android:id="@+id/recycle_addr_detail"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:layout_marginTop="15dp"
+            android:maxLength="60"
+            android:background="@color/white"
+            android:gravity="top"
+            android:hint="请填写详细地址"
+            android:textColorHint="@color/c999999"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:visibility="visible"/>
+
+    <com.yc.phonerecycle.widget.SetItemLayout
+            android:id="@+id/recycle_addr_defalut"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            app:title="设为默认"
+            app:is_show_switch="true"
+            app:show_switch_value="false"
+            app:hide_divider="true"/>
+
+    <com.yc.phonerecycle.widget.SimpleCornerTextView
+            android:id="@+id/submit"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            app:bgColor="@color/c0168b7"
+            app:radius="2.5dp"
+            android:text="提交"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+</LinearLayout>
