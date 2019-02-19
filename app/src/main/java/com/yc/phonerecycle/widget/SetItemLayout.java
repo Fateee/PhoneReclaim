@@ -70,7 +70,7 @@ public class SetItemLayout extends LinearLayout {
         boolean switchValue = a.getBoolean(R.styleable.setItemLayout_show_switch_value, false);
         if (isShowSwitch) showSwitchButton(switchValue, null);
 
-        boolean isShowTip = a.getBoolean(R.styleable.setItemLayout_is_show_image_tip, false);
+        boolean isShowTip = a.getBoolean(R.styleable.setItemLayout_show_arraw, false);
         if (isShowTip) showImageItemTip();
 
         boolean hideDivider = a.getBoolean(R.styleable.setItemLayout_hide_divider, false);

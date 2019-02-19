@@ -19,7 +19,7 @@ class SplashActivity : BaseActivity<CommonPresenter>(){
     override fun initBundle() {
     }
 
-    override fun getContentView(): Int = R.layout.activity_forget_pwd
+    override fun getContentView(): Int = R.layout.activity_card_bind
 
     override fun initView() {
     }

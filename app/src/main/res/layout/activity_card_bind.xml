@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/ceeeeee"
+              android:orientation="vertical">
+
+    <!--<include-->
+    <!--layout="@layout/titleview"/>-->
+    <com.yc.phonerecycle.widget.SimpleToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:toolbar_title="绑定银行卡"
+    />
+    <com.yc.phonerecycle.widget.SetItemLayout
+            android:id="@+id/card_bind_bank_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            app:title="开户行"
+            app:edit_hint="请输入银行名称"/>
+
+    <com.yc.phonerecycle.widget.SetItemLayout
+            android:id="@+id/card_bind_owner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            app:title="持卡人"
+            app:edit_hint="请输入持卡人姓名"/>
+    <com.yc.phonerecycle.widget.SetItemLayout
+            android:id="@+id/card_bind_card_num"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:title="银行卡号"
+            app:edit_hint="请输入银行卡号"/>
+    <com.yc.phonerecycle.widget.SimpleCornerTextView
+            android:id="@+id/card_submit"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            app:bgColor="@color/c0168b7"
+            app:radius="2.5dp"
+            android:text="确定"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+</LinearLayout>

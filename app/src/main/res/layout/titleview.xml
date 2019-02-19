@@ -49,6 +49,5 @@
         android:gravity="center"
         android:textColor="@color/c333333"
         android:textSize="16sp"
-        tools:text="完成"
         android:visibility="visible" />
 </FrameLayout>

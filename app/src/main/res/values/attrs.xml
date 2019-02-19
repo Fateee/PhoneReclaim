@@ -19,7 +19,7 @@
         <attr name="sub_title1" format="string"/>
         <attr name="is_show_switch" format="boolean"/>
         <attr name="show_switch_value" format="boolean"/>
-        <attr name="is_show_image_tip" format="boolean"/>
+        <attr name="show_arraw" format="boolean"/>
         <attr name="hide_divider" format="boolean"/>
     </declare-styleable>
 
