@@ -9,19 +9,21 @@
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:text="用户注册"
               android:layout_gravity="center_horizontal"
-              android:layout_marginTop="208px"
-              android:textSize="60px"
+              android:layout_marginTop="100dp"
+              android:textSize="29sp"
               android:textColor="@color/c333333"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:text="未注册的手机，先注册再登录使用"
               android:layout_gravity="center_horizontal"
-              android:layout_marginTop="30px"
-              android:textSize="30px"
+              android:layout_marginTop="15dp"
+              android:textSize="15sp"
               android:textColor="@color/c999999"/>
 
-    <LinearLayout android:layout_width="670px" android:layout_height="275px"
-                  android:layout_marginTop="60px"
+    <LinearLayout android:layout_width="match_parent" android:layout_height="138dp"
+                  android:layout_marginTop="30dp"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginRight="20dp"
                   android:layout_gravity="center_horizontal"
                   android:background="@drawable/login_edit_bg"
                   android:orientation="vertical">
@@ -29,16 +31,16 @@
                 android:id="@+id/signup_phone_et"
                 android:layout_width="match_parent" android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_marginLeft="40px"
-                android:layout_marginRight="40px"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@null"
                 android:drawableLeft="@drawable/ic_login_phone"
                 android:hint="手机号码"
                 android:inputType="phone"
                 android:textColorHint="@color/cb3b3b3"
-                android:textSize="32px"
-                android:drawablePadding="30px"/>
-        <View android:layout_width="match_parent" android:layout_height="2px"
+                android:textSize="16sp"
+                android:drawablePadding="15dp"/>
+        <View android:layout_width="match_parent" android:layout_height="1dp"
               android:background="@color/cc1c1c1"/>
         <FrameLayout
                 android:layout_width="match_parent" android:layout_height="0dp"
@@ -46,15 +48,15 @@
             <EditText
                     android:id="@+id/signup_verfy_code_et"
                     android:layout_width="match_parent" android:layout_height="match_parent"
-                    android:layout_marginLeft="40px"
-                    android:layout_marginRight="40px"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:background="@null"
                     android:drawableLeft="@drawable/ic_login_pwd"
                     android:hint="短信验证码"
                     android:inputType="phone"
                     android:textColorHint="@color/cb3b3b3"
-                    android:textSize="32px"
-                    android:drawablePadding="30px"/>
+                    android:textSize="16sp"
+                    android:drawablePadding="15dp"/>
             <TextView
                     android:id="@+id/signup_verfy_code"
                     android:layout_width="wrap_content"
@@ -62,12 +64,12 @@
                     android:text="获取验证码"
                     android:layout_gravity="right|center_vertical"
                     android:gravity="center_vertical"
-                    android:layout_marginRight="40px"
-                    android:textSize="30px"
+                    android:layout_marginRight="20dp"
+                    android:textSize="15sp"
                     android:textColor="@color/c0168b7"/>
         </FrameLayout>
 
-        <View android:layout_width="match_parent" android:layout_height="2px"
+        <View android:layout_width="match_parent" android:layout_height="1dp"
               android:background="@color/cc1c1c1"/>
 
         <FrameLayout
@@ -76,48 +78,50 @@
             <EditText
                     android:id="@+id/signup_pwd_et"
                     android:layout_width="match_parent" android:layout_height="match_parent"
-                    android:layout_marginLeft="40px"
-                    android:layout_marginRight="40px"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:background="@null"
                     android:drawableLeft="@drawable/ic_login_pwd"
                     android:hint="设置登录密码"
                     android:inputType="textPassword"
                     android:textColorHint="@color/cb3b3b3"
-                    android:textSize="32px"
-                    android:drawablePadding="30px"/>
+                    android:textSize="16sp"
+                    android:drawablePadding="15dp"/>
             <android.support.v7.widget.SwitchCompat
                     android:id="@+id/signup_pwd_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="right|center_vertical"
-                    android:layout_marginRight="40px"
-                    android:textSize="30px"
+                    android:layout_marginRight="20dp"
+                    android:textSize="15sp"
                     android:textColor="@color/c0168b7"/>
         </FrameLayout>
     </LinearLayout>
 
     <EditText
             android:id="@+id/signup_recommend_phone_et"
-            android:layout_width="670px"
-            android:layout_height="90px"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:background="@drawable/login_edit_bg"
-            android:layout_marginLeft="40px"
-            android:layout_marginRight="40px"
-            android:layout_marginTop="30px"
-            android:layout_marginBottom="60px"
-            android:paddingLeft="30px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="30dp"
+            android:paddingLeft="15dp"
             android:hint="推荐人手机号(选填)"
             android:inputType="phone"
             android:textColorHint="@color/cb3b3b3"
-            android:textSize="32px"/>
+            android:textSize="16sp"/>
 
     <com.yc.phonerecycle.widget.SimpleCornerTextView
             android:id="@+id/tv_signup_action"
-            android:layout_width="670px" android:layout_height="88px"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             app:bgColor="@color/c0168b7"
-            app:radius="5px"
+            app:radius="2.5dp"
             android:text="确认"
-            android:textSize="32px"
+            android:textSize="16sp"
             android:textColor="@color/white"
             android:gravity="center"/>
 
