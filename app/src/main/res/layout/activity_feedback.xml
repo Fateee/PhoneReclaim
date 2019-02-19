@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/cf7f8fa"
+              android:orientation="vertical">
+
+    <!--<include-->
+    <!--layout="@layout/titleview"/>-->
+    <com.yc.phonerecycle.widget.SimpleToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:toolbar_title="用户反馈"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="反馈内容"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="14sp"/>
+
+    <EditText
+            android:id="@+id/feedback_edit"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="14dp"
+            android:paddingTop="10dp"
+            android:gravity="top"
+            android:background="@color/white"
+            android:hint="有什么想说的请在这里反馈"
+            android:textColorHint="@color/c999999"
+            android:textSize="13sp"/>
+
+    <com.yc.phonerecycle.widget.SimpleCornerTextView
+            android:id="@+id/feedback_submit"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            app:bgColor="@color/c0168b7"
+            app:radius="2.5dp"
+            android:text="提交"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+</LinearLayout>
