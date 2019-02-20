@@ -13,4 +13,7 @@
     <string name="cash_account">收款账户: %s</string>
     <string name="cash_to_wx">请在我的钱包零钱中查看余额</string>
     <string name="cash_to_account_check">审核通过后，1个工作日内到账</string>
+    <string name="recycle_dingdan_success">订单提交成功</string>
+    <string name="recycle_dingdan_success_tip">请将此次评估手机寄到以下地址，并在我的订单内填写快递单号。</string>
+    <string name="order_address">重庆市渝中区大坪百盛1号楼412</string>
 </resources>
