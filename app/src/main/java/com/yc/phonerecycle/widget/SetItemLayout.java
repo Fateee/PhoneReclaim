@@ -154,7 +154,7 @@ public class SetItemLayout extends LinearLayout {
     }
 
     private void setIcon(int resid) {
-        mItemEdit.setVisibility(VISIBLE);
+        mItemIcon.setVisibility(VISIBLE);
         mItemIcon.setImageResource(resid);
     }
 

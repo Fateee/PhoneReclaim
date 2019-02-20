@@ -122,7 +122,6 @@
                 android:layout_toLeftOf="@id/right_views"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                tools:hint="请输入新的手机号码"
                 android:textColorHint="@color/cbbbbbb"
                 android:textSize="14sp"
                 android:visibility="gone"/>

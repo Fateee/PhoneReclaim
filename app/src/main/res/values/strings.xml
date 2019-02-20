@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">爱验机</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">首页</string>
+    <string name="title_dashboard">检测</string>
+    <string name="title_notifications">我的</string>
     <string name="about_us_tip1">爱验机为大家提供免费的验机评估平台。手机回收先用爱验机！</string>
     <string name="about_us_tip2">地址：重庆市渝中区大坪百盛1号楼412</string>
     <string name="about_us_tip3">全国合作电话：203-68595677</string>
