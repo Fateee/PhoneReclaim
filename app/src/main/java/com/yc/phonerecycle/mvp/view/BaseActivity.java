@@ -14,8 +14,17 @@ import com.yc.phonerecycle.mvp.presenter.base.BaseViewInf;
 
 public abstract class BaseActivity <P extends BasePresenter> extends AppCompatActivity implements BaseViewInf {
 
-    private P mP;
     private ProgressDialog loadingDialog;
+
+    BasePresenter mPresenter;
+
+    public P getPresenter() {
+        if (mPresenter == null) {
+            mPresenter = createPresenter();
+            if (mPresenter != null) mPresenter.attach(this);
+        }
+        return (P) mPresenter;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,8 +35,7 @@ public abstract class BaseActivity <P extends BasePresenter> extends AppCompatAc
 //        EventBus.getDefault().register(this);
 //        PushAgent.getInstance(this).onAppStart();
         initView();
-        mP = getPresenter();
-        if (mP != null) mP.attach(this);
+        getPresenter();
         initDatas();
     }
 
@@ -40,7 +48,7 @@ public abstract class BaseActivity <P extends BasePresenter> extends AppCompatAc
 
     protected abstract void initView();
 
-    protected abstract P getPresenter();
+    protected abstract P createPresenter();
 
     protected abstract void initDatas();
 
@@ -49,8 +57,8 @@ public abstract class BaseActivity <P extends BasePresenter> extends AppCompatAc
     protected void onDestroy() {
         super.onDestroy();
 //        EventBus.getDefault().unregister(this);
-        if (mP == null) return;
-        mP.deAttach();
+        if (getPresenter() == null) return;
+        getPresenter().deAttach();
     }
 
     public void showLoading() {

@@ -10,9 +10,11 @@ import android.view.View
 import android.widget.ImageView
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.adapter.GuidePageAdapter
+import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 
 
-class SplashActivity : BaseActivity<CommonPresenter>(){
+class SplashActivity : BaseActivity<EmptyPresenter>(){
+    override fun createPresenter(): EmptyPresenter? = null
 
     private val loadingTime: Long = 1500
 
@@ -22,10 +24,6 @@ class SplashActivity : BaseActivity<CommonPresenter>(){
     override fun getContentView(): Int = R.layout.fragment_main_home
 
     override fun initView() {
-    }
-
-    override fun getPresenter(): CommonPresenter {
-        return CommonPresenter()
     }
 
     override fun initDatas() {

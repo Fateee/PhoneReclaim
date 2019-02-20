@@ -13,18 +13,26 @@ import com.yc.phonerecycle.mvp.presenter.base.BaseViewInf;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements BaseViewInf {
 
-    private P mP;
+//    private P mP;
     public static final int LATEST_TYPE = 1;
     public static final int CATEGORY_TYPE = 2;
     public static final int CHOSEN_TYPE = 3;
     private ProgressDialog loadingDialog;
+    BasePresenter mPresenter;
+
+    public P getPresenter() {
+        if (mPresenter == null) {
+            mPresenter = createPresenter();
+            if (mPresenter != null) mPresenter.attach(this);
+        }
+        return (P) mPresenter;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        EventBus.getDefault().register(this);
-        mP = getPresenter();
-        if (mP == null) return;
-        mP.attach(this);
+        getPresenter();
     }
 
     @Nullable
@@ -42,7 +50,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         initData();
     }
 
-    protected abstract P getPresenter();
+    protected abstract P createPresenter();
 
     protected abstract int getContentView();
 
@@ -54,8 +62,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     public void onDestroy() {
         super.onDestroy();
 //        EventBus.getDefault().unregister(this);
-        if (mP == null) return;
-        mP.deAttach();
+        if (getPresenter() == null) return;
+        getPresenter().deAttach();
     }
     public void showLoading() {
         loadingDialog = ProgressDialog.show(getContext(),"","");
