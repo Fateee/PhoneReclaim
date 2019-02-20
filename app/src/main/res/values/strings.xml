@@ -10,4 +10,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="all_cash_out_tip">可提现余额   ¥ %s</string>
+    <string name="cash_account">收款账户: %s</string>
+    <string name="cash_to_wx">请在我的钱包零钱中查看余额</string>
+    <string name="cash_to_account_check">审核通过后，1个工作日内到账</string>
 </resources>
