@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/cf7f8fa"
+              android:orientation="vertical">
+
+    <com.yc.phonerecycle.widget.SimpleToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:toolbar_title="提现"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="提现金额"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left">
+
+            <EditText
+                    android:id="@+id/money_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/all_cash_out"
+                    android:background="@null"
+                    android:layout_marginTop="33dp"
+                    android:textColor="@color/black"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    tools:text="88.00"
+                    android:textSize="25sp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/money_et"
+                    android:layout_alignBaseline="@id/money_et"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:layout_marginRight="5dp"
+                    android:text="¥"
+                    android:textColor="@color/c282828"
+                    android:textSize="22sp"/>
+
+            <com.yc.phonerecycle.widget.SimpleCornerTextView
+                    android:id="@+id/all_cash_out"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    app:bgColor="@color/white"
+                    app:radius="5dp"
+                    app:borderWidth="0.5dp"
+                    app:borderColor="@color/c0168b7"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="全部提现"
+                    android:textSize="12sp"
+                    android:textColor="@color/c0168b7"
+                    android:gravity="center"/>
+        </RelativeLayout>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="14dp"
+                android:background="@color/ceeeeee"/>
+        <TextView
+                android:id="@+id/all_cash_out_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:text="@string/all_cash_out_tip"
+                android:textColor="@color/c999999"
+                android:textSize="14sp"/>
+    </LinearLayout>
+
+
+    <com.yc.phonerecycle.widget.SetItemLayout
+            android:id="@+id/cash_to_wx"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            app:icon="@drawable/ic_cash_to_wx"
+            app:title="提现到微信"
+            app:right_icon="@drawable/ic_cash_checked"/>
+    <com.yc.phonerecycle.widget.SetItemLayout
+            android:id="@+id/cash_to_bank"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:icon="@drawable/ic_cash_to_bankcard"
+            app:title="提现到银行卡"
+            app:right_icon="@drawable/ic_cash_uncheck"/>
+
+    <com.yc.phonerecycle.widget.SimpleCornerTextView
+            android:id="@+id/submit"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            app:bgColor="@color/c0168b7"
+            app:radius="5dp"
+            android:text="提现"
+            android:textSize="17sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+</LinearLayout>

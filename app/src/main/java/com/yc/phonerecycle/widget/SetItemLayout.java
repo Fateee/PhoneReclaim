@@ -73,6 +73,11 @@ public class SetItemLayout extends LinearLayout {
         boolean isShowTip = a.getBoolean(R.styleable.setItemLayout_show_arraw, false);
         if (isShowTip) showImageItemTip();
 
+        int rightIconId = a.getResourceId(R.styleable.setItemLayout_right_icon, 0);
+        if (rightIconId != 0) {
+            setRightIcon(rightIconId);
+        }
+
         boolean hideDivider = a.getBoolean(R.styleable.setItemLayout_hide_divider, false);
         if (hideDivider) hideDivider();
         a.recycle();
@@ -165,5 +170,10 @@ public class SetItemLayout extends LinearLayout {
     private void setSubTitleCode(String subTitleCode) {
         mVerfyCode.setText(subTitleCode);
         mVerfyCode.setVisibility(VISIBLE);
+    }
+
+    private void setRightIcon(int rightIconId) {
+        mItemTip.setVisibility(VISIBLE);
+        mItemTip.setImageResource(rightIconId);
     }
 }

@@ -21,7 +21,7 @@ class SplashActivity : BaseActivity<EmptyPresenter>(){
     override fun initBundle() {
     }
 
-    override fun getContentView(): Int = R.layout.fragment_main_home
+    override fun getContentView(): Int = R.layout.activity_cash_wx_bank
 
     override fun initView() {
     }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" xmlns:tool="http://schemas.android.com/tools"
+              android:background="@color/ceeeeee"
+              android:orientation="vertical">
+
+    <!--<include-->
+    <!--layout="@layout/titleview"/>-->
+    <com.yc.phonerecycle.widget.SimpleToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:toolbar_title="我的钱包"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="88dp"
+            android:text="我的余额"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:layout_gravity="center_horizontal"/>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:gravity="center_horizontal">
+        <TextView
+                android:id="@+id/money_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:textColor="@color/c282828"
+                tool:text="88.00"
+                android:textSize="40sp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_alignBaseline="@id/money_value"
+                android:layout_toLeftOf="@id/money_value"
+                android:includeFontPadding="false"
+                android:layout_marginRight="5dp"
+                android:text="¥"
+                android:textColor="@color/c282828"
+                android:textSize="22sp"/>
+    </RelativeLayout>
+    <com.yc.phonerecycle.widget.SimpleCornerTextView
+            android:id="@+id/submit"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            app:bgColor="@color/c0168b7"
+            app:radius="5dp"
+            android:text="提现"
+            android:textSize="17sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+</LinearLayout>

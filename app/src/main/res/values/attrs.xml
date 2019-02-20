@@ -20,6 +20,7 @@
         <attr name="is_show_switch" format="boolean"/>
         <attr name="show_switch_value" format="boolean"/>
         <attr name="show_arraw" format="boolean"/>
+        <attr name="right_icon" format="reference"/>
         <attr name="hide_divider" format="boolean"/>
     </declare-styleable>
 
