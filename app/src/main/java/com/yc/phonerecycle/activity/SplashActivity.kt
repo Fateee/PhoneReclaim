@@ -19,7 +19,7 @@ class SplashActivity : BaseActivity<CommonPresenter>(){
     override fun initBundle() {
     }
 
-    override fun getContentView(): Int = R.layout.fragment_main_usercenter
+    override fun getContentView(): Int = R.layout.fragment_main_home
 
     override fun initView() {
     }
