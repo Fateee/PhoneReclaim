@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:background="@color/white"
+                android:paddingBottom="15dp">
+    <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toRightOf="@id/order_userinfo_name"
+            android:layout_alignBottom="@id/order_userinfo_name"
+            android:includeFontPadding="false"
+            android:text="2018-1-12  13:14:55"
+            android:textColor="@color/c3c3c3c"
+            android:textSize="12sp"/>
+    <ImageView
+            android:id="@+id/icon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/date"
+            android:layout_alignLeft="@id/date"
+            android:src="@drawable/logo"/>
+
+    <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/icon"
+            android:layout_alignTop="@id/icon"
+            android:layout_marginLeft="10dp"
+            android:includeFontPadding="false"
+            tools:text="华为-P20Pro 6+128G大内存"
+            android:textColor="@color/c333333"
+            android:textSize="14sp"/>
+    <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/name"
+            android:layout_below="@id/name"
+            android:includeFontPadding="false"
+            android:layout_marginTop="8dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="华为-P20Pro 6+128G大内存"
+            android:textColor="@color/c999999"
+            android:textSize="12sp"/>
+    <TextView
+            android:id="@+id/detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/name"
+            android:layout_below="@id/content"
+            android:includeFontPadding="false"
+            android:layout_marginTop="10dp"
+            android:maxLines="1"
+            android:text="查看详情"
+            android:textColor="@color/c0168b7"
+            android:textSize="12sp"/>
+</RelativeLayout>

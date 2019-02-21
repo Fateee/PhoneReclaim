@@ -21,7 +21,7 @@ class SplashActivity : BaseActivity<EmptyPresenter>(){
     override fun initBundle() {
     }
 
-    override fun getContentView(): Int = R.layout.activity_recycle_success
+    override fun getContentView(): Int = R.layout.activity_order_detail
 
     override fun initView() {
     }

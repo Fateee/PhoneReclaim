@@ -2,6 +2,7 @@ package com.yc.phonerecycle.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
@@ -51,8 +52,17 @@ public class SetItemLayout extends LinearLayout {
         if (iconId != 0) {
             setIcon(iconId);
         }
+
         String title = a.getString(R.styleable.setItemLayout_title);
         if (!TextUtils.isEmpty(title)) setTitle(title);
+
+        float titleWidth = a.getDimension(R.styleable.setItemLayout_title_width, 0);
+        if (titleWidth != 0) {
+            setTitleWidth(titleWidth);
+        }
+
+        int titleColor = a.getColor(R.styleable.setItemLayout_title_color, Color.parseColor("#333333"));
+        setTitleColor(titleColor);
 
         String hint = a.getString(R.styleable.setItemLayout_edit_hint);
         if (!TextUtils.isEmpty(hint)) setHint(hint);
@@ -81,6 +91,16 @@ public class SetItemLayout extends LinearLayout {
         boolean hideDivider = a.getBoolean(R.styleable.setItemLayout_hide_divider, false);
         if (hideDivider) hideDivider();
         a.recycle();
+    }
+
+    private void setTitleColor(int titleColor) {
+        mItemName.setTextColor(titleColor);
+    }
+
+    private void setTitleWidth(float titleWidth) {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mItemName.getLayoutParams();
+        params.width = (int) titleWidth;
+        mItemName.setLayoutParams(params);
     }
 
     private void initView() {
