@@ -16,4 +16,9 @@
     <string name="recycle_dingdan_success">订单提交成功</string>
     <string name="recycle_dingdan_success_tip">请将此次评估手机寄到以下地址，并在我的订单内填写快递单号。</string>
     <string name="order_address">重庆市渝中区大坪百盛1号楼412</string>
+    <string name="shop_name">店铺： %s</string>
+    <string name="shop_open_time">营业时间: %s</string>
+    <string name="shop_tele">电话: %s</string>
+    <string name="deal_num">成交数: %s</string>
+    <string name="shop_addr">地址：%s</string>
 </resources>
