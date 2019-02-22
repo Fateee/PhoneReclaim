@@ -92,6 +92,22 @@
                     app:sub_title="请选择"
                     app:show_arraw="true"
                     app:hide_divider="true"/>
+
+            <EditText
+                    android:id="@+id/feedback_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="84dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="15dp"
+                    android:gravity="top"
+                    android:background="@drawable/hand_check_bg"
+                    android:hint="请描述其他故障(选填)"
+                    android:textColorHint="@color/c999999"
+                    android:textSize="15sp"/>
+
             <com.yc.phonerecycle.widget.SimpleCornerTextView
                     android:id="@+id/appraisal"
                     android:layout_width="match_parent" android:layout_height="44dp"
