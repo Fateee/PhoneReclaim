@@ -47,6 +47,13 @@ public class SetItemLayout extends LinearLayout {
 
         final TypedArray a = context.obtainStyledAttributes(
                 attrs, R.styleable.setItemLayout, defStyleAttr, 0);
+        int bg = a.getResourceId(R.styleable.setItemLayout_bg,0);
+        if (bg != 0) {
+            setBackgroundResource(bg);
+        } else {
+            int bgColor = a.getColor(R.styleable.setItemLayout_bg, getResources().getColor(R.color.white));
+            setBackgroundColor(bgColor);
+        }
 
         int iconId = a.getResourceId(R.styleable.setItemLayout_icon,0);
         if (iconId != 0) {
@@ -104,7 +111,6 @@ public class SetItemLayout extends LinearLayout {
     }
 
     private void initView() {
-//        View view =
         mItemIcon = (ImageView) findViewById(R.id.item_icon);
         mItemName = (TextView) findViewById(R.id.item_name);
         mItemEdit = (EditText) findViewById(R.id.item_edit);

@@ -10,97 +10,97 @@
     <com.yc.phonerecycle.widget.SimpleToolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:toolbar_title="手动评估"
+            app:toolbar_title="继续回收"
     />
     <ScrollView android:layout_width="match_parent"
                 android:layout_height="match_parent">
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:orientation="vertical">
             <include
-                    layout="@layout/header_hand_check_stepone"/>
+                    layout="@layout/header_hand_check_stepthree"/>
             <com.yc.phonerecycle.widget.SetItemLayout
-                    android:id="@+id/ram"
+                    android:id="@+id/phone_color"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     app:bg="@drawable/hand_check_bg"
-                    app:title="运行内存"
+                    app:title="机身颜色"
                     app:sub_title="请选择"
                     app:show_arraw="true"
                     app:hide_divider="true"/>
 
             <com.yc.phonerecycle.widget.SetItemLayout
-                    android:id="@+id/rom"
+                    android:id="@+id/fix_condition"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
                     app:bg="@drawable/hand_check_bg"
-                    app:title="存储空间"
+                    app:title="报修情况"
                     app:sub_title="请选择"
                     app:show_arraw="true"
                     app:hide_divider="true"/>
             <com.yc.phonerecycle.widget.SetItemLayout
-                    android:id="@+id/color"
+                    android:id="@+id/surface"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
                     app:bg="@drawable/hand_check_bg"
-                    app:title="颜色"
+                    app:title="外观情况"
                     app:sub_title="请选择"
                     app:show_arraw="true"
                     app:hide_divider="true"/>
             <com.yc.phonerecycle.widget.SetItemLayout
-                    android:id="@+id/net_type"
+                    android:id="@+id/screen"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
                     app:bg="@drawable/hand_check_bg"
-                    app:title="网络制式"
+                    app:title="屏幕问题"
                     app:sub_title="请选择"
                     app:show_arraw="true"
                     app:hide_divider="true"/>
             <com.yc.phonerecycle.widget.SetItemLayout
-                    android:id="@+id/version"
+                    android:id="@+id/overhaul"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
                     app:bg="@drawable/hand_check_bg"
-                    app:title="版本"
+                    app:title="拆修问题"
                     app:sub_title="请选择"
                     app:show_arraw="true"
                     app:hide_divider="true"/>
             <com.yc.phonerecycle.widget.SetItemLayout
-                    android:id="@+id/account_lock"
+                    android:id="@+id/in_water"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
                     app:bg="@drawable/hand_check_bg"
-                    app:title="有无账户锁"
+                    app:title="有无进水"
                     app:sub_title="请选择"
                     app:show_arraw="true"
                     app:hide_divider="true"/>
             <com.yc.phonerecycle.widget.SimpleCornerTextView
-                    android:id="@+id/next"
+                    android:id="@+id/appraisal"
                     android:layout_width="match_parent" android:layout_height="44dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="30dp"
                     app:bgColor="@color/c0168b7"
                     app:radius="2.5dp"
-                    android:text="下一步"
+                    android:text="估价回收"
                     android:textSize="16sp"
                     android:textColor="@color/white"
                     android:gravity="center"/>

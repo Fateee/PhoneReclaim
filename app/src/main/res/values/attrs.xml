@@ -11,6 +11,7 @@
         <attr name="radius" format="dimension"/>
     </declare-styleable>
     <declare-styleable name="setItemLayout">
+        <attr name="bg" format="color|reference"/>
         <attr name="icon" format="reference"/>
         <attr name="title" format="string"/>
         <attr name="title_width" format="dimension"/>

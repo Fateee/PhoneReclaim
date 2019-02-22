@@ -19,76 +19,100 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
             <include
-                    layout="@layout/header_hand_check_stepone"/>
+                    layout="@layout/header_hand_check_steptwo"/>
             <com.yc.phonerecycle.widget.SetItemLayout
-                    android:id="@+id/ram"
+                    android:id="@+id/start_up"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     app:bg="@drawable/hand_check_bg"
-                    app:title="运行内存"
+                    app:title="能否正常开机"
                     app:sub_title="请选择"
                     app:show_arraw="true"
                     app:hide_divider="true"/>
 
             <com.yc.phonerecycle.widget.SetItemLayout
-                    android:id="@+id/rom"
+                    android:id="@+id/fingerprint"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
                     app:bg="@drawable/hand_check_bg"
-                    app:title="存储空间"
+                    app:title="指纹有无故障"
                     app:sub_title="请选择"
                     app:show_arraw="true"
                     app:hide_divider="true"/>
             <com.yc.phonerecycle.widget.SetItemLayout
-                    android:id="@+id/color"
+                    android:id="@+id/wifi_fault"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
                     app:bg="@drawable/hand_check_bg"
-                    app:title="颜色"
+                    app:title="wifi故障"
                     app:sub_title="请选择"
                     app:show_arraw="true"
                     app:hide_divider="true"/>
             <com.yc.phonerecycle.widget.SetItemLayout
-                    android:id="@+id/net_type"
+                    android:id="@+id/bluetooth_fault"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
                     app:bg="@drawable/hand_check_bg"
-                    app:title="网络制式"
+                    app:title="蓝牙故障"
                     app:sub_title="请选择"
                     app:show_arraw="true"
                     app:hide_divider="true"/>
             <com.yc.phonerecycle.widget.SetItemLayout
-                    android:id="@+id/version"
+                    android:id="@+id/call_fault"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
                     app:bg="@drawable/hand_check_bg"
-                    app:title="版本"
+                    app:title="通话故障"
                     app:sub_title="请选择"
                     app:show_arraw="true"
                     app:hide_divider="true"/>
             <com.yc.phonerecycle.widget.SetItemLayout
-                    android:id="@+id/account_lock"
+                    android:id="@+id/camrea_fault"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
                     app:bg="@drawable/hand_check_bg"
-                    app:title="有无账户锁"
+                    app:title="摄像头故障"
+                    app:sub_title="请选择"
+                    app:show_arraw="true"
+                    app:hide_divider="true"/>
+            <com.yc.phonerecycle.widget.SetItemLayout
+                    android:id="@+id/gyro_fault"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    app:bg="@drawable/hand_check_bg"
+                    app:title="陀螺仪故障"
+                    app:sub_title="请选择"
+                    app:show_arraw="true"
+                    app:hide_divider="true"/>
+            <com.yc.phonerecycle.widget.SetItemLayout
+                    android:id="@+id/gradienter_fault"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    app:bg="@drawable/hand_check_bg"
+                    app:title="水平仪故障"
                     app:sub_title="请选择"
                     app:show_arraw="true"
                     app:hide_divider="true"/>
@@ -100,10 +124,25 @@
                     android:layout_marginTop="30dp"
                     app:bgColor="@color/c0168b7"
                     app:radius="2.5dp"
-                    android:text="下一步"
+                    android:text="继续回收"
                     android:textSize="16sp"
                     android:textColor="@color/white"
                     android:gravity="center"/>
+            <com.yc.phonerecycle.widget.SimpleCornerTextView
+                    android:id="@+id/last"
+                    android:layout_width="match_parent" android:layout_height="44dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="22dp"
+                    app:bgColor="@color/white"
+                    app:radius="2.5dp"
+                    android:text="上一步"
+                    android:textSize="16sp"
+                    android:textColor="@color/c666666"
+                    android:gravity="center"
+                    app:borderColor="@color/cbbbbbb"
+                    app:borderWidth="1dp"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
