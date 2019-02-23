@@ -4,6 +4,8 @@ package com.yc.phonerecycle.activity.fragment
 import android.support.v4.app.Fragment
 import android.view.View
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.activity.EditUserInfoActivity
+import com.yc.phonerecycle.activity.MyBankCardsActivity
 import com.yc.phonerecycle.activity.MySetListActivity
 import com.yc.phonerecycle.activity.MyWalletActivity
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
@@ -35,6 +37,32 @@ class UserCenterFragment : BaseFragment<EmptyPresenter>() {
             override fun onClick(p0: View?) {
                 ActivityToActivity.toActivity(
                     activity, MyWalletActivity::class.java)
+            }
+        })
+
+        avatar.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                ActivityToActivity.toActivity(
+                    activity, EditUserInfoActivity::class.java)
+            }
+        })
+        item_name.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                ActivityToActivity.toActivity(
+                    activity, EditUserInfoActivity::class.java)
+            }
+        })
+        item_sign.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                ActivityToActivity.toActivity(
+                    activity, EditUserInfoActivity::class.java)
+            }
+        })
+
+        uc_bank_card.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                ActivityToActivity.toActivity(
+                    activity, MyBankCardsActivity::class.java)
             }
         })
     }

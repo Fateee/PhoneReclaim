@@ -75,7 +75,7 @@ class SplashActivity : BaseActivity<EmptyPresenter>(){
 
     private fun toNextActivity() {
         //todo huyi
-        if (!UserInfoUtils.isLogged()) {
+        if (UserInfoUtils.isLogged()) {
             ActivityToActivity.toActivity(
                 this@SplashActivity, MainActivity::class.java)
         } else {
