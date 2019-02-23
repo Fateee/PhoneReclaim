@@ -1,6 +1,5 @@
 package com.yc.phonerecycle.activity
 
-import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.utils.ActivityToActivity
 import com.yc.phonerecycle.utils.UserInfoUtils
@@ -21,21 +20,19 @@ class SplashActivity : BaseActivity<EmptyPresenter>(){
     override fun initBundle() {
     }
 
-    override fun getContentView(): Int = R.layout.activity_hand_check_stepone
+    override fun getContentView(): Int = R.layout.activity_splash
 
     override fun initView() {
     }
 
     override fun initDatas() {
-//        if (UserInfoUtils.isGuideShown()) {
-//            splash_img.postDelayed({
-//                ActivityToActivity.toActivity(
-//                    this@SplashActivity, MainActivity::class.java)
-//                finish()
-//            },loadingTime)
-//        } else {
-//            initViewPager()
-//        }
+        if (UserInfoUtils.isGuideShown()) {
+            splash_img.postDelayed({
+                toNextActivity()
+            },loadingTime)
+        } else {
+            initViewPager()
+        }
     }
 
 
@@ -64,9 +61,7 @@ class SplashActivity : BaseActivity<EmptyPresenter>(){
                 imageView.setOnClickListener(object : View.OnClickListener {
                     override fun onClick(v: View?) {
                         UserInfoUtils.saveGuideShown()
-                        ActivityToActivity.toActivity(
-                            this@SplashActivity, MainActivity::class.java)
-                        finish()
+                        toNextActivity()
                     }
                 })
             }
@@ -76,6 +71,19 @@ class SplashActivity : BaseActivity<EmptyPresenter>(){
 
         //View集合初始化好后，设置Adapter
         guide_vp.setAdapter(GuidePageAdapter(viewList as List<View>?))
+    }
+
+    private fun toNextActivity() {
+        //todo huyi
+        if (!UserInfoUtils.isLogged()) {
+            ActivityToActivity.toActivity(
+                this@SplashActivity, MainActivity::class.java)
+        } else {
+            ActivityToActivity.toActivity(
+                this@SplashActivity, LoginActivity::class.java)
+        }
+
+        finish()
     }
 
 }

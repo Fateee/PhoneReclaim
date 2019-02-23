@@ -4,19 +4,22 @@
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_CONTENT_PROVIDERS_EXTERNALLY"/>
 
     <application
+            android:name=".app.BaseApplication"
             android:allowBackup="true"
             android:icon="@drawable/logo"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            android:name=".app.BaseApplication">
+            >
+        <activity android:name=".activity.LoginActivity">
+        </activity>
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -27,12 +30,54 @@
         <activity
                 android:name=".activity.MainActivity"
                 android:label="@string/app_name">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN"/>-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN"/> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+            <!-- </intent-filter> -->
         </activity>
+        <activity
+                android:name=".activity.AboutUsActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name=".activity.ChangePhoneActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name=".activity.EditUserInfoActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name=".activity.FeedbackActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name=".activity.MyBankCardsActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name=".activity.MySetListActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name=".activity.MyWalletActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name=".activity.ResetBankPwdActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name=".activity.ResetPwdActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity android:name=".activity.ForgetPwdActivity"/>
+        <activity android:name=".activity.SignUpActivity"/>
+        <activity android:name=".activity.HandCheckActivity"/>
+        <activity android:name=".activity.CheckResulttActivity"/>
         <meta-data
                 android:name="design_width_in_dp"
                 android:value="360"/>
@@ -40,4 +85,5 @@
                 android:name="design_height_in_dp"
                 android:value="640"/>
     </application>
+
 </manifest>

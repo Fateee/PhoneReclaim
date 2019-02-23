@@ -1,5 +1,6 @@
 package com.yc.phonerecycle.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -69,6 +70,14 @@ public class SimpleToolbar extends Toolbar {
         if (!TextUtils.isEmpty(righttitle)) {
             setRightTitleText(righttitle);
         }
+        mTxtLeftTitle.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getContext() instanceof Activity) {
+                    ((Activity)getContext()).finish();
+                }
+            }
+        });
     }
 
     @Override

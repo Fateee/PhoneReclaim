@@ -8,9 +8,13 @@ import android.view.View
 import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
 import com.snail.antifake.deviceid.macaddress.MacAddressUtils
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.activity.HandCheckActivity
+import com.yc.phonerecycle.activity.SignUpActivity
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
+import com.yc.phonerecycle.utils.ActivityToActivity
 import com.yc.phonerecycle.utils.MacUtils
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_main_home.*
 import java.net.NetworkInterface
 
@@ -39,6 +43,13 @@ class HomeFragment : BaseFragment<EmptyPresenter>() {
         wifi_mac.text = MacAddressUtils.getMacAddress(context)
         os_version.text = Build.VERSION.RELEASE
         imei_value.text = DeviceIdUtil.getDeviceId(context)
+
+        hand_check.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                ActivityToActivity.toActivity(
+                    activity, HandCheckActivity::class.java)
+            }
+        })
     }
 
 
