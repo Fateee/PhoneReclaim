@@ -6,7 +6,15 @@ public interface CommonBaseIV extends BaseViewInf {
     void showLoading();
     void dismissLoading();
 
-    interface MainMenuIV extends CommonBaseIV {
+    interface LoginViewIV extends CommonBaseIV {
+        void loginResponse(Object data);
+    }
+
+    interface SignUpIv extends CommonBaseIV {
+        void requestCodeOK(Object data);
+        void registerSuccess(Object data);
+        void requestCodeError();
+        void registerError(String message);
     }
 
     interface ChildMenuIV extends CommonBaseIV {

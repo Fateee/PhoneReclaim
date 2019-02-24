@@ -4,12 +4,16 @@ import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.utils.ActivityToActivity
 import android.view.View
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
+import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
+import com.yc.phonerecycle.utils.UserInfoUtils
 import kotlinx.android.synthetic.main.activity_setting_list.*
 
 
-class MySetListActivity : BaseActivity<EmptyPresenter>(){
-    override fun createPresenter(): EmptyPresenter? = null
+class MySetListActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV{
+
+    override fun createPresenter(): CommonPresenter? = CommonPresenter()
 
 
     override fun initBundle() {
@@ -57,10 +61,16 @@ class MySetListActivity : BaseActivity<EmptyPresenter>(){
         })
         setlist_logout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
+                presenter.logout()
+                UserInfoUtils.cleanUser()
                 ActivityToActivity.toActivity(
-                    this@MySetListActivity, MySetListActivity::class.java)
+                    this@MySetListActivity, LoginActivity::class.java)
+                finish()
             }
         })
+    }
+
+    override fun loginResponse(data: Any?) {
     }
 
 }

@@ -1,16 +1,33 @@
 package com.yc.phonerecycle.network.reqinterface;
 
 
+import com.yc.phonerecycle.model.bean.base.BaseRep;
+import com.yc.phonerecycle.model.bean.biz.LoginRep;
+import com.yc.phonerecycle.model.bean.request.LoginReqBody;
+import com.yc.phonerecycle.model.bean.request.RegisterReqBody;
 import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.*;
 
 public interface CommonRequest {
-//    @Headers("Content-Type: application/json")
-//    @GET("v1/code/getCodeByType/{type_id}")
-//    Call<ChooseItemRepBean> getChooseItemsByType(@Path("type_id") String type_id);
-//
+    @POST("v1/auth/login")
+    Observable<Response<LoginRep>> login(@Body LoginReqBody info);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/auth/loginout")
+    Observable<Response<BaseRep>> loginout(@Query("Authorization") String Authorization);
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/cSms/sendCode")
+    Observable<Response<BaseRep>> sendCode(@Query("phone") String phone,@Query("Authorization") String Authorization);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/account/register")
+    Observable<Response<BaseRep>> register(@Body RegisterReqBody info);
+
 //    @Headers("Content-Type: application/json")
 //    @GET("v1/code/getCodeByType/{type_id}")
 //    Observable<Response<ChooseItemRepBean>> getChooseOptionsByType (@Path("type_id") String type_id);

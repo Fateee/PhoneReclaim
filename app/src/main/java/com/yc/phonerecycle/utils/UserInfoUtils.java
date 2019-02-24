@@ -3,7 +3,7 @@ package com.yc.phonerecycle.utils;
 
 import com.yc.phonerecycle.app.BaseApplication;
 import com.yc.phonerecycle.constant.CacheKey;
-import com.yc.phonerecycle.model.bean.biz.User;
+import com.yc.phonerecycle.model.bean.biz.LoginRep;
 
 /**
  * Describe：用户信息帮助类
@@ -18,7 +18,7 @@ public class UserInfoUtils {
      *
      * @param user user
      */
-    public static void saveUser(User user) {
+    public static void saveUser(LoginRep user) {
         CacheUtils.get(BaseApplication.getApplication())
                 .put(CacheKey.USER_INFO, user);
         CacheUtils.get(BaseApplication.getApplication())
@@ -30,11 +30,11 @@ public class UserInfoUtils {
      *
      * @return user
      */
-    public static User getUser() {
-        User user = (User) CacheUtils.get(BaseApplication.getApplication())
+    public static LoginRep getUser() {
+        LoginRep user = (LoginRep) CacheUtils.get(BaseApplication.getApplication())
                 .getAsObject(CacheKey.USER_INFO);
         if (user == null) {
-            user = new User();
+            user = new LoginRep();
         }
         return user;
     }

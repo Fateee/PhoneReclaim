@@ -1,6 +1,10 @@
 package com.yc.phonerecycle.mvp.presenter.biz;
 
 import android.util.Log;
+import com.yc.phonerecycle.model.bean.base.BaseRep;
+import com.yc.phonerecycle.model.bean.biz.LoginRep;
+import com.yc.phonerecycle.model.bean.request.LoginReqBody;
+import com.yc.phonerecycle.model.bean.request.RegisterReqBody;
 import com.yc.phonerecycle.mvp.presenter.base.BasePresenter;
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV;
 import com.yc.phonerecycle.network.BaseRetrofit;
@@ -9,6 +13,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CommonPresenter extends BasePresenter<CommonBaseIV> {
@@ -23,42 +29,132 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest = BaseRetrofit.getInstance().createRequest(CommonRequest.class);
     }
 
+    public void loginAction(String loginName, String pwd) {
+        if (getView() == null) return;
+        getView().showLoading();
+        LoginReqBody body = new LoginReqBody(loginName,pwd);
+        mCommonRequest.login(body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<LoginRep>>() {
 
-//    public void getNewBabyDetail(String residentId) {
-//        if (getView() == null) return;
-//        getView().showLoading();
-//        mCommonRequest.getNewbornBabyFollowup(residentId)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<Response<NewBornVisitRepBean>>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                    }
-//
-//                    @Override
-//                    public void onNext(Response<NewBornVisitRepBean> value) {
-//                        getView().dismissLoading();
-//                        Log.i(TAG, "value.code() == " + value.code());
-//                        if (value.code() == 200 && value.body() != null && value.body() instanceof NewBornVisitRepBean) {
-//                            Log.i(TAG, "value.body() == " + value.body());
-//                            NewBornVisitRepBean configResponse = value.body();
-//                            if (configResponse != null) {
-//                                if (getView() instanceof CommonBaseIV.AddNewBabyVisitIV)
-//                                    ((CommonBaseIV.AddNewBabyVisitIV) getView()).getNewBabyvistSuccess(configResponse.data);
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.w(TAG, "onError : " + e.getMessage());
-//                        getView().dismissLoading();
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                    }
-//                });
-//    }
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
+                    }
+
+                    @Override
+                    public void onNext(Response<LoginRep> value) {
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null) {
+                            ((CommonBaseIV.LoginViewIV) getView()).loginResponse(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        getView().dismissLoading();
+                    }
+                });
+    }
+
+    public void logout() {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.loginout("")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        getView().dismissLoading();
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.LoginViewIV) getView()).loginResponse(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                        getView().dismissLoading();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+    public void sendCode(String phone) {
+        if (getView() == null) return;
+        mCommonRequest.sendCode(phone,"")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.SignUpIv) getView()).requestCodeOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                        ((CommonBaseIV.SignUpIv) getView()).requestCodeError();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void register(String code, String password, String phone, String referrer) {
+        if (getView() == null) return;
+        getView().showLoading();
+        RegisterReqBody info = new RegisterReqBody(code, password, phone, referrer);
+        mCommonRequest.register(info)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        getView().dismissLoading();
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.SignUpIv) getView()).registerSuccess(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                        getView().dismissLoading();
+                        ((CommonBaseIV.SignUpIv) getView()).registerError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
 }

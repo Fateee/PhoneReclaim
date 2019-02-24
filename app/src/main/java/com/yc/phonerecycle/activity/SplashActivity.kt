@@ -82,7 +82,6 @@ class SplashActivity : BaseActivity<EmptyPresenter>(){
             ActivityToActivity.toActivity(
                 this@SplashActivity, LoginActivity::class.java)
         }
-
         finish()
     }
 

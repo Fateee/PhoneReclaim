@@ -18,7 +18,8 @@ public class BaseApplication extends Application {
 
     //全局唯一的context
     private static BaseApplication application;
-
+    /**系统上下文*/
+    private static Context mAppContext;
 //    //Activity管理器
 //    private ActivityManage activityManage;
 
@@ -33,6 +34,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        mAppContext = getApplicationContext();
 //        activityManage = new ActivityManage();
 //        initARouter();
 //        initLogger();
@@ -89,6 +91,11 @@ public class BaseApplication extends Application {
 //        customAdaptForExternal();
     }
 
+    /**获取系统上下文：用于ToastUtil类*/
+    public static Context getAppContext()
+    {
+        return mAppContext;
+    }
 
     /**
      * 注意!!! 布局时的实时预览在开发阶段是一个很重要的环节, 很多情况下 Android Studio 提供的默认预览设备并不能完全展示我们的设计图

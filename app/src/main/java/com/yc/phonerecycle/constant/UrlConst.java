@@ -13,5 +13,5 @@ public class UrlConst {
 
     public static final String mLocalUrl = "http://172.20.17.63:5000/";
 
-    public static final String mBaseUrl = "http://49.4.86.234:10001/";
+    public static final String mBaseUrl = "http://39.107.86.160:20002/";
 }
