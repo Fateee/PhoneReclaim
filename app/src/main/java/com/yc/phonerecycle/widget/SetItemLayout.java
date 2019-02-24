@@ -202,4 +202,8 @@ public class SetItemLayout extends LinearLayout {
         mItemTip.setVisibility(VISIBLE);
         mItemTip.setImageResource(rightIconId);
     }
+
+    public String getTitle() {
+        return mItemName.getText().toString();
+    }
 }

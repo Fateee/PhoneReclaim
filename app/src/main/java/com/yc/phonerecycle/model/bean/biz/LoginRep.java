@@ -3,11 +3,12 @@ package com.yc.phonerecycle.model.bean.biz;
 
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 
+import java.io.Serializable;
+
 /**
  * Describe：用户信息
- * Created by 吴天强 on 2018/11/13.
  */
-public class LoginRep extends BaseRep {
+public class LoginRep extends BaseRep implements Serializable {
 
     /**
      * code : 0
@@ -25,7 +26,7 @@ public class LoginRep extends BaseRep {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * token : Banner eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJmb3JtZXIiLCJVU0VSIjoie1wiaWRcIjpcIjFcIixcImxvY2tlZFwiOnRydWUsXCJwaG9uZVwiOlwiMTU2MDAwMDAwMDBcIixcInJvbGVJZFwiOlwiMVwiLFwidHlwZVwiOlwiMVwiLFwidHlwZU5hbWVcIjpcIueUqOaIt1wiLFwidXNlck5hbWVcIjpcImFkbWluXCJ9IiwiZXhwIjoxNTUxMDE3OTMwLCJpYXQiOjE1NTA5ODE5MzB9.WZ-jwj_8J5XMDg8tH4oLLPgxjGSeCdvlxkBLCrrd4Vg
          * userInfoVO : {"id":"1","userName":"admin","locked":true,"phone":"15600000000","roleId":"1","type":"1","typeName":"用户"}
@@ -50,7 +51,7 @@ public class LoginRep extends BaseRep {
             this.userInfoVO = userInfoVO;
         }
 
-        public static class UserInfoVOBean {
+        public static class UserInfoVOBean implements Serializable{
             /**
              * id : 1
              * userName : admin

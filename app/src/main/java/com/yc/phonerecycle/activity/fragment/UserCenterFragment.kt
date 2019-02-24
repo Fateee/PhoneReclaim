@@ -4,13 +4,14 @@ package com.yc.phonerecycle.activity.fragment
 import android.support.v4.app.Fragment
 import android.view.View
 import com.yc.phonerecycle.R
-import com.yc.phonerecycle.activity.EditUserInfoActivity
+import com.yc.phonerecycle.activity.UserInfoActivity
 import com.yc.phonerecycle.activity.MyBankCardsActivity
 import com.yc.phonerecycle.activity.MySetListActivity
 import com.yc.phonerecycle.activity.MyWalletActivity
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
 import com.yc.phonerecycle.utils.ActivityToActivity
+import com.yc.phonerecycle.utils.UserInfoUtils
 import kotlinx.android.synthetic.main.fragment_main_usercenter.*
 
 
@@ -27,6 +28,7 @@ class UserCenterFragment : BaseFragment<EmptyPresenter>() {
     }
 
     override fun initData() {
+        item_name.text = UserInfoUtils.getUser().data?.userInfoVO?.userName
         iv_to_setlist.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 ActivityToActivity.toActivity(
@@ -43,19 +45,19 @@ class UserCenterFragment : BaseFragment<EmptyPresenter>() {
         avatar.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 ActivityToActivity.toActivity(
-                    activity, EditUserInfoActivity::class.java)
+                    activity, UserInfoActivity::class.java)
             }
         })
         item_name.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 ActivityToActivity.toActivity(
-                    activity, EditUserInfoActivity::class.java)
+                    activity, UserInfoActivity::class.java)
             }
         })
         item_sign.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 ActivityToActivity.toActivity(
-                    activity, EditUserInfoActivity::class.java)
+                    activity, UserInfoActivity::class.java)
             }
         })
 
