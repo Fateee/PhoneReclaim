@@ -1,5 +1,6 @@
 package com.yc.phonerecycle.mvp.view.viewinf;
 
+import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
 import com.yc.phonerecycle.mvp.presenter.base.BaseViewInf;
 
 public interface CommonBaseIV extends BaseViewInf {
@@ -17,7 +18,9 @@ public interface CommonBaseIV extends BaseViewInf {
         void registerError(String message);
     }
 
-    interface ChildMenuIV extends CommonBaseIV {
+    interface UserInfoIV extends CommonBaseIV {
+        void userInfoSuccess(UserInfoRep body);
+
     }
 
     interface AddViewIV extends CommonBaseIV {

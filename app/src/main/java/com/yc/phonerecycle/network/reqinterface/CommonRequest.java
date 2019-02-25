@@ -3,6 +3,7 @@ package com.yc.phonerecycle.network.reqinterface;
 
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 import com.yc.phonerecycle.model.bean.biz.LoginRep;
+import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
 import com.yc.phonerecycle.model.bean.request.LoginReqBody;
 import com.yc.phonerecycle.model.bean.request.RegisterReqBody;
 import io.reactivex.Observable;
@@ -27,6 +28,15 @@ public interface CommonRequest {
     @Headers("Content-Type: application/json")
     @POST("v1/account/register")
     Observable<Response<BaseRep>> register(@Body RegisterReqBody info);
+
+    @GET("v1/userCenter/getInfo")
+    Observable<Response<UserInfoRep>> getInfo();
+
+    interface UserInfoEdit {
+        @Headers("Content-Type: application/json")
+        @POST("v1/setting/changeName")
+        Observable<Response<BaseRep>> changeName(@Query("name") String name,@Query("useId") String useId,@Query("Authorization") String Authorization);
+    }
 
 //    @Headers("Content-Type: application/json")
 //    @GET("v1/code/getCodeByType/{type_id}")
@@ -67,6 +77,5 @@ public interface CommonRequest {
 //    Observable<Response<DivisionBean>> findChildDivisionsById(@Query("divisionId") String divisionId);
 
 //    http://49.4.86.234:10001/?divisionId=100000
-    interface PeopleRequest {
-    }
+
 }

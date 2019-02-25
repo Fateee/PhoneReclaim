@@ -3,6 +3,7 @@ package com.yc.phonerecycle.mvp.presenter.biz;
 import android.util.Log;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 import com.yc.phonerecycle.model.bean.biz.LoginRep;
+import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
 import com.yc.phonerecycle.model.bean.request.LoginReqBody;
 import com.yc.phonerecycle.model.bean.request.RegisterReqBody;
 import com.yc.phonerecycle.mvp.presenter.base.BasePresenter;
@@ -150,6 +151,35 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                         getView().dismissLoading();
                         ((CommonBaseIV.SignUpIv) getView()).registerError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void getInfo() {
+        if (getView() == null) return;
+        mCommonRequest.getInfo()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<UserInfoRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<UserInfoRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.UserInfoIV) getView()).userInfoSuccess(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
                     }
 
                     @Override
