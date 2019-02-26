@@ -15,6 +15,7 @@ public class LoginRep extends BaseRep implements Serializable {
      * info : 操作完成
      * data : {"token":"Banner eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJmb3JtZXIiLCJVU0VSIjoie1wiaWRcIjpcIjFcIixcImxvY2tlZFwiOnRydWUsXCJwaG9uZVwiOlwiMTU2MDAwMDAwMDBcIixcInJvbGVJZFwiOlwiMVwiLFwidHlwZVwiOlwiMVwiLFwidHlwZU5hbWVcIjpcIueUqOaIt1wiLFwidXNlck5hbWVcIjpcImFkbWluXCJ9IiwiZXhwIjoxNTUxMDE3OTMwLCJpYXQiOjE1NTA5ODE5MzB9.WZ-jwj_8J5XMDg8tH4oLLPgxjGSeCdvlxkBLCrrd4Vg","userInfoVO":{"id":"1","userName":"admin","locked":true,"phone":"15600000000","roleId":"1","type":"1","typeName":"用户"}}
      */
+    private static final long serialVersionUID = 4125096758372084309L;
 
     public DataBean data;
 
@@ -27,13 +28,14 @@ public class LoginRep extends BaseRep implements Serializable {
     }
 
     public static class DataBean implements Serializable{
+        private static final long serialVersionUID = 4125096758372084319L;
         /**
          * token : Banner eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJmb3JtZXIiLCJVU0VSIjoie1wiaWRcIjpcIjFcIixcImxvY2tlZFwiOnRydWUsXCJwaG9uZVwiOlwiMTU2MDAwMDAwMDBcIixcInJvbGVJZFwiOlwiMVwiLFwidHlwZVwiOlwiMVwiLFwidHlwZU5hbWVcIjpcIueUqOaIt1wiLFwidXNlck5hbWVcIjpcImFkbWluXCJ9IiwiZXhwIjoxNTUxMDE3OTMwLCJpYXQiOjE1NTA5ODE5MzB9.WZ-jwj_8J5XMDg8tH4oLLPgxjGSeCdvlxkBLCrrd4Vg
          * userInfoVO : {"id":"1","userName":"admin","locked":true,"phone":"15600000000","roleId":"1","type":"1","typeName":"用户"}
          */
 
-        private String token;
-        private UserInfoVOBean userInfoVO;
+        public String token;
+        public UserInfoVOBean userInfoVO;
 
         public String getToken() {
             return token;
@@ -52,6 +54,7 @@ public class LoginRep extends BaseRep implements Serializable {
         }
 
         public static class UserInfoVOBean implements Serializable{
+            private static final long serialVersionUID = 4125096758372084333L;
             /**
              * id : 1
              * userName : admin
@@ -62,13 +65,13 @@ public class LoginRep extends BaseRep implements Serializable {
              * typeName : 用户
              */
 
-            private String id;
-            private String userName;
-            private boolean locked;
-            private String phone;
-            private String roleId;
-            private String type;//1、用户/2、商家/3、门店/4、店员
-            private String typeName;
+            public String id;
+            public String userName;
+            public boolean locked;
+            public String phone;
+            public String roleId;
+            public String type;//1、用户/2、商家/3、门店/4、店员
+            public String typeName;
 
             public String getId() {
                 return id;

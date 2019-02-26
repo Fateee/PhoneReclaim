@@ -2,19 +2,14 @@ package com.yc.phonerecycle.activity
 
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
-import com.yc.phonerecycle.utils.ActivityToActivity
-import com.yc.phonerecycle.utils.UserInfoUtils
-import kotlinx.android.synthetic.main.activity_splash.*
-import android.widget.LinearLayout
-import android.view.View
-import android.widget.ImageView
 import com.yc.phonerecycle.R
-import com.yc.phonerecycle.activity.adapter.GuidePageAdapter
-import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
+import com.yc.phonerecycle.model.bean.biz.AboutUsRep
+import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 
 
-class AboutUsActivity : BaseActivity<EmptyPresenter>(){
-    override fun createPresenter(): EmptyPresenter? = null
+class AboutUsActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.AboutUsIV{
+
+    override fun createPresenter() = CommonPresenter()
 
 
     override fun initBundle() {
@@ -26,6 +21,9 @@ class AboutUsActivity : BaseActivity<EmptyPresenter>(){
     }
 
     override fun initDatas() {
+        presenter.getAboutUsVO()
     }
 
+    override fun getAboutUsOK(data: AboutUsRep?) {
+    }
 }

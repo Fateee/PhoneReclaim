@@ -12,4 +12,10 @@ public class PhoneUtil {
             return mobiles.matches(telRegex);
         }
     }
+
+    public static String hidePhoneNum(String phone) {
+        if (TextUtils.isEmpty(phone)) return "";
+        String phone_s = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        return phone_s;
+    }
 }

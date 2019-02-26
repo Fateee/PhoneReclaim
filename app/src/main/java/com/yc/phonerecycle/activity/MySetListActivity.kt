@@ -7,6 +7,7 @@ import com.yc.phonerecycle.R
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
+import com.yc.phonerecycle.utils.PhoneUtil
 import com.yc.phonerecycle.utils.UserInfoUtils
 import kotlinx.android.synthetic.main.activity_setting_list.*
 
@@ -71,6 +72,12 @@ class MySetListActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginView
     }
 
     override fun loginResponse(data: Any?) {
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var phone = PhoneUtil.hidePhoneNum(UserInfoUtils.getUser().data?.userInfoVO?.phone)
+        setlist_phone.setSubTitle(phone)
     }
 
 }

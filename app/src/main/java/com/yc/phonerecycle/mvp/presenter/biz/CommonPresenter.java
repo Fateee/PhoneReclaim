@@ -2,6 +2,7 @@ package com.yc.phonerecycle.mvp.presenter.biz;
 
 import android.util.Log;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
+import com.yc.phonerecycle.model.bean.biz.AboutUsRep;
 import com.yc.phonerecycle.model.bean.biz.LoginRep;
 import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
 import com.yc.phonerecycle.model.bean.request.*;
@@ -395,6 +396,73 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     }
                 });
     }
+
+    public void addFeedback(String id, String remark) {
+        if (getView() == null) return;
+        getView().showLoading();
+        FeedbackReqBody ticklingVO = new FeedbackReqBody(id,remark);
+        mCommonRequest.addFeedback(ticklingVO)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.FeedbakcIV) getView()).addFeedbackOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void getAboutUsVO() {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.getAboutUsVO()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<AboutUsRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<AboutUsRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.AboutUsIV) getView()).getAboutUsOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+
 
     // 回收相关.......
     public void saveOrUpdate(CheckReqBody goodsInstanceVO,String userId) {

@@ -2,6 +2,7 @@ package com.yc.phonerecycle.network.reqinterface;
 
 
 import com.yc.phonerecycle.model.bean.base.BaseRep;
+import com.yc.phonerecycle.model.bean.biz.AboutUsRep;
 import com.yc.phonerecycle.model.bean.biz.LoginRep;
 import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
 import com.yc.phonerecycle.model.bean.request.*;
@@ -57,10 +58,16 @@ public interface CommonRequest {
     @POST("v1/setting/resetPassword")
     Observable<Response<BaseRep>> resetPassword(@Body ChangePwdReqBody settingChangeVO);
 
-
     @Headers("Content-Type: application/json")
     @POST("v1/setting/changePhone")
     Observable<Response<BaseRep>> changePhone(@Query("code") String code,@Query("phone") String phone);
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/tickling/addTickling")
+    Observable<Response<BaseRep>> addFeedback(@Body FeedbackReqBody ticklingVO);
+
+    @GET("v1/detection/getAboutUsVO")
+    Observable<Response<AboutUsRep>> getAboutUsVO();
 
 
     // 回收相关.......

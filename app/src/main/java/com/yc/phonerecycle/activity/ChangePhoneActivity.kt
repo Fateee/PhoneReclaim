@@ -10,8 +10,8 @@ import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.PhoneUtil
 import com.yc.phonerecycle.utils.ToastUtil
+import com.yc.phonerecycle.utils.UserInfoUtils
 import kotlinx.android.synthetic.main.activity_reset_phone.*
-import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
 class ChangePhoneActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.SignUpIv,CommonBaseIV.changePhoneIV{
@@ -50,7 +50,7 @@ class ChangePhoneActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.SignUp
                 if (!PhoneUtil.isMobileNO(content)) {
                     ToastUtil.showShortToastCenter("手机号码格式不正确")
                 }
-                presenter.sendCode(signup_phone_et.text.toString())
+                presenter.sendCode(content)
             }
         })
         submit.setOnClickListener(object : View.OnClickListener {
@@ -92,6 +92,9 @@ class ChangePhoneActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.SignUp
     override fun changePhone(data: BaseRep?) {
         if ((data as BaseRep).code == 0) {
             ToastUtil.showShortToastCenter("修改成功")
+            var temp = UserInfoUtils.getUser()
+            temp.data?.userInfoVO?.phone = reset_pwd_phone.mItemEdit.text.toString()
+            UserInfoUtils.saveUser(temp)
             finish()
         }
     }
