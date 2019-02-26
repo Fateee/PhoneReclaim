@@ -4,6 +4,7 @@ package com.yc.phonerecycle.network.reqinterface;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 import com.yc.phonerecycle.model.bean.biz.LoginRep;
 import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
+import com.yc.phonerecycle.model.bean.request.ChangePwdReqBody;
 import com.yc.phonerecycle.model.bean.request.LoginReqBody;
 import com.yc.phonerecycle.model.bean.request.RegisterReqBody;
 import io.reactivex.Observable;
@@ -32,50 +33,33 @@ public interface CommonRequest {
     @GET("v1/userCenter/getInfo")
     Observable<Response<UserInfoRep>> getInfo();
 
-    interface UserInfoEdit {
-        @Headers("Content-Type: application/json")
-        @POST("v1/setting/changeName")
-        Observable<Response<BaseRep>> changeName(@Query("name") String name,@Query("useId") String useId,@Query("Authorization") String Authorization);
-    }
+    @Headers("Content-Type: application/json")
+    @POST("v1/setting/changeName")
+    Observable<Response<BaseRep>> changeName(@Query("name") String name,@Query("useId") String useId,@Query("Authorization") String Authorization);
 
-//    @Headers("Content-Type: application/json")
-//    @GET("v1/code/getCodeByType/{type_id}")
-//    Observable<Response<ChooseItemRepBean>> getChooseOptionsByType (@Path("type_id") String type_id);
-//
-//    @GET("v1/menu/getMenuByRoleId/{role_id}")
-//    Observable<Response<MainMenuRepBean>> getMainMenuById (@Path("role_id") String role_id);
-//
-//    @GET("v1/family/listFamilyList/{pageIndex}/{pageSize}")
-//    Observable<Response<FamilyListRepBean>> getFamilyList (@Path("pageIndex") String pageIndex, @Path("pageSize") String pageSize);
-//
-//
-//    @GET("v1/resident/getResidentById/{roleId}")
-//    Observable<Response<FamilyListRepBean>> getResidentById (@Path("roleId") String roleId);
-//
-//    @Headers("Content-Type: application/json")
-//    @GET("v1/resident/getResidentByFamilyId/{familyId}")
-//    Observable<Response<ResidentRepBean>> getResidentByFamilyId (@Path("familyId") String familyId);
-//
-//    @Headers("Content-Type: application/json")
-//    @POST("v1/resident/searchResident/{pageIndex}/{pageSize}")
-//    Observable<Response<ResidentRepBean>> getSearchResident (@Path("pageIndex") String pageIndex, @Path("pageSize") String pageSize, @Body SearchResidentReqBody body);
-//
-//    @Headers("Content-Type: application/json")
-//    @POST("v1/resident/saveOrUpdateResident")
-//    Observable<Response<UpdateFamilyRepBean>> saveOrUpdateResident(@Body UpdateResidentReqBody info);
-//
-//    @Headers("Content-Type: application/json")
-//    @POST("v1/babyFollowup/saveOrUpdateNewbornBabyFollowup")
-//    Observable<Response<UpdateFamilyRepBean>> saveOrUpdateNewbornBabyFollowup(@Body NewBornVisitReqBody info);
-//
-//    @Headers("Content-Type: application/json")
-//    @GET("v1/babyFollowup/getNewbornBabyFollowup/{residentId}")
-//    Observable<Response<NewBornVisitRepBean>> getNewbornBabyFollowup(@Path("residentId") String residentId);
-//
-//    @Headers("Content-Type: application/json")
-//    @GET("v1/division/findChildDivisionsById")
-//    Observable<Response<DivisionBean>> findChildDivisionsById(@Query("divisionId") String divisionId);
+    @Headers("Content-Type: application/json")
+    @POST("v1/setting/changeSignature")
+    Observable<Response<BaseRep>> changeSignature(@Query("phone") String phone,@Query("useId") String useId, @Query("signature") String signature,@Query("Authorization") String Authorization);
 
-//    http://49.4.86.234:10001/?divisionId=100000
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/setting/createWithdrawPassword")
+    Observable<Response<BaseRep>> createWithdrawPassword(@Query("password") String password,@Query("userId") String userId);
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/setting/resetWithdrawPassword")
+    Observable<Response<BaseRep>> resetWithdrawPassword(@Body ChangePwdReqBody settingChangeVO);
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/setting/resetPassword")
+    Observable<Response<BaseRep>> resetPassword(@Body ChangePwdReqBody settingChangeVO);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/setting/changePhone")
+    Observable<Response<BaseRep>> changePhone(@Query("code") String code,@Query("phone") String phone);
+
+
+
 
 }
