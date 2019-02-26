@@ -24,4 +24,9 @@ public interface CacheKey {
      * 引导页是否已经展示
      */
     String GUIDE_SHOWN = BaseApplication.getApplication().getPackageName() + ".GuideShown";
+
+    /**
+     * 保存用户中心信息
+     */
+    String USER_INFO_UC = BaseApplication.getApplication().getPackageName() + ".UserInfoUc";
 }

@@ -27,4 +27,5 @@
     <string name="order_ems_address">快递单号： %s</string>
     <string name="order_price_value">¥ %s</string>
     <string name="result_price_tip">(%s)</string>
+    <string name="my_user_count">我的用户 %s</string>
 </resources>

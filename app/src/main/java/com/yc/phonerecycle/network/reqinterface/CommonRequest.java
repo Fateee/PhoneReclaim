@@ -17,11 +17,11 @@ public interface CommonRequest {
 
     @Headers("Content-Type: application/json")
     @POST("v1/auth/loginout")
-    Observable<Response<BaseRep>> loginout(@Query("Authorization") String Authorization);
+    Observable<Response<BaseRep>> loginout();
 
     @Headers("Content-Type: application/json")
     @POST("v1/cSms/sendCode")
-    Observable<Response<BaseRep>> sendCode(@Query("phone") String phone,@Query("Authorization") String Authorization);
+    Observable<Response<BaseRep>> sendCode(@Query("phone") String phone);
 
 
     @Headers("Content-Type: application/json")
@@ -38,11 +38,11 @@ public interface CommonRequest {
 
     @Headers("Content-Type: application/json")
     @POST("v1/setting/changeName")
-    Observable<Response<BaseRep>> changeName(@Query("name") String name,@Query("useId") String useId,@Query("Authorization") String Authorization);
+    Observable<Response<BaseRep>> changeName(@Query("name") String name,@Query("useId") String useId);
 
     @Headers("Content-Type: application/json")
     @POST("v1/setting/changeSignature")
-    Observable<Response<BaseRep>> changeSignature(@Query("phone") String phone,@Query("useId") String useId, @Query("signature") String signature,@Query("Authorization") String Authorization);
+    Observable<Response<BaseRep>> changeSignature(@Query("phone") String phone,@Query("useId") String useId, @Query("signature") String signature);
 
 
     @Headers("Content-Type: application/json")

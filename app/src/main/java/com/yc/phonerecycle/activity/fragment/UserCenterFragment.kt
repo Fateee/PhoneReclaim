@@ -32,7 +32,6 @@ class UserCenterFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.UserInfo
     }
 
     override fun initData() {
-        presenter.getInfo()
         item_name.text = UserInfoUtils.getUser().data?.userInfoVO?.userName
         iv_to_setlist.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
@@ -74,8 +73,37 @@ class UserCenterFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.UserInfo
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.getInfo()
+    }
+
     override fun userInfoSuccess(body: UserInfoRep?) {
+        UserInfoUtils.saveUserInfo(body)
         item_name.text = body?.data?.name
+        item_sign.text = body?.data?.signature
+        if (UserInfoUtils.getUserType() == "1") {
+            item1_num.text = body?.data?.orderCount.toString()
+            item1_name.text = "订单"
+
+            item2_name.text = "钱包"
+
+            item3_num.text = body?.data?.instance.toString()
+            item3_name.text = "评估记录"
+        } else if (UserInfoUtils.getUserType() == "4") {
+            item1_num.text = body?.data?.instance.toString()
+            item1_name.text = "回收记录"
+
+            item2_name.text = "余额"
+
+            item3_num.text = body?.data?.testCount.toString()
+            item3_name.text = "检测记录"
+            uc_my_user.visibility = View.VISIBLE
+
+            uc_my_user.title = getString(R.string.my_user_count,body?.data?.myUser)
+        }
+
+        item2_num.text = body?.data?.money.toString()
     }
 
 }

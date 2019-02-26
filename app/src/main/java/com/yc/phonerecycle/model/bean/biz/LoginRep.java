@@ -67,7 +67,7 @@ public class LoginRep extends BaseRep implements Serializable {
             private boolean locked;
             private String phone;
             private String roleId;
-            private String type;
+            private String type;//1、用户/2、商家/3、门店/4、店员
             private String typeName;
 
             public String getId() {

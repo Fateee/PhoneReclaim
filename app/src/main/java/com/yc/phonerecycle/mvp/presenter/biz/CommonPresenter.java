@@ -66,7 +66,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     public void logout() {
         if (getView() == null) return;
         getView().showLoading();
-        mCommonRequest.loginout("")
+        mCommonRequest.loginout()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseRep>>() {
@@ -96,7 +96,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     }
     public void sendCode(String phone) {
         if (getView() == null) return;
-        mCommonRequest.sendCode(phone,"")
+        mCommonRequest.sendCode(phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseRep>>() {
@@ -222,7 +222,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
     public void changeName(String name, String useId) {
         if (getView() == null) return;
-        mCommonRequest.changeName(name,useId,"")
+        mCommonRequest.changeName(name,useId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseRep>>() {
@@ -234,7 +234,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     public void onNext(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
-                            ((CommonBaseIV.EditUserNameIV) getView()).editNickNameSuccess(value.body());
+                            ((CommonBaseIV.EditUserInfoIV) getView()).editNickNameSuccess(value.body());
                         }
                     }
 
@@ -251,7 +251,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
     public void changeSignature(String phone, String useId, String signature) {
         if (getView() == null) return;
-        mCommonRequest.changeSignature(phone,useId,signature,"")
+        mCommonRequest.changeSignature(phone,useId,signature)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseRep>>() {
@@ -263,7 +263,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     public void onNext(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
-                            ((CommonBaseIV.EditUserSignIV) getView()).editUserSignSuccess(value.body());
+                            ((CommonBaseIV.EditUserInfoIV) getView()).editUserSignSuccess(value.body());
                         }
                     }
 

@@ -27,11 +27,8 @@ public interface CommonBaseIV extends BaseViewInf {
         void userInfoSuccess(UserInfoRep body);
     }
 
-    interface EditUserNameIV extends CommonBaseIV {
+    interface EditUserInfoIV extends CommonBaseIV {
         void editNickNameSuccess(BaseRep data);
-    }
-
-    interface EditUserSignIV extends CommonBaseIV {
         void editUserSignSuccess(BaseRep data);
     }
 

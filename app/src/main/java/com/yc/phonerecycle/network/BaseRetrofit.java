@@ -2,12 +2,17 @@ package com.yc.phonerecycle.network;
 
 import android.util.Log;
 import com.yc.phonerecycle.constant.UrlConst;
+import com.yc.phonerecycle.utils.UserInfoUtils;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class BaseRetrofit {
@@ -30,6 +35,17 @@ public class BaseRetrofit {
 
         client = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request original = chain.request();
+                        Request request = original.newBuilder()
+                                .header("Authorization", UserInfoUtils.getUserToken())
+                                .method(original.method(), original.body())
+                                .build();
+                        return chain.proceed(request);
+                    }
+                })
                 .connectTimeout(5000, TimeUnit.SECONDS)
                 .readTimeout(5000, TimeUnit.SECONDS)
                 .writeTimeout(5000, TimeUnit.SECONDS)

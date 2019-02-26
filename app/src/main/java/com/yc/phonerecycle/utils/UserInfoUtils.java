@@ -4,6 +4,8 @@ package com.yc.phonerecycle.utils;
 import com.yc.phonerecycle.app.BaseApplication;
 import com.yc.phonerecycle.constant.CacheKey;
 import com.yc.phonerecycle.model.bean.biz.LoginRep;
+import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Describe：用户信息帮助类
@@ -75,4 +77,41 @@ public class UserInfoUtils {
                 .getAsObject(CacheKey.GUIDE_SHOWN);
         return result != null && (boolean) result;
     }
+
+    public static String getUserType() {
+        if (getUser().data != null) {
+            if (getUser().data.getUserInfoVO() != null) {
+                return getUser().data.getUserInfoVO().getType();
+            }
+        }
+        return "-1";
+    }
+
+    public static String getUserToken() {
+        if (getUser().data != null) {
+            return getUser().data.getToken();
+        }
+        return "";
+    }
+
+    public static void saveUserInfo(@Nullable UserInfoRep body) {
+        if (body == null) return;
+        CacheUtils.get(BaseApplication.getApplication())
+                .put(CacheKey.USER_INFO_UC, body);
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @return userInfo
+     */
+    public static UserInfoRep getUserInfo() {
+        UserInfoRep userInfo = (UserInfoRep) CacheUtils.get(BaseApplication.getApplication())
+                .getAsObject(CacheKey.USER_INFO_UC);
+        if (userInfo == null) {
+            userInfo = new UserInfoRep();
+        }
+        return userInfo;
+    }
+
 }

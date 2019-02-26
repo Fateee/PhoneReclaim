@@ -3,13 +3,18 @@ package com.yc.phonerecycle.activity
 import android.view.View
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.model.bean.biz.UserInfoRep
+import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
+import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.ActivityToActivity
+import com.yc.phonerecycle.utils.UserInfoUtils
 import kotlinx.android.synthetic.main.activity_edit_userinfo.*
 
 
-class UserInfoActivity : BaseActivity<EmptyPresenter>(){
-    override fun createPresenter(): EmptyPresenter? = null
+class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoIV{
+
+    override fun createPresenter() = CommonPresenter()
 
 
     override fun initBundle() {
@@ -41,4 +46,14 @@ class UserInfoActivity : BaseActivity<EmptyPresenter>(){
         })
     }
 
+    override fun onResume() {
+       super.onResume()
+        presenter.getInfo()
+    }
+
+    override fun userInfoSuccess(body: UserInfoRep?) {
+        UserInfoUtils.saveUserInfo(body)
+        userinfo_nick.setSubTitle(UserInfoUtils.getUserInfo().data?.name)
+        userinfo_sign.setSubTitle(UserInfoUtils.getUserInfo().data?.signature)
+    }
 }
