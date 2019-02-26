@@ -39,11 +39,11 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-                android:name=".activity.AboutUsActivity"
+                android:name=".activity.settlist.AboutUsActivity"
                 android:label="@string/app_name">
         </activity>
         <activity
-                android:name=".activity.ChangePhoneActivity"
+                android:name=".activity.settlist.ChangePhoneActivity"
                 android:label="@string/app_name">
         </activity>
         <activity
@@ -51,7 +51,7 @@
                 android:label="@string/app_name">
         </activity>
         <activity
-                android:name=".activity.FeedbackActivity"
+                android:name=".activity.settlist.FeedbackActivity"
                 android:label="@string/app_name">
         </activity>
         <activity
@@ -59,7 +59,7 @@
                 android:label="@string/app_name">
         </activity>
         <activity
-                android:name=".activity.MySetListActivity"
+                android:name=".activity.settlist.MySetListActivity"
                 android:label="@string/app_name">
         </activity>
         <activity
@@ -67,11 +67,11 @@
                 android:label="@string/app_name">
         </activity>
         <activity
-                android:name=".activity.ResetBankPwdActivity"
+                android:name=".activity.settlist.ResetBankPwdActivity"
                 android:label="@string/app_name">
         </activity>
         <activity
-                android:name=".activity.ResetPwdActivity"
+                android:name=".activity.settlist.ResetPwdActivity"
                 android:label="@string/app_name">
         </activity>
         <activity android:name=".activity.ForgetPwdActivity"/>

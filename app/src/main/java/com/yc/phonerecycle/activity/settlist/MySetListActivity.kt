@@ -1,11 +1,11 @@
-package com.yc.phonerecycle.activity
+package com.yc.phonerecycle.activity.settlist
 
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.utils.ActivityToActivity
 import android.view.View
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.activity.LoginActivity
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
-import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.PhoneUtil
 import com.yc.phonerecycle.utils.UserInfoUtils

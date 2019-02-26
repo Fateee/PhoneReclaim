@@ -17,20 +17,20 @@ import com.yc.phonerecycle.R;
  */
 
 public class SetItemLayout extends LinearLayout {
-    private ImageView mItemIcon;
+    public ImageView mItemIcon;
     public EditText mItemEdit;
-    private TextView mSubTitle1;
-    private View mDivider;
+    public TextView mSubTitle1;
+    public View mDivider;
     public TextView mVerfyCode;
 
     public interface OnSwitchListener {
         void onSwitch(View v, boolean isOpen);
     }
 
-    TextView mItemName;
-    TextView mSubTitle;
-    SwitchCompat mItemSwitch;
-    ImageView mItemTip;
+    public TextView mItemName;
+    public TextView mSubTitle;
+    public SwitchCompat mItemSwitch;
+    public ImageView mItemTip;
 
     public SetItemLayout(Context context) {
         this(context, null);

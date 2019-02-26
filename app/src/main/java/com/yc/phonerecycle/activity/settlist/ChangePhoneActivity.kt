@@ -1,4 +1,4 @@
-package com.yc.phonerecycle.activity
+package com.yc.phonerecycle.activity.settlist
 
 import android.os.CountDownTimer
 import android.text.TextUtils

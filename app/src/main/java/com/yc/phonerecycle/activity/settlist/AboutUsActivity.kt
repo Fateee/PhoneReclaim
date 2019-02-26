@@ -1,4 +1,4 @@
-package com.yc.phonerecycle.activity
+package com.yc.phonerecycle.activity.settlist
 
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity

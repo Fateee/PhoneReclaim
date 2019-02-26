@@ -6,11 +6,10 @@ import android.view.View
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.UserInfoActivity
 import com.yc.phonerecycle.activity.MyBankCardsActivity
-import com.yc.phonerecycle.activity.MySetListActivity
+import com.yc.phonerecycle.activity.settlist.MySetListActivity
 import com.yc.phonerecycle.activity.MyWalletActivity
 import com.yc.phonerecycle.model.bean.biz.UserInfoRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
-import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.ActivityToActivity
