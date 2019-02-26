@@ -47,4 +47,8 @@ public interface CommonBaseIV extends BaseViewInf {
     interface changePhoneIV extends CommonBaseIV {
         void changePhone(BaseRep data);
     }
+
+    interface saveOrUpdateIV extends CommonBaseIV {
+        void saveOrUpdate(BaseRep data);
+    }
 }

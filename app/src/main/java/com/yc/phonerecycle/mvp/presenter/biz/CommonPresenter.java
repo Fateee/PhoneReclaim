@@ -4,10 +4,7 @@ import android.util.Log;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 import com.yc.phonerecycle.model.bean.biz.LoginRep;
 import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
-import com.yc.phonerecycle.model.bean.request.ChangePwdReqBody;
-import com.yc.phonerecycle.model.bean.request.LoginReqBody;
-import com.yc.phonerecycle.model.bean.request.RegisterReqBody;
-import com.yc.phonerecycle.model.bean.request.ResetPwdByPhoneReqBody;
+import com.yc.phonerecycle.model.bean.request.*;
 import com.yc.phonerecycle.mvp.presenter.base.BasePresenter;
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV;
 import com.yc.phonerecycle.network.BaseRetrofit;
@@ -385,6 +382,36 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.changePhoneIV) getView()).changePhone(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    // 回收相关.......
+    public void saveOrUpdate(CheckReqBody goodsInstanceVO,String userId) {
+        if (getView() == null) return;
+        mCommonRequest.saveOrUpdate(goodsInstanceVO,userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.saveOrUpdateIV) getView()).saveOrUpdate(value.body());
                         }
                     }
 
