@@ -52,7 +52,7 @@ class SignUpActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.SignUpIv {
                     || TextUtils.isEmpty(pwd)) {
                     return
                 }
-                if (!(pwd.length in 6..20)) {
+                if (pwd.length !in 6..20) {
                     ToastUtil.showShortToastCenter("密码需为6-20位字母或数字")
                     return
                 }
