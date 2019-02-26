@@ -19,6 +19,10 @@ public interface CommonBaseIV extends BaseViewInf {
         void registerError(String message);
     }
 
+    interface ResetPwdByPhoneIv extends CommonBaseIV {
+        void resetPwdByPhoneOK(Object data);
+    }
+
     interface UserInfoIV extends CommonBaseIV {
         void userInfoSuccess(UserInfoRep body);
     }

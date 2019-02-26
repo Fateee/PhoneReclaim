@@ -4,9 +4,7 @@ package com.yc.phonerecycle.network.reqinterface;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 import com.yc.phonerecycle.model.bean.biz.LoginRep;
 import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
-import com.yc.phonerecycle.model.bean.request.ChangePwdReqBody;
-import com.yc.phonerecycle.model.bean.request.LoginReqBody;
-import com.yc.phonerecycle.model.bean.request.RegisterReqBody;
+import com.yc.phonerecycle.model.bean.request.*;
 import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -29,6 +27,11 @@ public interface CommonRequest {
     @Headers("Content-Type: application/json")
     @POST("v1/account/register")
     Observable<Response<BaseRep>> register(@Body RegisterReqBody info);
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/account/restPasswordByPhone")
+    Observable<Response<BaseRep>> restPasswordByPhone(@Body ResetPwdByPhoneReqBody info);
+
 
     @GET("v1/userCenter/getInfo")
     Observable<Response<UserInfoRep>> getInfo();
@@ -60,6 +63,9 @@ public interface CommonRequest {
     Observable<Response<BaseRep>> changePhone(@Query("code") String code,@Query("phone") String phone);
 
 
-
+    // 回收相关.......
+    @Headers("Content-Type: application/json")
+    @POST("v1/goodsInstance/saveOrUpdate")
+    Observable<Response<BaseRep>> saveOrUpdate(@Body CheckReqBody goodsInstanceVO,@Query("userId") String userId);
 
 }

@@ -7,6 +7,7 @@ import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
 import com.yc.phonerecycle.model.bean.request.ChangePwdReqBody;
 import com.yc.phonerecycle.model.bean.request.LoginReqBody;
 import com.yc.phonerecycle.model.bean.request.RegisterReqBody;
+import com.yc.phonerecycle.model.bean.request.ResetPwdByPhoneReqBody;
 import com.yc.phonerecycle.mvp.presenter.base.BasePresenter;
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV;
 import com.yc.phonerecycle.network.BaseRetrofit;
@@ -152,6 +153,39 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                         getView().dismissLoading();
                         ((CommonBaseIV.SignUpIv) getView()).registerError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void restPasswordByPhone(String code, String password, String phone) {
+        if (getView() == null) return;
+        getView().showLoading();
+        ResetPwdByPhoneReqBody info = new ResetPwdByPhoneReqBody(code, password, phone);
+        mCommonRequest.restPasswordByPhone(info)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        getView().dismissLoading();
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.ResetPwdByPhoneIv) getView()).resetPwdByPhoneOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                        getView().dismissLoading();
                     }
 
                     @Override
