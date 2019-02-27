@@ -57,4 +57,7 @@ public interface CommonBaseIV extends BaseViewInf {
     interface AboutUsIV extends CommonBaseIV {
         void getAboutUsOK(AboutUsRep data);
     }
+    interface saveBankCardIV extends CommonBaseIV {
+        void saveBankCardOK(BaseRep data);
+    }
 }

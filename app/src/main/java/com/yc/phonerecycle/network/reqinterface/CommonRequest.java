@@ -4,10 +4,10 @@ package com.yc.phonerecycle.network.reqinterface;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 import com.yc.phonerecycle.model.bean.biz.AboutUsRep;
 import com.yc.phonerecycle.model.bean.biz.LoginRep;
+import com.yc.phonerecycle.model.bean.request.SaveBankReqBody;
 import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
 import com.yc.phonerecycle.model.bean.request.*;
 import io.reactivex.Observable;
-import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.*;
 
@@ -75,4 +75,8 @@ public interface CommonRequest {
     @POST("v1/goodsInstance/saveOrUpdate")
     Observable<Response<BaseRep>> saveOrUpdate(@Body CheckReqBody goodsInstanceVO,@Query("userId") String userId);
 
+    //银行卡
+    @Headers("Content-Type: application/json")
+    @POST("v1/userBank/saveBankCard")
+    Observable<Response<BaseRep>> saveBankCard(@Body SaveBankReqBody userBankVO);
 }
