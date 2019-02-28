@@ -2,16 +2,21 @@ package com.yc.phonerecycle.network.reqinterface;
 
 
 import com.yc.phonerecycle.model.bean.base.BaseRep;
-import com.yc.phonerecycle.model.bean.biz.AboutUsRep;
-import com.yc.phonerecycle.model.bean.biz.LoginRep;
+import com.yc.phonerecycle.model.bean.biz.*;
 import com.yc.phonerecycle.model.bean.request.SaveBankReqBody;
-import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
 import com.yc.phonerecycle.model.bean.request.*;
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.*;
 
 public interface CommonRequest {
+
+    @GET("v1/dict/getDictType")
+    Observable<Response<DictTypeRep>> getDictType();
+
+    @GET("v1/dict/getDictMappingByType/{dicTypeId}")
+    Observable<Response<DictMapRep>> getDictMappingByType(@Path("dicTypeId") String dicTypeId);
+
     @POST("v1/auth/login")
     Observable<Response<LoginRep>> login(@Body LoginReqBody info);
 
@@ -79,4 +84,12 @@ public interface CommonRequest {
     @Headers("Content-Type: application/json")
     @POST("v1/userBank/saveBankCard")
     Observable<Response<BaseRep>> saveBankCard(@Body SaveBankReqBody userBankVO);
+
+    //回收
+    @Headers("Content-Type: application/json")
+    @POST("v1/order/addOrder")
+    Observable<Response<BaseRep>> addOrder(@Body RecycleReqBody orderVO);
+
+    @GET("v1/order/getGoodsInstanceById/{id}")
+    Observable<Response<OrderDetailRep>> getGoodsInstanceById(@Path("id") String id);
 }

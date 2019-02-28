@@ -1,10 +1,9 @@
 package com.yc.phonerecycle.mvp.presenter.biz;
 
 import android.util.Log;
+import com.yc.phonerecycle.app.BaseApplication;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
-import com.yc.phonerecycle.model.bean.biz.AboutUsRep;
-import com.yc.phonerecycle.model.bean.biz.LoginRep;
-import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
+import com.yc.phonerecycle.model.bean.biz.*;
 import com.yc.phonerecycle.model.bean.request.*;
 import com.yc.phonerecycle.mvp.presenter.base.BasePresenter;
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV;
@@ -28,6 +27,60 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
     public CommonPresenter() {
         mCommonRequest = BaseRetrofit.getInstance().createRequest(CommonRequest.class);
+    }
+
+    public void getDictType() {
+        if (getView() == null) return;
+        mCommonRequest.getDictType()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(new Observer<Response<DictTypeRep>>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+                    @Override
+                    public void onNext(Response<DictTypeRep> value) {
+                        if (value.code() == 200 && value.body() != null) {
+                            BaseApplication.mRootItems = value.body().data;
+                            if (BaseApplication.mRootItems != null && !BaseApplication.mRootItems.isEmpty()) {
+                                for (DictTypeRep.DataBean obj :BaseApplication.mRootItems) {
+                                    getDictMappingByType(obj.id);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {}
+
+                    @Override
+                    public void onComplete() {}
+                });
+    }
+
+    public void getDictMappingByType(final String dicTypeId) {
+        if (getView() == null) return;
+        mCommonRequest.getDictMappingByType(dicTypeId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(new Observer<Response<DictMapRep>>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+
+                    @Override
+                    public void onNext(Response<DictMapRep> value) {
+                        if (value.code() == 200 && value.body() != null) {
+                            BaseApplication.mOptionMap.put(dicTypeId,value.body().data);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {}
+
+                    @Override
+                    public void onComplete() {}
+                });
     }
 
     public void loginAction(String loginName, String pwd) {
@@ -526,4 +579,6 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     }
                 });
     }
+
+
 }

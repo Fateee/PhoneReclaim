@@ -3,18 +3,27 @@ package com.yc.phonerecycle.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import com.yc.phonerecycle.model.bean.biz.DictMapRep;
+import com.yc.phonerecycle.model.bean.biz.DictTypeRep;
+import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter;
 import me.jessyan.autosize.AutoSize;
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.onAdaptListener;
 import me.jessyan.autosize.unit.Subunits;
 import me.jessyan.autosize.utils.LogUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * Describe：基础Application所有需要模块化开发的module都需要继承自BaseApplication
  */
 public class BaseApplication extends Application {
+
+    public static List<DictTypeRep.DataBean> mRootItems;
+    public static HashMap<String, List<DictMapRep.DataBean>> mOptionMap = new HashMap<>();
 
     //全局唯一的context
     private static BaseApplication application;
@@ -89,6 +98,8 @@ public class BaseApplication extends Application {
 //                .setAutoAdaptStrategy(new AutoAdaptStrategy())
         ;
 //        customAdaptForExternal();
+        CommonPresenter commonPresenter = new CommonPresenter();
+        commonPresenter.getDictType();
     }
 
     /**获取系统上下文：用于ToastUtil类*/
