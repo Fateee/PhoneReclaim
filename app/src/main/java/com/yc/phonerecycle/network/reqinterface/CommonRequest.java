@@ -85,6 +85,16 @@ public interface CommonRequest {
     @POST("v1/userBank/saveBankCard")
     Observable<Response<BaseRep>> saveBankCard(@Body SaveBankReqBody userBankVO);
 
+    @Headers("Content-Type: application/json")
+    @POST("v1/userBank/deleteCardbyId")
+    Observable<Response<BaseRep>> deleteCardbyId(@Query("id") String id);
+
+    @GET("v1/userBank/getUserBankCard")
+    Observable<Response<BankCardListRep>> getUserBankCard();
+
+
+
+
     //回收
     @Headers("Content-Type: application/json")
     @POST("v1/order/addOrder")
