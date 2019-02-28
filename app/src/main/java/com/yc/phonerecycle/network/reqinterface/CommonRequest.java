@@ -92,4 +92,19 @@ public interface CommonRequest {
 
     @GET("v1/order/getGoodsInstanceById/{id}")
     Observable<Response<OrderDetailRep>> getGoodsInstanceById(@Path("id") String id);
+
+
+    //个人中心 我的订单
+    @GET("v1/orders/getAssistantMyOrderList/{status}")
+    Observable<Response<MyOrderListlRep>> getAssistantMyOrderList(@Path("status") String status);
+
+    @GET("v1/orders/getMyOrderList/{userId}/{status}")
+    Observable<Response<MyOrderListlRep>> getMyOrderList(@Path("userId") String userId,@Path("status") String status);
+
+    @GET("v1/orders/getOrderDetailbyId/{id}")
+    Observable<Response<MyOrderDetailRep>> getOrderDetailbyId(@Path("id") String id);
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/orders/writeTracking")
+    Observable<Response<BaseRep>> writeTracking(@Body WriteTrackReqBody writeTrackingVO);
 }
