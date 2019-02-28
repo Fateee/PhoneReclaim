@@ -55,4 +55,5 @@ dependencies {
     implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
 
     implementation 'me.jessyan:autosize:1.1.2'
+    implementation 'com.yanzhenjie:permission:2.0.0-rc12'
 }

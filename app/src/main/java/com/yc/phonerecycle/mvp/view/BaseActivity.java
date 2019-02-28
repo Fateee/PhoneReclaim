@@ -2,6 +2,7 @@ package com.yc.phonerecycle.mvp.view;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import butterknife.ButterKnife;
@@ -97,4 +98,13 @@ public abstract class BaseActivity <P extends BasePresenter> extends AppCompatAc
 //        super.onPause();
 //        MobclickAgent.onPause(this);
 //    }
+
+    /** Get the system properties */
+    protected boolean getSystemProperties(String name, boolean def) {
+        return SystemProperties.getBoolean("debug.test.basic." + name, def);
+    }
+
+    protected boolean hasSystemFeature(String name) {
+        return getPackageManager().hasSystemFeature(name);
+    }
 }

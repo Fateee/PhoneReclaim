@@ -12,12 +12,11 @@ import com.yc.phonerecycle.R;
 public class LCDTest extends BaseTest {
 
     private static final int[] COLORS = {
-        Color.RED,
-        Color.GREEN,
-        Color.WHITE,
-        Color.BLACK,
-            Color.YELLOW,
-        Color.BLUE,
+        R.drawable.bg_screen_one,
+            R.drawable.bg_screen_two,
+            R.drawable.bg_screen_three,
+            R.drawable.bg_screen_four,
+            R.drawable.bg_screen_five,
     };
 
     private int mColorIndex;
@@ -39,14 +38,14 @@ public class LCDTest extends BaseTest {
         if (index == 0) {
             setButtonVisibility(false);
             vc.setVisibility(View.VISIBLE);
-            vc.setBackgroundColor(COLORS[index]);
+            vc.setBackgroundResource(COLORS[index]);
             vt.setVisibility(View.GONE);
         } else if (index == COLORS.length) {
             setButtonVisibility(true);
             vc.setVisibility(View.GONE);
             vt.setVisibility(View.VISIBLE);
         } else {
-            vc.setBackgroundColor(COLORS[index]);
+            vc.setBackgroundResource(COLORS[index]);
         }
         return true;
     }

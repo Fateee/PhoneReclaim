@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent" xmlns:tool="http://schemas.android.com/tools"
+                android:background="@drawable/bg_auto_check"
+                android:layout_height="match_parent">
+
+    <ProgressBar
+            android:id="@+id/ic_rorato"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/auto_content"
+            android:layout_alignRight="@id/auto_content"
+            android:layout_alignTop="@id/auto_content"
+            android:layout_alignBottom="@id/auto_content"
+            android:indeterminate="false"
+            android:indeterminateDrawable="@drawable/custom"/>
+
+    <RelativeLayout
+            android:id="@+id/auto_content"
+            android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+        <ImageView
+                android:id="@+id/ic_circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_auto_check_circle"/>
+        <TextView
+                android:id="@+id/auto_index"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="60dp"
+                tool:text="3/10"
+                android:includeFontPadding="false"
+                android:textStyle="bold"
+                android:textSize="31sp"
+                android:textColor="@color/c05b701"
+        />
+        <TextView
+                android:id="@+id/auto_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/auto_index"
+                android:layout_centerHorizontal="true"
+                android:text="@string/auto_check_text"
+                android:textSize="12sp"
+                android:textColor="@color/c666666"
+        />
+    </RelativeLayout>
+
+</RelativeLayout>

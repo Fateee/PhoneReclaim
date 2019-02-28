@@ -20,19 +20,19 @@ class SplashActivity : BaseActivity<EmptyPresenter>(){
     override fun initBundle() {
     }
 
-    override fun getContentView(): Int = R.layout.activity_splash
+    override fun getContentView(): Int = R.layout.activity_auto_check
 
     override fun initView() {
     }
 
     override fun initDatas() {
-        if (UserInfoUtils.isGuideShown()) {
-            splash_img.postDelayed({
-                toNextActivity()
-            },loadingTime)
-        } else {
-            initViewPager()
-        }
+//        if (UserInfoUtils.isGuideShown()) {
+//            splash_img.postDelayed({
+//                toNextActivity()
+//            },loadingTime)
+//        } else {
+//            initViewPager()
+//        }
     }
 
 
