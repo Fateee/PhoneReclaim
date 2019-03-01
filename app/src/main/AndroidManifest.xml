@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.yc.phonerecycle">
-
+<!--com.yc.phonerecycle-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -27,6 +27,11 @@
             android:theme="@style/AppTheme"
             >
         <activity android:name=".activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".activity.SplashActivity">
             <!--<intent-filter>-->
@@ -90,11 +95,11 @@
         <activity android:name=".activity.CashWxBankActivity"/>
         <activity android:name=".activity.EditUserInfoActivity"/>
         <activity android:name=".activity.AutoCheckActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".activity.BindCardActivity"/>
         <meta-data
@@ -103,6 +108,52 @@
         <meta-data
                 android:name="design_height_in_dp"
                 android:value="640"/>
+
+        <activity
+                android:name="third.qq.SL_QQHandlerActivity"
+                android:configChanges="keyboardHidden|orientation"
+                android:exported="false"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        />
+
+        <!-- 腾讯sdk中增加的帮助activity对象，可以用来查看日志 -->
+        <activity
+                android:name="com.tencent.connect.common.AssistActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        />
+
+        <!-- 腾讯的认证activity -->
+        <activity
+                android:name="com.tencent.tauth.AuthActivity"
+                android:launchMode="singleTask"
+                android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1106223286" />
+            </intent-filter>
+        </activity>
+
+        <!-- ============================= 微信 ============================= -->
+
+        <!-- 处理微信回调的Activity -->
+        <activity
+                android:name=".wxapi.WXEntryActivity"
+                android:exported="true"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                android:launchMode="singleTask"
+        />
+
+        <!--<activity-alias-->
+                <!--android:name="${applicationId}.wxapi.WXEntryActivity"-->
+                <!--android:exported="true"-->
+                <!--android:targetActivity=".wx.wxapi.WXEntryActivity"-->
+                <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"/>-->
+
     </application>
 
 </manifest>

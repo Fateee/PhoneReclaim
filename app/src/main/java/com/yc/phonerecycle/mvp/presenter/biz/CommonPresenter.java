@@ -1,6 +1,11 @@
 package com.yc.phonerecycle.mvp.presenter.biz;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
+import com.alibaba.fastjson.JSON;
 import com.yc.phonerecycle.app.BaseApplication;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 import com.yc.phonerecycle.model.bean.biz.*;
@@ -16,6 +21,11 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import third.ErrorResponseEntity;
+import third.wx.SsoLoginManager;
+import third.wx.SsoLoginType;
+
+import java.util.Map;
 
 public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
@@ -115,6 +125,48 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         getView().dismissLoading();
                     }
                 });
+    }
+
+    public void login(final Context context, @SsoLoginType String type) {
+        if (getView() == null) return;
+//        loginView.showProgressDialog();
+        SsoLoginManager.login(context, type, new SsoLoginManager.LoginListener() {
+            @Override
+            public void onSuccess(String accessToken, String uId, long expiresIn, @Nullable final String wholeData) {
+                super.onSuccess(accessToken, uId, expiresIn, wholeData);
+                Map<String, Object> body = JSON.parseObject(wholeData, Map.class);
+                getView().showLoading();
+                Toast.makeText(context, "登录成功-----" + wholeData, Toast.LENGTH_LONG).show();
+//                TokenUtils.requestToken(context, body, new JMHttpRequest.INetworkListener() {
+//                    @Override
+//                    public void onSuccess(BaseResponseEntity response) {
+//                        handleWithLoginSucc(loginView, context);
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(int code, ErrorResponseEntity errorMsg) {
+//                        Log.e(TAG,"; code = " + code + "; msg = " + errorMsg.errorMsg + "; body =" + wholeData);
+//                        handleWithLoginFail(loginView, errorMsg);
+//                        if (code == 10051) loginView.finishActivity();
+//
+//                    }
+//                });
+            }
+
+            @Override
+            public void onError(int code, @NonNull ErrorResponseEntity errorMsg) {
+                super.onError(code, errorMsg);
+//                handleWithLoginFail(loginView, errorMsg);
+//                if (code == 10051) loginView.finishActivity();
+            }
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+//                loginView.dismissProgressDialog();
+            }
+        });
     }
 
     public void logout() {

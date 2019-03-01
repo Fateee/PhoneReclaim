@@ -25,4 +25,11 @@ public class BaseConst {
     public static final String ROOT_NEWBORN_KEY = "root_newborn_list";
     @Nullable
     public static final String EXTRA_FAMILY_OBJ_KEY="FAMILY_OBJ";
+
+
+//    public static final String WEIXIN_APPID = "wx0ba34feedb7d4f13";
+    public static final String WEIXIN_APPID = "wx59d13320bd8f36f4";
+
+    public static final String QQ_APPID = "1106223286";
+    public static String qqScope="all";
 }
