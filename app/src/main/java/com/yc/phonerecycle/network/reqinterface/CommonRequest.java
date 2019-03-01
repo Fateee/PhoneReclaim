@@ -42,6 +42,12 @@ public interface CommonRequest {
     @GET("v1/userCenter/getInfo")
     Observable<Response<UserInfoRep>> getInfo();
 
+
+    //设置
+    @Headers("Content-Type: application/json")
+    @POST("v1/setting/changeLog")
+    Observable<Response<BaseRep>> changeLog(@Body ChangeLogoBody changeLogoVO);
+
     @Headers("Content-Type: application/json")
     @POST("v1/setting/changeName")
     Observable<Response<BaseRep>> changeName(@Query("name") String name,@Query("useId") String useId);
@@ -49,7 +55,6 @@ public interface CommonRequest {
     @Headers("Content-Type: application/json")
     @POST("v1/setting/changeSignature")
     Observable<Response<BaseRep>> changeSignature(@Query("phone") String phone,@Query("useId") String useId, @Query("signature") String signature);
-
 
     @Headers("Content-Type: application/json")
     @POST("v1/setting/createWithdrawPassword")
@@ -67,10 +72,12 @@ public interface CommonRequest {
     @POST("v1/setting/changePhone")
     Observable<Response<BaseRep>> changePhone(@Query("code") String code,@Query("phone") String phone);
 
+    //添加用户反馈
     @Headers("Content-Type: application/json")
     @POST("v1/tickling/addTickling")
     Observable<Response<BaseRep>> addFeedback(@Body FeedbackReqBody ticklingVO);
 
+    //关于我们
     @GET("v1/detection/getAboutUsVO")
     Observable<Response<AboutUsRep>> getAboutUsVO();
 
@@ -117,4 +124,76 @@ public interface CommonRequest {
     @Headers("Content-Type: application/json")
     @POST("v1/orders/writeTracking")
     Observable<Response<BaseRep>> writeTracking(@Body WriteTrackReqBody writeTrackingVO);
+
+    //个人中心 附近的商家
+    @GET("v1/store/getNearby/{longitude}/{latitude}")
+    Observable<Response<NearByShopRep>> getNearby(@Path("longitude") String longitude,@Path("latitude") String latitude);
+
+    @GET("v1/store/getStoreDetail/{id}")
+    Observable<Response<NearByShopRep.DataBean>> getStoreDetail(@Path("id") String id);
+
+    //店铺信息(店员)
+    @GET("v1/stores/getMyStore")
+    Observable<Response<NearByShopRep.DataBean>> getMyStore();
+
+
+    //检测记录
+    //获取我的检测记录(店员)
+    @GET("v1/detection/getAssistantDetection/{status}")
+    Observable<Response<DetectionRep>> getAssistantDetection(@Path("status") String status);
+
+    //0802-根据检测记录查询验机报告
+    @GET("v1/detection/getGoodsInstanceReportVO/{goodsInstanceId}")
+    Observable<Response<PhoneReportRep>> getGoodsInstanceReportVO(@Path("goodsInstanceId") String goodsInstanceId);
+
+    //获取我的检测记录(店员)
+    @GET("v1/detection/getMyDetection")
+    Observable<Response<DetectionRep>> getAssistantDetection();
+
+
+    //估价 todo
+
+
+    //钱包-提现
+    //余额没有返回数字
+    @GET("v1/userMoney/getUserBankCard")
+    Observable<Response<UserMoneyRep>> getUserMoney();
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/userMoney/inputWithdrawPassword")//输入验证提现密码
+    Observable<Response<BaseRep>> inputWithdrawPassword(@Query("password") String password);
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/userMoney/saveUserMoney")
+    Observable<Response<BaseRep>> saveUserMoney(@Body CashAccountReqBody writeTrackingVO);
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/userMoney/saveWXBankCard")//保存用户微信授权
+    Observable<Response<BaseRep>> saveWXBankCard(@Query("openId") String openId);
+
+    //手动检测品牌
+    //获取品牌
+    @GET("v1/mBrand/getBrandSelect")
+    Observable<Response<BrandRep>> getBrandSelect();
+
+    //获取商品
+    @GET("v1/mBrand/getGoodsByBrandId/{brandId}")
+    Observable<Response<BrandGoodsRep>> getGoodsByBrandId(@Path("brandId") String brandId);
+
+
+    //评估 回收信息 地址
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/address/deleteById")//根据id删除地址
+    Observable<Response<BaseRep>> deleteById(@Query("id") String id);
+
+    @GET("v1/address/getByAddressById/{id}")
+    Observable<Response<RecycleAddrRep>> getByAddressById(@Path("id") String id);
+
+    @GET("v1/address/getUserAddress")
+    Observable<Response<RecycleAddrRep>> getUserAddress();
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/address/saveOrUpdateAddress")
+    Observable<Response<BaseRep>> saveOrUpdateAddress(@Body RecycleAddrRep.DataBean addressVO);
 }
