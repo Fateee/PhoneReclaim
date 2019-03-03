@@ -22,8 +22,28 @@ public class BaseRetrofit {
     private Retrofit retrofit;
     private String baseUrl;
 
-    private BaseRetrofit() {
-        baseUrl = UrlConst.mBaseUrl;
+    enum UrlType {
+        DEFAULT,
+        WEIXIN,
+        QQ
+    }
+
+    private BaseRetrofit(UrlType type) {
+        switch (type) {
+            case DEFAULT:
+                baseUrl = UrlConst.mBaseUrl;
+                break;
+            case WEIXIN:
+                baseUrl = UrlConst.mWXUrl;
+                break;
+            case QQ:
+                baseUrl = UrlConst.mQQUrl;
+                break;
+            default:
+                baseUrl = UrlConst.mBaseUrl;
+                break;
+        }
+
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -56,14 +76,14 @@ public class BaseRetrofit {
         if (mBaseRetrofit == null) {
             synchronized (BaseRetrofit.class) {
                 if (mBaseRetrofit == null) {
-                    mBaseRetrofit = new BaseRetrofit();
+                    mBaseRetrofit = new BaseRetrofit(UrlType.DEFAULT);
                 }
             }
         }
         return mBaseRetrofit;
     }
 
-    public Retrofit getRetrofit() {
+    private Retrofit getRetrofit() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
@@ -99,5 +119,21 @@ public class BaseRetrofit {
 
     public <T> T createRequest(final Class<T> service) {
         return getRetrofit().create(service);
+    }
+
+    private static class WxTokenHolder {
+        private static BaseRetrofit instance = new BaseRetrofit(UrlType.WEIXIN);
+    }
+
+    public static BaseRetrofit getWxInstance() {
+        return WxTokenHolder.instance;
+    }
+
+    private static class QQTokenHolder {
+        private static BaseRetrofit instance = new BaseRetrofit(UrlType.QQ);
+    }
+
+    public static BaseRetrofit getQQInstance() {
+        return QQTokenHolder.instance;
     }
 }

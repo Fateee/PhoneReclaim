@@ -196,4 +196,22 @@ public interface CommonRequest {
     @Headers("Content-Type: application/json")
     @POST("v1/address/saveOrUpdateAddress")
     Observable<Response<BaseRep>> saveOrUpdateAddress(@Body RecycleAddrRep.DataBean addressVO);
+
+
+    //第三方授权登录
+    @Headers("Content-Type: application/json")
+    @POST("v1/thirdLogin/getSystemToken")
+    Observable<Response<LoginRep>> getSystemToken(@Body GetTokenReqBody thirdLoginVO);
+
+    @GET("v1/thirdLogin/getThirdTokenByOpenId/{openId}")
+    Observable<Response<ThirdLoginInfoRep>> getThirdTokenByOpenId(@Path("openId") String openId);
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/thirdLogin/saveThirdTokenInfo")
+    Observable<Response<ThirdLoginInfoRep>> saveThirdTokenInfo(@Body ThirdLoginInfoRep.DataBean thirdVO);
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/thirdLogin/saveUserPhone")
+    Observable<Response<ThirdLoginInfoRep>> saveUserPhone(@Body ThirdPhoneBody thirdLoginSaveUserVo);
+
 }

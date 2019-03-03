@@ -5,6 +5,20 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'phonerecycle'
+            keyPassword '123456'
+            storeFile file('G:/Android/PhoneReclaim/phonekeystore.jks')
+            storePassword '123456'
+        }
+        debug {
+            keyAlias 'phonerecycle'
+            keyPassword '123456'
+            storeFile file('G:/Android/PhoneReclaim/phonekeystore.jks')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.yc.phonerecycle"
@@ -18,6 +32,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable true
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release
+            debuggable true
         }
     }
 }
@@ -33,7 +53,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    api project (':antifake')
+    api project(':antifake')
     // Retrofit库
     implementation 'com.squareup.retrofit2:retrofit:2.2.0'
     implementation 'com.squareup.retrofit2:retrofit:2.2.0'

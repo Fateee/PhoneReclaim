@@ -4,7 +4,9 @@ package com.yc.phonerecycle.utils;
 import com.yc.phonerecycle.app.BaseApplication;
 import com.yc.phonerecycle.constant.CacheKey;
 import com.yc.phonerecycle.model.bean.biz.LoginRep;
+import com.yc.phonerecycle.model.bean.biz.QqTokenRep;
 import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
+import com.yc.phonerecycle.model.bean.biz.WxTokenRep;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -112,6 +114,52 @@ public class UserInfoUtils {
             userInfo = new UserInfoRep();
         }
         return userInfo;
+    }
+
+
+    public static void saveUserWxTokenRep(WxTokenRep tokenRep) {
+        CacheUtils.get(BaseApplication.getApplication())
+                .put(CacheKey.USER_WX_TOKEN_REP, tokenRep);
+    }
+
+    /**
+     * 获取WX
+     *
+     * @return user
+     */
+    public static WxTokenRep getUserWxTokenRep() {
+        WxTokenRep tokenRep = (WxTokenRep) CacheUtils.get(BaseApplication.getApplication())
+                .getAsObject(CacheKey.USER_WX_TOKEN_REP);
+        if (tokenRep == null) {
+            tokenRep = new WxTokenRep();
+        }
+        return tokenRep;
+    }
+
+    /**
+     * 清除微信信息
+     */
+    public static void cleanUserWxTokenRep() {
+        saveUserWxTokenRep(null);
+    }
+
+    public static void saveUserQQTokenRep(QqTokenRep tokenRep) {
+        CacheUtils.get(BaseApplication.getApplication())
+                .put(CacheKey.USER_QQ_TOKEN_REP, tokenRep);
+    }
+
+    /**
+     * 获取WX
+     *
+     * @return user
+     */
+    public static QqTokenRep getUserQQTokenRep() {
+        QqTokenRep tokenRep = (QqTokenRep) CacheUtils.get(BaseApplication.getApplication())
+                .getAsObject(CacheKey.USER_QQ_TOKEN_REP);
+        if (tokenRep == null) {
+            tokenRep = new QqTokenRep();
+        }
+        return tokenRep;
     }
 
 }

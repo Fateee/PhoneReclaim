@@ -13,6 +13,17 @@ import kotlinx.android.synthetic.main.activity_setting_list.*
 
 
 class MySetListActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV{
+    override fun loginWX(
+        accessToken: String?,
+        uId: String?,
+        expiresIn: Long,
+        wholeData: String?,
+        body: MutableMap<String, Any>?
+    ) {
+    }
+
+    override fun loginQQ(accessToken: String?, uId: String?, expiresIn: Long, wholeData: String?) {
+    }
 
     override fun createPresenter(): CommonPresenter? = CommonPresenter()
 

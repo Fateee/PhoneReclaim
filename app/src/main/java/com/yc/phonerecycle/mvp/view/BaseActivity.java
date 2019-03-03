@@ -67,6 +67,7 @@ public abstract class BaseActivity <P extends BasePresenter> extends AppCompatAc
     }
 
     public void dismissLoading() {
+        if (loadingDialog == null) return;
         loadingDialog.dismiss();
     }
 

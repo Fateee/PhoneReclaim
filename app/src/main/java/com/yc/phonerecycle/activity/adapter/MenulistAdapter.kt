@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.model.bean.biz.BankCardListRep
+import kotlinx.android.synthetic.main.commont_listitem.view.*
 
 
 import java.util.ArrayList
@@ -83,24 +85,14 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
 //    }
 
     override fun onBindViewHolder(holder: ChildMenuVH, position: Int) {
-//        val temp = mDataList[position]
-//        when (temp) {
-//            is FamilyListRepBean.DataBean -> {
-//                holder.item1.text = temp.householderId
-//                holder.item2.text = temp.totalNumber
-//                holder.item3.text = temp.currentNumber
-//                holder.item4.text = temp.houseType
-//                holder.item5.text = temp.houseArea
-//                holder.item6.text = temp.annualIncome
-//                holder.item7.text = temp.healthStationDistance
-//                holder.item8.text = temp.healthCenterDistance
-//                holder.item9parent.visibility = View.VISIBLE
-//                holder.item9.text = "查看家庭成员"
-//                holder.item9.tag = temp
-//                holder.item9.setOnClickListener(mFamilyMemberListener)
-//                holder.mView.tag = temp
-//                holder.mView.setOnClickListener(mFamilyDetailListener)
-//            }
+        val temp = mDataList[position]
+        when (temp) {
+            is BankCardListRep.DataBean -> {
+
+                holder.name.text = temp.cardholder
+                holder.bank_name.text = temp.openingBank
+                holder.bank_account.text = temp.acount
+            }
 //            is ResidentRepBean.DataBean -> {
 //                holder.item1.text = temp.code
 //                holder.item2.text = temp.name
@@ -122,7 +114,7 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
 //                temp.tag = mType
 //                holder.mView.setOnClickListener(mPeopleDetailListener)
 //            }
-//        }
+        }
     }
 
 //    private fun getMapNameById(id: String?): String {
@@ -159,4 +151,7 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
 }
 
 class ChildMenuVH(val mView: View) : RecyclerView.ViewHolder(mView) {
+    val name: TextView = mView.name
+    val bank_name: TextView = mView.bank_name
+    val bank_account: TextView = mView.bank_account
 }

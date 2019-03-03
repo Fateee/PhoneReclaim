@@ -2,8 +2,11 @@ package com.yc.phonerecycle.mvp.view.viewinf;
 
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 import com.yc.phonerecycle.model.bean.biz.AboutUsRep;
+import com.yc.phonerecycle.model.bean.biz.BankCardListRep;
 import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
 import com.yc.phonerecycle.mvp.presenter.base.BaseViewInf;
+
+import java.util.Map;
 
 public interface CommonBaseIV extends BaseViewInf {
     void showLoading();
@@ -11,6 +14,8 @@ public interface CommonBaseIV extends BaseViewInf {
 
     interface LoginViewIV extends CommonBaseIV {
         void loginResponse(Object data);
+        void loginWX(String accessToken, String uId, long expiresIn, final String wholeData, Map<String, Object> body);
+        void loginQQ(String accessToken, String uId, long expiresIn, final String wholeData);
     }
 
     interface SignUpIv extends CommonBaseIV {
@@ -59,5 +64,15 @@ public interface CommonBaseIV extends BaseViewInf {
     }
     interface saveBankCardIV extends CommonBaseIV {
         void saveBankCardOK(BaseRep data);
+    }
+
+    interface CommonIV extends CommonBaseIV{
+        void getDataOK(Object rep);
+    }
+
+    interface MoneyIV extends CommonBaseIV{
+        void cashPwdOK(BaseRep rep);
+        void saveMoneyBankOK(BaseRep rep);
+        void saveMoneyWXOK(BaseRep rep);
     }
 }

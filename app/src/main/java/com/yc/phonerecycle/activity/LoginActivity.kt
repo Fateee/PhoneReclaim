@@ -1,21 +1,29 @@
 package com.yc.phonerecycle.activity
 
-import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.tencent.connect.common.Constants
 import com.tencent.tauth.Tencent
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.constant.BaseConst
 import com.yc.phonerecycle.model.bean.biz.LoginRep
+import com.yc.phonerecycle.model.bean.biz.WxTokenRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
+import com.yc.phonerecycle.network.BaseRetrofit
+import com.yc.phonerecycle.network.reqinterface.WeiXinRequest
 import com.yc.phonerecycle.utils.ActivityToActivity
 import com.yc.phonerecycle.utils.PhoneUtil
 import com.yc.phonerecycle.utils.ToastUtil
 import com.yc.phonerecycle.utils.UserInfoUtils
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
+import retrofit2.Response
 import third.wx.SsoLoginType
 
 
@@ -68,8 +76,12 @@ class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV {
         })
         iv_login_wx.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                //todo huyi
-                presenter.login(this@LoginActivity,SsoLoginType.WEIXIN)
+                var openid = UserInfoUtils.getUserWxTokenRep().openid
+                if (TextUtils.isEmpty(openid)) {
+                    presenter.login(this@LoginActivity,SsoLoginType.WEIXIN)
+                } else {
+                    presenter.getThirdTokenByOpenId(this@LoginActivity,openid,SsoLoginType.WEIXIN)
+                }
             }
         })
         iv_login_qq.setOnClickListener(object : View.OnClickListener {
@@ -92,6 +104,33 @@ class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV {
                     ToastUtil.showShortToastCenter(data.info)
             }
         }
+    }
+
+    override fun loginWX(
+        accessToken: String,
+        uId: String,
+        expiresIn: Long,
+        wholeData: String,
+        body: MutableMap<String, Any>
+    ) {
+        var wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest::class.java)
+        wxRequest.getAccessToken(BaseConst.WEIXIN_APPID,BaseConst.WEIXIN_SERCET, body["code"] as String?,BaseConst.WEIXIN_TYPE_AUTH_CODE)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<Response<WxTokenRep>> {
+                override fun onComplete() {}
+                override fun onSubscribe(d: Disposable) {}
+                override fun onError(e: Throwable) {}
+                override fun onNext(value: Response<WxTokenRep>) {
+                    if (value.code() == 200 && value.body() != null) {
+                        Log.e("huyi",value.body().toString()+" ")
+                    }
+                }
+            })
+    }
+
+    override fun loginQQ(accessToken: String?, uId: String?, expiresIn: Long, wholeData: String?) {
+
     }
 
 //    fun initOpenidAndToken(jsonObject: JSONObject) {

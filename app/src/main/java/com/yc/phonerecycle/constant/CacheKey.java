@@ -29,4 +29,8 @@ public interface CacheKey {
      * 保存用户中心信息
      */
     String USER_INFO_UC = BaseApplication.getApplication().getPackageName() + ".UserInfoUc";
+
+    String USER_WX_TOKEN_REP = BaseApplication.getApplication().getPackageName() + ".WxTokenRep";
+
+    String USER_QQ_TOKEN_REP = BaseApplication.getApplication().getPackageName() + ".QqTokenRep";
 }

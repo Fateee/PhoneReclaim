@@ -29,7 +29,9 @@ public class BaseConst {
 
 //    public static final String WEIXIN_APPID = "wx0ba34feedb7d4f13";
     public static final String WEIXIN_APPID = "wx59d13320bd8f36f4";
+    public static final String WEIXIN_SERCET = "c341d6508f44e08f592a673afa6ee876";
+    public static final String WEIXIN_TYPE_AUTH_CODE = "authorization_code";
 
-    public static final String QQ_APPID = "1106223286";
+    public static final String QQ_APPID = "1103278945";//"1106223286";
     public static String qqScope="all";
 }

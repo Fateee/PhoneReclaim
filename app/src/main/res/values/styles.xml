@@ -10,4 +10,34 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    -
+    <style parent="@android:style/Theme.Dialog" name="dialog_pay_theme">
+
+        <!--边框-->
+
+
+        <item name="android:windowFrame">@null</item>
+
+        <item name="android:windowNoTitle">true</item>
+
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <item name="android:backgroundDimAmount">0.4</item>
+
+        <!--弹框背景灰度-->
+
+
+    </style>
+
+    <!--动画方式-->
+
+
+    -
+    <style parent="android:Animation" name="dialogOpenAnimation">
+
+        <item name="android:windowEnterAnimation">@anim/dialog_payview_in</item>
+
+        <item name="android:windowExitAnimation">@anim/dialog_payview_out</item>
+
+    </style>
 </resources>

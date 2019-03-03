@@ -198,7 +198,7 @@ public class SetItemLayout extends LinearLayout {
         mVerfyCode.setVisibility(VISIBLE);
     }
 
-    private void setRightIcon(int rightIconId) {
+    public void setRightIcon(int rightIconId) {
         mItemTip.setVisibility(VISIBLE);
         mItemTip.setImageResource(rightIconId);
     }

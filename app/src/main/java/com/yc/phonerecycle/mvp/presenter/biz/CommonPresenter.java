@@ -3,10 +3,12 @@ package com.yc.phonerecycle.mvp.presenter.biz;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.yc.phonerecycle.app.BaseApplication;
+import com.yc.phonerecycle.constant.BaseConst;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 import com.yc.phonerecycle.model.bean.biz.*;
 import com.yc.phonerecycle.model.bean.request.*;
@@ -14,6 +16,8 @@ import com.yc.phonerecycle.mvp.presenter.base.BasePresenter;
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV;
 import com.yc.phonerecycle.network.BaseRetrofit;
 import com.yc.phonerecycle.network.reqinterface.CommonRequest;
+import com.yc.phonerecycle.network.reqinterface.WeiXinRequest;
+import com.yc.phonerecycle.utils.UserInfoUtils;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -127,7 +131,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
-    public void login(final Context context, @SsoLoginType String type) {
+    public void login(final Context context, @SsoLoginType final String type) {
         if (getView() == null) return;
 //        loginView.showProgressDialog();
         SsoLoginManager.login(context, type, new SsoLoginManager.LoginListener() {
@@ -136,7 +140,18 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 super.onSuccess(accessToken, uId, expiresIn, wholeData);
                 Map<String, Object> body = JSON.parseObject(wholeData, Map.class);
                 getView().showLoading();
-                Toast.makeText(context, "登录成功-----" + wholeData, Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, "登录成功-----" + wholeData, Toast.LENGTH_LONG).show();
+                if (type.equals(SsoLoginType.WEIXIN)) {
+                    getWXToken(body);
+//                    ((CommonBaseIV.LoginViewIV) getView()).loginWX(accessToken, uId, expiresIn, wholeData,body);
+                } else if (type.equals(SsoLoginType.QQ)) {
+//                    ((CommonBaseIV.LoginViewIV) getView()).loginQQ(accessToken, uId, expiresIn, wholeData);
+                    QqTokenRep result = JSON.parseObject(wholeData, QqTokenRep.class);
+                    UserInfoUtils.saveUserQQTokenRep(result);
+                    ThirdLoginInfoRep.DataBean thirdVO = new ThirdLoginInfoRep.DataBean();
+                    thirdVO.updateInfo(result.access_token,result.openid,result.access_token,result.expires_in);
+                    saveThirdTokenInfo(thirdVO);
+                }
 //                TokenUtils.requestToken(context, body, new JMHttpRequest.INetworkListener() {
 //                    @Override
 //                    public void onSuccess(BaseResponseEntity response) {
@@ -168,6 +183,183 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
             }
         });
     }
+
+    public void getWXToken(Map<String, Object> body) {
+        WeiXinRequest wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest.class);
+        wxRequest.getAccessToken(BaseConst.WEIXIN_APPID,BaseConst.WEIXIN_SERCET, (String) body.get("code"),BaseConst.WEIXIN_TYPE_AUTH_CODE)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<WxTokenRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<WxTokenRep> value) {
+                        getView().dismissLoading();
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            UserInfoUtils.saveUserWxTokenRep(value.body());
+                            ThirdLoginInfoRep.DataBean thirdVO = new ThirdLoginInfoRep.DataBean();
+                            thirdVO.updateInfo(value.body().access_token,value.body().openid,value.body().refresh_token,value.body().expires_in);
+                            getUserWXInfo(thirdVO);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                        getView().dismissLoading();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void getUserWXInfo(final ThirdLoginInfoRep.DataBean thirdVO) {
+        String openid = thirdVO.openID;
+        String access_token = thirdVO.accessToken;
+        WeiXinRequest wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest.class);
+        wxRequest.getWxUserInfo(openid,access_token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<WxUserInfoRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<WxUserInfoRep> value) {
+                        getView().dismissLoading();
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            thirdVO.nickName = value.body().nickname;
+                            thirdVO.logo = value.body().headimgurl;
+                            thirdVO.gender = value.body().sex+"";
+                            saveThirdTokenInfo(thirdVO);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                        getView().dismissLoading();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void getThirdTokenByOpenId(final Context context,String openId,@SsoLoginType final String type) {
+        if (getView() == null) return;
+        mCommonRequest.getThirdTokenByOpenId(openId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<ThirdLoginInfoRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+
+                    @Override
+                    public void onNext(Response<ThirdLoginInfoRep> value) {
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null) {
+                            if (value.body().data != null) {
+                                //todo 是否过期
+                                boolean expire = false;
+                                if (expire) {
+
+                                } else {
+                                    login(context,type);
+                                }
+                            } else {
+                                login(context,type);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        getView().dismissLoading();
+                    }
+                });
+    }
+
+    public void saveThirdTokenInfo(final ThirdLoginInfoRep.DataBean thirdVO) {
+        if (getView() == null) return;
+        mCommonRequest.saveThirdTokenInfo(thirdVO)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<ThirdLoginInfoRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) { }
+
+                    @Override
+                    public void onNext(Response<ThirdLoginInfoRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            if (value.body().data == null || TextUtils.isEmpty(value.body().data.userId)) {
+                                //第一次创建
+                                //去绑定手机页
+
+                            } else {
+                                getSystemToekn(value.body().data.userId,thirdVO.openID);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    private void getSystemToekn(String userId, String openID) {
+        if (getView() == null) return;
+        GetTokenReqBody body = new GetTokenReqBody();
+        body.userId = userId;
+        body.openId = openID;
+        mCommonRequest.getSystemToken(body)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<LoginRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<LoginRep> value) {
+                        getView().dismissLoading();
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                        getView().dismissLoading();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
 
     public void logout() {
         if (getView() == null) return;
@@ -632,5 +824,163 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
+    public void getUserBankCard() {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.getUserBankCard()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BankCardListRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
 
+                    @Override
+                    public void onNext(Response<BankCardListRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void getUserMoney() {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.getUserMoney()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<UserMoneyRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<UserMoneyRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void inputWithdrawPassword(String password) {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.inputWithdrawPassword(password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.MoneyIV) getView()).cashPwdOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void saveUserMoney(CashAccountReqBody writeTrackingVO) {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.saveUserMoney(writeTrackingVO)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.MoneyIV) getView()).saveMoneyBankOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void saveWXBankCard(String openId) {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.saveWXBankCard(openId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.MoneyIV) getView()).saveMoneyWXOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
 }
