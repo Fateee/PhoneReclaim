@@ -983,4 +983,102 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     }
                 });
     }
+
+
+    public void getNearbyShop(String longitude, String latitude) {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.getNearby(longitude,latitude)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<NearByShopRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<NearByShopRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+
+    public void getStoreDetail(String id) {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.getStoreDetail(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<NearByShopRep.DataBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<NearByShopRep.DataBean> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void getMyStore() {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.getMyStore()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<NearByShopRep.DataBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<NearByShopRep.DataBean> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
 }

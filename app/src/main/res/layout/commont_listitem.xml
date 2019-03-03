@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tool="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tool="http://schemas.android.com/tools"
+              android:layout_width="match_parent" android:layout_height="wrap_content"
               android:orientation="vertical">
 
     <RelativeLayout
@@ -13,7 +13,8 @@
             android:layout_marginRight="12dp"
             android:layout_marginLeft="12dp"
             android:background="@drawable/bg_bank_card"
-            android:layout_below="@id/title_home">
+            android:layout_below="@id/title_home"
+            android:visibility="gone">
         <ImageView
                 android:id="@+id/bank_logo"
                 android:layout_width="52dp"
@@ -53,6 +54,96 @@
                     android:text="324234234234234"
                     android:textColor="@color/white"
                     android:textSize="14sp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/header_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+        <TextView
+                android:id="@+id/shop_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                tool:text="啊德华"
+                android:textColor="@color/c333333"
+                android:textSize="15sp"/>
+        <TextView
+                android:id="@+id/shop_addr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/shop_name"
+                android:layout_toLeftOf="@+id/iv_detail_arrow"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                tool:text="啊德华safsdfsdfsdfasdf"
+                android:textColor="@color/c666666"
+                android:textSize="12sp"/>
+
+        <ImageView
+                android:id="@+id/iv_detail_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/shop_addr"
+                android:src="@drawable/ic_list_item_new_arrow"/>
+        <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/ceeeeee"
+                android:layout_below="@id/iv_detail_arrow"
+                android:layout_marginTop="15dp"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/divider"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+            <FrameLayout android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight="1">
+                <TextView
+                        android:id="@+id/contact_shop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/ic_edit"
+                        tool:text="联系门店"
+                        android:textColor="@color/c333333"
+                        android:textSize="13sp"/>
+            </FrameLayout>
+            <View
+                    android:layout_width="1dp" android:layout_height="match_parent"
+                    android:background="@color/ceeeeee"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
+            <FrameLayout android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight="1">
+                <TextView
+                        android:id="@+id/map_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/ic_map_detail"
+                        tool:text="查看地图"
+                        android:textColor="@color/c333333"
+                        android:textSize="13sp"/>
+            </FrameLayout>
         </LinearLayout>
 
     </RelativeLayout>

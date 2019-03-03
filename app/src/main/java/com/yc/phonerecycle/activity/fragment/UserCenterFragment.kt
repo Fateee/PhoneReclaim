@@ -4,10 +4,9 @@ package com.yc.phonerecycle.activity.fragment
 import android.support.v4.app.Fragment
 import android.view.View
 import com.yc.phonerecycle.R
-import com.yc.phonerecycle.activity.UserInfoActivity
-import com.yc.phonerecycle.activity.MyBankCardsActivity
+import com.yc.phonerecycle.activity.*
 import com.yc.phonerecycle.activity.settlist.MySetListActivity
-import com.yc.phonerecycle.activity.MyWalletActivity
+import com.yc.phonerecycle.model.bean.biz.NearByShopRep
 import com.yc.phonerecycle.model.bean.biz.UserInfoRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
@@ -68,6 +67,24 @@ class UserCenterFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.UserInfo
             override fun onClick(p0: View?) {
                 ActivityToActivity.toActivity(
                     activity, MyBankCardsActivity::class.java)
+            }
+        })
+        uc_shop_nearby.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                var type = UserInfoUtils.getUser().data?.userInfoVO?.type
+                when (type) {
+                    "1" -> {
+                        ActivityToActivity.toActivity(
+                            activity, MyNearShopActivity::class.java)
+                    }
+                    "4" -> {
+                        var map = HashMap<String,String>()
+                        map["type"] = "4"
+                        ActivityToActivity.toActivity(
+                            activity, ShopDetailActivity::class.java,map)
+                    }
+                }
+
             }
         })
     }

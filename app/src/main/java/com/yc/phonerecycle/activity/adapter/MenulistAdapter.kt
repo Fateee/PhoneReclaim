@@ -7,9 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.activity.ShopDetailActivity
 import com.yc.phonerecycle.model.bean.biz.BankCardListRep
+import com.yc.phonerecycle.model.bean.biz.NearByShopRep
+import com.yc.phonerecycle.utils.ActivityToActivity
 import kotlinx.android.synthetic.main.commont_listitem.view.*
 
 
@@ -88,32 +92,39 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
         val temp = mDataList[position]
         when (temp) {
             is BankCardListRep.DataBean -> {
-
                 holder.name.text = temp.cardholder
                 holder.bank_name.text = temp.openingBank
                 holder.bank_account.text = temp.acount
+                holder.header_one.visibility = View.VISIBLE
+                holder.header_two.visibility = View.GONE
             }
-//            is ResidentRepBean.DataBean -> {
-//                holder.item1.text = temp.code
-//                holder.item2.text = temp.name
-//                var sexStr = "未知"
-//                if (!"0".equals(temp.sex)){
-//                    sexStr = getMapNameById(temp.sex)
-//                }
-//                holder.item3.text = sexStr
-//                holder.item4.text = temp.birthday
-//                holder.item5.text = temp.identityNumber
-//                var censusType = getMapNameById(temp.censusType)
-//                holder.item6.text = censusType
-//                var floatingPopulation = getMapNameById(temp.floatingPopulation)
-//                holder.item7.text = floatingPopulation
-//                var relationshipType = getMapNameById(temp.relationshipType)
-//                holder.item8.text = relationshipType
-//                holder.item9parent.visibility = View.GONE
-//                holder.mView.tag = temp
-//                temp.tag = mType
-//                holder.mView.setOnClickListener(mPeopleDetailListener)
-//            }
+            is NearByShopRep.DataBean -> {
+                holder.header_one.visibility = View.GONE
+                holder.header_two.visibility = View.VISIBLE
+                holder.shop_name.text = temp.name
+                holder.shop_addr.text = temp.address
+                holder.contact_shop.setOnClickListener(object :View.OnClickListener{
+                    override fun onClick(p0: View?) {
+
+                    }
+                })
+                holder.map_detail.setOnClickListener(object :View.OnClickListener{
+                    override fun onClick(p0: View?) {
+
+                    }
+                })
+                holder.header_two.tag = temp
+                holder.header_two.setOnClickListener(object :View.OnClickListener{
+                    override fun onClick(p0: View?) {
+                        var tmp = p0?.tag as NearByShopRep.DataBean
+                        var map = HashMap<String,String>()
+                        map["id"] = tmp.id
+                        map["type"] = "1"
+                        ActivityToActivity.toActivity(
+                            mContext, ShopDetailActivity::class.java,map)
+                    }
+                })
+            }
         }
     }
 
@@ -151,7 +162,15 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
 }
 
 class ChildMenuVH(val mView: View) : RecyclerView.ViewHolder(mView) {
+    val header_one: RelativeLayout = mView.header_one
     val name: TextView = mView.name
     val bank_name: TextView = mView.bank_name
     val bank_account: TextView = mView.bank_account
+
+    val header_two: RelativeLayout = mView.header_two
+
+    val shop_name: TextView = mView.shop_name
+    val shop_addr: TextView = mView.shop_addr
+    val contact_shop: TextView = mView.contact_shop
+    val map_detail: TextView = mView.map_detail
 }
