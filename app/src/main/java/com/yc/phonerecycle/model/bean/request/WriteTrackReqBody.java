@@ -11,4 +11,9 @@ public class WriteTrackReqBody {
     public String orderId;
     public String trackingNumber;
 
+    public WriteTrackReqBody(String courierCompany, String orderId, String trackingNumber) {
+        this.courierCompany = courierCompany;
+        this.orderId = orderId;
+        this.trackingNumber = trackingNumber;
+    }
 }

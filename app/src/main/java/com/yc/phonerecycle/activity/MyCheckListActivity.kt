@@ -7,7 +7,7 @@ import com.yc.phonerecycle.model.bean.biz.AboutUsRep
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 
 
-class MyCheckListActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.AboutUsIV{
+class MyCheckListActivity : BaseActivity<CommonPresenter>(){
 
     override fun createPresenter() = CommonPresenter()
 
@@ -23,6 +23,4 @@ class MyCheckListActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.AboutUs
     override fun initDatas() {
     }
 
-    override fun getAboutUsOK(data: AboutUsRep?) {
-    }
 }

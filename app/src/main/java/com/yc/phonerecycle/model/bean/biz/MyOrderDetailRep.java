@@ -1,6 +1,7 @@
 package com.yc.phonerecycle.model.bean.biz;
 
 
+import com.yc.phonerecycle.model.bean.BaseBean;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 
 public class MyOrderDetailRep extends BaseRep {
@@ -49,12 +50,12 @@ public class MyOrderDetailRep extends BaseRep {
         public String orderOwnerName;
         public String orderType;
         public int ownerType;
-        public int status;
+        public int status;//0、已完成 1、待寄出 2、待收货 3、已退回 4、验机 5、待打款
         public String statusName;
         public String trackingNumber;
 
 
-        public static class GoodsInstanceVOBean {
+        public static class GoodsInstanceVOBean extends BaseBean {
             /**
              * battery : 0
              * bluetooth : 0
