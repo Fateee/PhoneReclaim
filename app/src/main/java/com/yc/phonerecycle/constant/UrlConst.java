@@ -18,6 +18,7 @@ public class UrlConst {
     public static final String mWXUrl = "https://api.weixin.qq.com/";
     public static String mQQUrl;
 
+    public static final String FILE_DOWNLOAD_URL = mBaseUrl+"v1/cFileManger/download/";
 //    public static String access_token_API  = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code";
 //
 //    public static String refresh_token_API = "https://api.weixin.qq.com/sns/oauth2/refresh_token?appid={0}&grant_type=refresh_token&refresh_token={1}";

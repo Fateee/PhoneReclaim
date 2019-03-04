@@ -69,7 +69,9 @@ public interface CommonBaseIV extends BaseViewInf {
     interface CommonIV extends CommonBaseIV{
         void getDataOK(Object rep);
     }
-
+    interface CommonTypeIV extends CommonBaseIV{
+        void getDataOK(Object rep,int type);
+    }
     interface MoneyIV extends CommonBaseIV{
         void cashPwdOK(BaseRep rep);
         void saveMoneyBankOK(BaseRep rep);

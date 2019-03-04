@@ -1079,4 +1079,65 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     }
                 });
     }
+
+    public void getBrandSelect(final int type) {
+        if (getView() == null) return;
+        mCommonRequest.getBrandSelect()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BrandRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BrandRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonTypeIV) getView()).getDataOK(value.body(),type);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void getGoodsByBrandId(final int type,String brandId) {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.getGoodsByBrandId(brandId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BrandGoodsRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BrandGoodsRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonTypeIV) getView()).getDataOK(value.body(),type);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
 }
