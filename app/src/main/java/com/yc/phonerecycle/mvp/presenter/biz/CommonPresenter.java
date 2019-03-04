@@ -1140,4 +1140,133 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     }
                 });
     }
+
+    public void getAssistantMyOrderList(String status) {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.getAssistantMyOrderList(status)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<MyOrderListlRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<MyOrderListlRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+
+    public void getMyOrderList(String userId, String status) {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.getMyOrderList(userId,status)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<MyOrderListlRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<MyOrderListlRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void getAssistantDetection(String status) {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.getAssistantDetection(status)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<DetectionRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<DetectionRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void getAssistantDetection() {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.getAssistantDetection()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<DetectionRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<DetectionRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
 }

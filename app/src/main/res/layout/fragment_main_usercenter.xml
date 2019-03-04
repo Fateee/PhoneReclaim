@@ -69,6 +69,7 @@
                       android:layout_height="75dp"
                       android:background="@color/white">
             <LinearLayout
+                    android:id="@+id/item1_layout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -120,6 +121,7 @@
             </LinearLayout>
 
             <LinearLayout
+                    android:id="@+id/item3_layout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

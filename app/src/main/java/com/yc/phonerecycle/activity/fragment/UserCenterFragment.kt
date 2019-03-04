@@ -87,6 +87,29 @@ class UserCenterFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.UserInfo
 
             }
         })
+        item1_layout.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                ActivityToActivity.toActivity(
+                    activity, MyOrderListActivity::class.java)
+            }
+        })
+        item3_layout.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                var type = UserInfoUtils.getUser().data?.userInfoVO?.type
+                when (type) {
+                    "1" -> {
+                        ActivityToActivity.toActivity(
+                            activity, MyCheckListActivity::class.java)
+                    }
+                    "4" -> {
+                        var map = HashMap<String,String>()
+                        map["type"] = "4"
+                        ActivityToActivity.toActivity(
+                            activity, ShopperCheckListActivity::class.java,map)
+                    }
+                }
+            }
+        })
     }
 
     override fun onResume() {

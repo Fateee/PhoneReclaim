@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:background="@color/white"
                 android:paddingBottom="15dp">
     <TextView
@@ -18,6 +18,20 @@
             android:text="2018-1-12  13:14:55"
             android:textColor="@color/c3c3c3c"
             android:textSize="12sp"/>
+    <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/date"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="待邮寄"
+            android:textColor="@color/c969696"
+            android:textSize="11sp"
+            android:visibility="gone"/>
     <ImageView
             android:id="@+id/icon"
             android:layout_width="70dp"
@@ -62,4 +76,34 @@
             android:text="查看详情"
             android:textColor="@color/c0168b7"
             android:textSize="12sp"/>
+
+    <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent" android:layout_height="0.5dp"
+            android:background="@color/ceeeeee"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="13dp"
+            android:visibility="gone"
+            android:layout_below="@id/icon"/>
+
+    <com.yc.phonerecycle.widget.SimpleCornerTextView
+            android:id="@+id/wait_ems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="13dp"
+            android:paddingRight="13dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_below="@id/divider"
+            app:bgColor="@color/c0168b7"
+            app:radius="20dp"
+            android:text="立即邮寄"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:visibility="gone"/>
 </RelativeLayout>
