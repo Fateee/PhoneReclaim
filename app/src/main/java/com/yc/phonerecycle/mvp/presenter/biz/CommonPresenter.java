@@ -44,7 +44,6 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     }
 
     public void getDictType() {
-        if (getView() == null) return;
         mCommonRequest.getDictType()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
@@ -73,7 +72,6 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     }
 
     public void getDictMappingByType(final String dicTypeId) {
-        if (getView() == null) return;
         mCommonRequest.getDictMappingByType(dicTypeId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
