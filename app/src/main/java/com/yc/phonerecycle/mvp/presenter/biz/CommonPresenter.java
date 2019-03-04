@@ -293,6 +293,8 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
     public void saveThirdTokenInfo(final ThirdLoginInfoRep.DataBean thirdVO) {
         if (getView() == null) return;
+        String json = JSON.toJSONString(thirdVO);
+        Log.i(TAG, "saveThirdTokenInfo == " + json);
         mCommonRequest.saveThirdTokenInfo(thirdVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

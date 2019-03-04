@@ -57,5 +57,6 @@ public class ThirdLoginInfoRep extends BaseRep {
             this.refreshToken = refresh_token;
             this.expiresIn = expiresIn;
         }
+
     }
 }
