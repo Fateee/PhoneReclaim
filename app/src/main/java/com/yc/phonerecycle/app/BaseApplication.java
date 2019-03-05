@@ -98,6 +98,12 @@ public class BaseApplication extends Application {
 //                .setAutoAdaptStrategy(new AutoAdaptStrategy())
         ;
 //        customAdaptForExternal();
+        List<DictMapRep.DataBean> yesOrNoList = new ArrayList<>();
+        DictMapRep.DataBean noBean = new DictMapRep.DataBean("0","0","无","0");
+        DictMapRep.DataBean yesBean = new DictMapRep.DataBean("1","1","有","1");
+        yesOrNoList.add(noBean);
+        yesOrNoList.add(yesBean);
+        mOptionMap.put("-1",yesOrNoList);
         CommonPresenter commonPresenter = new CommonPresenter();
         commonPresenter.getDictType();
     }

@@ -58,6 +58,11 @@ object PermissionUtils {
     }
 
     @JvmStatic
+    fun checkPhoneStatePermission(context: Context, callback: Callback?) {
+        checkPermission(context, callback, Manifest.permission.READ_PHONE_STATE)
+    }
+
+    @JvmStatic
     fun openPermissionSettings(context: Context) {
         AndPermission.with(context).runtime().setting().start()
     }

@@ -232,23 +232,23 @@ class AutoCheckActivity : BaseActivity<CommonPresenter>(), SensorEventListener {
                     WIFI_STATE_DISABLED -> {
                         ToastUtil.showShortToast("WiFi disabled")
                         mWifiManager.isWifiEnabled = true
-                        checkResult.wirelessNetwork = 1
+                        checkResult.wifi = 1
                     }
                     WIFI_STATE_DISABLING -> {
                         ToastUtil.showShortToast("WiFi disabling")
-                        checkResult.wirelessNetwork = 1
+                        checkResult.wifi = 1
                     }
                     WIFI_STATE_ENABLED -> {
                         ToastUtil.showShortToast("WiFi enabled")
-                        checkResult.wirelessNetwork = 1
+                        checkResult.wifi = 1
                     }
                     WIFI_STATE_ENABLING -> {
                         ToastUtil.showShortToast("WiFi enabling")
-                        checkResult.wirelessNetwork = 1
+                        checkResult.wifi = 1
                     }
                     WIFI_STATE_UNKNOWN -> {
                         ToastUtil.showShortToast("WiFi state unknown")
-                        checkResult.wirelessNetwork = 0
+                        checkResult.wifi = 0
                     }
                 }
             }

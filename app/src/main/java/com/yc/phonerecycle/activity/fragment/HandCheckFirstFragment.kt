@@ -31,6 +31,7 @@ class HandCheckFirstFragment : BaseFragment<EmptyPresenter>() {
     override fun initData() {
         next.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
+                if(!setCheckValue()) return
                 (activity as HandCheckActivity).changeFragment((activity as HandCheckActivity).mSecondFragment)
             }
         })
@@ -69,6 +70,21 @@ class HandCheckFirstFragment : BaseFragment<EmptyPresenter>() {
                 dialogChoice(account_lock,"15")
             }
         })
+    }
+
+    private fun setCheckValue(): Boolean {
+        if (ram.tag == null || rom.tag == null || color.tag == null || net_type.tag == null || version.tag == null || account_lock.tag == null) return false
+        return if (activity is HandCheckActivity) {
+            (activity as HandCheckActivity).mCheckReqBody.memory = (ram.tag as DictMapRep.DataBean).id
+            (activity as HandCheckActivity).mCheckReqBody.capacity = (rom.tag as DictMapRep.DataBean).id
+            (activity as HandCheckActivity).mCheckReqBody.colour = (color.tag as DictMapRep.DataBean).id
+            (activity as HandCheckActivity).mCheckReqBody.wirelessNetwork = (net_type.tag as DictMapRep.DataBean).id
+            (activity as HandCheckActivity).mCheckReqBody.regional = (version.tag as DictMapRep.DataBean).id
+            (activity as HandCheckActivity).mCheckReqBody.lockAccount = (account_lock.tag as DictMapRep.DataBean).id
+            true
+        } else{
+            false
+        }
     }
 
 

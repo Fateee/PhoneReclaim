@@ -22,5 +22,11 @@ public class DictMapRep extends BaseRep implements Serializable {
         public String name;
         public String value;
 
+        public DataBean(String id, String typeId, String name, String value) {
+            this.id = id;
+            this.typeId = typeId;
+            this.name = name;
+            this.value = value;
+        }
     }
 }

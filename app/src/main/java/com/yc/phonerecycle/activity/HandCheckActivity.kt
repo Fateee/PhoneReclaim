@@ -3,6 +3,7 @@ package com.yc.phonerecycle.activity
 import android.support.v4.app.Fragment
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.fragment.*
+import com.yc.phonerecycle.model.bean.request.CheckReqBody
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 
@@ -11,6 +12,8 @@ class HandCheckActivity : BaseActivity<EmptyPresenter>() {
     var mFirstFragment = HandCheckFirstFragment()
     var mSecondFragment = HandCheckSecondFragment()
     var mThirdFragment = HandCheckThirdFragment()
+
+    var mCheckReqBody = CheckReqBody()
 
     override fun createPresenter(): EmptyPresenter? = null
 

@@ -72,7 +72,6 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.1.70.android'
     implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
     implementation 'me.jessyan:autosize:1.1.2'
-    implementation 'com.yanzhenjie:permission:2.0.0-rc12'
     implementation files('libs/open_sdk_r6019_lite.jar')
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6'
     implementation 'com.github.bumptech.glide:glide:3.7.0'

@@ -92,7 +92,7 @@ public interface CommonRequest {
     // 回收相关.......
     @Headers("Content-Type: application/json")
     @POST("v1/goodsInstance/saveOrUpdate")
-    Observable<Response<BaseRep>> saveOrUpdate(@Body CheckReqBody goodsInstanceVO,@Query("userId") String userId);
+    Observable<Response<BaseRep>> saveOrUpdate(@Body CheckReqBody goodsInstanceVO);
 
     //银行卡
     @Headers("Content-Type: application/json")

@@ -31,6 +31,7 @@ class HandCheckSecondFragment : BaseFragment<EmptyPresenter>() {
     override fun initData() {
         last.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
+                if(!setCheckValue()) return
                 (activity as HandCheckActivity).changeFragment((activity as HandCheckActivity).mFirstFragment)
             }
         })
@@ -44,7 +45,65 @@ class HandCheckSecondFragment : BaseFragment<EmptyPresenter>() {
                 (activity as HandCheckActivity).changeFragment((activity as HandCheckActivity).mFirstFragment)
             }
         })
+        start_up.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                dialogChoice(start_up,"14")
+            }
+        })
+        fingerprint.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                dialogChoice(fingerprint,"-1")
+            }
+        })
+        wifi_fault.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                dialogChoice(wifi_fault,"16")
+            }
+        })
+        bluetooth_fault.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                dialogChoice(bluetooth_fault,"-1")
+            }
+        })
+        call_fault.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                dialogChoice(call_fault,"-1")
+            }
+        })
+        camrea_fault.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                dialogChoice(camrea_fault,"-1")
+            }
+        })
+        gyro_fault.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                dialogChoice(gyro_fault,"17")
+            }
+        })
+        gradienter_fault.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                dialogChoice(gradienter_fault,"-1")
+            }
+        })
+    }
 
+    private fun setCheckValue(): Boolean {
+        if (start_up.tag == null || fingerprint.tag == null ||
+            wifi_fault.tag == null || bluetooth_fault.tag == null || call_fault.tag == null ||
+            camrea_fault.tag == null|| gyro_fault.tag == null || gradienter_fault.tag == null) return false
+        return if (activity is HandCheckActivity) {
+            (activity as HandCheckActivity).mCheckReqBody.startingState = (start_up.tag as DictMapRep.DataBean).id
+            (activity as HandCheckActivity).mCheckReqBody.fingerprint = (fingerprint.tag as DictMapRep.DataBean).id.toInt()
+            (activity as HandCheckActivity).mCheckReqBody.wifi = (wifi_fault.tag as DictMapRep.DataBean).id.toInt()
+            (activity as HandCheckActivity).mCheckReqBody.bluetooth = (bluetooth_fault.tag as DictMapRep.DataBean).id.toInt()
+            (activity as HandCheckActivity).mCheckReqBody.call = (call_fault.tag as DictMapRep.DataBean).id.toInt()
+            (activity as HandCheckActivity).mCheckReqBody.camera = (camrea_fault.tag as DictMapRep.DataBean).id.toInt()
+            (activity as HandCheckActivity).mCheckReqBody.gyroscope = (gyro_fault.tag as DictMapRep.DataBean).id.toInt()
+            (activity as HandCheckActivity).mCheckReqBody.spiritLevel = (gradienter_fault.tag as DictMapRep.DataBean).id.toInt()
+            true
+        } else{
+            false
+        }
     }
 
     /**

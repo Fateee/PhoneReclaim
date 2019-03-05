@@ -33,6 +33,7 @@ class HandCheckThirdFragment : BaseFragment<EmptyPresenter>() {
     override fun initData() {
         appraisal.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
+                if(!setCheckValue()) return
                 ActivityToActivity.toActivity(
                     activity, CheckResulttActivity::class.java)
             }
@@ -72,6 +73,23 @@ class HandCheckThirdFragment : BaseFragment<EmptyPresenter>() {
                 dialogChoice(in_water,"13")
             }
         })
+    }
+
+    private fun setCheckValue(): Boolean {
+        if (phone_color.tag == null || fix_condition.tag == null ||
+            surface.tag == null || screen.tag == null || overhaul.tag == null ||
+            in_water.tag == null) return false
+        return if (activity is HandCheckActivity) {
+            (activity as HandCheckActivity).mCheckReqBody.colour = (phone_color.tag as DictMapRep.DataBean).id
+            (activity as HandCheckActivity).mCheckReqBody.warranty = (fix_condition.tag as DictMapRep.DataBean).id
+            (activity as HandCheckActivity).mCheckReqBody.facade = (surface.tag as DictMapRep.DataBean).id
+            (activity as HandCheckActivity).mCheckReqBody.screenProblem = (screen.tag as DictMapRep.DataBean).id
+            (activity as HandCheckActivity).mCheckReqBody.overhaul = (overhaul.tag as DictMapRep.DataBean).id
+            (activity as HandCheckActivity).mCheckReqBody.water = (in_water.tag as DictMapRep.DataBean).id
+            true
+        } else{
+            false
+        }
     }
 
     /**

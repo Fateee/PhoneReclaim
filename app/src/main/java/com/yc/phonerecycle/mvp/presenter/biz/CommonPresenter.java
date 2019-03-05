@@ -792,9 +792,9 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
 
     // 回收相关.......
-    public void saveOrUpdate(CheckReqBody goodsInstanceVO,String userId) {
+    public void saveOrUpdate(CheckReqBody goodsInstanceVO) {
         if (getView() == null) return;
-        mCommonRequest.saveOrUpdate(goodsInstanceVO,userId)
+        mCommonRequest.saveOrUpdate(goodsInstanceVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseRep>>() {
