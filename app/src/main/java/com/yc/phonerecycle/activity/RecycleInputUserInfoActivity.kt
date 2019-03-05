@@ -1,0 +1,28 @@
+package com.yc.phonerecycle.activity
+
+import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
+import com.yc.phonerecycle.mvp.view.BaseActivity
+import com.yc.phonerecycle.R
+import com.yc.phonerecycle.model.bean.biz.AboutUsRep
+import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
+
+
+class RecycleInputUserInfoActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonIV{
+    override fun getDataOK(rep: Any?) {
+    }
+
+    override fun createPresenter() = CommonPresenter()
+
+
+    override fun initBundle() {
+    }
+
+    override fun getContentView(): Int = R.layout.activity_recycle_userinfo
+
+    override fun initView() {
+    }
+
+    override fun initDatas() {
+    }
+
+}
