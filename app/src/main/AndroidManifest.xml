@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
             android:name=".app.BaseApplication"
@@ -109,6 +110,7 @@
         <activity android:name=".activity.MyOrderListActivity"/>
         <activity android:name=".activity.MyCheckListActivity"/>
         <activity android:name=".activity.ShopperCheckListActivity"/>
+        <activity android:name=".activity.CropPictureActivity"/>
         <meta-data
                 android:name="design_width_in_dp"
                 android:value="360"/>
@@ -160,7 +162,15 @@
                 <!--android:exported="true"-->
                 <!--android:targetActivity=".wx.wxapi.WXEntryActivity"-->
                 <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"/>-->
-
+        <provider
+                android:name="android.support.v4.content.FileProvider"
+                android:authorities="${applicationId}.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

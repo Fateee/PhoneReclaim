@@ -22,6 +22,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +31,8 @@ import third.ErrorResponseEntity;
 import third.wx.SsoLoginManager;
 import third.wx.SsoLoginType;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 public class CommonPresenter extends BasePresenter<CommonBaseIV> {
@@ -41,6 +45,32 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
     public CommonPresenter() {
         mCommonRequest = BaseRetrofit.getInstance().createRequest(CommonRequest.class);
+    }
+
+    public void uploadFile(File file) {
+        Map<String, RequestBody> parms = new HashMap<>();
+        parms.put(file.getName(),RequestBody.create(MediaType.parse("image/png"),file));
+        mCommonRequest.uploadFile(parms)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {}
+
+                    @Override
+                    public void onComplete() {}
+                });
     }
 
     public void getDictType() {

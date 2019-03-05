@@ -58,5 +58,6 @@
     <color name="cd7d7d7">#d7d7d7</color>
     <color name="c323232">#323232</color>
     <color name="c969696">#969696</color>
+    <color name="transparent">#00000000</color>
 
 </resources>

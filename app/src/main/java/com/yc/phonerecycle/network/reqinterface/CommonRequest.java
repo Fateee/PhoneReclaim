@@ -6,10 +6,17 @@ import com.yc.phonerecycle.model.bean.biz.*;
 import com.yc.phonerecycle.model.bean.request.SaveBankReqBody;
 import com.yc.phonerecycle.model.bean.request.*;
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import retrofit2.Response;
 import retrofit2.http.*;
 
+import java.util.Map;
+
 public interface CommonRequest {
+
+    @Multipart
+    @POST("v1/cFileManger/upload")
+    Observable<Response<BaseRep>> uploadFile(@PartMap Map<String, RequestBody> parms);
 
     @GET("v1/dict/getDictType")
     Observable<Response<DictTypeRep>> getDictType();

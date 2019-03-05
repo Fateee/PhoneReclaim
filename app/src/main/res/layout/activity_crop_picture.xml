@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal|top"
+        android:background="@android:color/background_light"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/cancel"
+            style="@style/left_back_TextView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:maxLines="1"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:text="图片剪切" />
+
+        <TextView
+            android:id="@+id/sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="10dp"
+            android:maxLines="1"
+            android:text="确定"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+    </FrameLayout>
+
+    <com.jm.jiedian.widget.ClipImageLayout
+        android:id="@+id/id_clipImageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

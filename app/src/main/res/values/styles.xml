@@ -9,8 +9,14 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
-    -
+    <style name="grid_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
     <style parent="@android:style/Theme.Dialog" name="dialog_pay_theme">
 
         <!--边框-->
@@ -32,12 +38,16 @@
     <!--动画方式-->
 
 
-    -
     <style parent="android:Animation" name="dialogOpenAnimation">
-
         <item name="android:windowEnterAnimation">@anim/dialog_payview_in</item>
-
         <item name="android:windowExitAnimation">@anim/dialog_payview_out</item>
+    </style>
 
+    <style name="left_back_TextView">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_gravity">left|center_vertical</item>
+        <item name="android:layout_marginLeft">13.3dip</item>
+        <item name="android:background">@drawable/jm_pro_detail_back_icon</item>
     </style>
 </resources>

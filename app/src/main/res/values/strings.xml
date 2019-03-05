@@ -30,8 +30,13 @@
     <string name="my_user_count">我的用户 %s</string>
 
 
+    <string name="cancel">取消</string>
+    <string name="photo">拍照</string>
+    <string name="choose_from_album">从相册选择</string>
+    <string name="open_camera_rights">开启相机权限</string>
+    <string name="setting">设置</string>
 
-
+    <string name="unable_to_find_system_album">无法找到系统相册</string>
 
 
 
