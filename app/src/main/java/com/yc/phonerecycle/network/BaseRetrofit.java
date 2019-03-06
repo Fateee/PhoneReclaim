@@ -58,6 +58,7 @@ public class BaseRetrofit {
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
+                        Log.i("RetrofitLog", "Authorization = " + UserInfoUtils.getUserToken());
                         Request original = chain.request();
                         Request request = original.newBuilder()
                                 .header("Authorization", UserInfoUtils.getUserToken())

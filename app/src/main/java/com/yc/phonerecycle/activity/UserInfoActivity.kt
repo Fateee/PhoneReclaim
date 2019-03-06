@@ -15,8 +15,12 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
+import com.yc.library.widget.AddressSelector
+import com.yc.library.widget.BottomDialog
+import com.yc.library.widget.OnAddressSelectedListener
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.model.bean.biz.DivisionRep
 import com.yc.phonerecycle.model.bean.biz.UserInfoRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
@@ -29,7 +33,27 @@ import java.security.AccessController.getContext
 import java.util.*
 
 
-class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoIV{
+class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoIV, OnAddressSelectedListener,
+    AddressSelector.OnDialogCloseListener, AddressSelector.onSelectorAreaPositionListener {
+    override fun selectorAreaPosition(
+        provincePosition: Int,
+        cityPosition: Int,
+        countyPosition: Int,
+        streetPosition: Int
+    ) {
+    }
+
+    override fun dialogclose() {
+    }
+
+    override fun onAddressSelected(
+        province: DivisionRep.DataBean.VoListBean?,
+        city: DivisionRep.DataBean.VoListBean?,
+        county: DivisionRep.DataBean.VoListBean?,
+        street: DivisionRep.DataBean.VoListBean?,
+        village: DivisionRep.DataBean.VoListBean?
+    ) {
+    }
 
     override fun createPresenter() = CommonPresenter()
 
@@ -49,6 +73,8 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
     internal val CROP = 2
     internal val CROP_PICTURE = 3
 
+    private var dialog : BottomDialog? = null
+
     override fun initView() {
         if (DeviceUtil.checkSDCardAvailable()) {
             mUploadfilePath = Environment.getExternalStorageDirectory().absolutePath + File.separator + IMAGE_DIR
@@ -67,11 +93,12 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
         })
         userinfo_nick.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                var map = HashMap<String,String>()
-                map["title"] = userinfo_nick.getTitle()
-                map["type"] = "0"
-                ActivityToActivity.toActivity(
-                    this@UserInfoActivity, EditUserInfoActivity::class.java,map)
+                addrDialog()
+//                var map = HashMap<String,String>()
+//                map["title"] = userinfo_nick.getTitle()
+//                map["type"] = "0"
+//                ActivityToActivity.toActivity(
+//                    this@UserInfoActivity, EditUserInfoActivity::class.java,map)
             }
         })
         userinfo_sign.setOnClickListener(object : View.OnClickListener {
@@ -87,7 +114,7 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
 
     override fun onResume() {
        super.onResume()
-        presenter.getInfo()
+//        presenter.getInfo()
     }
 
     override fun userInfoSuccess(body: UserInfoRep?) {
@@ -284,4 +311,22 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
         intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
         startActivityForResult(intent, requestCode)
     }
+
+    public fun addrDialog() {
+        if (dialog != null) {
+            dialog?.show();
+        } else {
+            dialog = BottomDialog(this@UserInfoActivity)
+            dialog?.setOnAddressSelectedListener(this@UserInfoActivity)
+            dialog?.setDialogDismisListener(this@UserInfoActivity)
+            dialog?.setTextSize(14f);//设置字体的大小
+            dialog?.setIndicatorBackgroundColor(android.R.color.holo_orange_light);//设置指示器的颜色
+            dialog?.setTextSelectedColor(android.R.color.holo_orange_light);//设置字体获得焦点的颜色
+            dialog?.setTextUnSelectedColor(android.R.color.holo_blue_light);//设置字体没有获得焦点的颜色
+//            dialog.setDisplaySelectorArea("31",1,"2704",1,"2711",0,"15582",1);//设置已选中的地区
+            dialog?.setSelectorAreaPositionListener(this@UserInfoActivity);
+            dialog?.show();
+        }
+    }
 }
+

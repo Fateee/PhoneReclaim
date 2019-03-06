@@ -45,7 +45,9 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     }
 
     public void uploadFile(File file) {
+        Log.i(TAG, "file.exists == " + file.exists());
         Map<String, RequestBody> parms = new HashMap<>();
+//        parms.put("Authorization",RequestBody.create(MediaType.parse("text/plain"),UserInfoUtils.getUserToken()));
         parms.put(file.getName(),RequestBody.create(MediaType.parse("image/png"),file));
         mCommonRequest.uploadFile(parms)
                 .subscribeOn(Schedulers.io())
@@ -1438,4 +1440,42 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
+
+    public void queryDivision(DivisionQueryBody divisionQueryVo, final int type) {
+        mCommonRequest.queryDivision("0","35",divisionQueryVo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<DivisionRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<DivisionRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null && divisionListener !=null) {
+                            divisionListener.onDivisionGetOk(value.body().data,type);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    private DivisionListener divisionListener;
+
+    public void setDivisionListener(DivisionListener divisionListener) {
+        this.divisionListener = divisionListener;
+    }
+
+    public interface DivisionListener{
+        void onDivisionGetOk(DivisionRep.DataBean dataBean,int type);
+    }
 }
