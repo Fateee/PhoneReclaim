@@ -4,6 +4,7 @@ package com.yc.phonerecycle.model.bean.biz;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Describe：用户信息
@@ -11,31 +12,20 @@ import java.io.Serializable;
 public class LoginRep extends BaseRep implements Serializable {
 
     /**
-     * code : 0
-     * info : 操作完成
-     * data : {"token":"Banner eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJmb3JtZXIiLCJVU0VSIjoie1wiaWRcIjpcIjFcIixcImxvY2tlZFwiOnRydWUsXCJwaG9uZVwiOlwiMTU2MDAwMDAwMDBcIixcInJvbGVJZFwiOlwiMVwiLFwidHlwZVwiOlwiMVwiLFwidHlwZU5hbWVcIjpcIueUqOaIt1wiLFwidXNlck5hbWVcIjpcImFkbWluXCJ9IiwiZXhwIjoxNTUxMDE3OTMwLCJpYXQiOjE1NTA5ODE5MzB9.WZ-jwj_8J5XMDg8tH4oLLPgxjGSeCdvlxkBLCrrd4Vg","userInfoVO":{"id":"1","userName":"admin","locked":true,"phone":"15600000000","roleId":"1","type":"1","typeName":"用户"}}
+     * data : {"token":"","userInfoVO":{"id":"","locked":true,"permissionsVOS":[{"id":"","name":""}],"phone":"","roleId":"","type":"","typeName":"","userName":""}}
      */
-    private static final long serialVersionUID = 4125096758372084309L;
 
     public DataBean data;
-
-    public DataBean getData() {
-        return data;
-    }
-
-    public void setData(DataBean data) {
-        this.data = data;
-    }
 
     public static class DataBean implements Serializable{
         private static final long serialVersionUID = 4125096758372084319L;
         /**
-         * token : Banner eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJmb3JtZXIiLCJVU0VSIjoie1wiaWRcIjpcIjFcIixcImxvY2tlZFwiOnRydWUsXCJwaG9uZVwiOlwiMTU2MDAwMDAwMDBcIixcInJvbGVJZFwiOlwiMVwiLFwidHlwZVwiOlwiMVwiLFwidHlwZU5hbWVcIjpcIueUqOaIt1wiLFwidXNlck5hbWVcIjpcImFkbWluXCJ9IiwiZXhwIjoxNTUxMDE3OTMwLCJpYXQiOjE1NTA5ODE5MzB9.WZ-jwj_8J5XMDg8tH4oLLPgxjGSeCdvlxkBLCrrd4Vg
-         * userInfoVO : {"id":"1","userName":"admin","locked":true,"phone":"15600000000","roleId":"1","type":"1","typeName":"用户"}
+         * token :
+         * userInfoVO : {"id":"","locked":true,"permissionsVOS":[{"id":"","name":""}],"phone":"","roleId":"","type":"","typeName":"","userName":""}
          */
 
-        public String token;
-        public UserInfoVOBean userInfoVO;
+        private String token;
+        private UserInfoVOBean userInfoVO;
 
         public String getToken() {
             return token;
@@ -56,22 +46,24 @@ public class LoginRep extends BaseRep implements Serializable {
         public static class UserInfoVOBean implements Serializable{
             private static final long serialVersionUID = 4125096758372084333L;
             /**
-             * id : 1
-             * userName : admin
+             * id :
              * locked : true
-             * phone : 15600000000
-             * roleId : 1
-             * type : 1
-             * typeName : 用户
+             * permissionsVOS : [{"id":"","name":""}]
+             * phone :
+             * roleId :
+             * type :
+             * typeName :
+             * userName :
              */
 
-            public String id;
-            public String userName;
-            public boolean locked;
-            public String phone;
-            public String roleId;
-            public String type;//1、用户/2、商家/3、门店/4、店员
-            public String typeName;
+            private String id;
+            private boolean locked;
+            private String phone;
+            private String roleId;
+            private String type;
+            private String typeName;
+            private String userName;
+            private List<PermissionsVOSBean> permissionsVOS;
 
             public String getId() {
                 return id;
@@ -79,14 +71,6 @@ public class LoginRep extends BaseRep implements Serializable {
 
             public void setId(String id) {
                 this.id = id;
-            }
-
-            public String getUserName() {
-                return userName;
-            }
-
-            public void setUserName(String userName) {
-                this.userName = userName;
             }
 
             public boolean isLocked() {
@@ -127,6 +111,49 @@ public class LoginRep extends BaseRep implements Serializable {
 
             public void setTypeName(String typeName) {
                 this.typeName = typeName;
+            }
+
+            public String getUserName() {
+                return userName;
+            }
+
+            public void setUserName(String userName) {
+                this.userName = userName;
+            }
+
+            public List<PermissionsVOSBean> getPermissionsVOS() {
+                return permissionsVOS;
+            }
+
+            public void setPermissionsVOS(List<PermissionsVOSBean> permissionsVOS) {
+                this.permissionsVOS = permissionsVOS;
+            }
+
+            public static class PermissionsVOSBean implements Serializable {
+                private static final long serialVersionUID = 4125096758375034334L;
+                /**
+                 * id :
+                 * name :
+                 */
+
+                private String id;
+                private String name;
+
+                public String getId() {
+                    return id;
+                }
+
+                public void setId(String id) {
+                    this.id = id;
+                }
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
             }
         }
     }

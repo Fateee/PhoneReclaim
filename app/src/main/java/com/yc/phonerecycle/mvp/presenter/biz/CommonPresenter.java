@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.yc.phonerecycle.app.BaseApplication;
 import com.yc.phonerecycle.constant.BaseConst;
@@ -24,8 +23,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import third.ErrorResponseEntity;
 import third.wx.SsoLoginManager;
@@ -178,7 +175,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     UserInfoUtils.saveUserQQTokenRep(result);
                     ThirdLoginInfoRep.DataBean thirdVO = new ThirdLoginInfoRep.DataBean();
                     thirdVO.updateInfo(result.access_token,result.openid,result.access_token,result.expires_in);
-                    saveThirdTokenInfo(thirdVO);
+                    saveThirdTokenInfo(thirdVO,SsoLoginType.QQ);
                 }
 //                TokenUtils.requestToken(context, body, new JMHttpRequest.INetworkListener() {
 //                    @Override
@@ -215,6 +212,43 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     public void getWXToken(Map<String, Object> body) {
         WeiXinRequest wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest.class);
         wxRequest.getAccessToken(BaseConst.WEIXIN_APPID,BaseConst.WEIXIN_SERCET, (String) body.get("code"),BaseConst.WEIXIN_TYPE_AUTH_CODE)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<WxTokenRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<WxTokenRep> value) {
+                        getView().dismissLoading();
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            UserInfoUtils.saveUserWxTokenRep(value.body());
+                            refreshWXToken();
+//                            ThirdLoginInfoRep.DataBean thirdVO = new ThirdLoginInfoRep.DataBean();
+//                            thirdVO.updateInfo(value.body().access_token,value.body().openid,value.body().refresh_token,value.body().expires_in);
+//                            getUserWXInfo(thirdVO);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                        getView().dismissLoading();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void refreshWXToken() {
+        WeiXinRequest wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest.class);
+        String refresh_token = UserInfoUtils.getUserWxTokenRep().refresh_token;
+        if (TextUtils.isEmpty(refresh_token)) return;
+        wxRequest.refreshAccessToken(BaseConst.WEIXIN_APPID,refresh_token, BaseConst.WEIXIN_TYPE_REFRESH_CODE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<WxTokenRep>>() {
@@ -266,7 +300,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                             thirdVO.nickName = value.body().nickname;
                             thirdVO.logo = value.body().headimgurl;
                             thirdVO.gender = value.body().sex+"";
-                            saveThirdTokenInfo(thirdVO);
+                            saveThirdTokenInfo(thirdVO,SsoLoginType.WEIXIN);
                         }
                     }
 
@@ -301,7 +335,12 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                                 if (expire) {
 
                                 } else {
-                                    login(context,type);
+                                    if (type.equals(SsoLoginType.WEIXIN)) {
+                                        refreshWXToken();
+                                    } else if (type.equals(SsoLoginType.QQ)) {
+
+                                    }
+//                                    login(context,type);
                                 }
                             } else {
                                 login(context,type);
@@ -321,7 +360,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
-    public void saveThirdTokenInfo(final ThirdLoginInfoRep.DataBean thirdVO) {
+    public void saveThirdTokenInfo(final ThirdLoginInfoRep.DataBean thirdVO, final String type) {
         if (getView() == null) return;
         String json = JSON.toJSONString(thirdVO);
         Log.i(TAG, "saveThirdTokenInfo == " + json);
@@ -339,10 +378,39 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                             if (value.body().data == null || TextUtils.isEmpty(value.body().data.userId)) {
                                 //第一次创建
                                 //去绑定手机页
-
+                                ((CommonBaseIV.ThirdLoginViewIV) getView()).goBindPhoneView(value.body().data.openID,type);
                             } else {
                                 getSystemToekn(value.body().data.userId,thirdVO.openID);
                             }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void saveUserPhone(String code, String openId, String phone) {
+        if (getView() == null) return;
+        ThirdPhoneBody thirdLoginSaveUserVo = new ThirdPhoneBody(code,openId,phone);
+        mCommonRequest.saveUserPhone(thirdLoginSaveUserVo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<ThirdLoginInfoRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) { }
+
+                    @Override
+                    public void onNext(Response<ThirdLoginInfoRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            getSystemToekn(value.body().data.userId,value.body().data.openID);
                         }
                     }
 
@@ -374,7 +442,9 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         getView().dismissLoading();
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
-
+                            UserInfoUtils.cleanUser();
+                            UserInfoUtils.saveUser(value.body());
+                            ((CommonBaseIV.ThirdBindIV) getView()).thirdBindOKGetSystemTokenResponse(value.body());
                         }
                     }
 
@@ -422,9 +492,10 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     }
                 });
     }
-    public void sendCode(String phone) {
+    public void sendCode(int businessType, String phone) {//1 注册验证码 2 忘记密码
         if (getView() == null) return;
-        mCommonRequest.sendCode(phone)
+        SendCodeBody phoneBody = new SendCodeBody(businessType, phone);
+        mCommonRequest.sendCode(phoneBody)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseRep>>() {

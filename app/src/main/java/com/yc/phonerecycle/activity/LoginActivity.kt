@@ -27,7 +27,7 @@ import retrofit2.Response
 import third.wx.SsoLoginType
 
 
-class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV {
+class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV,CommonBaseIV.ThirdLoginViewIV {
 
     var QQAppID: String = "1103278945"
 
@@ -104,6 +104,14 @@ class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV {
                     ToastUtil.showShortToastCenter(data.info)
             }
         }
+    }
+
+    override fun goBindPhoneView(openID: String?, type: String?) {
+        var map = HashMap<String,String?>()
+        map["openid"] = openID
+        map["type"] = type
+        ActivityToActivity.toActivity(
+            this@LoginActivity, BindPhoneForThirdActivity::class.java,map)
     }
 
     override fun loginWX(

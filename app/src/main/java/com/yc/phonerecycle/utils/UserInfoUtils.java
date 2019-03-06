@@ -161,5 +161,10 @@ public class UserInfoUtils {
         }
         return tokenRep;
     }
-
+    /**
+     * 清除微信信息
+     */
+    public static void cleanUserQQTokenRep() {
+        saveUserQQTokenRep(null);
+    }
 }

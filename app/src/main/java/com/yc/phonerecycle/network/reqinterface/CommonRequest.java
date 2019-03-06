@@ -34,7 +34,7 @@ public interface CommonRequest {
 
     @Headers("Content-Type: application/json")
     @POST("v1/cSms/sendCode")
-    Observable<Response<BaseRep>> sendCode(@Query("phone") String phone);
+    Observable<Response<BaseRep>> sendCode(@Body SendCodeBody phone);
 
 
     @Headers("Content-Type: application/json")

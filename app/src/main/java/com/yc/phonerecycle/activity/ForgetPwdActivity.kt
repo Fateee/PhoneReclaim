@@ -53,7 +53,7 @@ class ForgetPwdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV.SignUpI
                 if (!PhoneUtil.isMobileNO(content)) {
                     ToastUtil.showShortToastCenter("手机号码格式不正确")
                 }
-                presenter.sendCode(content)
+                presenter.sendCode(2,content)
             }
         })
         txt_right_title.setOnClickListener(object : View.OnClickListener {

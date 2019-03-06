@@ -69,7 +69,7 @@ class SignUpActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.SignUpIv {
                 if (!PhoneUtil.isMobileNO(signup_phone_et.text.toString())) {
                     ToastUtil.showShortToastCenter("手机号码格式不正确")
                 }
-                presenter.sendCode(signup_phone_et.text.toString())
+                presenter.sendCode(1,signup_phone_et.text.toString())
             }
         })
         signup_pwd_switch.setOnCheckedChangeListener { compoundButton, b ->
