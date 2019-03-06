@@ -87,7 +87,7 @@ class BindPhoneForThirdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV
                 if (!PhoneUtil.isMobileNO(content)) {
                     ToastUtil.showShortToastCenter("手机号码格式不正确")
                 }
-                presenter.sendCode(1,content)
+                presenter.sendCode(3,content)
             }
         })
         txt_right_title.setOnClickListener(object : View.OnClickListener {

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import com.tencent.connect.UserInfo;
+import com.tencent.connect.auth.QQToken;
 import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
@@ -111,4 +113,35 @@ public class SL_QQHandlerActivity extends Activity {
         }
     }
 
+    void getUserInfo(Activity activity, String appId, String token, String oppid, String expires_in) {
+        Tencent tencent = Tencent.createInstance(appId, activity.getApplicationContext());
+        QQToken qqtoken = tencent.getQQToken();
+        tencent.setOpenId(oppid);
+        tencent.setAccessToken(token, expires_in);
+        UserInfo info = new UserInfo(getApplicationContext(), qqtoken);
+        info.getUserInfo(new IUiListener() {
+            @Override
+            public void onComplete(Object o) {
+                String nickname = ((JSONObject) o).optString("nickname");
+                String sexStr = ((JSONObject) o).optString("sex");
+                String headImg = ((JSONObject) o).optString("figureurl_qq_2");
+                int sex = 0;
+                switch (sexStr) {
+                    case "男":
+                        sex = 1;
+                        break;
+                }
+//                //QQ第三方登录（5个参数）
+//                loginByQQOpenId(nickname, sex, headImg, uniqueCode, 0);
+            }
+
+            @Override
+            public void onError(UiError uiError) {
+            }
+
+            @Override
+            public void onCancel() {
+            }
+        });
+    }
 }
