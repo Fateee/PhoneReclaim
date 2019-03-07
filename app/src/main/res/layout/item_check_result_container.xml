@@ -3,7 +3,15 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
     <include
-        layout="@layout/item_check_result"/>
+            android:id="@+id/left_view"
+            layout="@layout/item_check_result"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
     <include
-            layout="@layout/item_check_result"/>
+            android:id="@+id/right_view"
+            layout="@layout/item_check_result"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
 </LinearLayout>

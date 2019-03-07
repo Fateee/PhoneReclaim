@@ -27,10 +27,12 @@ import android.location.LocationManager
 import android.location.Location
 import android.location.LocationListener
 import android.os.Bundle
+import com.yc.phonerecycle.BaseCheckActivity
+import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
 
 
-class AutoCheckActivity : BaseActivity<CommonPresenter>(), SensorEventListener {
+class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListener {
 
     var index = 0
     var checkResult = CheckReqBody()
@@ -227,28 +229,29 @@ class AutoCheckActivity : BaseActivity<CommonPresenter>(), SensorEventListener {
 
     private val wifiReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
+            var list = BaseApplication.mOptionMap.get("16")
             if (intent?.action == WifiManager.WIFI_STATE_CHANGED_ACTION) {
                 when (intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WIFI_STATE_UNKNOWN)) {
                     WIFI_STATE_DISABLED -> {
                         ToastUtil.showShortToast("WiFi disabled")
                         mWifiManager.isWifiEnabled = true
-                        checkResult.wifi = 1
+                        checkResult.wifi = list?.get(0)?.id?.toInt() ?: 1602
                     }
                     WIFI_STATE_DISABLING -> {
                         ToastUtil.showShortToast("WiFi disabling")
-                        checkResult.wifi = 1
+                        checkResult.wifi = list?.get(0)?.id?.toInt() ?: 1602
                     }
                     WIFI_STATE_ENABLED -> {
                         ToastUtil.showShortToast("WiFi enabled")
-                        checkResult.wifi = 1
+                        checkResult.wifi = list?.get(0)?.id?.toInt() ?: 1602
                     }
                     WIFI_STATE_ENABLING -> {
                         ToastUtil.showShortToast("WiFi enabling")
-                        checkResult.wifi = 1
+                        checkResult.wifi = list?.get(0)?.id?.toInt() ?: 1602
                     }
                     WIFI_STATE_UNKNOWN -> {
                         ToastUtil.showShortToast("WiFi state unknown")
-                        checkResult.wifi = 0
+                        checkResult.wifi = list?.get(1)?.id?.toInt() ?: 1601
                     }
                 }
             }

@@ -73,6 +73,10 @@ public interface CommonBaseIV extends BaseViewInf {
         void saveBankCardOK(BaseRep data);
     }
 
+    interface SaveAddrIV extends CommonBaseIV {
+        void saveAddrOK(BaseRep data);
+    }
+
     interface CommonIV extends CommonBaseIV{
         void getDataOK(Object rep);
     }

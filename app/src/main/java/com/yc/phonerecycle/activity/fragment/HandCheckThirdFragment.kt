@@ -9,10 +9,16 @@ import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.CheckResulttActivity
 import com.yc.phonerecycle.activity.HandCheckActivity
 import com.yc.phonerecycle.app.BaseApplication
+import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.model.bean.biz.DictMapRep
+import com.yc.phonerecycle.model.bean.biz.SaveRecordRep
+import com.yc.phonerecycle.model.bean.request.CheckReqBody
+import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
+import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.ActivityToActivity
+import com.yc.phonerecycle.utils.ToastUtil
 import com.yc.phonerecycle.widget.SetItemLayout
 import kotlinx.android.synthetic.main.activity_hand_check_stepthree.*
 import kotlinx.android.synthetic.main.titleview.*
@@ -22,8 +28,22 @@ import kotlinx.android.synthetic.main.titleview.*
  * A simple [Fragment] subclass.
  *
  */
-class HandCheckThirdFragment : BaseFragment<EmptyPresenter>() {
-    override fun createPresenter(): EmptyPresenter? = null
+class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.saveOrUpdateIV {
+    override fun saveOrUpdate(data: BaseRep?) {
+        if (data is SaveRecordRep) {
+            if (data?.code == 0) {
+                ToastUtil.showShortToastCenter("添加检测记录成功")
+                var map = HashMap<String, Any>()
+                map["checkbean"] = (activity as HandCheckActivity).mCheckReqBody
+                map["recordid"] = data.data
+//            map["result_type"] = (activity as HandCheckActivity).mCheckReqBody
+                ActivityToActivity.toActivity(
+                    activity, CheckResulttActivity::class.java,map)
+            }
+        }
+    }
+
+    override fun createPresenter() = CommonPresenter()
 
     override fun getContentView(): Int = R.layout.activity_hand_check_stepthree
 
@@ -34,8 +54,7 @@ class HandCheckThirdFragment : BaseFragment<EmptyPresenter>() {
         appraisal.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 if(!setCheckValue()) return
-                ActivityToActivity.toActivity(
-                    activity, CheckResulttActivity::class.java)
+                presenter.saveOrUpdate((activity as HandCheckActivity).mCheckReqBody)
             }
         })
         txt_left_title.setOnClickListener(object : View.OnClickListener {

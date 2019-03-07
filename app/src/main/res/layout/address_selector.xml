@@ -52,10 +52,12 @@
 
             <TextView
                 android:id="@+id/textViewStreet"
-                style="@style/tab" />
+                style="@style/tab"
+                android:visibility="gone"/>
             <TextView
                     android:id="@+id/textViewvillage"
-                    style="@style/tab"/>
+                    style="@style/tab"
+                    android:visibility="gone"/>
         </LinearLayout>
 
         <View

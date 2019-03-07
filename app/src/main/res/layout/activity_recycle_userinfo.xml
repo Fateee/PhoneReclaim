@@ -42,7 +42,8 @@
             app:title="选择地区"
             app:sub_title="请选择"
             app:hide_divider="true"
-            app:show_arraw="true"/>
+            app:show_arraw="true"
+            android:visibility="gone"/>
     <EditText
             android:id="@+id/recycle_addr_detail"
             android:layout_width="match_parent"

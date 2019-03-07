@@ -1,31 +1,107 @@
 package com.yc.phonerecycle.activity
 
+import android.text.TextUtils
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.utils.ActivityToActivity
 import com.yc.phonerecycle.utils.UserInfoUtils
-import kotlinx.android.synthetic.main.activity_splash.*
-import android.widget.LinearLayout
 import android.view.View
-import android.widget.ImageView
 import com.yc.phonerecycle.R
-import com.yc.phonerecycle.activity.adapter.GuidePageAdapter
-import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
+import com.yc.phonerecycle.model.bean.request.CheckReqBody
+import kotlinx.android.synthetic.main.activity_check_result_detail.*
+import kotlinx.android.synthetic.main.item_check_result.view.*
+import kotlinx.android.synthetic.main.item_check_result_container.view.*
 
 
-class CheckResulttActivity : BaseActivity<EmptyPresenter>(){
-    override fun createPresenter(): EmptyPresenter? = null
+class CheckResulttActivity : BaseActivity<CommonPresenter>(){
+    override fun createPresenter() = CommonPresenter()
 
+    var mCheckReqBody : CheckReqBody? = null
+
+    private var result_type: String? = ""
+
+    private var recordid: String? = ""
 
     override fun initBundle() {
+        mCheckReqBody = intent.getSerializableExtra("checkbean") as CheckReqBody
+        result_type = intent.getStringExtra("result_type")
+        recordid = intent.getStringExtra("recordid")
     }
 
     override fun getContentView(): Int = R.layout.activity_check_result_detail
 
     override fun initView() {
+
+        name.text = mCheckReqBody?.brandName+" "+mCheckReqBody?.type+" "+mCheckReqBody?.regional
+        content.text = mCheckReqBody?.memory+" "+mCheckReqBody?.capacity
+        //1 有 0无
+        addRowView("无线网络",mCheckReqBody?.wifi == 1602,"","距离感应器",true,"")
+        addRowView("蓝牙",mCheckReqBody?.bluetooth == 1,"","光线感应器",true,"")
+        addRowView("扬声器",mCheckReqBody?.loudspeaker == 1,"","重力感应器",true,"")
+        addRowView("麦克风",mCheckReqBody?.microphone == 1,"","水平仪",true,"")
+        addRowView("闪光灯",mCheckReqBody?.flashlight == 1,"","指南针",false,"")
+
+        addRowView("震动器",mCheckReqBody?.vibrator == 1,"","定位",true,"")
+        addRowView("摄像头",mCheckReqBody?.camera == 1,"","指纹",true,"")
+        addRowView("屏幕触控",mCheckReqBody?.multiTouch == 1,"","拨打电话",true,"")
+        addRowView("屏幕坏点",mCheckReqBody?.screen == 1,"","语音助手",true,"")
+        addRowView("电池状态",false,"83%","",true,"")
+    }
+
+    private fun addRowView(leftTitle: String, leftOk: Boolean, leftValue: String,rightTitle: String, rightOk: Boolean, rightValue: String) {
+        var rowView = layoutInflater.inflate(R.layout.item_check_result_container, detail_container,false)
+        if (!TextUtils.isEmpty(leftTitle)) {
+            rowView.left_view.check_name.text = leftTitle
+            if (TextUtils.isEmpty(leftValue)) {
+                if (leftOk) {
+                    rowView.left_view.ic_check_value.setImageResource(R.drawable.ic_right)
+                } else {
+                    rowView.left_view.ic_check_value.setImageResource(R.drawable.ic_error)
+                }
+            } else {
+                rowView.left_view.check_value.text = leftValue
+            }
+        }
+        if (!TextUtils.isEmpty(rightTitle)) {
+            rowView.right_view.check_name.text = rightTitle
+            if (TextUtils.isEmpty(rightValue)) {
+                if (rightOk) {
+                    rowView.right_view.ic_check_value.setImageResource(R.drawable.ic_right)
+                } else {
+                    rowView.right_view.ic_check_value.setImageResource(R.drawable.ic_error)
+                }
+            } else {
+                rowView.right_view.check_value.text = rightValue
+            }
+        }
+        detail_container.addView(rowView,detail_container.childCount)
     }
 
     override fun initDatas() {
+        var type = UserInfoUtils.getUser().data?.userInfoVO?.type
+        when (type) {
+            "1" -> {
+                submit.text="立即回收"
+            }
+            "4" -> {
+                submit.text="返回主页"
+            }
+        }
+        submit.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                when (type) {
+                    "1" -> {
+                        var map = HashMap<String, Any?>()
+                        map["recordid"] = recordid
+                        ActivityToActivity.toActivity(
+                            this@CheckResulttActivity, RecycleInputUserInfoActivity::class.java,map)
+                    }
+                    "4" -> {
+                        finish()
+                    }
+                }
+            }
+        })
     }
 
 }

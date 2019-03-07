@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="0dp"
+              android:layout_width="match_parent"
               xmlns:tool="http://schemas.android.com/tools"
               android:paddingLeft="24dp"
               android:paddingRight="50dp"
               android:paddingBottom="9dp"
               android:paddingTop="9dp"
-              android:layout_weight="1"
               android:orientation="horizontal"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content">
         <TextView
                 android:id="@+id/check_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
                 android:textSize="13sp"
                 android:textColor="@color/c333333"
                 tool:text="无线网络"/>
         <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
                 <TextView
                         android:id="@+id/check_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:drawableLeft="@drawable/ic_right"
                         android:textSize="13sp"
                         android:textColor="@color/c333333"/>
+                <ImageView
+                        android:id="@+id/ic_check_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"/>
         </FrameLayout>
 </LinearLayout>

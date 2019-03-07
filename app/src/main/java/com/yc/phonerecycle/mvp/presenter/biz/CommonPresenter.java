@@ -870,13 +870,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.saveOrUpdate(goodsInstanceVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new Observer<Response<SaveRecordRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onNext(Response<SaveRecordRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.saveOrUpdateIV) getView()).saveOrUpdate(value.body());
@@ -1483,6 +1483,34 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void saveOrUpdateAddress(RecycleAddrRep.DataBean addressVO) {
+        mCommonRequest.saveOrUpdateAddress(addressVO)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.SaveAddrIV) getView()).saveAddrOK(value.body());
                         }
                     }
 

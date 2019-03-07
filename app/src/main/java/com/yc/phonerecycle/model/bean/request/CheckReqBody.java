@@ -1,6 +1,8 @@
 package com.yc.phonerecycle.model.bean.request;
 
-public class CheckReqBody {
+import com.yc.phonerecycle.model.bean.BaseBean;
+
+public class CheckReqBody extends BaseBean {
 
     /**
      * battery : 0

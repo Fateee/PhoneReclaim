@@ -11,12 +11,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.yc.phonerecycle.R;
+import com.yc.phonerecycle.utils.DeviceUtil;
+import com.yc.phonerecycle.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 
-public class MicrophoneTest extends BaseTest {
+public class MicrophoneTest extends SpeakerTest {
 
     private static final String TAG = "MicrophoneTest";
     private static final int MSG_START       = 1;
@@ -34,6 +37,7 @@ public class MicrophoneTest extends BaseTest {
     private int mAmplitude1;
     private int mAmplitude2;
     private int mTime = 1;
+    private String mUploadfilePath;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,26 +62,30 @@ public class MicrophoneTest extends BaseTest {
     public void onHandleMessage(final int index) {
         switch (index) {
         case MSG_START:
-            setButtonVisibility(false);
+//            setButtonVisibility(false);
             setStepText(R.string.microphone_close_to);
             setTimerTask(MSG_CLOSE_TO, 3000);
             break;
         case MSG_CLOSE_TO:
             mTime = 1;
             startRecord();
-            setTimerTask(MSG_AMPLITUDE_1, 0);
+            setTimerTask(MSG_AMPLITUDE_1, 6000);
             break;
         case MSG_AMPLITUDE_1:
-            if (mRecorder != null) {
-                mAmplitude1 = mRecorder.getMaxAmplitude();
-            }
-            if (mTime < MAX_TIMES) {
-                mTime++;
-                setTimerTask(MSG_AMPLITUDE_1, 1000);
-            } else {
-                setStepText(R.string.microphone_block);
-                setTimerTask(MSG_BLOCK, 3000);
-            }
+//            setButtonVisibility(true);
+            stopRecord();
+            Log.e("huyifile",mRecordFile.exists()+" "+mRecordFile.length());
+            playMusic(mRecordFile);
+//            if (mRecorder != null) {
+//                mAmplitude1 = mRecorder.getMaxAmplitude();
+//            }
+//            if (mTime < MAX_TIMES) {
+//                mTime++;
+//                setTimerTask(MSG_AMPLITUDE_1, 1000);
+//            } else {
+//                setStepText(R.string.microphone_block);
+//                setTimerTask(MSG_BLOCK, 3000);
+//            }
             break;
         case MSG_BLOCK:
             mTime = 1;
@@ -98,7 +106,7 @@ public class MicrophoneTest extends BaseTest {
             }
             break;
         case MSG_END:
-            setButtonVisibility(true);
+//            setButtonVisibility(true);
             stopRecord();
             break;
         }
@@ -132,7 +140,7 @@ public class MicrophoneTest extends BaseTest {
 
         TextView tv = (TextView) v.findViewById(R.id.microphone_text);
         tv.setVisibility(View.VISIBLE);
-        tv.setText(getString(resId, formatArgs));
+        tv.setText(getActivity().getString(resId, formatArgs));
     }
 
     private void setResultText(int amplitude1, int amplitude2) {
@@ -164,7 +172,7 @@ public class MicrophoneTest extends BaseTest {
             tv4.setTextColor(Color.RED);
         }
     }
-
+    private String IMAGE_DIR = "phonerecycle/image";
     private void startRecord() {
         stopRecord();
 
@@ -172,19 +180,33 @@ public class MicrophoneTest extends BaseTest {
             Log.i(TAG, "Storage is not mounted");
             return;
         }
-
+        if (DeviceUtil.checkSDCardAvailable()) {
+            mUploadfilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + IMAGE_DIR;
+            FileUtils.makeDirs(mUploadfilePath, true);
+        } else {
+        }
         mRecorder = new MediaRecorder();
         // Create audio output file path
-        mRecordFile = new File(Environment.getExternalStorageDirectory(), "sound.3gp");
+        mRecordFile = new File(mUploadfilePath, "sound.3gp");
         // Set the source for the microphone recoding
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
         // Set output format of recorded sound
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
         // Set audio encoding format
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
         // Set recording output file path
         mRecorder.setOutputFile(mRecordFile.getAbsolutePath());
+        mRecorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {
 
+                          @Override
+                  public void onError(MediaRecorder mr, int what, int extra) {
+                                     // 发生错误，停止录制
+                              mRecorder.stop();
+                              mRecorder.release();
+                              mRecorder = null;
+                                     Toast.makeText(getActivity(), "录音发生错误", 0).show();
+                                 }
+              });
         try {
             mRecorder.prepare();
             mRecorder.start();

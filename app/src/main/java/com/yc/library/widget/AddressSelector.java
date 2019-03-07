@@ -593,17 +593,26 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
                 textViewCounty.setText(county.countyName);
                 textViewStreet.setText("请选择");
                 textViewVillage.setText("请选择");
-                retrieveStreetsWith(county.countyCode);
+//                retrieveStreetsWith(county.countyCode);
 
                 streets = null;
                 streetAdapter.notifyDataSetChanged();
 
                 this.countyIndex = position;
                 this.streetIndex = INDEX_INVALID;
+
                 villages = null;
                 villageAdapter.notifyDataSetChanged();
                 this.villageIndex = INDEX_INVALID;
                 countyAdapter.notifyDataSetChanged();
+
+                callbackInternal();
+                if(selectorAreaPositionListener!=null){
+                    selectorAreaPositionListener.selectorAreaPosition(provincePostion,cityPosition,countyPosition,streetPosition);
+                }
+//                if(dialogCloseListener!=null){
+//                    dialogCloseListener.dialogclose();
+//                }
                 break;
             case INDEX_TAB_STREET:
                 DivisionRep.DataBean.VoListBean street = streetAdapter.getItem(position);
