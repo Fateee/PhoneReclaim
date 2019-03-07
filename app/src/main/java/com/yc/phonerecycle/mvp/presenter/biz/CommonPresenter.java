@@ -1469,6 +1469,34 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
+    public void addOrder(RecycleReqBody orderVO) {
+        mCommonRequest.addOrder(orderVO)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
     private DivisionListener divisionListener;
 
     public void setDivisionListener(DivisionListener divisionListener) {

@@ -47,6 +47,9 @@ public class RecycleReqBody {
     public String statusName;
     public String trackingNumber;
 
+    public RecycleReqBody() {
+    }
+
     public RecycleReqBody(String address, String addressId, String area, String consigneeName, String consigneePhone, String courierCompany, String dealTime, String dealUser, String estimatePrice, String goodsInstance, String id, String number, String orderOwner, String orderOwnerName, String orderType, int ownerType, String returnCourierCompany, String returnTrackingNumber, int status, String statusName, String trackingNumber) {
         this.address = address;
         this.addressId = addressId;
