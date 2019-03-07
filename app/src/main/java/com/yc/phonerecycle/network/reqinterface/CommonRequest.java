@@ -180,11 +180,11 @@ public interface CommonRequest {
 
     //手动检测品牌
     //获取品牌
-    @GET("v1/mBrand/getBrandSelect")
-    Observable<Response<BrandRep>> getBrandSelect();
+    @GET("v1/mBrand/getBrandSelect/{name}")
+    Observable<Response<BrandRep>> getBrandSelect(@Path("name") String name);
 
     //获取商品
-    @GET("v1/mBrand/getGoodsByBrandId/{brandId}")
+    @GET("v1/mBrand/getGoodsByBrandId/{brandId}/")
     Observable<Response<BrandGoodsRep>> getGoodsByBrandId(@Path("brandId") String brandId);
 
 

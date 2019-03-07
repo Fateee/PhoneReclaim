@@ -8,6 +8,7 @@ import com.yc.library.widget.OnAddressSelectedListener
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.constant.BaseConst
 import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.model.bean.biz.AboutUsRep
 import com.yc.phonerecycle.model.bean.biz.DivisionRep
@@ -29,6 +30,7 @@ class RecycleInputUserInfoActivity : BaseActivity<CommonPresenter>(),CommonBaseI
             var orderVO = RecycleReqBody()
             orderVO.goodsInstance = recordid
             orderVO.address = addressVO.address
+            orderVO.status = BaseConst.ORDER_WAIT_EMS
             presenter.addOrder(orderVO)
         }
     }
@@ -114,7 +116,7 @@ class RecycleInputUserInfoActivity : BaseActivity<CommonPresenter>(),CommonBaseI
     }
 
     override fun dialogclose() {
-
+        dialog?.dismiss()
     }
 
     private var addrcode: String?=""

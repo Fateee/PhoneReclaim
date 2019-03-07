@@ -38,5 +38,11 @@ public class BaseConst {
     public static final String QQ_APPID = "1103278945";//"1106223286";
     public static String qqScope="all";
 
-
+    //0、已完成 1、待寄出 2、待收货 3、已退回 4、验机 5、待打款
+    public static final int ORDER_DONE = 0;
+    public static final int ORDER_WAIT_EMS = 1;
+    public static final int ORDER_WATI_RECEIVE = 2;
+    public static final int ORDER_HAS_RETURN = 3;
+    public static final int ORDER_CHECK = 4;
+    public static final int ORDER_WAIT_CASH = 5;
 }

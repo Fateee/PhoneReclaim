@@ -610,9 +610,9 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
                 if(selectorAreaPositionListener!=null){
                     selectorAreaPositionListener.selectorAreaPosition(provincePostion,cityPosition,countyPosition,streetPosition);
                 }
-//                if(dialogCloseListener!=null){
-//                    dialogCloseListener.dialogclose();
-//                }
+                if(dialogCloseListener!=null){
+                    dialogCloseListener.dialogclose();
+                }
                 break;
             case INDEX_TAB_STREET:
                 DivisionRep.DataBean.VoListBean street = streetAdapter.getItem(position);

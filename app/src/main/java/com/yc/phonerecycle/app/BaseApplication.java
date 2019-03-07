@@ -3,6 +3,8 @@ package com.yc.phonerecycle.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import com.yc.phonerecycle.model.bean.biz.DictMapRep;
 import com.yc.phonerecycle.model.bean.biz.DictTypeRep;
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter;
@@ -20,7 +22,7 @@ import java.util.Locale;
 /**
  * Describe：基础Application所有需要模块化开发的module都需要继承自BaseApplication
  */
-public class BaseApplication extends Application {
+public class BaseApplication extends MultiDexApplication {
 
     public static List<DictTypeRep.DataBean> mRootItems;
     public static HashMap<String, List<DictMapRep.DataBean>> mOptionMap = new HashMap<>();
@@ -37,7 +39,7 @@ public class BaseApplication extends Application {
         super.attachBaseContext(base);
         application = this;
         //MultiDex分包方法 必须最先初始化
-//        MultiDex.install(this);
+        MultiDex.install(this);
     }
 
     @Override

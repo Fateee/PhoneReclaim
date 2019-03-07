@@ -1187,7 +1187,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
     public void getBrandSelect(final int type) {
         if (getView() == null) return;
-        mCommonRequest.getBrandSelect()
+        mCommonRequest.getBrandSelect(" ")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BrandRep>>() {
