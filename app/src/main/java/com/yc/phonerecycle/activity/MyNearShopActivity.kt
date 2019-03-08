@@ -26,6 +26,8 @@ import java.util.*
 
 class MyNearShopActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonIV{
 
+
+
     //声明AMapLocationClient类对象
     var mLocationClient: AMapLocationClient? = null
     private var latitude: Double = 0.0
@@ -131,21 +133,30 @@ class MyNearShopActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonIV
         rv_list.layoutManager = mGridLayoutManager
         mMenulistAdapter = MenulistAdapter(this)
         rv_list.adapter = mMenulistAdapter
-
+        requestShops()
     }
 
     override fun onResume() {
         super.onResume()
-        requestShops()
     }
 
     private fun requestShops() {
-        if (longitude == 0.0 && latitude == 0.0) return
+//        if (longitude == 0.0 && latitude == 0.0) return
         presenter.getNearbyShop(longitude.toString(),latitude.toString())
     }
 
     override fun getDataOK(rep: Any?) {
         if (rep is NearByShopRep) {
+//            var bean = NearByShopRep.DataBean()
+//            bean.name = "沁园蛋糕（东和春天）"
+//            bean.address = getString(R.string.order_address)
+//            bean.longitudeLatitude = "104.079696@30.538899"
+//            rep.data.add(bean)
+//            var bean1 = NearByShopRep.DataBean()
+//            bean1.name = "沁园蛋糕（东和春天）"
+//            bean1.address = getString(R.string.order_address)
+//            bean1.longitudeLatitude = "104.079696@30.538899"
+//            rep.data.add(bean1)
             mMenulistAdapter.refreshUI(rep.data,true)
         }
     }

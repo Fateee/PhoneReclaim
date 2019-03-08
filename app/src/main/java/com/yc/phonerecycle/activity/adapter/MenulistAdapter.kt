@@ -11,6 +11,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.ShopDetailActivity
+import com.yc.phonerecycle.activity.ShopInMapActivity
+import com.yc.phonerecycle.model.bean.BaseBean
 import com.yc.phonerecycle.model.bean.biz.BankCardListRep
 import com.yc.phonerecycle.model.bean.biz.NearByShopRep
 import com.yc.phonerecycle.utils.ActivityToActivity
@@ -103,21 +105,32 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
                 holder.header_two.visibility = View.VISIBLE
                 holder.shop_name.text = temp.name
                 holder.shop_addr.text = temp.address
+                holder.contact_shop.tag = temp
                 holder.contact_shop.setOnClickListener(object :View.OnClickListener{
                     override fun onClick(p0: View?) {
-
+                        var tmp = p0?.tag as NearByShopRep.DataBean
+                        var map = HashMap<String,String?>()
+                        map["id"] = tmp.id
+                        map["type"] = "1"
+                        ActivityToActivity.toActivity(
+                            mContext, ShopDetailActivity::class.java,map)
                     }
                 })
+                holder.map_detail.tag = temp
                 holder.map_detail.setOnClickListener(object :View.OnClickListener{
                     override fun onClick(p0: View?) {
-
+                        var tmp = p0?.tag as NearByShopRep.DataBean
+                        var map = HashMap<String,BaseBean?>()
+                        map["shopbean"] = tmp
+                        ActivityToActivity.toActivity(
+                            mContext, ShopInMapActivity::class.java,map)
                     }
                 })
                 holder.header_two.tag = temp
                 holder.header_two.setOnClickListener(object :View.OnClickListener{
                     override fun onClick(p0: View?) {
                         var tmp = p0?.tag as NearByShopRep.DataBean
-                        var map = HashMap<String,String>()
+                        var map = HashMap<String,String?>()
                         map["id"] = tmp.id
                         map["type"] = "1"
                         ActivityToActivity.toActivity(

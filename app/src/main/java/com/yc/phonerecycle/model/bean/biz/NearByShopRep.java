@@ -1,6 +1,7 @@
 package com.yc.phonerecycle.model.bean.biz;
 
 
+import com.yc.phonerecycle.model.bean.BaseBean;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public class NearByShopRep extends BaseRep {
     public List<DataBean> data;
 
 
-    public static class DataBean {
+    public static class DataBean extends BaseBean {
         /**
          * address :
          * adminUser :

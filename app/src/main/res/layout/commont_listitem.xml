@@ -62,6 +62,8 @@
             android:id="@+id/header_two"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
             android:visibility="gone">
         <TextView
                 android:id="@+id/shop_name"
@@ -119,7 +121,7 @@
                         android:layout_weight="1"
                         android:drawablePadding="5dp"
                         android:drawableLeft="@drawable/ic_edit"
-                        tool:text="联系门店"
+                        android:text="联系门店"
                         android:textColor="@color/c333333"
                         android:textSize="13sp"/>
             </FrameLayout>
@@ -140,7 +142,7 @@
                         android:layout_weight="1"
                         android:drawablePadding="5dp"
                         android:drawableLeft="@drawable/ic_map_detail"
-                        tool:text="查看地图"
+                        android:text="查看地图"
                         android:textColor="@color/c333333"
                         android:textSize="13sp"/>
             </FrameLayout>
