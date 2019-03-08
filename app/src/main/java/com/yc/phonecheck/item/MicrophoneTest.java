@@ -189,11 +189,11 @@ public class MicrophoneTest extends SpeakerTest {
         // Create audio output file path
         mRecordFile = new File(mUploadfilePath, "sound.3gp");
         // Set the source for the microphone recoding
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         // Set output format of recorded sound
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         // Set audio encoding format
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         // Set recording output file path
         mRecorder.setOutputFile(mRecordFile.getAbsolutePath());
         mRecorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {

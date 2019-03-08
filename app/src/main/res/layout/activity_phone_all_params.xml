@@ -19,6 +19,7 @@
             android:layout_height="match_parent">
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="match_parent"
+                      android:paddingRight="15dp"
                         android:orientation="vertical">
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
@@ -42,7 +43,9 @@
                           android:text="品牌"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c333333"/>
-                <TextView android:layout_width="match_parent"
+                <TextView
+                        android:id="@+id/brandname"
+                        android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
@@ -67,6 +70,7 @@
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c333333"/>
                 <TextView android:layout_width="match_parent"
+                          android:id="@+id/typename"
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
@@ -91,6 +95,7 @@
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c333333"/>
                 <TextView android:layout_width="match_parent"
+                          android:id="@+id/os_version"
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
@@ -116,6 +121,7 @@
                           android:textColor="@color/c333333"/>
                 <TextView android:layout_width="match_parent"
                           android:layout_height="wrap_content"
+                          android:id="@+id/cpu_type"
                           android:gravity="right"
                           android:textSize="13sp"
                           tool:text="Apple"
@@ -139,6 +145,7 @@
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c333333"/>
                 <TextView android:layout_width="match_parent"
+                          android:id="@+id/main_camera"
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
@@ -175,6 +182,7 @@
                           android:textColor="@color/c333333"/>
                 <TextView android:layout_width="match_parent"
                           android:layout_height="wrap_content"
+                          android:id="@+id/rom"
                           android:gravity="right"
                           android:textSize="13sp"
                           tool:text="Apple"
@@ -199,6 +207,7 @@
                           android:textColor="@color/c333333"/>
                 <TextView android:layout_width="match_parent"
                           android:layout_height="wrap_content"
+                          android:id="@+id/ram"
                           android:gravity="right"
                           android:textSize="13sp"
                           tool:text="Apple"
@@ -235,6 +244,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/cpu_cpu_type"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -258,6 +268,7 @@
                 <TextView android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:gravity="right"
+                          android:id="@+id/cpu_core"
                           android:textSize="13sp"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
@@ -283,6 +294,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/cpu_feq"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -317,6 +329,7 @@
                 <TextView android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:gravity="right"
+                          android:id="@+id/screen_size"
                           android:textSize="13sp"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
@@ -342,6 +355,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/screen_texing"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -365,6 +379,7 @@
                 <TextView android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:gravity="right"
+                          android:id="@+id/screen_fenbianlv"
                           android:textSize="13sp"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
@@ -390,6 +405,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/screen_midu"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -412,6 +428,7 @@
                           android:textColor="@color/c333333"/>
                 <TextView android:layout_width="match_parent"
                           android:layout_height="wrap_content"
+                          android:id="@+id/screen_touch"
                           android:gravity="right"
                           android:textSize="13sp"
                           tool:text="Apple"
@@ -449,6 +466,7 @@
                 <TextView android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:gravity="right"
+                          android:id="@+id/video_record"
                           android:textSize="13sp"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
@@ -474,6 +492,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/back_camera"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -498,6 +517,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/front_camera"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -533,6 +553,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/network_model"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -568,6 +589,7 @@
                 <TextView android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:gravity="right"
+                          android:id="@+id/gps_value"
                           android:textSize="13sp"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
@@ -593,6 +615,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/wifi_value"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -617,6 +640,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/bluetooth_value"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -652,6 +676,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/battery_value"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -688,6 +713,7 @@
                           android:gravity="right"
                           android:textSize="13sp"
                           tool:text="Apple"
+                          android:id="@+id/os_value"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
             </LinearLayout>
@@ -722,6 +748,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/gravity_value"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -744,6 +771,7 @@
                           android:textColor="@color/c333333"/>
                 <TextView android:layout_width="match_parent"
                           android:layout_height="wrap_content"
+                          android:id="@+id/accl_value"
                           android:gravity="right"
                           android:textSize="13sp"
                           tool:text="Apple"
@@ -770,6 +798,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/light_value"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -794,6 +823,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/compass_value"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -818,6 +848,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/distance_value"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
@@ -842,6 +873,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
+                          android:id="@+id/tuoluoyi_value"
                           tool:text="Apple"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
