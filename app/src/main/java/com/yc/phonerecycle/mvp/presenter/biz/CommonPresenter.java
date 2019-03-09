@@ -2,8 +2,6 @@ package com.yc.phonerecycle.mvp.presenter.biz;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -30,12 +28,9 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Response;
-import third.ErrorResponseEntity;
-import third.wx.SsoLoginManager;
 import third.wx.SsoLoginType;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 
 public class CommonPresenter extends BasePresenter<CommonBaseIV> {
@@ -1052,8 +1047,9 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     }
 
     public void getUserBankCard() {
-        if (getView() == null) return;
-        getView().showLoading();
+        if (getView() != null ) {
+            getView().showLoading();
+        }
         mCommonRequest.getUserBankCard()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -1065,9 +1061,16 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onNext(Response<BankCardListRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
-                        getView().dismissLoading();
+                        if (getView() != null) {
+                            getView().dismissLoading();
+                        }
                         if (value.code() == 200 && value.body() != null ) {
-                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                            if (getView() != null) {
+                                ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                            }
+                            if (bankcardListener != null) {
+                                bankcardListener.onBankcardGetOk(value.body());
+                            }
                         }
                     }
 
@@ -1566,7 +1569,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
 
     public void queryDivision(DivisionQueryBody divisionQueryVo, final int type) {
-        mCommonRequest.queryDivision("0","35",divisionQueryVo)
+        mCommonRequest.queryDivision("-1","-1",divisionQueryVo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<DivisionRep>>() {
@@ -1657,5 +1660,15 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
     public interface DivisionListener{
         void onDivisionGetOk(DivisionRep.DataBean dataBean,int type);
+    }
+
+    private BankcardListener bankcardListener;
+
+    public void setBankcardListener(BankcardListener bankcardListener) {
+        this.bankcardListener = bankcardListener;
+    }
+
+    public interface BankcardListener{
+        void onBankcardGetOk(BankCardListRep dataBean);
     }
 }

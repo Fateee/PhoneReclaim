@@ -21,7 +21,7 @@ public class CashAccountReqBody {
     public String applyTime;
     public String bankName;
     public String dealTime;
-    public int meoney;
+    public float meoney;
     public int status;
     public String statusName;
     public int type;

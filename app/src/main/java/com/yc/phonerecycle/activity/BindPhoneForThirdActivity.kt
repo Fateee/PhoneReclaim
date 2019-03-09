@@ -1,11 +1,13 @@
 package com.yc.phonerecycle.activity
 
+import android.content.Intent
 import android.os.CountDownTimer
 import android.text.TextUtils
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import android.view.View
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.constant.BaseConst
 import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.model.bean.biz.LoginRep
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
@@ -20,8 +22,9 @@ class BindPhoneForThirdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV
     override fun loginResponse(data: Any?) {
         if (data is LoginRep) {
             if(data.code == 0) {
-                ActivityToActivity.toActivity(
-                    this@BindPhoneForThirdActivity, MainActivity::class.java)
+                var intent = Intent()
+                intent.putExtra("result",true)
+                setResult(BaseConst.REQUEST_BIND_PHONE,intent)
                 finish()
             } else {
                 if (!TextUtils.isEmpty(data.info))

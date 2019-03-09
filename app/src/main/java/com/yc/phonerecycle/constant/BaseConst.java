@@ -46,4 +46,6 @@ public class BaseConst {
     public static final int ORDER_HAS_RETURN = 3;
     public static final int ORDER_CHECK = 4;
     public static final int ORDER_WAIT_CASH = 5;
+
+    public static final int REQUEST_BIND_PHONE = 10000;
 }

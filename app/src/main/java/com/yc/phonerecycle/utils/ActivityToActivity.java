@@ -103,6 +103,49 @@ public class ActivityToActivity {
         activity.startActivity(intent);
     }
 
+    public static void toActivity(Activity activity, Class<? extends Activity> clazz,int request_code) {
+        toActivity(activity, clazz, null,request_code);
+    }
+
+    /**
+     * 普通Activity之间跳转
+     *
+     * @param activity activity
+     * @param clazz    目标activity
+     * @param params   参数
+     */
+    public static void toActivity(Activity activity, Class<? extends Activity> clazz,
+                                  Map<String, ?> params,int request_code) {
+        Intent intent = new Intent(activity, clazz);
+        if (params != null) {
+            for (Map.Entry<String, ?> entry : params.entrySet()) {
+                String key = entry.getKey();
+                Object value = params.get(key);
+                if (value instanceof String) {
+                    intent.putExtra(key, (String) value);
+                } else if (value instanceof Boolean) {
+                    intent.putExtra(key, (boolean) value);
+                } else if (value instanceof Integer) {
+                    intent.putExtra(key, (int) value);
+                } else if (value instanceof Float) {
+                    intent.putExtra(key, (float) value);
+                } else if (value instanceof Double) {
+                    intent.putExtra(key, (double) value);
+                } else if (value instanceof Long) {
+                    intent.putExtra(key, (long) value);
+                } else if (value instanceof Short) {
+                    intent.putExtra(key, (short) value);
+                } else if (value instanceof BaseBean) {
+                    intent.putExtra(key, (BaseBean) value);
+                } else if (value instanceof ArrayList) {
+                    intent.putExtra(key, (ArrayList) value);
+                } else if (value instanceof HashMap) {
+                    intent.putExtra(key, (HashMap) value);
+                }
+            }
+        }
+        activity.startActivityForResult(intent,request_code);
+    }
 
 //    /**
 //     * ARouter跳转Activity

@@ -71,9 +71,11 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
         var userId = UserInfoUtils.getUser().data?.userInfoVO?.id
         when (type) {
             "1" -> {//-1 查询全部 0、已完成 1、待寄出 2、待收货 3、已退回 4、验机 5、待打款
+                title_view.visibility = View.GONE
                 presenter.getMyOrderList(userId,mStatus)
             }
             "4" -> {
+                title_view.visibility = View.GONE
                 if (isCheckList) {
                     presenter.getAssistantDetection(mStatus)
                 } else {

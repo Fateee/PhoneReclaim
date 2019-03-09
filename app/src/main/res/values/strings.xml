@@ -199,4 +199,5 @@
     <string name="vibrator">震动</string>
     <string name="auto_check_text">正在检测： %s</string>
     <string name="shop_name_inmap">%s-</string>
+    <string name="this_cash_value">本次提现金额: ¥ %s</string>
 </resources>

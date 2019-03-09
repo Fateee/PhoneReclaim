@@ -76,22 +76,24 @@ class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV,C
         })
         iv_login_wx.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                var openid = UserInfoUtils.getUserWxTokenRep().openid
-                if (TextUtils.isEmpty(openid)) {
-                    presenter.login(this@LoginActivity,SsoLoginType.WEIXIN)
-                } else {
-                    presenter.getThirdTokenByOpenId(this@LoginActivity,openid,SsoLoginType.WEIXIN)
-                }
+//                var openid = UserInfoUtils.getUserWxTokenRep().openid
+//                if (TextUtils.isEmpty(openid)) {
+//                    presenter.login(this@LoginActivity,SsoLoginType.WEIXIN)
+//                } else {
+//                    presenter.getThirdTokenByOpenId(this@LoginActivity,openid,SsoLoginType.WEIXIN)
+//                }
+                presenter.login(this@LoginActivity,SsoLoginType.WEIXIN)
             }
         })
         iv_login_qq.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                var openid = UserInfoUtils.getUserQQTokenRep().openid
-                if (TextUtils.isEmpty(openid)) {
-                    presenter.login(this@LoginActivity,SsoLoginType.QQ)
-                } else {
-                    presenter.getThirdTokenByOpenId(this@LoginActivity,openid,SsoLoginType.QQ)
-                }
+//                var openid = UserInfoUtils.getUserQQTokenRep().openid
+//                if (TextUtils.isEmpty(openid)) {
+//                    presenter.login(this@LoginActivity,SsoLoginType.QQ)
+//                } else {
+//                    presenter.getThirdTokenByOpenId(this@LoginActivity,openid,SsoLoginType.QQ)
+//                }
+                presenter.login(this@LoginActivity,SsoLoginType.QQ)
             }
         })
     }
@@ -115,7 +117,7 @@ class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV,C
         map["openid"] = openID
         map["type"] = type
         ActivityToActivity.toActivity(
-            this@LoginActivity, BindPhoneForThirdActivity::class.java,map)
+            this@LoginActivity, BindPhoneForThirdActivity::class.java,map,BaseConst.REQUEST_BIND_PHONE)
     }
 
     override fun loginWX(
@@ -165,7 +167,13 @@ class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV,C
 ////            Tencent.onActivityResultData(requestCode, resultCode, data, listener)
 //            UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
 //        }
-        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        if (requestCode == BaseConst.REQUEST_BIND_PHONE && resultCode == BaseConst.REQUEST_BIND_PHONE) {
+            ActivityToActivity.toActivity(
+                this@LoginActivity, MainActivity::class.java)
+            finish()
+        } else {
+            UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data)
+        }
     }
 
 }

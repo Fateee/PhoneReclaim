@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.ShopDetailActivity
 import com.yc.phonerecycle.activity.ShopInMapActivity
+import com.yc.phonerecycle.interfaces.OnBankClickListener
 import com.yc.phonerecycle.model.bean.BaseBean
 import com.yc.phonerecycle.model.bean.biz.BankCardListRep
 import com.yc.phonerecycle.model.bean.biz.NearByShopRep
@@ -31,7 +32,7 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
     private var mItemWidth: Int = 0
     private var mType: Int = 0
     private var mImgId: Int = 0
-
+    lateinit var mOnBankClickListener : OnBankClickListener
 //    fun startActivity(mContext: Context, pos: Int, mDataList: ArrayList<T>) {
 //        val intent = Intent(mContext, PhotoViewActivity::class.java)
 //        intent.putExtra(PhotoViewActivity.NOWPOS, pos)
@@ -94,11 +95,19 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
         val temp = mDataList[position]
         when (temp) {
             is BankCardListRep.DataBean -> {
-                holder.name.text = temp.cardholder
+                holder.name.text = temp.cardholder?.replaceRange(0,1,"*")
                 holder.bank_name.text = temp.openingBank
                 holder.bank_account.text = temp.acount
                 holder.header_one.visibility = View.VISIBLE
                 holder.header_two.visibility = View.GONE
+                holder.header_one.tag = temp
+                if (mType == 10) {
+                    holder.header_one.setOnClickListener(object :View.OnClickListener{
+                        override fun onClick(v: View?) {
+                            mOnBankClickListener.OnBankClick(v?.tag as BankCardListRep.DataBean)
+                        }
+                    })
+                }
             }
             is NearByShopRep.DataBean -> {
                 holder.header_one.visibility = View.GONE
