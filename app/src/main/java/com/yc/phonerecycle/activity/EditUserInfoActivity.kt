@@ -54,7 +54,7 @@ class EditUserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.EditU
                         presenter.changeName(content, UserInfoUtils.getUser().data?.userInfoVO?.id)
                     }
                     "1" -> {
-                        presenter.changeSignature(UserInfoUtils.getUser().data?.userInfoVO?.phone, UserInfoUtils.getUser().data?.userInfoVO?.id,content)
+                        presenter.changeSignature( UserInfoUtils.getUser().data?.userInfoVO?.id,content)
                     }
                 }
             }

@@ -33,8 +33,8 @@ import kotlinx.android.synthetic.main.activity_auto_check.*
 
 class HandCheckActivity : BaseActivity<EmptyPresenter>() , SensorEventListener {
 
-//    var mFirstFragment = HandCheckFirstFragment()
-    var mFirstFragment = MicrophoneTest()
+    var mFirstFragment = HandCheckFirstFragment()
+//    var mFirstFragment = MicrophoneTest()
     var mSecondFragment = HandCheckSecondFragment()
     var mThirdFragment = HandCheckThirdFragment()
 

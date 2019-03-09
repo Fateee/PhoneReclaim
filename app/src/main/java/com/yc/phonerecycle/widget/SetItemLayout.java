@@ -179,7 +179,7 @@ public class SetItemLayout extends LinearLayout {
         mSubTitle1.setVisibility(VISIBLE);
     }
 
-    private void setHint(String hint) {
+    public void setHint(String hint) {
         mItemEdit.setVisibility(VISIBLE);
         mItemEdit.setHint(hint);
     }

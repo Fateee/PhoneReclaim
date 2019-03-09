@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
+import com.bumptech.glide.request.RequestOptions
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.HandCheckActivity
 import com.yc.phonerecycle.constant.UrlConst
@@ -80,8 +82,8 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
                 if (holder is PhoneVH) {
                     holder.phone_name.text = temp.type
                     var url = UrlConst.FILE_DOWNLOAD_URL+temp.logo
-                    Glide.with(mContext).load(url).centerCrop().into(holder.phone_logo)
-
+//                    Glide.with(mContext).load(url).centerCrop().into(holder.phone_logo)
+                    Glide.with(mContext).load(url).into(holder.phone_logo)
                     holder.itemView.tag = temp
                     holder.itemView.setOnClickListener(object :View.OnClickListener{
                         override fun onClick(p0: View?) {

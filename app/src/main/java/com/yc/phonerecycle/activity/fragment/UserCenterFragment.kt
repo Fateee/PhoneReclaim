@@ -1,8 +1,12 @@
 package com.yc.phonerecycle.activity.fragment
 
 
+import android.content.Context
 import android.support.v4.app.Fragment
 import android.view.View
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.*
 import com.yc.phonerecycle.activity.settlist.MySetListActivity
@@ -31,6 +35,7 @@ class UserCenterFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.UserInfo
 
     override fun initData() {
         item_name.text = UserInfoUtils.getUser().data?.userInfoVO?.userName
+        Glide.with(activity as Context).load(UserInfoUtils.getUserInfo().data?.logo).apply(RequestOptions.bitmapTransform(CircleCrop())).into(avatar)
         iv_to_setlist.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 ActivityToActivity.toActivity(
@@ -143,6 +148,8 @@ class UserCenterFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.UserInfo
         }
 
         item2_num.text = body?.data?.money.toString()
+
+        Glide.with(activity as Context).load(body?.data?.logo).apply(RequestOptions.bitmapTransform(CircleCrop())).into(avatar)
     }
 
 }

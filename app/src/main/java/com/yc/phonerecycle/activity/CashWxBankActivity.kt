@@ -4,10 +4,12 @@ import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.utils.ActivityToActivity
 import android.view.View
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.activity.settlist.CreateBankPwdActivity
 import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.model.bean.request.CashAccountReqBody
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
+import com.yc.phonerecycle.utils.ToastUtil
 import com.yc.phonerecycle.widget.PasswordDialog
 import kotlinx.android.synthetic.main.activity_cash_wx_bank.*
 
@@ -21,6 +23,11 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
 //                var writeTrackingVO = CashAccountReqBody()
 //                presenter.saveUserMoney()
             }
+        } else if (rep.code == 17) {
+            ActivityToActivity.toActivity(
+                this@CashWxBankActivity, CreateBankPwdActivity::class.java)
+        } else {
+            ToastUtil.showShortToastCenter(rep.info)
         }
     }
 

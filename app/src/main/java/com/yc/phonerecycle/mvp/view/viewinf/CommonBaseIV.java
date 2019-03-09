@@ -40,6 +40,10 @@ public interface CommonBaseIV extends BaseViewInf {
         void userInfoSuccess(UserInfoRep body);
     }
 
+    interface UploadFileIV extends CommonBaseIV {
+        void uploadFileSuccess(BaseRep data);
+    }
+
     interface EditUserInfoIV extends CommonBaseIV {
         void editNickNameSuccess(BaseRep data);
         void editUserSignSuccess(BaseRep data);

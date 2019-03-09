@@ -22,6 +22,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Response;
 import third.ErrorResponseEntity;
@@ -45,20 +46,26 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     }
 
     public void uploadFile(File file) {
+        if (getView() == null) return;
+        getView().showLoading();
         Log.i(TAG, "file.exists == " + file.exists());
-        Map<String, RequestBody> parms = new HashMap<>();
-//        parms.put("Authorization",RequestBody.create(MediaType.parse("text/plain"),UserInfoUtils.getUserToken()));
-        parms.put(file.getName(),RequestBody.create(MediaType.parse("image/png"),file));
-        mCommonRequest.uploadFile(parms)
+        RequestBody firstBody = RequestBody.create( MediaType.parse("multipart/form-data"), "test");
+
+        RequestBody body = RequestBody.create(MediaType.parse("image/png"), file);//content-type为image/png，其中byteArray中的数据对应图中(5)处
+        MultipartBody.Part fileparam = MultipartBody.Part.createFormData("interactionFile", file.getName(), body);//分别对应图中(3)、(4)
+
+        mCommonRequest.uploadFile(firstBody,fileparam)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new Observer<Response<UploadFileRep>>() {
 
                     @Override
                     public void onSubscribe(Disposable d) {}
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onNext(Response<UploadFileRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
+                        getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
                         }
@@ -366,6 +373,12 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         if (getView() == null) return;
         String json = JSON.toJSONString(thirdVO);
         Log.i(TAG, "saveThirdTokenInfo == " + json);
+        thirdVO.responseJson = json;
+        if (type.equals(SsoLoginType.WEIXIN)) {
+            thirdVO.openType = "2";
+        } else if (type.equals(SsoLoginType.QQ)) {
+            thirdVO.openType = "1";
+        }
         mCommonRequest.saveThirdTokenInfo(thirdVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -433,6 +446,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         body.userId = userId;
         body.openId = openID;
         mCommonRequest.getSystemToken(body)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<LoginRep>>() {
                     @Override
@@ -446,7 +460,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         if (value.code() == 200 && value.body() != null ) {
                             UserInfoUtils.cleanUser();
                             UserInfoUtils.saveUser(value.body());
-                            ((CommonBaseIV.ThirdBindIV) getView()).thirdBindOKGetSystemTokenResponse(value.body());
+                            ((CommonBaseIV.LoginViewIV) getView()).loginResponse(value.body());
                         }
                     }
 
@@ -605,6 +619,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onNext(Response<UserInfoRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.UserInfoIV) getView()).userInfoSuccess(value.body());
                         }
@@ -621,9 +636,40 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
+    public void changeLog(String logo, String useId) {
+        if (getView() == null) return;
+        ChangeLogoBody changeLogoVO = new ChangeLogoBody(logo,useId);
+        mCommonRequest.changeLog(changeLogoVO)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.UploadFileIV) getView()).uploadFileSuccess(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
     public void changeName(String name, String useId) {
         if (getView() == null) return;
-        mCommonRequest.changeName(name,useId)
+        ChangeNameBody changeLogoVO = new ChangeNameBody(name,useId);
+        mCommonRequest.changeName(changeLogoVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseRep>>() {
@@ -650,9 +696,10 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
-    public void changeSignature(String phone, String useId, String signature) {
+    public void changeSignature(String useId, String signature) {
         if (getView() == null) return;
-        mCommonRequest.changeSignature(phone,useId,signature)
+        ChangeSignBody changeSignBody = new ChangeSignBody(signature,useId);
+        mCommonRequest.changeSignature(changeSignBody)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseRep>>() {
@@ -741,7 +788,8 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
     public void createWithdrawPassword(String password,String userId) {
         if (getView() == null) return;
-        mCommonRequest.createWithdrawPassword(password,userId)
+        createWithdrawPasswordBody changePasswordVO = new createWithdrawPasswordBody(password,userId);
+        mCommonRequest.createWithdrawPassword(changePasswordVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseRep>>() {
@@ -770,7 +818,8 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
     public void changePhone(String code, String phone) {
         if (getView() == null) return;
-        mCommonRequest.changePhone(code,phone)
+        ChangePhoneBody body = new ChangePhoneBody(code,phone);
+        mCommonRequest.changePhone(body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseRep>>() {

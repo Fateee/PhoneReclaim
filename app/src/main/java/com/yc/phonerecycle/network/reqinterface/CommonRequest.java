@@ -6,6 +6,7 @@ import com.yc.phonerecycle.model.bean.biz.*;
 import com.yc.phonerecycle.model.bean.request.SaveBankReqBody;
 import com.yc.phonerecycle.model.bean.request.*;
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Response;
 import retrofit2.http.*;
@@ -16,7 +17,7 @@ public interface CommonRequest {
 
     @Multipart
     @POST("v1/cFileManger/upload")
-    Observable<Response<BaseRep>> uploadFile(@PartMap Map<String, RequestBody> parms);
+    Observable<Response<UploadFileRep>> uploadFile(@Part("interactionFile") RequestBody firstBody,@Part MultipartBody.Part file/* @PartMap Map<String, RequestBody> parms*/);
 
     @GET("v1/dict/getDictType")
     Observable<Response<DictTypeRep>> getDictType();
@@ -57,15 +58,15 @@ public interface CommonRequest {
 
     @Headers("Content-Type: application/json")
     @POST("v1/setting/changeName")
-    Observable<Response<BaseRep>> changeName(@Query("name") String name,@Query("useId") String useId);
+    Observable<Response<BaseRep>> changeName(@Body ChangeNameBody changeLogoVO);
 
     @Headers("Content-Type: application/json")
     @POST("v1/setting/changeSignature")
-    Observable<Response<BaseRep>> changeSignature(@Query("phone") String phone,@Query("useId") String useId, @Query("signature") String signature);
+    Observable<Response<BaseRep>> changeSignature(@Body ChangeSignBody changeSingnatureVO);
 
     @Headers("Content-Type: application/json")
     @POST("v1/setting/createWithdrawPassword")
-    Observable<Response<BaseRep>> createWithdrawPassword(@Query("password") String password,@Query("userId") String userId);
+    Observable<Response<BaseRep>> createWithdrawPassword(@Body createWithdrawPasswordBody changePasswordVO);
 
     @Headers("Content-Type: application/json")
     @POST("v1/setting/resetWithdrawPassword")
@@ -77,7 +78,7 @@ public interface CommonRequest {
 
     @Headers("Content-Type: application/json")
     @POST("v1/setting/changePhone")
-    Observable<Response<BaseRep>> changePhone(@Query("code") String code,@Query("phone") String phone);
+    Observable<Response<BaseRep>> changePhone(@Body ChangePhoneBody changePhoneVO);
 
     //添加用户反馈
     @Headers("Content-Type: application/json")

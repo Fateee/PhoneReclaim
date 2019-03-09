@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:title="银行卡号"
-            app:edit_hint="请输入银行卡号"/>
+            app:edit_hint="请输入16位银行卡号"/>
     <com.yc.phonerecycle.widget.SimpleCornerTextView
             android:id="@+id/card_submit"
             android:layout_width="match_parent" android:layout_height="44dp"

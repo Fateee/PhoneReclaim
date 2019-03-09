@@ -14,10 +14,7 @@ import android.view.View
 import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
 import com.snail.antifake.deviceid.macaddress.MacAddressUtils
 import com.yc.phonerecycle.R
-import com.yc.phonerecycle.activity.AllParamsActivity
-import com.yc.phonerecycle.activity.ChoosePhoneActivity
-import com.yc.phonerecycle.activity.HandCheckActivity
-import com.yc.phonerecycle.activity.SignUpActivity
+import com.yc.phonerecycle.activity.*
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
 import com.yc.phonerecycle.utils.*
@@ -72,6 +69,12 @@ class HomeFragment : BaseFragment<EmptyPresenter>() {
             override fun onClick(p0: View?) {
                 ActivityToActivity.toActivity(
                     activity, ChoosePhoneActivity::class.java)
+            }
+        })
+        auto_check.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                ActivityToActivity.toActivity(
+                    activity, AutoCheckActivity::class.java)
             }
         })
         to_detail.setOnClickListener(object : View.OnClickListener {

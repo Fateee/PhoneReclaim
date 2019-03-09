@@ -39,7 +39,7 @@ public class ThirdLoginInfoRep extends BaseRep {
         public String logo;
         public String nickName;
         public String openID;
-        public String openType;
+        public String openType;//类型 1 qq 2 wx
         public String qqAppId;
         public String qqAppSecret;
         public String qqRedirectUrl;

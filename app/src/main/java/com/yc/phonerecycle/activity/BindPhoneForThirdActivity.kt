@@ -16,8 +16,18 @@ import kotlinx.android.synthetic.main.activity_forget_pwd.*
 import kotlinx.android.synthetic.main.titleview.*
 
 
-class BindPhoneForThirdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV.SignUpIv,CommonBaseIV.ThirdBindIV {
+class BindPhoneForThirdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV.SignUpIv,CommonBaseIV.LoginViewIV {
     override fun loginResponse(data: Any?) {
+        if (data is LoginRep) {
+            if(data.code == 0) {
+                ActivityToActivity.toActivity(
+                    this@BindPhoneForThirdActivity, MainActivity::class.java)
+                finish()
+            } else {
+                if (!TextUtils.isEmpty(data.info))
+                    ToastUtil.showShortToastCenter(data.info)
+            }
+        }
     }
 
     override fun loginWX(
@@ -32,18 +42,18 @@ class BindPhoneForThirdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV
     override fun loginQQ(accessToken: String?, uId: String?, expiresIn: Long, wholeData: String?) {
     }
 
-    override fun thirdBindOKGetSystemTokenResponse(data: Any?) {
-        if (data is LoginRep) {
-            if(data.code == 0) {
-                ActivityToActivity.toActivity(
-                    this@BindPhoneForThirdActivity, MainActivity::class.java)
-                finish()
-            } else {
-                if (!TextUtils.isEmpty(data.info))
-                    ToastUtil.showShortToastCenter(data.info)
-            }
-        }
-    }
+//    override fun thirdBindOKGetSystemTokenResponse(data: Any?) {
+//        if (data is LoginRep) {
+//            if(data.code == 0) {
+//                ActivityToActivity.toActivity(
+//                    this@BindPhoneForThirdActivity, MainActivity::class.java)
+//                finish()
+//            } else {
+//                if (!TextUtils.isEmpty(data.info))
+//                    ToastUtil.showShortToastCenter(data.info)
+//            }
+//        }
+//    }
 
     var timer = object : CountDownTimer(60*1000,1000) {
         override fun onFinish() {

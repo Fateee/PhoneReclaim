@@ -9,27 +9,27 @@ import java.util.List;
 public class NearByShopRep extends BaseRep {
     public List<DataBean> data;
 
-
     public static class DataBean extends BaseBean {
         /**
-         * address :
-         * adminUser :
-         * adminUserName :
-         * area :
-         * businessHours :
+         * address : 
+         * adminUser : 
+         * adminUserName : 
+         * area : 
+         * businessHours : 
          * distance : 0
-         * fixedLine :
+         * email : 
+         * fixedLine : 
          * fixtureNumber : 0
-         * id :
-         * images :
-         * longitudeLatitude :
-         * mainImage :
-         * merchantsId :
-         * merchantsName :
-         * name :
-         * password :
-         * phone :
-         * remark :
+         * id : 
+         * images : 
+         * longitudeLatitude : 
+         * mainImage : 
+         * merchantsId : 
+         * merchantsName : 
+         * name : 
+         * password : 
+         * phone : 
+         * remark : 
          * status : 0
          */
 
@@ -39,6 +39,7 @@ public class NearByShopRep extends BaseRep {
         public String area;
         public String businessHours;
         public int distance;
+        public String email;
         public String fixedLine;
         public int fixtureNumber;
         public String id;
@@ -52,6 +53,5 @@ public class NearByShopRep extends BaseRep {
         public String phone;
         public String remark;
         public int status;
-
     }
 }

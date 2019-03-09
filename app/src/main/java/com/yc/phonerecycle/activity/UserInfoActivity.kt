@@ -15,9 +15,14 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.yc.library.widget.BottomDialog
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.model.bean.base.BaseRep
+import com.yc.phonerecycle.model.bean.biz.UploadFileRep
 import com.yc.phonerecycle.model.bean.biz.UserInfoRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
@@ -28,7 +33,25 @@ import java.io.File
 import java.util.*
 
 
-class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoIV{
+class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoIV,CommonBaseIV.CommonIV,CommonBaseIV.UploadFileIV{
+    override fun uploadFileSuccess(data: BaseRep?) {
+        if (data?.code == 0) {
+            ToastUtil.showShortToast("头像上传成功")
+            presenter.getInfo()
+        }
+    }
+
+    override fun getDataOK(rep: Any?) {
+        if (rep is UploadFileRep) {
+            if (rep.code == 0) {
+                if (TextUtils.isEmpty(rep.data)) {
+                    ToastUtil.showShortToast("上传头像失败")
+                    return
+                }
+                presenter.changeLog(rep.data,UserInfoUtils.getUser().data?.userInfoVO?.id)
+            }
+        }
+    }
 
     override fun createPresenter() = CommonPresenter()
 
@@ -61,6 +84,7 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
     }
 
     override fun initDatas() {
+        presenter.getInfo()
         avatar.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 handleWithIconClick()
@@ -91,10 +115,17 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
 //        presenter.getInfo()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        presenter.getInfo()
+    }
+
     override fun userInfoSuccess(body: UserInfoRep?) {
         UserInfoUtils.saveUserInfo(body)
         userinfo_nick.setSubTitle(UserInfoUtils.getUserInfo().data?.name)
         userinfo_sign.setSubTitle(UserInfoUtils.getUserInfo().data?.signature)
+//        Glide.with(this@UserInfoActivity).load(body?.data?.logo).centerCrop().into(avatar)
+        Glide.with(this@UserInfoActivity).load(body?.data?.logo).apply(RequestOptions.bitmapTransform(CircleCrop())).into(avatar)
     }
 
     fun handleWithIconClick() {
