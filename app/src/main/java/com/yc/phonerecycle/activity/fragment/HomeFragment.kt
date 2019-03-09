@@ -16,6 +16,7 @@ import com.snail.antifake.deviceid.macaddress.MacAddressUtils
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.*
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
+import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.mvp.view.BaseFragment
 import com.yc.phonerecycle.utils.*
 import kotlinx.android.synthetic.main.activity_login.*
@@ -60,7 +61,7 @@ class HomeFragment : BaseFragment<EmptyPresenter>() {
             }
 
             override fun onDenied(context: Context) {
-                showPermissionDialog()
+                (activity as BaseActivity<*>).showPermissionDialog("开启电话权限","你还没有开启电话权限，开启之后才可读取手机信息")
             }
         })
 
@@ -85,35 +86,35 @@ class HomeFragment : BaseFragment<EmptyPresenter>() {
         })
     }
 
-    internal fun showPermissionDialog() {
-        if (cameraDialog == null) {
-            cameraDialog = DialogHelper.showDialog(
-                "1",
-                activity as Context,
-                null,
-                "",
-                "",
-                getString(R.string.open_camera_rights),
-                "你还没有开启电话权限，开启之后才可读取手机信息",
-                getString(R.string.cancel),
-                getString(R.string.setting),
-                "",
-                "",
-                object : BaseDialog.IClickListener {
-                    override fun click(dialog: Dialog) {
-                    }
-                },
-                object : BaseDialog.IClickListener {
-                    override fun click(dialog: Dialog) {
-                        PermissionUtils.openPermissionSettings(activity as Context)
-                    }
-                }
-            )
-            cameraDialog?.setCanceledOnTouchOutside(false)
-            cameraDialog?.setOnCancelListener(DialogInterface.OnCancelListener {
-            })
-        } else if (!cameraDialog?.isShowing()!!) {
-            cameraDialog?.show()
-        }
-    }
+//    internal fun showPermissionDialog() {
+//        if (cameraDialog == null) {
+//            cameraDialog = DialogHelper.showDialog(
+//                "1",
+//                activity as Context,
+//                null,
+//                "",
+//                "",
+//                getString(R.string.open_camera_rights),
+//                "你还没有开启电话权限，开启之后才可读取手机信息",
+//                getString(R.string.cancel),
+//                getString(R.string.setting),
+//                "",
+//                "",
+//                object : BaseDialog.IClickListener {
+//                    override fun click(dialog: Dialog) {
+//                    }
+//                },
+//                object : BaseDialog.IClickListener {
+//                    override fun click(dialog: Dialog) {
+//                        PermissionUtils.openPermissionSettings(activity as Context)
+//                    }
+//                }
+//            )
+//            cameraDialog?.setCanceledOnTouchOutside(false)
+//            cameraDialog?.setOnCancelListener(DialogInterface.OnCancelListener {
+//            })
+//        } else if (!cameraDialog?.isShowing()!!) {
+//            cameraDialog?.show()
+//        }
+//    }
 }

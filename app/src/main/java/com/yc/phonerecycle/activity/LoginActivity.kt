@@ -1,10 +1,10 @@
 package com.yc.phonerecycle.activity
 
+import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import com.tencent.connect.common.Constants
-import com.tencent.tauth.Tencent
+import com.umeng.socialize.UMShareAPI
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.constant.BaseConst
 import com.yc.phonerecycle.model.bean.biz.LoginRep
@@ -86,8 +86,12 @@ class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV,C
         })
         iv_login_qq.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                //todo huyi
-                presenter.login(this@LoginActivity,SsoLoginType.QQ)
+                var openid = UserInfoUtils.getUserQQTokenRep().openid
+                if (TextUtils.isEmpty(openid)) {
+                    presenter.login(this@LoginActivity,SsoLoginType.QQ)
+                } else {
+                    presenter.getThirdTokenByOpenId(this@LoginActivity,openid,SsoLoginType.QQ)
+                }
             }
         })
     }
@@ -155,10 +159,13 @@ class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV,C
 //        }
 //    }
 //
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 //        if (requestCode == Constants.REQUEST_LOGIN || requestCode == Constants.REQUEST_APPBAR) {
-//            Tencent.onActivityResultData(requestCode, resultCode, data, listener)
+////            Tencent.onActivityResultData(requestCode, resultCode, data, listener)
+//            UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
 //        }
-//    }
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
 }

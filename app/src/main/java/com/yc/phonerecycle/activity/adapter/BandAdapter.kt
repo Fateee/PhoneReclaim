@@ -81,18 +81,17 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
             is BrandGoodsRep.DataBean -> {
                 if (holder is PhoneVH) {
                     holder.phone_name.text = temp.type
-                    var url = UrlConst.FILE_DOWNLOAD_URL+temp.logo
+//                    var url = UrlConst.FILE_DOWNLOAD_URL+temp.logo
 //                    Glide.with(mContext).load(url).centerCrop().into(holder.phone_logo)
-                    Glide.with(mContext).load(url).into(holder.phone_logo)
+                    Glide.with(mContext).load(temp.logo).into(holder.phone_logo)
                     holder.itemView.tag = temp
                     holder.itemView.setOnClickListener(object :View.OnClickListener{
                         override fun onClick(p0: View?) {
-//                            var tmp = p0?.tag as NearByShopRep.DataBean
-//                            var map = HashMap<String,String>()
-//                            map["id"] = tmp.id
-//                            map["type"] = "1"
+                            var tmp = p0?.tag as BrandGoodsRep.DataBean
+                            var map = HashMap<String,Any>()
+                            map["brandbean"] = tmp
                             ActivityToActivity.toActivity(
-                                mContext, HandCheckActivity::class.java)
+                                mContext, HandCheckActivity::class.java,map)
                         }
                     })
                 }

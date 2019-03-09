@@ -5,6 +5,9 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
+import com.yc.phonerecycle.constant.BaseConst;
 import com.yc.phonerecycle.model.bean.biz.DictMapRep;
 import com.yc.phonerecycle.model.bean.biz.DictTypeRep;
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter;
@@ -50,7 +53,10 @@ public class BaseApplication extends MultiDexApplication {
 //        initARouter();
 //        initLogger();
 //        initCrashManage();
+        UMConfigure.init(this,"5c8370ee3fc19556f5000b08","umeng",UMConfigure.DEVICE_TYPE_PHONE,"");//58edcfeb310c93091c000be2 5965ee00734be40b580001a0
 
+        PlatformConfig.setWeixin(BaseConst.WEIXIN_APPID, BaseConst.WEIXIN_SERCET);
+        PlatformConfig.setQQZone(BaseConst.QQ_APPID,BaseConst.QQ_APPID);
         //当 App 中出现多进程, 并且您需要适配所有的进程, 就需要在 App 初始化时调用 initCompatMultiProcess()
         //在 Demo 中跳转的三方库中的 DefaultErrorActivity 就是在另外一个进程中, 所以要想适配这个 Activity 就需要调用 initCompatMultiProcess()
         AutoSize.initCompatMultiProcess(this);

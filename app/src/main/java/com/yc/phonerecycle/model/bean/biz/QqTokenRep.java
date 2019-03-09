@@ -21,7 +21,8 @@ public class QqTokenRep implements Serializable {
     public String openid;
     public String access_token;
     public String pay_token;
-    public int expires_in;
+//    public int expires_in;
+    public String expires_in;
     public String pf;
     public String pfkey;
     public String msg;
@@ -29,4 +30,13 @@ public class QqTokenRep implements Serializable {
     public int query_authority_cost;
     public int authority_cost;
 
+    public QqTokenRep() {
+    }
+
+    public QqTokenRep(String access_token, String expires_in, String refresh_token, String openid) {
+        this.access_token = access_token;
+        this.expires_in = expires_in;
+        this.access_token = refresh_token;
+        this.openid = openid;
+    }
 }

@@ -1,5 +1,6 @@
 package com.yc.phonerecycle.activity
 
+import android.Manifest
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.FragmentTransaction
@@ -10,6 +11,14 @@ import com.yc.phonerecycle.activity.fragment.UserCenterFragment
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import android.support.v4.app.ActivityCompat
+import android.Manifest.permission
+import android.Manifest.permission.WRITE_APN_SETTINGS
+import android.Manifest.permission.SYSTEM_ALERT_WINDOW
+import android.Manifest.permission.SET_DEBUG_APP
+import android.Manifest.permission.READ_LOGS
+import android.os.Build.VERSION
+import android.os.Build
 
 
 class MainActivity : BaseActivity<EmptyPresenter>() {
@@ -41,7 +50,21 @@ class MainActivity : BaseActivity<EmptyPresenter>() {
     override fun getContentView(): Int = R.layout.activity_main
 
     override fun initView() {
-
+        if (Build.VERSION.SDK_INT >= 23) {
+            val mPermissionList = arrayOf<String>(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.CALL_PHONE,
+                Manifest.permission.READ_LOGS,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.SET_DEBUG_APP,
+                Manifest.permission.SYSTEM_ALERT_WINDOW,
+                Manifest.permission.GET_ACCOUNTS,
+                Manifest.permission.WRITE_APN_SETTINGS
+            )
+            ActivityCompat.requestPermissions(this, mPermissionList, 123)
+        }
     }
 
     override fun createPresenter(): EmptyPresenter? = null

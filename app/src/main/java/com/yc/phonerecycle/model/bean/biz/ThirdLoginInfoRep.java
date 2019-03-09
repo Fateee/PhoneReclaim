@@ -34,7 +34,7 @@ public class ThirdLoginInfoRep extends BaseRep {
          */
 
         public String accessToken;
-        public int expiresIn;
+        public String expiresIn;
         public String gender;
         public String logo;
         public String nickName;
@@ -51,7 +51,7 @@ public class ThirdLoginInfoRep extends BaseRep {
         public String weCatAppSecret;
         public String weCatRedirectUrl;
 
-        public void updateInfo(String accessToken,String openid,String refresh_token,int expiresIn) {
+        public void updateInfo(String accessToken,String openid,String refresh_token,String expiresIn) {
             this.accessToken = accessToken;
             this.openID = openid;
             this.refreshToken = refresh_token;

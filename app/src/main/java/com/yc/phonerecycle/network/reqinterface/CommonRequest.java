@@ -203,7 +203,7 @@ public interface CommonRequest {
 
     @Headers("Content-Type: application/json")
     @POST("v1/address/saveOrUpdateAddress")
-    Observable<Response<BaseRep>> saveOrUpdateAddress(@Body RecycleAddrRep.DataBean addressVO);
+    Observable<Response<StringDataRep>> saveOrUpdateAddress(@Body RecycleAddrRep.DataBean addressVO);
 
 
     //第三方授权登录

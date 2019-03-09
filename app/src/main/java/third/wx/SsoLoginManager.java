@@ -48,9 +48,9 @@ public class SsoLoginManager {
             switch (type) {
                 case QQ:
                     if (isQQInstalled(activity)) {
-                        Intent intent = new Intent(activity, SL_QQHandlerActivity.class).putExtra(SL_QQHandlerActivity.KEY_IS_LOGIN_TYPE, true);
-                        activity.startActivity(intent);
-                        activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//                        Intent intent = new Intent(activity, SL_QQHandlerActivity.class).putExtra(SL_QQHandlerActivity.KEY_IS_LOGIN_TYPE, true);
+//                        activity.startActivity(intent);
+//                        activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     } else {
                         ToastUtil.showShortToast("未安装QQ");
                         if (listener != null) {
@@ -60,9 +60,9 @@ public class SsoLoginManager {
                     break;
                 case WEIXIN:
                     if (isWeiXinInstalled(activity)) {
-                        WXEntryActivity.wxRespListener = weixinCodeRespListener;
-                        WXEntryActivity.login(activity.getApplicationContext());
-                        activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//                        WXEntryActivity.wxRespListener = weixinCodeRespListener;
+//                        WXEntryActivity.login(activity.getApplicationContext());
+//                        activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     } else {
                         ToastUtil.showShortToast("未安装微信");
                         if (listener != null) {
@@ -76,7 +76,7 @@ public class SsoLoginManager {
 
     public static void recycle() {
         listener = null;
-        WXEntryActivity.wxRespListener = null;
+//        WXEntryActivity.wxRespListener = null;
     }
 
     public static class LoginListener {

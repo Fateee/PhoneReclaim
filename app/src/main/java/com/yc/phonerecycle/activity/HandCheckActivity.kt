@@ -21,15 +21,19 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
 import com.yc.phonecheck.item.MicrophoneTest
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.fragment.*
 import com.yc.phonerecycle.app.BaseApplication
+import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
+import com.yc.phonerecycle.utils.PermissionUtils
 import com.yc.phonerecycle.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_auto_check.*
+import kotlinx.android.synthetic.main.fragment_main_home.*
 
 class HandCheckActivity : BaseActivity<EmptyPresenter>() , SensorEventListener {
 
@@ -50,7 +54,25 @@ class HandCheckActivity : BaseActivity<EmptyPresenter>() , SensorEventListener {
 
     override fun createPresenter(): EmptyPresenter? = null
 
+    public lateinit var brandbean: BrandGoodsRep.DataBean
+
     override fun initBundle() {
+        brandbean = intent.getSerializableExtra("brandbean") as BrandGoodsRep.DataBean
+        mCheckReqBody.goodsId = brandbean.id
+        mCheckReqBody.system = Build.VERSION.RELEASE
+        PermissionUtils.checkPhoneStatePermission(this@HandCheckActivity, object : PermissionUtils.Callback() {
+            override fun onGranted() {
+                mCheckReqBody.imei = DeviceIdUtil.getDeviceId(this@HandCheckActivity)
+            }
+
+            override fun onRationale() {
+                ToastUtil.showShortToast("请开启电话权限才能正常使用")
+            }
+
+            override fun onDenied(context: Context) {
+                showPermissionDialog("开启电话权限","你还没有开启电话权限，开启之后才可读取手机信息")
+            }
+        })
     }
 
     override fun getContentView(): Int = R.layout.activity_hand_check

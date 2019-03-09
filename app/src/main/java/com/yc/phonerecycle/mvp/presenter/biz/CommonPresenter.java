@@ -1,11 +1,16 @@
 package com.yc.phonerecycle.mvp.presenter.biz;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yc.phonerecycle.app.BaseApplication;
 import com.yc.phonerecycle.constant.BaseConst;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
@@ -167,55 +172,125 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
     public void login(final Context context, @SsoLoginType final String type) {
         if (getView() == null) return;
-//        loginView.showProgressDialog();
-        SsoLoginManager.login(context, type, new SsoLoginManager.LoginListener() {
+        getView().showLoading();
+        SHARE_MEDIA share_media_type = SHARE_MEDIA.WEIXIN;
+        if (type.equals(SsoLoginType.WEIXIN)) {
+            share_media_type = SHARE_MEDIA.WEIXIN;
+        } else if (type.equals(SsoLoginType.QQ)) {
+            share_media_type = SHARE_MEDIA.QQ;
+        }
+        UMShareAPI.get(context).getPlatformInfo((Activity) context, share_media_type, new UMAuthListener() {
             @Override
-            public void onSuccess(String accessToken, String uId, long expiresIn, @Nullable final String wholeData) {
-                super.onSuccess(accessToken, uId, expiresIn, wholeData);
-                Map<String, Object> body = JSON.parseObject(wholeData, Map.class);
-                getView().showLoading();
-//                Toast.makeText(context, "登录成功-----" + wholeData, Toast.LENGTH_LONG).show();
+            public void onStart(com.umeng.socialize.bean.SHARE_MEDIA share_media) {
+                Log.e("授权开始", "onStart授权开始: ");
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                //sdk是6.4.5的,但是获取值的时候用的是6.2以前的(access_token)才能获取到值,未知原因
+                String uid = map.get("uid");
+                String openid = map.get("openid");//微博没有
+                String unionid = map.get("unionid");//微博没有
+                String access_token = map.get("access_token");
+                String refresh_token = map.get("refresh_token");//微信,qq,微博都没有获取到
+                String expires_in = map.get("expires_in");
+                String name = map.get("name");//名称
+                String gender = map.get("gender");//性别
+                String iconurl = map.get("iconurl");//头像地址
+
+                Log.e("openid", "onStart授权完成: " + openid);
+                Log.e("unionid", "onStart授权完成: " + unionid);
+                Log.e("access_token", "onStart授权完成: " + access_token);
+                Log.e("refresh_token", "onStart授权完成: " + refresh_token);
+                Log.e("expires_in", "onStart授权完成: " + expires_in);
+                Log.e("uid", "onStart授权完成: " + uid);
+                Log.e("name", "onStart授权完成: " + name);
+                Log.e("gender", "onStart授权完成: " + gender);
+                Log.e("iconurl", "onStart授权完成: " + iconurl);
+
+                ThirdLoginInfoRep.DataBean thirdVO = new ThirdLoginInfoRep.DataBean();
+                thirdVO.updateInfo(access_token,openid,refresh_token,expires_in);
+                thirdVO.nickName = name;
+                thirdVO.logo = iconurl;
+                thirdVO.gender = gender;
+                String json = JSON.toJSONString(thirdVO);
+                Log.i(TAG, "saveThirdTokenInfo == " + json);
+                thirdVO.responseJson = json;
+
                 if (type.equals(SsoLoginType.WEIXIN)) {
-                    getWXToken(body);
-//                    ((CommonBaseIV.LoginViewIV) getView()).loginWX(accessToken, uId, expiresIn, wholeData,body);
+                    UserInfoUtils.cleanUserWxTokenRep();
+                    WxTokenRep tokenRep = new WxTokenRep(access_token,expires_in,refresh_token,openid,"");
+                    UserInfoUtils.saveUserWxTokenRep(tokenRep);
+                    thirdVO.openType = "2";
                 } else if (type.equals(SsoLoginType.QQ)) {
-//                    ((CommonBaseIV.LoginViewIV) getView()).loginQQ(accessToken, uId, expiresIn, wholeData);
-                    QqTokenRep result = JSON.parseObject(wholeData, QqTokenRep.class);
+                    UserInfoUtils.cleanUserQQTokenRep();
+                    QqTokenRep result = new QqTokenRep(access_token,expires_in,refresh_token,openid);
                     UserInfoUtils.saveUserQQTokenRep(result);
-                    ThirdLoginInfoRep.DataBean thirdVO = new ThirdLoginInfoRep.DataBean();
-                    thirdVO.updateInfo(result.access_token,result.openid,result.access_token,result.expires_in);
-                    saveThirdTokenInfo(thirdVO,SsoLoginType.QQ);
+                    thirdVO.openType = "1";
                 }
-//                TokenUtils.requestToken(context, body, new JMHttpRequest.INetworkListener() {
-//                    @Override
-//                    public void onSuccess(BaseResponseEntity response) {
-//                        handleWithLoginSucc(loginView, context);
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(int code, ErrorResponseEntity errorMsg) {
-//                        Log.e(TAG,"; code = " + code + "; msg = " + errorMsg.errorMsg + "; body =" + wholeData);
-//                        handleWithLoginFail(loginView, errorMsg);
-//                        if (code == 10051) loginView.finishActivity();
-//
-//                    }
-//                });
+                saveThirdTokenInfo(thirdVO,type);
             }
 
             @Override
-            public void onError(int code, @NonNull ErrorResponseEntity errorMsg) {
-                super.onError(code, errorMsg);
-//                handleWithLoginFail(loginView, errorMsg);
-//                if (code == 10051) loginView.finishActivity();
+            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                Toast.makeText(context, "授权失败", Toast.LENGTH_LONG).show();
+                Log.e("onError", "onError: " + "授权失败");
             }
 
             @Override
-            public void onCancel() {
-                super.onCancel();
-//                loginView.dismissProgressDialog();
+            public void onCancel(SHARE_MEDIA share_media, int i) {
+                Toast.makeText(context, "授权取消", Toast.LENGTH_LONG).show();
+                Log.e("onError", "onError: " + "授权取消");
             }
         });
+//        SsoLoginManager.login(context, type, new SsoLoginManager.LoginListener() {
+//            @Override
+//            public void onSuccess(String accessToken, String uId, long expiresIn, @Nullable final String wholeData) {
+//                super.onSuccess(accessToken, uId, expiresIn, wholeData);
+//                Map<String, Object> body = JSON.parseObject(wholeData, Map.class);
+//                getView().showLoading();
+////                Toast.makeText(context, "登录成功-----" + wholeData, Toast.LENGTH_LONG).show();
+//                if (type.equals(SsoLoginType.WEIXIN)) {
+//                    getWXToken(body);
+////                    ((CommonBaseIV.LoginViewIV) getView()).loginWX(accessToken, uId, expiresIn, wholeData,body);
+//                } else if (type.equals(SsoLoginType.QQ)) {
+////                    ((CommonBaseIV.LoginViewIV) getView()).loginQQ(accessToken, uId, expiresIn, wholeData);
+//                    QqTokenRep result = JSON.parseObject(wholeData, QqTokenRep.class);
+//                    UserInfoUtils.saveUserQQTokenRep(result);
+//                    ThirdLoginInfoRep.DataBean thirdVO = new ThirdLoginInfoRep.DataBean();
+//                    thirdVO.updateInfo(result.access_token,result.openid,result.access_token,result.expires_in);
+//                    saveThirdTokenInfo(thirdVO,SsoLoginType.QQ);
+//                }
+////                TokenUtils.requestToken(context, body, new JMHttpRequest.INetworkListener() {
+////                    @Override
+////                    public void onSuccess(BaseResponseEntity response) {
+////                        handleWithLoginSucc(loginView, context);
+////
+////                    }
+////
+////                    @Override
+////                    public void onError(int code, ErrorResponseEntity errorMsg) {
+////                        Log.e(TAG,"; code = " + code + "; msg = " + errorMsg.errorMsg + "; body =" + wholeData);
+////                        handleWithLoginFail(loginView, errorMsg);
+////                        if (code == 10051) loginView.finishActivity();
+////
+////                    }
+////                });
+//            }
+//
+//            @Override
+//            public void onError(int code, @NonNull ErrorResponseEntity errorMsg) {
+//                super.onError(code, errorMsg);
+////                handleWithLoginFail(loginView, errorMsg);
+////                if (code == 10051) loginView.finishActivity();
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                super.onCancel();
+////                loginView.dismissProgressDialog();
+//            }
+//        });
     }
 
     public void getWXToken(Map<String, Object> body) {
@@ -371,14 +446,14 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
     public void saveThirdTokenInfo(final ThirdLoginInfoRep.DataBean thirdVO, final String type) {
         if (getView() == null) return;
-        String json = JSON.toJSONString(thirdVO);
-        Log.i(TAG, "saveThirdTokenInfo == " + json);
-        thirdVO.responseJson = json;
-        if (type.equals(SsoLoginType.WEIXIN)) {
-            thirdVO.openType = "2";
-        } else if (type.equals(SsoLoginType.QQ)) {
-            thirdVO.openType = "1";
-        }
+//        String json = JSON.toJSONString(thirdVO);
+//        Log.i(TAG, "saveThirdTokenInfo == " + json);
+//        thirdVO.responseJson = json;
+//        if (type.equals(SsoLoginType.WEIXIN)) {
+//            thirdVO.openType = "2";
+//        } else if (type.equals(SsoLoginType.QQ)) {
+//            thirdVO.openType = "1";
+//        }
         mCommonRequest.saveThirdTokenInfo(thirdVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -1550,13 +1625,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.saveOrUpdateAddress(addressVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new Observer<Response<StringDataRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onNext(Response<StringDataRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.SaveAddrIV) getView()).saveAddrOK(value.body());

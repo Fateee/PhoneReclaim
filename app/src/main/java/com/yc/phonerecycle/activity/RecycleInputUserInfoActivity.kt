@@ -13,6 +13,7 @@ import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.model.bean.biz.AboutUsRep
 import com.yc.phonerecycle.model.bean.biz.DivisionRep
 import com.yc.phonerecycle.model.bean.biz.RecycleAddrRep
+import com.yc.phonerecycle.model.bean.biz.StringDataRep
 import com.yc.phonerecycle.model.bean.request.RecycleReqBody
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.ActivityToActivity
@@ -24,14 +25,17 @@ class RecycleInputUserInfoActivity : BaseActivity<CommonPresenter>(),CommonBaseI
     OnAddressSelectedListener,
     AddressSelector.OnDialogCloseListener, AddressSelector.onSelectorAreaPositionListener{
     override fun saveAddrOK(data: BaseRep?) {
-        if (data?.code == 0) {
-            ToastUtil.showShortToastCenter("地址提交成功")
+        if (data is StringDataRep) {
+            if (data?.code == 0) {
+                ToastUtil.showShortToastCenter("地址提交成功")
 
-            var orderVO = RecycleReqBody()
-            orderVO.goodsInstance = recordid
-            orderVO.address = addressVO.address
-            orderVO.status = BaseConst.ORDER_WAIT_EMS
-            presenter.addOrder(orderVO)
+                var orderVO = RecycleReqBody()
+                orderVO.goodsInstance = recordid
+                orderVO.area = addressVO.address
+                orderVO.addressId = data?.data
+                orderVO.status = BaseConst.ORDER_WAIT_EMS
+                presenter.addOrder(orderVO)
+            }
         }
     }
 
