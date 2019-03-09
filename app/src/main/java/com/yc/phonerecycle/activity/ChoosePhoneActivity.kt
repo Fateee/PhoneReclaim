@@ -31,7 +31,7 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
     private lateinit var mPhoneAdapter: BandAdapter
 
     override fun initDatas() {
-        presenter.getBrandSelect(0)
+        presenter.getBrandSelect("",0)
         val mLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         brand_list.layoutManager = mLinearLayoutManager
         mBandAdapter = BandAdapter(this,0)

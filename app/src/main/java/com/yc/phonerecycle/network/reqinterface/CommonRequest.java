@@ -138,11 +138,11 @@ public interface CommonRequest {
     Observable<Response<NearByShopRep>> getNearby(@Path("longitude") String longitude,@Path("latitude") String latitude);
 
     @GET("v1/store/getStoreDetail/{id}")
-    Observable<Response<NearByShopRep.DataBean>> getStoreDetail(@Path("id") String id);
+    Observable<Response<ShopDetailRep>> getStoreDetail(@Path("id") String id);
 
     //店铺信息(店员)
     @GET("v1/stores/getMyStore")
-    Observable<Response<NearByShopRep.DataBean>> getMyStore();
+    Observable<Response<ShopDetailRep>> getMyStore();
 
 
     //检测记录
@@ -181,8 +181,8 @@ public interface CommonRequest {
 
     //手动检测品牌
     //获取品牌
-    @GET("v1/mBrand/getBrandSelect/{name}")
-    Observable<Response<BrandRep>> getBrandSelect(@Path("name") String name);
+    @GET("v1/mBrand/getBrandSelect")
+    Observable<Response<BrandRep>> getBrandSelect(@Query("name") String name);
 
     //获取商品
     @GET("v1/mBrand/getGoodsByBrandId/{brandId}/")

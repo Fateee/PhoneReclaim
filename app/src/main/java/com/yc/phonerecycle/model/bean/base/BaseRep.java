@@ -1,6 +1,7 @@
 package com.yc.phonerecycle.model.bean.base;
 
 
+import com.yc.phonerecycle.model.bean.BaseBean;
 import com.yc.phonerecycle.mvp.presenter.base.BaseModelInf;
 
 import java.io.Serializable;

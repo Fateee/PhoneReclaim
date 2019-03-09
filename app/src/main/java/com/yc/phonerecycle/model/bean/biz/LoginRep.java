@@ -10,7 +10,7 @@ import java.util.List;
  * Describe：用户信息
  */
 public class LoginRep extends BaseRep implements Serializable {
-
+    private static final long serialVersionUID = 4125096758372084000L;
     /**
      * data : {"token":"","userInfoVO":{"id":"","locked":true,"permissionsVOS":[{"id":"","name":""}],"phone":"","roleId":"","type":"","typeName":"","userName":""}}
      */

@@ -1176,13 +1176,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getStoreDetail(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<NearByShopRep.DataBean>>() {
+                .subscribe(new Observer<Response<ShopDetailRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<NearByShopRep.DataBean> value) {
+                    public void onNext(Response<ShopDetailRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1208,13 +1208,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getMyStore()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<NearByShopRep.DataBean>>() {
+                .subscribe(new Observer<Response<ShopDetailRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<NearByShopRep.DataBean> value) {
+                    public void onNext(Response<ShopDetailRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1234,9 +1234,9 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
-    public void getBrandSelect(final int type) {
+    public void getBrandSelect(String name,final int type) {
         if (getView() == null) return;
-        mCommonRequest.getBrandSelect(" ")
+        mCommonRequest.getBrandSelect(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BrandRep>>() {

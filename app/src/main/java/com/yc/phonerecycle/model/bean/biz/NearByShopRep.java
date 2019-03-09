@@ -38,7 +38,7 @@ public class NearByShopRep extends BaseRep {
         public String adminUserName;
         public String area;
         public String businessHours;
-        public int distance;
+        public double distance;
         public String email;
         public String fixedLine;
         public int fixtureNumber;
