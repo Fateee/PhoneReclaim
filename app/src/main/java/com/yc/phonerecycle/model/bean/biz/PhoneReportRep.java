@@ -4,9 +4,8 @@ package com.yc.phonerecycle.model.bean.biz;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 
 public class PhoneReportRep extends BaseRep {
-
     /**
-     * data : {"battery":0,"bluetooth":0,"brandId":"","brandName":"","call":0,"camera":0,"capacity":"","checkTime":"","colour":"","compass":0,"comprehensionAids":0,"estimatePrice":0,"facade":"","fingerprint":0,"flashlight":0,"goodsId":"","goodsInstanceId":"","gravitySensor":0,"gyroscope":0,"id":"","imei":"","lightSensor":0,"location":0,"lockAccount":"","loudspeaker":0,"memory":"","microphone":0,"multiTouch":0,"orderId":"","other":"","overhaul":"","price":0,"proximitySenso":0,"remark":"","screen":0,"screenProblem":"","spiritLevel":0,"startingState":"","system":"","type":"","vibrator":0,"water":"","wifi":0,"wirelessNetwork":""}
+     * data : {"battery":0,"bluetooth":0,"brandId":"","brandName":"","call":0,"camera":0,"capacity":"","checkTime":"","colour":"","compass":0,"comprehensionAids":0,"estimatePrice":0,"facade":"","fingerprint":0,"flashlight":0,"goodsId":"","goodsInstanceId":"","gravitySensor":0,"gyroscope":0,"id":"","imei":"","lightSensor":0,"location":0,"lockAccount":"","loudspeaker":0,"memory":"","microphone":0,"model":"","multiTouch":0,"orderId":"","other":"","overhaul":"","price":0,"proximitySenso":0,"regional":"","remark":"","screen":0,"screenProblem":"","spiritLevel":0,"startingState":"","system":"","type":"","vibrator":0,"warranty":"","water":"","wifi":0,"wirelessNetwork":""}
      */
 
     public DataBean data;
@@ -40,12 +39,14 @@ public class PhoneReportRep extends BaseRep {
          * loudspeaker : 0
          * memory : 
          * microphone : 0
+         * model : 
          * multiTouch : 0
          * orderId : 
          * other : 
          * overhaul : 
          * price : 0
          * proximitySenso : 0
+         * regional : 
          * remark : 
          * screen : 0
          * screenProblem : 
@@ -54,6 +55,7 @@ public class PhoneReportRep extends BaseRep {
          * system : 
          * type : 
          * vibrator : 0
+         * warranty : 
          * water : 
          * wifi : 0
          * wirelessNetwork : 
@@ -86,12 +88,14 @@ public class PhoneReportRep extends BaseRep {
         public int loudspeaker;
         public String memory;
         public int microphone;
+        public String model;
         public int multiTouch;
         public String orderId;
         public String other;
         public String overhaul;
         public int price;
         public int proximitySenso;
+        public String regional;
         public String remark;
         public int screen;
         public String screenProblem;
@@ -100,6 +104,7 @@ public class PhoneReportRep extends BaseRep {
         public String system;
         public String type;
         public int vibrator;
+        public String warranty;
         public String water;
         public int wifi;
         public String wirelessNetwork;

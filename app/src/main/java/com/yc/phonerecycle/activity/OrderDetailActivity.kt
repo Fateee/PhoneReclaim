@@ -55,13 +55,18 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
             }
             date.text = rep.data.dealTime
             name.text = rep.data.goodsInstanceVO.brandName+"+"+rep.data.goodsInstanceVO.brandId+"+"+rep.data.goodsInstanceVO.capacity
-            detail.tag = rep.data.goodsInstanceVO
+            detail.tag = rep.data
             detail.setOnClickListener {
-                //TODO 报告详情
-                var map = HashMap<String,BaseBean>()
-                map["obj"] = detail.tag as BaseBean
-                ActivityToActivity.toActivity(
-                    this@OrderDetailActivity, ReportDetailActivity::class.java,map)
+                var tag = detail.tag as MyOrderDetailRep.DataBean
+                var map = HashMap<String,String?>()
+                map["recordid"] = tag.goodsInstanceVO?.id
+                if (tag.status == 3 || tag.status == 5) {
+                    ActivityToActivity.toActivity(
+                        this@OrderDetailActivity, ReportDetailActivity::class.java,map)
+                } else {
+                    ActivityToActivity.toActivity(
+                        this@OrderDetailActivity, CheckResulttActivity::class.java,map)
+                }
             }
             order_price_value.text = getString(R.string.order_price_value,rep.data.estimatePrice)
         } else if (rep is BaseRep) {

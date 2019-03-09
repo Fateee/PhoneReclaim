@@ -1,38 +1,36 @@
 package com.yc.phonerecycle.model.bean.biz;
 
 
-import com.yc.phonerecycle.model.bean.BaseBean;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 
 public class MyOrderDetailRep extends BaseRep {
-
-
     /**
-     * data : {"address":"","area":"","consigneeName":"","consigneePhone":"","courierCompany":"","dealTime":"","dealUser":"","estimatePrice":"","goodsInstance":"","goodsInstanceVO":{"battery":0,"bluetooth":0,"brandId":"","brandName":"","call":0,"camera":0,"capacity":0,"colour":"","compass":0,"comprehensionAids":0,"facade":0,"fingerprint":0,"flashlight":0,"goodsId":"","gravitySensor":0,"gyroscope":0,"id":"","imei":"","lightSensor":0,"location":0,"lockAccount":0,"loudspeaker":0,"memory":0,"microphone":0,"multiTouch":0,"orderId":"","other":"","overhaul":0,"proximitySenso":0,"screen":0,"screenProblem":0,"spiritLevel":0,"startingState":0,"status":0,"system":"","type":"","vibrator":0,"water":0,"wifi":0,"wirelessNetwork":0},"id":"","orderOwner":"","orderOwnerName":"","orderType":"","ownerType":0,"status":0,"statusName":"","trackingNumber":""}
+     * data : {"address":"","area":"","consigneeName":"","consigneePhone":"","courierCompany":"","dealTime":"","dealUser":"","estimatePrice":"","goodsInstance":"","goodsInstanceVO":{"battery":0,"bluetooth":0,"brandId":"","brandName":"","call":0,"camera":0,"capacity":"","checkTime":"","colour":"","compass":0,"comprehensionAids":0,"estimatePrice":0,"facade":"","fingerprint":0,"flashlight":0,"goodsId":"","gravitySensor":0,"gyroscope":0,"id":"","imei":"","lightSensor":0,"location":0,"lockAccount":"","loudspeaker":0,"memory":"","microphone":0,"model":"","multiTouch":0,"orderId":"","other":"","overhaul":"","proximitySenso":0,"regional":"","screen":0,"screenProblem":"","spiritLevel":0,"startingState":"","status":0,"system":"","type":"","vibrator":0,"warranty":"","water":"","wifi":0,"wirelessNetwork":""},"id":"","orderOwner":"","orderOwnerName":"","orderType":"","ownerType":0,"status":0,"statusName":"","trackingNumber":""}
      */
 
     public DataBean data;
 
+
     public static class DataBean {
         /**
-         * address : 
-         * area : 
-         * consigneeName : 
-         * consigneePhone : 
-         * courierCompany : 
-         * dealTime : 
-         * dealUser : 
-         * estimatePrice : 
-         * goodsInstance : 
-         * goodsInstanceVO : {"battery":0,"bluetooth":0,"brandId":"","brandName":"","call":0,"camera":0,"capacity":0,"colour":"","compass":0,"comprehensionAids":0,"facade":0,"fingerprint":0,"flashlight":0,"goodsId":"","gravitySensor":0,"gyroscope":0,"id":"","imei":"","lightSensor":0,"location":0,"lockAccount":0,"loudspeaker":0,"memory":0,"microphone":0,"multiTouch":0,"orderId":"","other":"","overhaul":0,"proximitySenso":0,"screen":0,"screenProblem":0,"spiritLevel":0,"startingState":0,"status":0,"system":"","type":"","vibrator":0,"water":0,"wifi":0,"wirelessNetwork":0}
-         * id : 
-         * orderOwner : 
-         * orderOwnerName : 
-         * orderType : 
+         * address :
+         * area :
+         * consigneeName :
+         * consigneePhone :
+         * courierCompany :
+         * dealTime :
+         * dealUser :
+         * estimatePrice :
+         * goodsInstance :
+         * goodsInstanceVO : {"battery":0,"bluetooth":0,"brandId":"","brandName":"","call":0,"camera":0,"capacity":"","checkTime":"","colour":"","compass":0,"comprehensionAids":0,"estimatePrice":0,"facade":"","fingerprint":0,"flashlight":0,"goodsId":"","gravitySensor":0,"gyroscope":0,"id":"","imei":"","lightSensor":0,"location":0,"lockAccount":"","loudspeaker":0,"memory":"","microphone":0,"model":"","multiTouch":0,"orderId":"","other":"","overhaul":"","proximitySenso":0,"regional":"","screen":0,"screenProblem":"","spiritLevel":0,"startingState":"","status":0,"system":"","type":"","vibrator":0,"warranty":"","water":"","wifi":0,"wirelessNetwork":""}
+         * id :
+         * orderOwner :
+         * orderOwnerName :
+         * orderType :
          * ownerType : 0
          * status : 0
-         * statusName : 
-         * trackingNumber : 
+         * statusName :
+         * trackingNumber :
          */
 
         public String address;
@@ -50,53 +48,58 @@ public class MyOrderDetailRep extends BaseRep {
         public String orderOwnerName;
         public String orderType;
         public int ownerType;
-        public int status;//0、已完成 1、待寄出 2、待收货 3、已退回 4、验机 5、待打款
+        public int status;
         public String statusName;
         public String trackingNumber;
 
 
-        public static class GoodsInstanceVOBean extends BaseBean {
+        public static class GoodsInstanceVOBean {
             /**
              * battery : 0
              * bluetooth : 0
-             * brandId : 
-             * brandName : 
+             * brandId :
+             * brandName :
              * call : 0
              * camera : 0
-             * capacity : 0
-             * colour : 
+             * capacity :
+             * checkTime :
+             * colour :
              * compass : 0
              * comprehensionAids : 0
-             * facade : 0
+             * estimatePrice : 0
+             * facade :
              * fingerprint : 0
              * flashlight : 0
-             * goodsId : 
+             * goodsId :
              * gravitySensor : 0
              * gyroscope : 0
-             * id : 
-             * imei : 
+             * id :
+             * imei :
              * lightSensor : 0
              * location : 0
-             * lockAccount : 0
+             * lockAccount :
              * loudspeaker : 0
-             * memory : 0
+             * memory :
              * microphone : 0
+             * model :
              * multiTouch : 0
-             * orderId : 
-             * other : 
-             * overhaul : 0
+             * orderId :
+             * other :
+             * overhaul :
              * proximitySenso : 0
+             * regional :
              * screen : 0
-             * screenProblem : 0
+             * screenProblem :
              * spiritLevel : 0
-             * startingState : 0
+             * startingState :
              * status : 0
-             * system : 
-             * type : 
+             * system :
+             * type :
              * vibrator : 0
-             * water : 0
+             * warranty :
+             * water :
              * wifi : 0
-             * wirelessNetwork : 0
+             * wirelessNetwork :
              */
 
             public int battery;
@@ -105,11 +108,13 @@ public class MyOrderDetailRep extends BaseRep {
             public String brandName;
             public int call;
             public int camera;
-            public int capacity;
+            public String capacity;
+            public String checkTime;
             public String colour;
             public int compass;
             public int comprehensionAids;
-            public int facade;
+            public int estimatePrice;
+            public String facade;
             public int fingerprint;
             public int flashlight;
             public String goodsId;
@@ -119,26 +124,29 @@ public class MyOrderDetailRep extends BaseRep {
             public String imei;
             public int lightSensor;
             public int location;
-            public int lockAccount;
+            public String lockAccount;
             public int loudspeaker;
-            public int memory;
+            public String memory;
             public int microphone;
+            public String model;
             public int multiTouch;
             public String orderId;
             public String other;
-            public int overhaul;
+            public String overhaul;
             public int proximitySenso;
+            public String regional;
             public int screen;
-            public int screenProblem;
+            public String screenProblem;
             public int spiritLevel;
-            public int startingState;
+            public String startingState;
             public int status;
             public String system;
             public String type;
             public int vibrator;
-            public int water;
+            public String warranty;
+            public String water;
             public int wifi;
-            public int wirelessNetwork;
+            public String wirelessNetwork;
 
         }
     }

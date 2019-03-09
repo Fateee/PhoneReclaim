@@ -115,8 +115,11 @@ public interface CommonRequest {
     @POST("v1/order/addOrder")
     Observable<Response<BaseRep>> addOrder(@Body RecycleReqBody orderVO);
 
-    @GET("v1/order/getGoodsInstanceById/{id}")
+    @GET("v1/goodsInstance/getGoodsInstanceById/{id}")
     Observable<Response<OrderDetailRep>> getGoodsInstanceById(@Path("id") String id);
+
+//    @GET("v1/order/getGoodsInstanceById/{id}")
+//    Observable<Response<OrderDetailRep>> getGoodsInstanceById(@Path("id") String id);
 
 
     //个人中心 我的订单

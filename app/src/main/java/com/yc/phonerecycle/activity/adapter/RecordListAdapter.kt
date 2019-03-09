@@ -9,7 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.activity.CheckResulttActivity
 import com.yc.phonerecycle.activity.HandCheckActivity
+import com.yc.phonerecycle.activity.OrderDetailActivity
+import com.yc.phonerecycle.activity.ReportDetailActivity
 import com.yc.phonerecycle.constant.UrlConst
 import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
 import com.yc.phonerecycle.model.bean.biz.BrandRep
@@ -70,6 +73,7 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                         holder.wait_ems.setOnClickListener(object :View.OnClickListener{
                             override fun onClick(p0: View?) {
                                 //立即邮寄
+
                             }
                         })
                     }
@@ -95,6 +99,11 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                 holder.itemView.setOnClickListener(object :View.OnClickListener{
                     override fun onClick(p0: View?) {
                         //订单详情
+                        var tmp = p0?.tag as MyOrderListlRep.DataBean
+                        var map = HashMap<String,String?>()
+                        map["ord_id"] = tmp.id
+                        ActivityToActivity.toActivity(
+                            mContext, OrderDetailActivity::class.java,map)
                     }
                 })
             }
@@ -133,6 +142,22 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                         holder.status.text = "待打款"
                     }
                 }
+                holder.itemView.tag = temp
+                holder.itemView.setOnClickListener(object :View.OnClickListener{
+                    override fun onClick(v: View?) {
+                        //订单详情
+                        var tag = v?.tag as DetectionRep.DataBean
+                        var map = HashMap<String,String?>()
+                        map["recordid"] = tag.id
+                        if (tag.status == 3 || tag.status == 5) {
+                            ActivityToActivity.toActivity(
+                                mContext, ReportDetailActivity::class.java,map)
+                        } else {
+                            ActivityToActivity.toActivity(
+                                mContext, CheckResulttActivity::class.java,map)
+                        }
+                    }
+                })
             }
         }
     }

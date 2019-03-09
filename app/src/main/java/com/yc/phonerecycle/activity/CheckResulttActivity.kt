@@ -7,13 +7,21 @@ import com.yc.phonerecycle.utils.ActivityToActivity
 import com.yc.phonerecycle.utils.UserInfoUtils
 import android.view.View
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.model.bean.biz.OrderDetailRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
+import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import kotlinx.android.synthetic.main.activity_check_result_detail.*
 import kotlinx.android.synthetic.main.item_check_result.view.*
 import kotlinx.android.synthetic.main.item_check_result_container.view.*
 
 
-class CheckResulttActivity : BaseActivity<CommonPresenter>(){
+class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.CommonIV{
+    override fun getDataOK(rep: Any?) {
+        if (rep is OrderDetailRep) {
+            refreshView(rep.data)
+        }
+    }
+
     override fun createPresenter() = CommonPresenter()
 
     var mCheckReqBody : CheckReqBody? = null
@@ -23,7 +31,7 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(){
     private var recordid: String? = ""
 
     override fun initBundle() {
-        mCheckReqBody = intent.getSerializableExtra("checkbean") as CheckReqBody
+//        mCheckReqBody = intent.getSerializableExtra("checkbean") as CheckReqBody
         result_type = intent.getStringExtra("result_type")
         recordid = intent.getStringExtra("recordid")
     }
@@ -32,6 +40,9 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(){
 
     override fun initView() {
 
+    }
+
+    private fun refreshView(mCheckReqBody: OrderDetailRep.DataBean) {
         name.text = mCheckReqBody?.brandName+" "+mCheckReqBody?.type+" "+mCheckReqBody?.regional
         content.text = mCheckReqBody?.memory+" "+mCheckReqBody?.capacity
         //1 有 0无
@@ -78,6 +89,7 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(){
     }
 
     override fun initDatas() {
+        presenter.getGoodsInstanceById(recordid)
         var type = UserInfoUtils.getUser().data?.userInfoVO?.type
         when (type) {
             "1" -> {
