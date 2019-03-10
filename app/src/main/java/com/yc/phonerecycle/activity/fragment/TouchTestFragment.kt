@@ -1,33 +1,26 @@
 package com.yc.phonerecycle.activity.fragment
 
 
-import android.content.DialogInterface
 import android.os.Handler
 import android.os.Message
-import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.View
-import com.yc.phonecheck.views.BorderTouchView
 import com.yc.phonecheck.views.OnTouchChangedListener
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.AutoCheckActivity
-import com.yc.phonerecycle.activity.HandCheckActivity
-import com.yc.phonerecycle.app.BaseApplication
-import com.yc.phonerecycle.model.bean.biz.DictMapRep
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
+import kotlinx.android.synthetic.main.touch.*
 
 
 class TouchTestFragment : BaseFragment<EmptyPresenter>(), OnTouchChangedListener {
-    private val TAG = "TouchTest"
+    private val TAG = "TouchTestFragment"
     private val MSG_BORDER_TOUCH = 1
     private val MSG_CENTER_TOUCH = 2
     private val MSG_END = 3
 
-    private var mBorderView: BorderTouchView? = null
-
     override fun onTouchFinish(v: View?) {
-        if (v === mBorderView) {
+        if (v?.id == R.id.touch_border) {
             val msg = Message.obtain()
             msg.arg1 = MSG_END
             mHandler.sendMessageDelayed(msg, 1000)
@@ -45,7 +38,7 @@ class TouchTestFragment : BaseFragment<EmptyPresenter>(), OnTouchChangedListener
     override fun getContentView(): Int = R.layout.touch
 
     override fun initViews(view: View?) {
-        mBorderView = view?.findViewById(R.id.touch_border) as BorderTouchView
+        touch_border?.setOnTouchChangedListener(this)
     }
 
     override fun initData() {
@@ -56,12 +49,11 @@ class TouchTestFragment : BaseFragment<EmptyPresenter>(), OnTouchChangedListener
         when (index) {
             MSG_BORDER_TOUCH -> {
                 Log.i(TAG, "MSG_BORDER_TOUCH")
-                mBorderView?.setOnTouchChangedListener(this)
-                mBorderView?.setVisibility(View.VISIBLE)
+                touch_border?.setVisibility(View.VISIBLE)
             }
             MSG_CENTER_TOUCH -> {
                 Log.i(TAG, "MSG_CENTER_TOUCH")
-                mBorderView?.setVisibility(View.GONE)
+                touch_border?.setVisibility(View.GONE)
             }
             MSG_END -> {
                 Log.i(TAG, "MSG_END")

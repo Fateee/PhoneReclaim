@@ -69,6 +69,7 @@
                         android:maxLines="1"
                         android:textColor="@color/cffde00"
                         android:textSize="24sp"/>
+                <!--android:text="@string/result_price_tip"-->
                 <TextView
                         android:id="@+id/price_tip"
                         android:layout_width="wrap_content"
@@ -77,8 +78,8 @@
                         android:layout_alignBaseline="@id/price"
                         android:includeFontPadding="false"
                         android:layout_marginTop="8dp"
-                        android:text="@string/result_price_tip"
-                        tool:text="(预估价格)"
+
+                        android:text="(预估价格)"
                         android:maxLines="1"
                         android:textColor="@color/cffde00"
                         android:textSize="16sp"/>

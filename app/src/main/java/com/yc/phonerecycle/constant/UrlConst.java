@@ -13,8 +13,8 @@ public class UrlConst {
 
     public static final String mLocalUrl = "http://172.20.17.63:5000/";
 
-    public static final String mBaseUrl = "http://39.107.86.160:20002/";
-//    public static final String mBaseUrl = "http://192.168.31.121:20002/";
+//    public static final String mBaseUrl = "http://39.107.86.160:20002/";
+    public static final String mBaseUrl = "http://192.168.31.121:20002/";
 
     public static final String mWXUrl = "https://api.weixin.qq.com/";
     public static String mQQUrl;

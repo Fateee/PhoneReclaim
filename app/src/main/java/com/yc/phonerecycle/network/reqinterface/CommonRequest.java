@@ -227,6 +227,6 @@ public interface CommonRequest {
 
 
     @Headers("Content-Type: application/json")
-    @POST("v1/adminDivision/list/{page}/{size}")
-    Observable<Response<DivisionRep>> queryDivision(@Path("page") String page,@Path("size") String size,@Body DivisionQueryBody adminDivisionQueryVo);
+    @POST("v1/adminDivision/list")
+    Observable<Response<DivisionRep>> queryDivision(/*@Path("page") String page,@Path("size") String size,*/@Body DivisionQueryBody adminDivisionQueryVo);
 }

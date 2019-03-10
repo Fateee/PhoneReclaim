@@ -94,7 +94,7 @@
                     app:hide_divider="true"/>
 
             <EditText
-                    android:id="@+id/feedback_edit"
+                    android:id="@+id/remark_edit"
                     android:layout_width="match_parent"
                     android:layout_height="84dp"
                     android:layout_marginLeft="15dp"

@@ -62,7 +62,8 @@ class MainActivity : BaseActivity<EmptyPresenter>() {
                 Manifest.permission.SYSTEM_ALERT_WINDOW,
                 Manifest.permission.GET_ACCOUNTS,
                 Manifest.permission.WRITE_APN_SETTINGS,
-                Manifest.permission.USE_FINGERPRINT
+                Manifest.permission.USE_FINGERPRINT,
+                Manifest.permission.CAMERA
             )
             ActivityCompat.requestPermissions(this, mPermissionList, 123)
         }

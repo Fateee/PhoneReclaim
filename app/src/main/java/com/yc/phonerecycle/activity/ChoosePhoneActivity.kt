@@ -42,6 +42,7 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
         mBandAdapter.setOnItemClickListener(object : OnItemClick{
             override fun onItemClick(pos: Int, tag: Any) {
                 if (tag is BrandRep.DataBean) {
+                    mPhoneAdapter.mBrandId = tag.id
                     presenter.getGoodsByBrandId(1,tag.id)
                 }
             }

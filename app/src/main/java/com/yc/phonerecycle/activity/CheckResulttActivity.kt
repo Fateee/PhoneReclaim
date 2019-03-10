@@ -42,11 +42,12 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
 
     }
 
-    private fun refreshView(mCheckReqBody: OrderDetailRep.DataBean) {
+    private fun refreshView(mCheckReqBody: OrderDetailRep.DataBean?) {
         name.text = mCheckReqBody?.brandName+" "+mCheckReqBody?.type+" "+mCheckReqBody?.regional
         content.text = mCheckReqBody?.memory+" "+mCheckReqBody?.capacity
+        price.text = getString(R.string.order_price_value,mCheckReqBody?.estimatePrice.toString())
         //1 有 0无
-        addRowView("无线网络",mCheckReqBody?.wifi == 1602,"","距离感应器",mCheckReqBody?.proximitySenso ==0,"")
+        addRowView("无线网络",mCheckReqBody?.wifi == 1601,"","距离感应器",mCheckReqBody?.proximitySenso ==0,"")
         addRowView("蓝牙",mCheckReqBody?.bluetooth == 0,"","光线感应器",mCheckReqBody?.lightSensor==0,"")
         addRowView("扬声器",mCheckReqBody?.loudspeaker == 0,"","重力感应器",mCheckReqBody?.gravitySensor==0,"")
         addRowView("麦克风",mCheckReqBody?.microphone == 0,"","水平仪",mCheckReqBody?.spiritLevel==0,"")

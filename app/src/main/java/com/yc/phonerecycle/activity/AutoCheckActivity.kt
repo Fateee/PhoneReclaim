@@ -22,7 +22,6 @@ import android.support.v4.app.ActivityCompat
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
-import com.yc.phonerecycle.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_auto_check.*
 import android.location.LocationManager
 import android.location.Location
@@ -42,9 +41,7 @@ import com.yc.phonerecycle.activity.fragment.TouchTestFragment
 import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
-import com.yc.phonerecycle.utils.CameraUtils
-import com.yc.phonerecycle.utils.DeviceUtil
-import com.yc.phonerecycle.utils.PermissionUtils
+import com.yc.phonerecycle.utils.*
 
 
 class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListener {
@@ -66,11 +63,63 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 
 
     override fun initBundle() {
-        var brandbean = intent.getSerializableExtra("brandbean") as BrandGoodsRep.DataBean
-        checkResult.goodsId = brandbean.id
+        var goodbean = intent.getSerializableExtra("goodbean") as BrandGoodsRep.DataBean
+        var brandid = intent.getStringExtra("brandid")
+        checkResult.brandId = brandid
+        checkResult.goodsId = goodbean.id
         checkResult.system = Build.VERSION.RELEASE
         checkResult.brandName = Build.MODEL
-        checkResult.capacity = DeviceUtil.getTotalRomSize()
+        checkResult.capacity = "0201"
+        var totleSize = DeviceUtil.getTotalRomSize()
+        if (totleSize.contains("GB")) {
+            var temp = totleSize.removeSuffix("GB")
+            var totle = temp.trimEnd().toDouble()
+            if (totle < 16) {
+                checkResult.capacity = "0201"
+            } else if (totle < 32) {
+                checkResult.capacity = "0202"
+            } else if (totle < 64) {
+                checkResult.capacity = "0203"
+            } else if (totle < 128) {
+                checkResult.capacity = "0204"
+            } else if (totle < 256) {
+                checkResult.capacity = "0205"
+            } else if (totle < 512) {
+                checkResult.capacity = "0206"
+            } else {
+                checkResult.capacity = "0201"
+            }
+        }
+
+        var totleRamSize = DeviceUtil.getTotalRamSize()
+        var totleRam :Double = 0.0
+        if (totleRamSize.contains("GB")) {
+            var temp = totleSize.removeSuffix("GB")
+            totleRam = temp.trimEnd().toDouble()
+        }
+        if (totleRamSize.contains("MB")) {
+            var temp = totleSize.removeSuffix("MB")
+            totleRam = temp.trimEnd().toDouble()
+        }
+        if (totleRam < 1) {
+            checkResult.memory = "0101"
+        } else if (totleRam < 2) {
+            checkResult.memory = "0102"
+        } else if (totleRam < 3) {
+            checkResult.memory = "0103"
+        } else if (totleRam < 4) {
+            checkResult.memory = "0104"
+        } else if (totleRam < 6) {
+            checkResult.memory = "0105"
+        } else if (totleRam < 8) {
+            checkResult.memory = "0106"
+        } else if (totleRam < 10) {
+            checkResult.memory = "0107"
+        } else if (totleRam < 12) {
+            checkResult.memory = "0108"
+        } else {
+            checkResult.memory = "0101"
+        }
         PermissionUtils.checkPhoneStatePermission(this@AutoCheckActivity, object : PermissionUtils.Callback() {
             override fun onGranted() {
                 checkResult.imei = DeviceIdUtil.getDeviceId(this@AutoCheckActivity)
@@ -131,8 +180,8 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         LIGHT = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
         ORIENTATION = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION)
         COMPASS = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-//        doWifiTest()
-        doGravitySensorTest()
+        doWifiTest()
+//        doGravitySensorTest()
     }
 
     private fun doWifiTest() {
@@ -199,8 +248,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         ic_circle.postDelayed({ initView()
             doLocationTest()},3000)
         val hasCompass = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_COMPASS)
-        //TODO HUYI
-//        if (!hasCompass) checkResult.compass = 1
+        if (!hasCompass) checkResult.compass = 1
         mSensorManager.registerListener(this,COMPASS,SensorManager.SENSOR_DELAY_FASTEST)
     }
 
@@ -295,7 +343,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     private fun doSpeakerTest() {
         ic_circle.postDelayed({ initView()
             doFlashLightTest()},2500)
-        var ret = speakerTest()
+        var ret = CheckPhoneUtil.doSpeakerTest()
         checkResult.loudspeaker = if (ret) {0} else {1}
     }
 
@@ -307,9 +355,22 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 
     private fun doFlashLightTest() {
         ic_circle.postDelayed({ initView()
-            doVibratorTest()},2500)
-        var ret = openLightOn()
-        checkResult.flashlight = if (ret) {0} else {1}
+            doVibratorTest()},4000)
+        checkResult.flashlight = 1
+        PermissionUtils.checkCameraPermission(this@AutoCheckActivity, object : PermissionUtils.Callback() {
+            override fun onGranted() {
+                var ret = openLightOn()
+                checkResult.flashlight = if (ret) {0} else {1}
+            }
+            override fun onRationale() {
+                ToastUtil.showShortToast("请开启相机权限才能正常使用")
+                checkResult.flashlight = 1
+            }
+            override fun onDenied(context: Context) {
+                showPermissionDialog("开启相机权限","你还没有开启相机权限，开启之后才可读取相机信息")
+                checkResult.flashlight = 1
+            }
+        })
     }
     private fun doVibratorTest() {
         ic_circle.postDelayed({ initView()
@@ -331,7 +392,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     fun touchTest() {
         ic_rorato.visibility = View.GONE
         checkResult.multiTouch = 1
-        ic_circle.postDelayed(lcdTestRunnable,5*1000)
+        ic_circle.postDelayed(lcdTestRunnable,45*1000)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.screen_check_layout,mTouchTest)
         transaction.commit()
@@ -395,5 +456,10 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
                 doLocationTest()
             }
         }
+    }
+
+    override fun onDestroy() {
+        mSensorManager?.unregisterListener(this)
+        super.onDestroy()
     }
 }

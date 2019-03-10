@@ -9,8 +9,10 @@ import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.HandCheckActivity
 import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.biz.DictMapRep
+import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
+import com.yc.phonerecycle.utils.ToastUtil
 import com.yc.phonerecycle.widget.SetItemLayout
 import kotlinx.android.synthetic.main.activity_hand_check_steptwo.*
 import kotlinx.android.synthetic.main.titleview.*
@@ -20,8 +22,8 @@ import kotlinx.android.synthetic.main.titleview.*
  * A simple [Fragment] subclass.
  *
  */
-class HandCheckSecondFragment : BaseFragment<EmptyPresenter>() {
-    override fun createPresenter(): EmptyPresenter? = null
+class HandCheckSecondFragment : BaseFragment<CommonPresenter>() {
+    override fun createPresenter() = CommonPresenter()
 
     override fun getContentView(): Int = R.layout.activity_hand_check_steptwo
 
@@ -137,6 +139,9 @@ class HandCheckSecondFragment : BaseFragment<EmptyPresenter>() {
                 }
             })
             builder.create().show()
+        } else {
+            ToastUtil.showShortToastCenter("获取选项中...请稍后点击重试")
+            presenter.getDictMappingByType(dicTypeId)
         }
     }
 }

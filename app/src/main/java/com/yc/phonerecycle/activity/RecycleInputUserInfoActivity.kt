@@ -126,14 +126,14 @@ class RecycleInputUserInfoActivity : BaseActivity<CommonPresenter>(),CommonBaseI
     private var addrcode: String?=""
 
     override fun onAddressSelected(
-        province: DivisionRep.DataBean.VoListBean?,
-        city: DivisionRep.DataBean.VoListBean?,
-        county: DivisionRep.DataBean.VoListBean?,
-        street: DivisionRep.DataBean.VoListBean?,
-        village: DivisionRep.DataBean.VoListBean?
+        province: DivisionRep.DataBean?,
+        city: DivisionRep.DataBean?,
+        county: DivisionRep.DataBean?,
+        street: DivisionRep.DataBean?,
+        village: DivisionRep.DataBean?
     ) {
-        address = province?.provinceName+city?.cityName+county?.countyName
-        addrcode = county?.countyCode
+        address = province?.name+city?.name+county?.name
+        addrcode = county?.id
         recycle_addr_city.setSubTitle(address)
     }
 

@@ -13,6 +13,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.hardware.fingerprint.FingerprintManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -23,6 +24,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
 import com.yc.phonecheck.item.MicrophoneTest
+import com.yc.phonerecycle.BaseCheckActivity
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.fragment.*
 import com.yc.phonerecycle.app.BaseApplication
@@ -30,12 +32,15 @@ import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
+import com.yc.phonerecycle.utils.CheckPhoneUtil
 import com.yc.phonerecycle.utils.PermissionUtils
 import com.yc.phonerecycle.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_auto_check.*
 import kotlinx.android.synthetic.main.fragment_main_home.*
 
-class HandCheckActivity : BaseActivity<EmptyPresenter>() , SensorEventListener {
+class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListener {
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+    }
 
     var mFirstFragment = HandCheckFirstFragment()
 //    var mFirstFragment = MicrophoneTest()
@@ -56,8 +61,10 @@ class HandCheckActivity : BaseActivity<EmptyPresenter>() , SensorEventListener {
 
 
     override fun initBundle() {
-        var brandbean = intent.getSerializableExtra("brandbean") as BrandGoodsRep.DataBean
-        mCheckReqBody.goodsId = brandbean.id
+        var goodbean = intent.getSerializableExtra("goodbean") as BrandGoodsRep.DataBean
+        var brandid = intent.getStringExtra("brandid")
+        mCheckReqBody.brandId = brandid
+        mCheckReqBody.goodsId = goodbean.id
         mCheckReqBody.system = Build.VERSION.RELEASE
         mCheckReqBody.brandName = Build.MODEL
         PermissionUtils.checkPhoneStatePermission(this@HandCheckActivity, object : PermissionUtils.Callback() {
@@ -81,7 +88,25 @@ class HandCheckActivity : BaseActivity<EmptyPresenter>() , SensorEventListener {
     }
 
     override fun initDatas() {
+        pm = applicationContext.packageManager
+        mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        mGRAVITY = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
+        PROXIMITY = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
+        LIGHT = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+        ORIENTATION = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION)
+        COMPASS = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+
         changeFragment(mFirstFragment)
+        doGravitySensorTest()
+        doDistanceSensorTest()
+        doLightSensorTest()
+        doOrientationSensorTest()
+        doCompassTest()
+        doLocationTest()
+        doFingerTest()
+        doMicroTest()
+        doSpeakerTest()
+        checkOther()
     }
 
     fun changeFragment(mfragment: Fragment) {
@@ -102,83 +127,63 @@ class HandCheckActivity : BaseActivity<EmptyPresenter>() , SensorEventListener {
         }
     }
 
-    private fun doWifiTest() {
-        registerWifiBroadcast()
-        mWifiManager.isWifiEnabled = !mWifiManager.isWifiEnabled
-        ic_circle.postDelayed({ initView()
-            doBlueToothTest()},6000)
-    }
+    private lateinit var mSensorManager: SensorManager
+    private var mGRAVITY: Sensor? = null
+    private var PROXIMITY: Sensor? = null
+    private var LIGHT: Sensor? = null
+    private var ORIENTATION: Sensor? = null
+    private var COMPASS: Sensor? = null
+    private lateinit var fingerprintManager: FingerprintManager
+    private lateinit var locationManager: LocationManager
 
-
-    private fun doBlueToothTest() {
-        registerBluetoothBroadcast()
-        if(!mBluetooth.isEnabled) {
-            mBluetooth.enable()
-        } else {
-            mBluetooth.disable()
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (event?.sensor?.type == Sensor.TYPE_GRAVITY){
+            ToastUtil.showShortToast("TYPE_GRAVITY: "+event.values[0])
+            mCheckReqBody.gravitySensor = 0
+        }else if (event?.sensor?.type == Sensor.TYPE_PROXIMITY) {
+            ToastUtil.showShortToast("Distance: "+event.values[0])
+            mCheckReqBody.proximitySenso = 0
+        } else if (event?.sensor?.type == Sensor.TYPE_LIGHT ) {
+            ToastUtil.showShortToast("Light: "+event.values[0])
+            mCheckReqBody.lightSensor = 0
+        } else if (event?.sensor?.type == Sensor.TYPE_ORIENTATION) {
+            ToastUtil.showShortToast("spiritLevel: "+event.values[0])
+            mCheckReqBody.spiritLevel = 0
+        } else if (event?.sensor?.type == Sensor.TYPE_MAGNETIC_FIELD) {
+            ToastUtil.showShortToast("Compass: "+event.values[0])
+            mCheckReqBody.compass = 0
         }
-        ic_circle.postDelayed({ initView()
-            doGravitySensorTest()},6000)
     }
+
 
     private fun doGravitySensorTest() {
-        val hasGSensor = pm.hasSystemFeature(PackageManager.FEATURE_SCREEN_PORTRAIT) && pm.hasSystemFeature(
-            PackageManager.FEATURE_SCREEN_LANDSCAPE)
-        var ret =  hasGSensor && getSystemProperties("gsensor", true)
-        if (ret) {
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
-        } else {
-            //无重力感应
-            mCheckReqBody.gravitySensor = 0
-        }
-        ic_circle.postDelayed({ initView()
-            doDistanceSensorTest()},6000)
+        mCheckReqBody.gravitySensor = 1
+        mSensorManager.registerListener(this,mGRAVITY,SensorManager.SENSOR_DELAY_FASTEST)
     }
 
 
     private fun doDistanceSensorTest() {
         val hasProxSensor = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY)
-        var ret = hasProxSensor && getSystemProperties("proxsensor", true)
-        if (ret) {
-            var mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-            var mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
-            mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL)
-            ic_circle.postDelayed({ mSensorManager.unregisterListener(this)},5000)
-        } else {
-            mCheckReqBody.proximitySenso = 0
-        }
-        ic_circle.postDelayed({
-            initView()
-            doLightSensorTest()},6000)
+        if (!hasProxSensor) mCheckReqBody.proximitySenso = 1
+        mSensorManager.registerListener(this,PROXIMITY,SensorManager.SENSOR_DELAY_FASTEST)
+
     }
 
     private fun doLightSensorTest() {
         val hasLightSensor = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_LIGHT)
-        var ret = hasLightSensor && getSystemProperties("lightsensor", true)
-        if (ret) {
-            var mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-            var mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
-            mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL)
-            ic_circle.postDelayed({ mSensorManager.unregisterListener(this)},5000)
-        } else {
-            mCheckReqBody.lightSensor = 0
-        }
-        ic_circle.postDelayed({ initView()
-            doCompassTest()},6000)
+        if (!hasLightSensor) mCheckReqBody.lightSensor = 1
+        mSensorManager.registerListener(this,LIGHT,SensorManager.SENSOR_DELAY_FASTEST)
     }
+
+    private fun doOrientationSensorTest() {
+        mCheckReqBody.spiritLevel = 1
+        mSensorManager.registerListener(this,ORIENTATION,SensorManager.SENSOR_DELAY_FASTEST)
+    }
+
     private fun doCompassTest() {
         val hasCompass = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_COMPASS)
-        var ret =  hasCompass && getSystemProperties("compass", true)
-        if (ret) {
-            var mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-            var mAccSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-            mSensorManager.registerListener(this, mAccSensor, SensorManager.SENSOR_DELAY_UI)
-            ic_circle.postDelayed({ mSensorManager.unregisterListener(this)},5000)
-        } else {
-            mCheckReqBody.compass = 0
-        }
-        ic_circle.postDelayed({ initView()
-            doLocationTest()},6000)
+        if (!hasCompass) mCheckReqBody.compass = 1
+        mSensorManager.registerListener(this,COMPASS,SensorManager.SENSOR_DELAY_FASTEST)
     }
 
     private fun checkLocationPermission() : Boolean {
@@ -186,7 +191,10 @@ class HandCheckActivity : BaseActivity<EmptyPresenter>() , SensorEventListener {
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
     }
 
+
     private fun doLocationTest() {
+        val haslocation = pm.hasSystemFeature(PackageManager.FEATURE_LOCATION)
+        if (!haslocation) mCheckReqBody.location = 1
         if (Build.VERSION.SDK_INT >= 23) {// android6 执行运行时权限
             if (checkLocationPermission()) {
                 // TODO: Consider calling
@@ -197,7 +205,11 @@ class HandCheckActivity : BaseActivity<EmptyPresenter>() , SensorEventListener {
             }
         }
 
-        var locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (locationManager == null) {
+            mCheckReqBody.location = 1
+            return
+        }
         // 获取所有可用的位置提供器
         var providerList = locationManager.getProviders(true);
         // 测试一般都在室内，这里颠倒了书上的判断顺序
@@ -207,7 +219,7 @@ class HandCheckActivity : BaseActivity<EmptyPresenter>() , SensorEventListener {
             else -> {
                 // 当没有可用的位置提供器时，弹出Toast提示用户
                 ToastUtil.showShortToast("Please Open Your GPS or Location Service")
-                mCheckReqBody.location = 0
+                mCheckReqBody.location = 1
                 return
             }
         }
@@ -215,171 +227,77 @@ class HandCheckActivity : BaseActivity<EmptyPresenter>() , SensorEventListener {
         var location = locationManager.getLastKnownLocation(provider)
         if(location!=null){
             //显示当前设备的位置信息
-            mCheckReqBody.location = 1
+            mCheckReqBody.location = 0
             return
         }
         locationManager.requestLocationUpdates(provider, 1000, 1f, locationListener)
-        ic_circle.postDelayed({
-            initView()
-            locationManager?.removeUpdates(locationListener) },6000)
 
     }
-    private fun doFingerTest() {
 
+    private fun doFingerTest() {
+        val hasFINGERPRINT = pm.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
+        if (!hasFINGERPRINT) mCheckReqBody.fingerprint = 1
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            fingerprintManager = getSystemService(Context.FINGERPRINT_SERVICE) as FingerprintManager
+            if (fingerprintManager == null) {
+                mCheckReqBody.fingerprint = 1
+            }
+            PermissionUtils.checkFingerPermission(this@HandCheckActivity, object : PermissionUtils.Callback() {
+                override fun onGranted() {
+                    if (fingerprintManager == null || !fingerprintManager.isHardwareDetected()) {
+                        mCheckReqBody.fingerprint = 1
+                    } else {
+                        mCheckReqBody.fingerprint = 0
+                    }
+                }
+                override fun onRationale() {
+                    ToastUtil.showShortToast("请开启指纹权限才能正常使用")
+                    mCheckReqBody.fingerprint = 1
+                }
+                override fun onDenied(context: Context) {
+                    showPermissionDialog("开启指纹权限","你还没有开启指纹权限，开启之后才可读取指纹信息")
+                    mCheckReqBody.fingerprint = 1
+                }
+            })
+        } else {
+            mCheckReqBody.fingerprint = 1
+        }
     }
     private fun doMicroTest() {
-
+        val hasMicrophone = microTest()
+        mCheckReqBody.microphone = if (hasMicrophone) {0} else {1}
     }
     private fun doSpeakerTest() {
-
+        var ret = CheckPhoneUtil.doSpeakerTest()
+        mCheckReqBody.loudspeaker = if (ret) {0} else {1}
     }
-    private fun doFlashLightTest() {
 
-    }
-    private fun doVibratorTest() {
-
-    }
-    private fun doCameraTest() {
+    private fun checkOther() {
+        val hasGYROSCOPE = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE)
+        if (!hasGYROSCOPE) mCheckReqBody.gyroscope = 1
 
     }
 
-    private fun registerWifiBroadcast() {
-        mWifiManager = applicationContext
-            .getSystemService(Context.WIFI_SERVICE) as WifiManager
-        var filter = IntentFilter()
-        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION)
-        registerReceiver(wifiReceiver, filter)
+    override fun onDestroy() {
+        locationManager?.removeUpdates(locationListener)
+        mSensorManager?.unregisterListener(this)
+        super.onDestroy()
     }
 
-
-
-    private fun registerBluetoothBroadcast() {
-        mBluetooth = BluetoothAdapter.getDefaultAdapter()
-        var filter = IntentFilter()
-        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
-        registerReceiver(blueReceiver, filter)
-    }
-
-    private val wifiReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent?.action == WifiManager.WIFI_STATE_CHANGED_ACTION) {
-                var list = BaseApplication.mOptionMap.get("16")
-                when (intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_UNKNOWN)) {
-                    WifiManager.WIFI_STATE_DISABLED -> {
-                        ToastUtil.showShortToast("WiFi disabled")
-                        mWifiManager.isWifiEnabled = true
-                        mCheckReqBody.wifi = list?.get(0)?.id?.toInt() ?: 1602
-                    }
-                    WifiManager.WIFI_STATE_DISABLING -> {
-                        ToastUtil.showShortToast("WiFi disabling")
-                        mCheckReqBody.wifi = list?.get(0)?.id?.toInt() ?: 1602
-                    }
-                    WifiManager.WIFI_STATE_ENABLED -> {
-                        ToastUtil.showShortToast("WiFi enabled")
-                        mCheckReqBody.wifi = list?.get(0)?.id?.toInt() ?: 1602
-                    }
-                    WifiManager.WIFI_STATE_ENABLING -> {
-                        ToastUtil.showShortToast("WiFi enabling")
-                        mCheckReqBody.wifi = list?.get(0)?.id?.toInt() ?: 1602
-                    }
-                    WifiManager.WIFI_STATE_UNKNOWN -> {
-                        ToastUtil.showShortToast("WiFi state unknown")
-                        mCheckReqBody.wifi = list?.get(1)?.id?.toInt() ?: 1601
-                    }
-                }
-            }
-        }
-    }
-
-    private val blueReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent?.action == BluetoothAdapter.ACTION_STATE_CHANGED) {
-                when (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, 0)) {
-                    BluetoothAdapter.STATE_OFF -> {
-                        ToastUtil.showShortToast("蓝牙已经关闭")
-                        mWifiManager.isWifiEnabled = true
-                        mCheckReqBody.bluetooth = 1
-                    }
-                    BluetoothAdapter.STATE_TURNING_OFF -> {
-                        ToastUtil.showShortToast("蓝牙正在关闭中")
-                        mCheckReqBody.bluetooth = 1
-                    }
-                    BluetoothAdapter.STATE_ON -> {
-                        ToastUtil.showShortToast("蓝牙已经打开")
-                        mCheckReqBody.bluetooth = 1
-                    }
-                    BluetoothAdapter.STATE_TURNING_ON -> {
-                        ToastUtil.showShortToast("蓝牙正在打开中")
-                        mCheckReqBody.bluetooth = 1
-                    }
-                    0 -> {
-                        ToastUtil.showShortToast("蓝牙 state unknown")
-                        mCheckReqBody.bluetooth = 0
-                    }
-                }
-            }
-        }
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration?) {
-        super.onConfigurationChanged(newConfig)
-        when (newConfig?.orientation) {
-            Configuration.ORIENTATION_PORTRAIT -> {
-                //重力测试成功
-                mCheckReqBody.gravitySensor = 1
-            }
-            Configuration.ORIENTATION_LANDSCAPE -> {
-                //重力测试成功
-                mCheckReqBody.gravitySensor = 1
-            }
-        }
-    }
-
-
-    //LocationListener 用于当位置信息变化时由 locationManager 调用
     private var locationListener : LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
             //更新当前设备的位置信息
-            mCheckReqBody.location = 1
+            mCheckReqBody.location = 0
         }
 
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
         }
 
         override fun onProviderEnabled(provider: String?) {
+            mCheckReqBody.location = 0
         }
 
         override fun onProviderDisabled(provider: String?) {
         }
     }
-
-    override fun onSensorChanged(event: SensorEvent?) {
-        if (event?.sensor?.type == Sensor.TYPE_LIGHT ) {
-            ToastUtil.showShortToast("Light: "+event.values[0])
-            mCheckReqBody.lightSensor = 1
-        } else if (event?.sensor?.type == Sensor.TYPE_PROXIMITY) {
-            ToastUtil.showShortToast("Distance: "+event.values[0])
-            mCheckReqBody.proximitySenso = 1
-        } else if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
-            ToastUtil.showShortToast("Compass: "+event.values[0])
-            mCheckReqBody.compass = 1
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission Granted准许
-                doLocationTest()
-            } else {
-                // Permission Denied拒绝
-                doLocationTest()
-            }
-        }
-    }
-
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-    }
-
 }

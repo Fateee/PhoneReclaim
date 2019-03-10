@@ -27,6 +27,8 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
                     order_price_tip.text = "最终回收价："
                 }
                 1->{
+                    order_userinfo_content.visibility = View.VISIBLE
+                    order_userinfo_tip.text = "收货地址"
                     order_sendby.visibility = View.VISIBLE
                     order_ems_content.visibility = View.GONE
                     order_send_now.visibility = View.VISIBLE
@@ -36,9 +38,15 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
                 }
                 2->{
                     order_getby.visibility = View.VISIBLE
+                    order_ems_change.visibility = View.VISIBLE
+                    order_ems_change.setOnClickListener{
+                        mEmsDialog?.show()
+                    }
                 }
                 3->{
+                    order_ems_tip.text = "退回物流信息"
                     order_return.visibility = View.VISIBLE
+                    order_price_tip.text = "最终回收价："
                 }
                 4->{
                 }

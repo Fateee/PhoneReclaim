@@ -76,11 +76,11 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
     private CountyAdapter countyAdapter;
     private StreetAdapter streetAdapter;
     private VillageAdapter villageAdapter;
-    private List<DivisionRep.DataBean.VoListBean> provinces;
-    private List<DivisionRep.DataBean.VoListBean> cities;
-    private List<DivisionRep.DataBean.VoListBean> counties;
-    private List<DivisionRep.DataBean.VoListBean> streets;
-    private List<DivisionRep.DataBean.VoListBean> villages;
+    private List<DivisionRep.DataBean> provinces;
+    private List<DivisionRep.DataBean> cities;
+    private List<DivisionRep.DataBean> counties;
+    private List<DivisionRep.DataBean> streets;
+    private List<DivisionRep.DataBean> villages;
     private OnAddressSelectedListener listener;
     private OnDialogCloseListener dialogCloseListener;
     private onSelectorAreaPositionListener selectorAreaPositionListener;
@@ -363,17 +363,17 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
 }
 
     @Override
-    public void onDivisionGetOk(DivisionRep.DataBean dataBean, int type) {
+    public void onDivisionGetOk(DivisionRep dataBean, int type) {
         switch (type) {
             case WHAT_PROVINCES_PROVIDED: //更新省份列表
-                provinces = dataBean.voList;
+                provinces = dataBean.data;
                 provinceAdapter.notifyDataSetChanged();
                 listView.setAdapter(provinceAdapter);
 
                 break;
 
             case WHAT_CITIES_PROVIDED: //更新城市列表
-                cities = dataBean.voList;
+                cities = dataBean.data;
                 cityAdapter.notifyDataSetChanged();
                 if (Lists.notEmpty(cities)) {
                     // 以次级内容更新列表
@@ -388,7 +388,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
                 break;
 
             case WHAT_COUNTIES_PROVIDED://更新乡镇列表
-                counties = dataBean.voList;
+                counties = dataBean.data;
                 countyAdapter.notifyDataSetChanged();
                 if (Lists.notEmpty(counties)) {
                     listView.setAdapter(countyAdapter);
@@ -400,7 +400,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
                 break;
 
             case WHAT_STREETS_PROVIDED://更新街道列表
-                streets = dataBean.voList;
+                streets = dataBean.data;
                 streetAdapter.notifyDataSetChanged();
                 if (Lists.notEmpty(streets)) {
                     listView.setAdapter(streetAdapter);
@@ -411,7 +411,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
 
                 break;
             case WHAT_VILLAGE_PROVIDED://更新街道列表
-                villages = dataBean.voList;
+                villages = dataBean.data;
                 villageAdapter.notifyDataSetChanged();
                 if (Lists.notEmpty(villages)) {
                     listView.setAdapter(villageAdapter);
@@ -533,16 +533,16 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (tabIndex) {
             case INDEX_TAB_PROVINCE: //省份
-                DivisionRep.DataBean.VoListBean province = provinceAdapter.getItem(position);
+                DivisionRep.DataBean province = provinceAdapter.getItem(position);
                 provincePostion = position;
                 // 更新当前级别及子级标签文本
-                textViewProvince.setText(province.provinceName);
+                textViewProvince.setText(province.name);
                 textViewCity.setText("请选择");
                 textViewCounty.setText("请选择");
                 textViewStreet.setText("请选择");
                 textViewVillage.setText("请选择");
                 //根据省份的id,从数据库中查询城市列表
-                retrieveCitiesWith(province.provinceCode);
+                retrieveCitiesWith(province.id);
 
                 // 清空子级数据
                 cities = null;
@@ -564,14 +564,15 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
                 provinceAdapter.notifyDataSetChanged();
                 break;
             case INDEX_TAB_CITY://城市
-                DivisionRep.DataBean.VoListBean city = cityAdapter.getItem(position);
+                DivisionRep.DataBean city = cityAdapter.getItem(position);
                 cityPosition = position;
-                textViewCity.setText(city.cityName);
+                textViewCity.setText(city.name);
                 textViewCounty.setText("请选择");
                 textViewStreet.setText("请选择");
                 textViewVillage.setText("请选择");
                 //根据城市的id,从数据库中查询城市列表
-                retrieveCountiesWith(city.cityCode);
+                DivisionRep.DataBean proSelect = provinceAdapter.getItem(provinceIndex);
+                retrieveCountiesWith(proSelect.id,city.id);
                 // 清空子级数据
                 counties = null;
                 streets = null;
@@ -588,9 +589,9 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
                 cityAdapter.notifyDataSetChanged();
                 break;
             case INDEX_TAB_COUNTY:
-                DivisionRep.DataBean.VoListBean county = countyAdapter.getItem(position);
+                DivisionRep.DataBean county = countyAdapter.getItem(position);
                 countyPosition = position;
-                textViewCounty.setText(county.countyName);
+                textViewCounty.setText(county.name);
                 textViewStreet.setText("请选择");
                 textViewVillage.setText("请选择");
 //                retrieveStreetsWith(county.countyCode);
@@ -615,11 +616,11 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
                 }
                 break;
             case INDEX_TAB_STREET:
-                DivisionRep.DataBean.VoListBean street = streetAdapter.getItem(position);
+                DivisionRep.DataBean street = streetAdapter.getItem(position);
                 streetPosition = position;
-                textViewStreet.setText(street.townName);
+                textViewStreet.setText(street.name);
                 textViewVillage.setText("请选择");
-                retrieveVillagesWith(street.townCode);
+                retrieveVillagesWith(street.id);
                 villages = null;
                 villageAdapter.notifyDataSetChanged();
                 this.villageIndex = INDEX_INVALID;
@@ -635,9 +636,9 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
 
                 break;
             case INDEX_TAB_VILLAGE:
-                DivisionRep.DataBean.VoListBean village = villageAdapter.getItem(position);
+                DivisionRep.DataBean village = villageAdapter.getItem(position);
                 villagePosition = position;
-                textViewVillage.setText(village.villageName);
+                textViewVillage.setText(village.name);
 
                 this.villageIndex = position;
 
@@ -680,11 +681,13 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
 
     /**
      * 根据城市id查询乡镇列表
+     * @param id
      * @param cityId 城市id
      */
-    private void retrieveCountiesWith(String cityId){
+    private void retrieveCountiesWith(String id, String cityId){
         progressBar.setVisibility(View.VISIBLE);
         DivisionQueryBody body = new DivisionQueryBody();
+        body.provinceCode = id;
         body.cityCode=cityId;
         mCommonPresenter.queryDivision(body,WHAT_COUNTIES_PROVIDED);
 //        List<County> countyList = addressDictManager.getCountyList(cityId);
@@ -717,11 +720,11 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
      */
     private void callbackInternal() {
         if (listener != null) {
-            DivisionRep.DataBean.VoListBean province = provinces == null || provinceIndex == INDEX_INVALID ? null : provinces.get(provinceIndex);
-            DivisionRep.DataBean.VoListBean city = cities == null || cityIndex == INDEX_INVALID ? null : cities.get(cityIndex);
-            DivisionRep.DataBean.VoListBean county = counties == null || countyIndex == INDEX_INVALID ? null : counties.get(countyIndex);
-            DivisionRep.DataBean.VoListBean street = streets == null || streetIndex == INDEX_INVALID ? null : streets.get(streetIndex);
-            DivisionRep.DataBean.VoListBean village = villages == null || villageIndex == INDEX_INVALID ? null : villages.get(villageIndex);
+            DivisionRep.DataBean province = provinces == null || provinceIndex == INDEX_INVALID ? null : provinces.get(provinceIndex);
+            DivisionRep.DataBean city = cities == null || cityIndex == INDEX_INVALID ? null : cities.get(cityIndex);
+            DivisionRep.DataBean county = counties == null || countyIndex == INDEX_INVALID ? null : counties.get(countyIndex);
+            DivisionRep.DataBean street = streets == null || streetIndex == INDEX_INVALID ? null : streets.get(streetIndex);
+            DivisionRep.DataBean village = villages == null || villageIndex == INDEX_INVALID ? null : villages.get(villageIndex);
             listener.onAddressSelected(province, city, county, street,village);
         }
     }
@@ -753,7 +756,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
         }
 
         @Override
-        public DivisionRep.DataBean.VoListBean getItem(int position) {
+        public DivisionRep.DataBean getItem(int position) {
             return provinces.get(position);
         }
 
@@ -778,8 +781,8 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
                 holder = (Holder) convertView.getTag();
             }
 
-            DivisionRep.DataBean.VoListBean item = getItem(position);
-            holder.textView.setText(item.provinceName);
+            DivisionRep.DataBean item = getItem(position);
+            holder.textView.setText(item.name);
 
             boolean checked = provinceIndex != INDEX_INVALID && provinces.get(provinceIndex).id.equals( item.id);
             holder.textView.setEnabled(!checked);
@@ -805,7 +808,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
         }
 
         @Override
-        public DivisionRep.DataBean.VoListBean getItem(int position) {
+        public DivisionRep.DataBean getItem(int position) {
             return cities.get(position);
         }
 
@@ -830,8 +833,8 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
                 holder = (Holder) convertView.getTag();
             }
 
-            DivisionRep.DataBean.VoListBean item = getItem(position);
-            holder.textView.setText(item.cityName);
+            DivisionRep.DataBean item = getItem(position);
+            holder.textView.setText(item.name);
 
             boolean checked = cityIndex != INDEX_INVALID && cities.get(cityIndex).id.equals( item.id);
             holder.textView.setEnabled(!checked);
@@ -857,7 +860,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
         }
 
         @Override
-        public DivisionRep.DataBean.VoListBean getItem(int position) {
+        public DivisionRep.DataBean getItem(int position) {
             return counties.get(position);
         }
 
@@ -882,8 +885,8 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
                 holder = (Holder) convertView.getTag();
             }
 
-            DivisionRep.DataBean.VoListBean item = getItem(position);
-            holder.textView.setText(item.countyName);
+            DivisionRep.DataBean item = getItem(position);
+            holder.textView.setText(item.name);
 
             boolean checked = countyIndex != INDEX_INVALID && counties.get(countyIndex).id.equals( item.id);
             holder.textView.setEnabled(!checked);
@@ -909,7 +912,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
         }
 
         @Override
-        public DivisionRep.DataBean.VoListBean getItem(int position) {
+        public DivisionRep.DataBean getItem(int position) {
             return streets.get(position);
         }
 
@@ -934,8 +937,8 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
                 holder = (Holder) convertView.getTag();
             }
 
-            DivisionRep.DataBean.VoListBean item = getItem(position);
-            holder.textView.setText(item.townName);
+            DivisionRep.DataBean item = getItem(position);
+            holder.textView.setText(item.name);
 
             boolean checked = streetIndex != INDEX_INVALID && streets.get(streetIndex).id.equals( item.id);
             holder.textView.setEnabled(!checked);
@@ -961,7 +964,7 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
         }
 
         @Override
-        public DivisionRep.DataBean.VoListBean getItem(int position) {
+        public DivisionRep.DataBean getItem(int position) {
             return villages.get(position);
         }
 
@@ -986,8 +989,8 @@ public class AddressSelector implements AdapterView.OnItemClickListener, CommonP
                 holder = (Holder) convertView.getTag();
             }
 
-            DivisionRep.DataBean.VoListBean item = getItem(position);
-            holder.textView.setText(item.villageName);
+            DivisionRep.DataBean item = getItem(position);
+            holder.textView.setText(item.name);
 
             boolean checked = villageIndex != INDEX_INVALID && villages.get(villageIndex).id.equals( item.id);
             holder.textView.setEnabled(!checked);

@@ -16,11 +16,11 @@ import kotlinx.android.synthetic.main.item_check_result_container.view.*
 class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonIV{
     override fun getDataOK(rep: Any?) {
         if (rep is PhoneReportRep) {
-            refreshView(rep.data)
+            refreshView(rep?.data)
         }
     }
 
-    private lateinit var goodsInstanceVO: MyOrderDetailRep.DataBean.GoodsInstanceVOBean
+    private var goodsInstanceVO: MyOrderDetailRep.DataBean.GoodsInstanceVOBean? = null
     private var recordid: String? = ""
 
     override fun createPresenter() = CommonPresenter()
@@ -39,20 +39,20 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
         presenter.getGoodsInstanceReport(recordid)
     }
 
-    private fun refreshView(mCheckReqBody: PhoneReportRep.DataBean) {
+    private fun refreshView(mCheckReqBody: PhoneReportRep.DataBean?) {
         name.text = mCheckReqBody?.brandName+" "+mCheckReqBody?.type+" "+mCheckReqBody?.regional
         content.text = mCheckReqBody?.memory+" "+mCheckReqBody?.capacity
         //1 有 0无
-        addRowView("无线网络",mCheckReqBody?.wifi == 1602,"","距离感应器",true,"")
-        addRowView("蓝牙",mCheckReqBody?.bluetooth == 1,"","光线感应器",true,"")
-        addRowView("扬声器",mCheckReqBody?.loudspeaker == 1,"","重力感应器",true,"")
-        addRowView("麦克风",mCheckReqBody?.microphone == 1,"","水平仪",true,"")
-        addRowView("闪光灯",mCheckReqBody?.flashlight == 1,"","指南针",false,"")
+        addRowView("无线网络",mCheckReqBody?.wifi == 1601,"","距离感应器",mCheckReqBody?.proximitySenso ==0,"")
+        addRowView("蓝牙",mCheckReqBody?.bluetooth == 0,"","光线感应器",mCheckReqBody?.lightSensor==0,"")
+        addRowView("扬声器",mCheckReqBody?.loudspeaker == 0,"","重力感应器",mCheckReqBody?.gravitySensor==0,"")
+        addRowView("麦克风",mCheckReqBody?.microphone == 0,"","水平仪",mCheckReqBody?.spiritLevel==0,"")
+        addRowView("闪光灯",mCheckReqBody?.flashlight == 0,"","指南针",mCheckReqBody?.compass==0,"")
 
-        addRowView("震动器",mCheckReqBody?.vibrator == 1,"","定位",true,"")
-        addRowView("摄像头",mCheckReqBody?.camera == 1,"","指纹",true,"")
-        addRowView("屏幕触控",mCheckReqBody?.multiTouch == 1,"","拨打电话",true,"")
-        addRowView("屏幕坏点",mCheckReqBody?.screen == 1,"","语音助手",true,"")
+        addRowView("震动器",mCheckReqBody?.vibrator == 0,"","定位",mCheckReqBody?.location==0,"")
+        addRowView("摄像头",mCheckReqBody?.camera == 0,"","指纹",mCheckReqBody?.fingerprint==0,"")
+        addRowView("屏幕触控",mCheckReqBody?.multiTouch == 0,"","拨打电话",mCheckReqBody?.call==0,"")
+        addRowView("屏幕坏点",mCheckReqBody?.screen == 0,"","语音助手",mCheckReqBody?.comprehensionAids==0,"")
         addRowView("电池状态",false,"83%","",true,"")
     }
 

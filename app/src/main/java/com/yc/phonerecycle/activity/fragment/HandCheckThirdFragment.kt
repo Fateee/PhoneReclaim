@@ -114,6 +114,7 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
             (activity as HandCheckActivity).mCheckReqBody.screenProblem = (screen.tag as DictMapRep.DataBean).id
             (activity as HandCheckActivity).mCheckReqBody.overhaul = (overhaul.tag as DictMapRep.DataBean).id
             (activity as HandCheckActivity).mCheckReqBody.water = (in_water.tag as DictMapRep.DataBean).id
+            (activity as HandCheckActivity).mCheckReqBody.other = remark_edit.getText().toString()
             presenter.saveOrUpdate((activity as HandCheckActivity).mCheckReqBody)
             true
         } else if (activity is AutoCheckActivity) {
@@ -161,6 +162,9 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
                 }
             })
             builder.create().show()
+        } else {
+            ToastUtil.showShortToastCenter("获取选项中...请稍后点击重试")
+            presenter.getDictMappingByType(dicTypeId)
         }
     }
 }

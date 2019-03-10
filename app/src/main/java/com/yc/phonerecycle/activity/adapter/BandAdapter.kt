@@ -56,6 +56,8 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
     }
 
 
+    var mBrandId: String = ""
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val temp = mDataList[position]
         when (temp) {
@@ -72,7 +74,9 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
                     holder.itemView.tag = temp
                     holder.itemView.setOnClickListener(object :View.OnClickListener{
                         override fun onClick(p0: View?) {
+                            var tmp = p0?.tag as BrandRep.DataBean
                             mCheckIndex = position
+                            mBrandId = tmp.id
                             mOnItemClick?.onItemClick(position,holder.itemView.tag)
                             notifyDataSetChanged()
                         }
@@ -82,15 +86,16 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
             is BrandGoodsRep.DataBean -> {
                 if (holder is PhoneVH) {
                     holder.phone_name.text = temp.type
-//                    var url = UrlConst.FILE_DOWNLOAD_URL+temp.logo
+                    var url = UrlConst.FILE_DOWNLOAD_URL+temp.logo
 //                    Glide.with(mContext).load(url).centerCrop().into(holder.phone_logo)
-                    Glide.with(mContext).load(temp.logo).into(holder.phone_logo)
+                    Glide.with(mContext).load(url).into(holder.phone_logo)
                     holder.itemView.tag = temp
                     holder.itemView.setOnClickListener(object :View.OnClickListener{
                         override fun onClick(p0: View?) {
                             var tmp = p0?.tag as BrandGoodsRep.DataBean
                             var map = HashMap<String,Any?>()
-                            map["brandbean"] = tmp
+                            map["goodbean"] = tmp
+                            map["brandid"] = mBrandId
                             when(mCheckType) {
                                 "0" -> {
                                     ActivityToActivity.toActivity(

@@ -43,12 +43,13 @@ class HomeFragment : BaseFragment<EmptyPresenter>() {
 
     override fun initData() {
         phone_model.text = Build.MODEL
-//        phone_storage.text = StorageVolume.EXTRA_STORAGE_VOLUME
+        phone_storage.text = DeviceUtil.getTotalRomSize()
         pingpai_value.text = Build.BRAND
         model_value.text = Build.MODEL
+        storage_value.text = DeviceUtil.getTotalRamSize()+"+"+DeviceUtil.getTotalRomSize()
+
         val macAddress = android.provider.Settings.Secure.getString(context?.getContentResolver(), "bluetooth_address")
         bluetooth_mac.text = macAddress
-        val wifiMacAddress=MacUtils.getWifiMacAddress()
         wifi_mac.text = MacAddressUtils.getMacAddress(context)
         os_version.text = Build.VERSION.RELEASE
         Log.e("wifi",DeviceUtil.isWifiAvailable().toString()+" wifi "+DeviceUtil.isWifiConect())
