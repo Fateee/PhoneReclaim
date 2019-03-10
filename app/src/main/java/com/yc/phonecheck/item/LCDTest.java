@@ -44,7 +44,7 @@ public class LCDTest extends BaseTest {
         int index = mColorIndex++ % (COLORS.length + 1);
 
         if (index == 0) {
-            mHandler.sendEmptyMessageDelayed(0,2000);
+            mHandler.sendEmptyMessageDelayed(0,1500);
 //            setButtonVisibility(false);
             vc.setVisibility(View.VISIBLE);
             vc.setBackgroundResource(COLORS[index]);
@@ -91,7 +91,7 @@ public class LCDTest extends BaseTest {
                 }
             });
         } else {
-            mHandler.sendEmptyMessageDelayed(0,2000);
+            mHandler.sendEmptyMessageDelayed(0,1500);
             vc.setBackgroundResource(COLORS[index]);
         }
 

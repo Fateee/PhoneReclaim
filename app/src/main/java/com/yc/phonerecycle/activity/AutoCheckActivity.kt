@@ -35,7 +35,10 @@ import com.yc.phonecheck.item.CallTest
 import com.yc.phonecheck.item.LCDTest
 import com.yc.phonecheck.item.TouchTest
 import com.yc.phonerecycle.BaseCheckActivity
+import com.yc.phonerecycle.activity.fragment.CallTestFragment
 import com.yc.phonerecycle.activity.fragment.HandCheckThirdFragment
+import com.yc.phonerecycle.activity.fragment.LcdTestFragment
+import com.yc.phonerecycle.activity.fragment.TouchTestFragment
 import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
@@ -128,7 +131,8 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         LIGHT = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
         ORIENTATION = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION)
         COMPASS = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-        doWifiTest()
+//        doWifiTest()
+        doGravitySensorTest()
     }
 
     private fun doWifiTest() {
@@ -294,6 +298,13 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         var ret = speakerTest()
         checkResult.loudspeaker = if (ret) {0} else {1}
     }
+
+    private fun checkOther() {
+        val hasGYROSCOPE = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE)
+        if (!hasGYROSCOPE) checkResult.gyroscope = 1
+
+    }
+
     private fun doFlashLightTest() {
         ic_circle.postDelayed({ initView()
             doVibratorTest()},2500)
@@ -307,16 +318,20 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         checkResult.vibrator = if (ret) {0} else {1}
     }
     private fun doCameraTest() {
-        ic_circle.postDelayed({touchTest()},2500)
+        ic_circle.postDelayed({
+//            doLCDTest()
+            touchTest()
+        },2500)
         var ret = CameraUtils.HasBackCamera() !=2 || CameraUtils.HasFrontCamera() != 2
         checkResult.camera = if (ret) {0} else {1}
     }
 
-    private var mTouchTest = TouchTest()
+//    private var mTouchTest = TouchTest()
+    private var mTouchTest = TouchTestFragment()
     fun touchTest() {
         ic_rorato.visibility = View.GONE
         checkResult.multiTouch = 1
-        screen_check_layout.postDelayed(lcdTestRunnable,45*1000)
+        ic_circle.postDelayed(lcdTestRunnable,5*1000)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.screen_check_layout,mTouchTest)
         transaction.commit()
@@ -328,9 +343,8 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         }
     }
 
-    private var mLCDTest = LCDTest()
+    private var mLCDTest = LcdTestFragment()
 
-    @Jvm
     fun doLCDTest() {
         screen_check_layout.removeCallbacks(lcdTestRunnable)
         val transaction = supportFragmentManager.beginTransaction()
@@ -338,8 +352,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         transaction.commit()
     }
 
-    private var mCallTest = CallTest()
-    @JvmStatic
+    private var mCallTest = CallTestFragment()
     fun doCallTest() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.screen_check_layout,mCallTest)

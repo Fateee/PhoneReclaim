@@ -35,9 +35,12 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
             if (data?.code == 0) {
                 ToastUtil.showShortToastCenter("添加检测记录成功")
                 var map = HashMap<String, Any>()
-                map["checkbean"] = (activity as HandCheckActivity).mCheckReqBody
+                if (activity is HandCheckActivity) {
+                    map["checkbean"] = (activity as HandCheckActivity).mCheckReqBody
+                } else if (activity is AutoCheckActivity) {
+                    map["checkbean"] = (activity as AutoCheckActivity).checkResult
+                }
                 map["recordid"] = data.data
-//            map["result_type"] = (activity as HandCheckActivity).mCheckReqBody
                 ActivityToActivity.toActivity(
                     activity, CheckResulttActivity::class.java,map)
             }
@@ -55,7 +58,7 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
         appraisal.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 if(!setCheckValue()) return
-                presenter.saveOrUpdate((activity as HandCheckActivity).mCheckReqBody)
+
             }
         })
         txt_left_title.setOnClickListener(object : View.OnClickListener {
@@ -111,6 +114,16 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
             (activity as HandCheckActivity).mCheckReqBody.screenProblem = (screen.tag as DictMapRep.DataBean).id
             (activity as HandCheckActivity).mCheckReqBody.overhaul = (overhaul.tag as DictMapRep.DataBean).id
             (activity as HandCheckActivity).mCheckReqBody.water = (in_water.tag as DictMapRep.DataBean).id
+            presenter.saveOrUpdate((activity as HandCheckActivity).mCheckReqBody)
+            true
+        } else if (activity is AutoCheckActivity) {
+            (activity as AutoCheckActivity).checkResult.colour = (phone_color.tag as DictMapRep.DataBean).id
+            (activity as AutoCheckActivity).checkResult.warranty = (fix_condition.tag as DictMapRep.DataBean).id
+            (activity as AutoCheckActivity).checkResult.facade = (surface.tag as DictMapRep.DataBean).id
+            (activity as AutoCheckActivity).checkResult.screenProblem = (screen.tag as DictMapRep.DataBean).id
+            (activity as AutoCheckActivity).checkResult.overhaul = (overhaul.tag as DictMapRep.DataBean).id
+            (activity as AutoCheckActivity).checkResult.water = (in_water.tag as DictMapRep.DataBean).id
+            presenter.saveOrUpdate((activity as AutoCheckActivity).checkResult)
             true
         } else{
             false

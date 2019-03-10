@@ -38,7 +38,7 @@ public abstract class BaseTest extends Fragment implements Runnable {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        cancelTimerTask();
+//        cancelTimerTask();
     }
 
     @Override

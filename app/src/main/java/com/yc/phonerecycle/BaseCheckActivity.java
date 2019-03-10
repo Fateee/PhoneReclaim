@@ -144,8 +144,8 @@ public abstract class BaseCheckActivity<P extends BasePresenter> extends AppComp
         try
         {
             Thread.sleep(1000L);
-            localParameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-            localCamera.setParameters(localParameters);
+//            localParameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+//            localCamera.setParameters(localParameters);
             localCamera.stopPreview();
             localCamera.release();
             if (localCamera != null)
