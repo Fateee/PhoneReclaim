@@ -21,7 +21,7 @@ public abstract class BaseTest extends Fragment implements Runnable {
     private ScheduledThreadPoolExecutor mTimerTask;
     private int mIndex;
 
-    private Handler mHandler = new Handler() {
+    public Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {

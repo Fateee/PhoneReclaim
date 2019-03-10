@@ -10,6 +10,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import com.yc.phonerecycle.R;
 
 public class BorderTouchView extends View {
 
@@ -36,7 +37,7 @@ public class BorderTouchView extends View {
 
     public BorderTouchView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
+        setBackgroundResource(R.drawable.touch_bg);
         DisplayMetrics dm = getResources().getDisplayMetrics();
         mRectWidth = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 40, dm);

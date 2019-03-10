@@ -1,6 +1,7 @@
 package com.yc.phonecheck.item;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import com.yc.phonecheck.views.BorderTouchView;
 import com.yc.phonecheck.views.OnTouchChangedListener;
 import com.yc.phonerecycle.R;
+import com.yc.phonerecycle.activity.AutoCheckActivity;
 
 
 public class TouchTest extends BaseTest implements OnTouchChangedListener {
@@ -30,7 +32,10 @@ public class TouchTest extends BaseTest implements OnTouchChangedListener {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setTimerTask(MSG_BORDER_TOUCH, 0);
+//        setTimerTask(MSG_BORDER_TOUCH, 0);
+        Message msg = Message.obtain();
+        msg.arg1=MSG_BORDER_TOUCH;
+        mHandler.sendMessage(msg);
     }
 
     @Override
@@ -47,7 +52,12 @@ public class TouchTest extends BaseTest implements OnTouchChangedListener {
             break;
         case MSG_END:
             Log.i(TAG, "MSG_END");
-            clickPassButton();
+//            clickPassButton();
+            if (getActivity() instanceof AutoCheckActivity) {
+                ((AutoCheckActivity)getActivity()).checkResult.multiTouch = 0;
+                ((AutoCheckActivity)getActivity()).doLCDTest();
+            }
+
             break;
         }
     }
@@ -55,7 +65,10 @@ public class TouchTest extends BaseTest implements OnTouchChangedListener {
     @Override
     public void onTouchFinish(View v) {
         if (v == mBorderView) {
-            setTimerTask(MSG_END, 1000);
+            Message msg = Message.obtain();
+            msg.arg1=MSG_END;
+            mHandler.sendMessageDelayed(msg,1000);
+//            setTimerTask(MSG_END, 1000);
         }
     }
 

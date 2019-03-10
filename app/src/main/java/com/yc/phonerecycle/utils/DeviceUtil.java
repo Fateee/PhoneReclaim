@@ -1,7 +1,10 @@
 package com.yc.phonerecycle.utils;
 
 import android.app.ActivityManager;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
@@ -203,7 +206,7 @@ public final class DeviceUtil {
     }
 
     public static String getTotalRomSize() {
-        final StatFs statFs = new StatFs(Environment.getDataDirectory().getParentFile().getPath());
+        final StatFs statFs = new StatFs(Environment.getDataDirectory().getPath());
         long totalCounts = statFs.getBlockCountLong();//总共的block数
         long size = statFs.getBlockSizeLong(); //每格所占的大小，一般是4KB==
         long totalROMSize = totalCounts *size; //内部存储总大小
@@ -224,5 +227,41 @@ public final class DeviceUtil {
         String availableSize = Formatter.formatFileSize(BaseApplication.getAppContext(), availableBlocks*blockSize);//获得SD卡可用容
 
         return availableSize+"/"+totalSize;
+    }
+
+    public static boolean isWifiAvailable() {
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) BaseApplication.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWiFiNetworkInfo = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (mWiFiNetworkInfo != null) {
+            return mWiFiNetworkInfo.isAvailable();
+        }
+        return false;
+    }
+
+    public static boolean isWifiConect() {
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) BaseApplication.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWiFiNetworkInfo = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (mWiFiNetworkInfo != null) {
+            return mWiFiNetworkInfo.isConnected();
+        }
+        return false;
+    }
+
+    public static boolean isBleAvailable() {
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) BaseApplication.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mBleInfo = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_BLUETOOTH);
+        if (mBleInfo != null) {
+            return mBleInfo.isAvailable();
+        }
+        return false;
+    }
+
+    public static boolean isBleConect() {
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) BaseApplication.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mBleInfo = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_BLUETOOTH);
+        if (mBleInfo != null) {
+            return mBleInfo.isConnected();
+        }
+        return false;
     }
 }

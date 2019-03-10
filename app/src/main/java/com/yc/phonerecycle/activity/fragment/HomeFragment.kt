@@ -10,6 +10,7 @@ import android.os.storage.StorageVolume
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.support.v4.content.FileProvider
+import android.util.Log
 import android.view.View
 import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
 import com.snail.antifake.deviceid.macaddress.MacAddressUtils
@@ -50,7 +51,8 @@ class HomeFragment : BaseFragment<EmptyPresenter>() {
         val wifiMacAddress=MacUtils.getWifiMacAddress()
         wifi_mac.text = MacAddressUtils.getMacAddress(context)
         os_version.text = Build.VERSION.RELEASE
-
+        Log.e("wifi",DeviceUtil.isWifiAvailable().toString()+" wifi "+DeviceUtil.isWifiConect())
+//        Log.e("ble",DeviceUtil.isBleAvailable().toString()+" wifi "+DeviceUtil.isBleConect())
         PermissionUtils.checkPhoneStatePermission(activity as Context, object : PermissionUtils.Callback() {
             override fun onGranted() {
                 imei_value.text = DeviceIdUtil.getDeviceId(context)
@@ -68,14 +70,20 @@ class HomeFragment : BaseFragment<EmptyPresenter>() {
 
         hand_check.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
+                var map = HashMap<String,String?>()
+                map["checktype"] = "0"
                 ActivityToActivity.toActivity(
-                    activity, ChoosePhoneActivity::class.java)
+                    activity, ChoosePhoneActivity::class.java,map)
             }
         })
         auto_check.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
+                var map = HashMap<String,String?>()
+                map["checktype"] = "1"
                 ActivityToActivity.toActivity(
-                    activity, AutoCheckActivity::class.java)
+                    activity, ChoosePhoneActivity::class.java,map)
+//                ActivityToActivity.toActivity(
+//                    activity, AutoCheckActivity::class.java)
             }
         })
         to_detail.setOnClickListener(object : View.OnClickListener {

@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import com.yc.phonerecycle.R;
+import com.yc.phonerecycle.activity.AutoCheckActivity;
 
 
 public class CallTest extends BaseTest implements View.OnClickListener {
@@ -30,7 +31,10 @@ public class CallTest extends BaseTest implements View.OnClickListener {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        setButtonVisibility(true);
+        if (requestCode == REQUEST_CALL) {
+            ((AutoCheckActivity)getActivity()).checkResult.call = 0;
+            ((AutoCheckActivity)getActivity()).doHandCheck();
+        }
     }
 
     @Override
@@ -69,7 +73,8 @@ public class CallTest extends BaseTest implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.refuse:
-
+                ((AutoCheckActivity)getActivity()).checkResult.call = 1;
+                ((AutoCheckActivity)getActivity()).doHandCheck();
                 break;
             case R.id.grant:
                 callPhone("10086");

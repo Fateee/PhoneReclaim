@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.view.View
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.activity.AutoCheckActivity
 import com.yc.phonerecycle.activity.CheckResulttActivity
 import com.yc.phonerecycle.activity.HandCheckActivity
 import com.yc.phonerecycle.app.BaseApplication
@@ -59,7 +60,12 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
         })
         txt_left_title.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                (activity as HandCheckActivity).changeFragment((activity as HandCheckActivity).mSecondFragment)
+                if (activity is HandCheckActivity) {
+                    (activity as HandCheckActivity).changeFragment((activity as HandCheckActivity).mSecondFragment)
+                } else if (activity is AutoCheckActivity) {
+                    activity?.finish()
+//                    (activity as AutoCheckActivity).changeFragment((activity as HandCheckActivity).mSecondFragment)
+                }
             }
         })
         phone_color.setOnClickListener(object : View.OnClickListener {

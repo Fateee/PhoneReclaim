@@ -67,4 +67,9 @@ object PermissionUtils {
         AndPermission.with(context).runtime().setting().start()
     }
 
+    @JvmStatic
+    fun checkFingerPermission(context: Context, callback: Callback?) {
+        checkPermission(context, callback, Manifest.permission.USE_FINGERPRINT)
+    }
+
 }

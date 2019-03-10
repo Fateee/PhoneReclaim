@@ -18,7 +18,10 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
     override fun createPresenter() = CommonPresenter()
 
 
+    private var checktype: String? = "-1"
+
     override fun initBundle() {
+        checktype = intent.getStringExtra("checktype")
     }
 
     override fun getContentView(): Int = R.layout.activity_choose_phone
@@ -48,6 +51,7 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
         val mGridLayoutManager = GridLayoutManager(this, 2)
         brand_detail_list.layoutManager = mGridLayoutManager
         mPhoneAdapter = BandAdapter(this,1)
+        mPhoneAdapter.mCheckType = checktype
         brand_detail_list.adapter = mPhoneAdapter
 
     }

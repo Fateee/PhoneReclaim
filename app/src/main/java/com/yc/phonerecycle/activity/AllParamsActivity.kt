@@ -56,7 +56,7 @@ class AllParamsActivity : BaseActivity<CommonPresenter>() {
         typename.text = Build.MODEL
         os_version.text = Build.VERSION.RELEASE
         cpu_type.text = CameraUtils.getCpuName()
-        PermissionUtils.checkPhoneStatePermission(this@AllParamsActivity, object : PermissionUtils.Callback() {
+        PermissionUtils.checkCameraPermission(this@AllParamsActivity, object : PermissionUtils.Callback() {
             override fun onGranted() {
                 main_camera.text = CameraUtils.getCameraPixels(CameraUtils.HasBackCamera())+"像素"
                 back_camera.text = CameraUtils.getCameraPixels(CameraUtils.HasBackCamera())+"像素"

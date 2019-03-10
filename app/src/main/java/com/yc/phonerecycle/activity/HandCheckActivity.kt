@@ -54,12 +54,12 @@ class HandCheckActivity : BaseActivity<EmptyPresenter>() , SensorEventListener {
 
     override fun createPresenter(): EmptyPresenter? = null
 
-    public lateinit var brandbean: BrandGoodsRep.DataBean
 
     override fun initBundle() {
-        brandbean = intent.getSerializableExtra("brandbean") as BrandGoodsRep.DataBean
+        var brandbean = intent.getSerializableExtra("brandbean") as BrandGoodsRep.DataBean
         mCheckReqBody.goodsId = brandbean.id
         mCheckReqBody.system = Build.VERSION.RELEASE
+        mCheckReqBody.brandName = Build.MODEL
         PermissionUtils.checkPhoneStatePermission(this@HandCheckActivity, object : PermissionUtils.Callback() {
             override fun onGranted() {
                 mCheckReqBody.imei = DeviceIdUtil.getDeviceId(this@HandCheckActivity)

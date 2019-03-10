@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
 import com.bumptech.glide.request.RequestOptions
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.activity.AutoCheckActivity
 import com.yc.phonerecycle.activity.HandCheckActivity
 import com.yc.phonerecycle.constant.UrlConst
 import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
@@ -38,7 +39,7 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
 //        intent.putExtra(PhotoViewActivity.DATALIST, mDataList)
 //        mContext.startActivity(intent)
 //    }
-
+    var mCheckType : String? = "-1"
     public fun setOnItemClickListener(onItemClick : OnItemClick) {
         mOnItemClick = onItemClick
     }
@@ -88,10 +89,19 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
                     holder.itemView.setOnClickListener(object :View.OnClickListener{
                         override fun onClick(p0: View?) {
                             var tmp = p0?.tag as BrandGoodsRep.DataBean
-                            var map = HashMap<String,Any>()
+                            var map = HashMap<String,Any?>()
                             map["brandbean"] = tmp
-                            ActivityToActivity.toActivity(
-                                mContext, HandCheckActivity::class.java,map)
+                            when(mCheckType) {
+                                "0" -> {
+                                    ActivityToActivity.toActivity(
+                                        mContext, HandCheckActivity::class.java,map)
+                                }
+                                "1" -> {
+                                    ActivityToActivity.toActivity(
+                                        mContext, AutoCheckActivity::class.java,map)
+                                }
+                            }
+
                         }
                     })
                 }

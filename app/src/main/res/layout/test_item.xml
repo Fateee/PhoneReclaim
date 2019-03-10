@@ -6,11 +6,19 @@
                 android:keepScreenOn="true"
                 android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/item_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
+    <TextView
+            android:id="@+id/lcd_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="45dip"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/lcd_desc"
+            android:textAppearance="?android:attr/textAppearance" />
+
+    <TextView
+            android:id="@+id/lcd_color"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     <LinearLayout
             android:id="@+id/screen_container"
@@ -20,7 +28,8 @@
             android:layout_marginRight="20dp"
             android:layout_centerInParent="true"
             android:background="@drawable/hand_check_bg"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
         
         <LinearLayout 
                 android:layout_width="match_parent" 
@@ -102,6 +111,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:visibility="gone"
         android:orientation="horizontal" >
 
         <Button
