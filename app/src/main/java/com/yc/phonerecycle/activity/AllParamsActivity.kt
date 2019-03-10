@@ -12,17 +12,14 @@ import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.model.bean.biz.AboutUsRep
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
-import com.yc.phonerecycle.utils.CameraUtils
-import com.yc.phonerecycle.utils.CpuUtils
 import kotlinx.android.synthetic.main.activity_phone_all_params.*
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
 import android.os.BatteryManager
-
-
-
-
+import android.text.format.Formatter
+import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
+import com.yc.phonerecycle.utils.*
 
 
 class AllParamsActivity : BaseActivity<CommonPresenter>() {
@@ -59,10 +56,25 @@ class AllParamsActivity : BaseActivity<CommonPresenter>() {
         typename.text = Build.MODEL
         os_version.text = Build.VERSION.RELEASE
         cpu_type.text = CameraUtils.getCpuName()
-        main_camera.text = CameraUtils.getCameraPixels(CameraUtils.HasBackCamera())+"像素"
+        PermissionUtils.checkPhoneStatePermission(this@AllParamsActivity, object : PermissionUtils.Callback() {
+            override fun onGranted() {
+                main_camera.text = CameraUtils.getCameraPixels(CameraUtils.HasBackCamera())+"像素"
+                back_camera.text = CameraUtils.getCameraPixels(CameraUtils.HasBackCamera())+"像素"
+                front_camera.text = CameraUtils.getCameraPixels(CameraUtils.HasFrontCamera())+"像素"
+            }
 
-//        rom.text =
-//        ram.text =
+            override fun onRationale() {
+                ToastUtil.showShortToast("请开启摄像头权限才能正常使用")
+            }
+
+            override fun onDenied(context: Context) {
+                showPermissionDialog("开启摄像头权限","你还没有开启摄像头权限，开启之后才可读取摄像头信息")
+            }
+        })
+
+
+        rom.text = DeviceUtil.getAvailRomSize()+"/"+DeviceUtil.getTotalRomSize()
+        ram.text = DeviceUtil.getAvailRamSize()+"/"+DeviceUtil.getTotalRamSize()
 
         cpu_cpu_type.text = CameraUtils.getCpuName()
         cpu_core.text = CpuUtils.getNumCpuCores().toString()
@@ -82,8 +94,6 @@ class AllParamsActivity : BaseActivity<CommonPresenter>() {
         }
 
 //        video_record.text
-        back_camera.text = CameraUtils.getCameraPixels(CameraUtils.HasBackCamera())+"像素"
-        front_camera.text = CameraUtils.getCameraPixels(CameraUtils.HasFrontCamera())+"像素"
 
         network_model.text = phone.getNetworkType().toString()
 //        gps_value.text = android.os.Build.FINGERPRINT

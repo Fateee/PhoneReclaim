@@ -5,8 +5,12 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
+import android.os.StatFs;
 import android.text.TextUtils;
+import android.text.format.Formatter;
+import com.yc.phonerecycle.app.BaseApplication;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
@@ -173,5 +177,52 @@ public final class DeviceUtil {
                     .processName));
         }
         return true;
+    }
+
+    public static String getAvailRamSize() {
+        ActivityManager manager = (ActivityManager) BaseApplication.getAppContext().getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo info = new ActivityManager.MemoryInfo();
+        manager.getMemoryInfo(info);
+        return Formatter.formatFileSize(BaseApplication.getAppContext(), info.availMem);
+    }
+
+    public static String getTotalRamSize() {
+        ActivityManager manager = (ActivityManager) BaseApplication.getAppContext().getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo info = new ActivityManager.MemoryInfo();
+        manager.getMemoryInfo(info);
+        return Formatter.formatFileSize(BaseApplication.getAppContext(), info.totalMem);
+    }
+
+    public static String getAvailRomSize() {
+        final StatFs statFs = new StatFs(Environment.getDataDirectory().getPath());
+        long availableCounts = statFs.getAvailableBlocksLong() ; //获取可用的block数
+        long size = statFs.getBlockSizeLong(); //每格所占的大小，一般是4KB==
+        long availROMSize = availableCounts * size;//可用内部存储大小
+
+        return Formatter.formatFileSize(BaseApplication.getAppContext(), availROMSize);
+    }
+
+    public static String getTotalRomSize() {
+        final StatFs statFs = new StatFs(Environment.getDataDirectory().getParentFile().getPath());
+        long totalCounts = statFs.getBlockCountLong();//总共的block数
+        long size = statFs.getBlockSizeLong(); //每格所占的大小，一般是4KB==
+        long totalROMSize = totalCounts *size; //内部存储总大小
+
+        return Formatter.formatFileSize(BaseApplication.getAppContext(), totalROMSize);
+    }
+
+    //得到SD卡大小
+    public static String getSdcardSize(){
+
+        File path = Environment.getExternalStorageDirectory();//得到SD卡的路径
+        StatFs stat = new StatFs(path.getPath());//创建StatFs对象，用来获取文件系统的状态
+        long blockCount = stat.getBlockCount();
+        long blockSize = stat.getBlockSize();
+        long availableBlocks = stat.getAvailableBlocks();
+
+        String totalSize = Formatter.formatFileSize(BaseApplication.getAppContext(), blockCount*blockSize);//格式化获得SD卡总容量
+        String availableSize = Formatter.formatFileSize(BaseApplication.getAppContext(), availableBlocks*blockSize);//获得SD卡可用容
+
+        return availableSize+"/"+totalSize;
     }
 }

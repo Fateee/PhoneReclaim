@@ -149,7 +149,7 @@
                           android:layout_height="wrap_content"
                           android:gravity="right"
                           android:textSize="13sp"
-                          tool:text="Apple"
+                          android:text="未知"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
             </LinearLayout>
@@ -493,7 +493,7 @@
                           android:gravity="right"
                           android:textSize="13sp"
                           android:id="@+id/back_camera"
-                          tool:text="Apple"
+                          android:text="未知"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
             </LinearLayout>
@@ -518,7 +518,7 @@
                           android:gravity="right"
                           android:textSize="13sp"
                           android:id="@+id/front_camera"
-                          tool:text="Apple"
+                          android:text="未知"
                           android:layout_marginLeft="15dp"
                           android:textColor="@color/c666666"/>
             </LinearLayout>
