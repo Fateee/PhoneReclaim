@@ -29,7 +29,7 @@ class CheckListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV
 
     private val mReefreshListener: SwipeRefreshLayout.OnRefreshListener = object : SwipeRefreshLayout.OnRefreshListener {
         override fun onRefresh() {
-            presenter.getAssistantDetection()
+            presenter.getMyDetection()
         }
     }
 
@@ -73,7 +73,7 @@ class CheckListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV
         when (type) {
             "1" -> {//-1 查询全部 0、已完成 1、待寄出 2、待收货 3、已退回 4、验机 5、待打款
                 title_view.visibility = View.GONE
-                presenter.getAssistantDetection()
+                presenter.getMyDetection()
             }
         }
 

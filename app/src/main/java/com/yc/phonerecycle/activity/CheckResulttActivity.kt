@@ -1,7 +1,5 @@
 package com.yc.phonerecycle.activity
 
-import android.content.DialogInterface
-import android.support.v7.app.AlertDialog
 import android.text.TextUtils
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
@@ -19,7 +17,6 @@ import com.yc.phonerecycle.model.bean.biz.MyOrderListlRep
 import com.yc.phonerecycle.model.bean.biz.OrderDetailRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
-import com.yc.phonerecycle.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_check_result_detail.*
 import kotlinx.android.synthetic.main.item_check_result.view.*
 import kotlinx.android.synthetic.main.item_check_result_container.view.*
@@ -99,9 +96,11 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
             custom_phone.visibility = View.VISIBLE
             custom_phone.text = getString(R.string.check_time,mCheckReqBody?.checkTime)
         } else {
-            custom_phone.visibility = View.VISIBLE
-            //todo huyi
-            custom_phone.text = getString(R.string.custom_phone,mCheckReqBody?.checkTime)
+            if (!TextUtils.isEmpty(recordid)) {
+                custom_phone.visibility = View.VISIBLE
+                //todo huyi
+                custom_phone.text = getString(R.string.custom_phone,mCheckReqBody?.checkTime)
+            }
         }
     }
 
@@ -139,14 +138,15 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
             presenter.getGoodsInstanceById(recordid)
         else {
             var ret = mCheckReqBody?.cloneToOrderDetailRepDataBean()
+            submit.visibility = View.VISIBLE
             submit.text="自动检测"
-            //todo huyi
-//            refreshView(ret)
+            refreshView(ret)
             submit.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(p0: View?) {
                     finish()
                 }
             })
+            return
         }
         if(mCheckReqBody != null) {
             submit.visibility = View.VISIBLE

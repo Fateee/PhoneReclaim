@@ -217,9 +217,9 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         ic_circle.postDelayed({
             initView()
             doDistanceSensorTest()
-        },3000)
-        checkResult.gravitySensor = 1
-        mSensorManager.registerListener(this,mGRAVITY,SensorManager.SENSOR_DELAY_FASTEST)
+        },2500)
+        checkResult.gravitySensor = if (CameraUtils.isSupportGravity(BaseApplication.getAppContext())) {0} else {1}
+//        mSensorManager.registerListener(this,mGRAVITY,SensorManager.SENSOR_DELAY_FASTEST)
     }
 
 
@@ -271,7 +271,6 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         if (!haslocation) checkResult.location = 1
         if (Build.VERSION.SDK_INT >= 23) {// android6 执行运行时权限
             if (checkLocationPermission()) {
-                // TODO: Consider calling
                 var string_array: Array<String> =
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 ActivityCompat.requestPermissions(this, string_array, REQUEST_CODE)
@@ -349,6 +348,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
             doFlashLightTest()},2500)
         var ret = CheckPhoneUtil.doSpeakerTest()
         checkResult.loudspeaker = if (ret) {0} else {1}
+        checkOther()
     }
 
     private fun checkOther() {

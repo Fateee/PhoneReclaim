@@ -51,10 +51,10 @@ class BindCardActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.saveBankC
                     ToastUtil.showShortToastCenter("请输入银行卡号")
                     return
                 }
-                if (card_num.length != 16) {
-                    ToastUtil.showShortToastCenter("卡号须为16位")
-                    return
-                }
+//                if (card_num.length != 16) {
+//                    ToastUtil.showShortToastCenter("卡号须为16位")
+//                    return
+//                }
                 presenter.saveBankCard(card_num,bind_owner,"",bank_name, UserInfoUtils.getUser().data?.userInfoVO?.id)
             }
         })

@@ -34,6 +34,8 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
     private lateinit var mPhoneAdapter: BandAdapter
 
     override fun initDatas() {
+        //todo huyi search
+
         presenter.getBrandSelect("",0)
         val mLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         brand_list.layoutManager = mLinearLayoutManager
@@ -60,7 +62,8 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
     override fun getDataOK(rep: Any?, type: Int) {
         if (type == 0 && rep is BrandRep) {
             mBandAdapter.refreshUI(rep.data,true)
-            presenter.getGoodsByBrandId(1,rep.data[0].id)
+            if (rep.data.size > 0)
+                presenter.getGoodsByBrandId(1,rep.data[0].id)
         } else if (type == 1 && rep is BrandGoodsRep) {
             mPhoneAdapter.refreshUI(rep.data,true)
         }

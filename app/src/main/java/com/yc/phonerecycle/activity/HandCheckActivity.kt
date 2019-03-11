@@ -32,6 +32,7 @@ import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
+import com.yc.phonerecycle.utils.CameraUtils
 import com.yc.phonerecycle.utils.CheckPhoneUtil
 import com.yc.phonerecycle.utils.PermissionUtils
 import com.yc.phonerecycle.utils.ToastUtil
@@ -139,27 +140,27 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_GRAVITY){
-            ToastUtil.showShortToast("TYPE_GRAVITY: "+event.values[0])
+//            ToastUtil.showShortToast("TYPE_GRAVITY: "+event.values[0])
             mCheckReqBody.gravitySensor = 0
         }else if (event?.sensor?.type == Sensor.TYPE_PROXIMITY) {
-            ToastUtil.showShortToast("Distance: "+event.values[0])
+//            ToastUtil.showShortToast("Distance: "+event.values[0])
             mCheckReqBody.proximitySenso = 0
         } else if (event?.sensor?.type == Sensor.TYPE_LIGHT ) {
-            ToastUtil.showShortToast("Light: "+event.values[0])
+//            ToastUtil.showShortToast("Light: "+event.values[0])
             mCheckReqBody.lightSensor = 0
         } else if (event?.sensor?.type == Sensor.TYPE_ORIENTATION) {
-            ToastUtil.showShortToast("spiritLevel: "+event.values[0])
+//            ToastUtil.showShortToast("spiritLevel: "+event.values[0])
             mCheckReqBody.spiritLevel = 0
         } else if (event?.sensor?.type == Sensor.TYPE_MAGNETIC_FIELD) {
-            ToastUtil.showShortToast("Compass: "+event.values[0])
+//            ToastUtil.showShortToast("Compass: "+event.values[0])
             mCheckReqBody.compass = 0
         }
     }
 
 
     private fun doGravitySensorTest() {
-        mCheckReqBody.gravitySensor = 1
-        mSensorManager.registerListener(this,mGRAVITY,SensorManager.SENSOR_DELAY_FASTEST)
+        mCheckReqBody.gravitySensor = if (CameraUtils.isSupportGravity(BaseApplication.getAppContext())) {0} else {1}
+//        mSensorManager.registerListener(this,mGRAVITY,SensorManager.SENSOR_DELAY_FASTEST)
     }
 
 
@@ -198,7 +199,6 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
         if (!haslocation) mCheckReqBody.location = 1
         if (Build.VERSION.SDK_INT >= 23) {// android6 执行运行时权限
             if (checkLocationPermission()) {
-                // TODO: Consider calling
                 var string_array: Array<String> =
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 ActivityCompat.requestPermissions(this, string_array, REQUEST_CODE)

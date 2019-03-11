@@ -114,6 +114,14 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
                         }
                     })
                 }
+                if (mType == 11) {
+                    holder.header_one.setOnLongClickListener(object :View.OnLongClickListener{
+                        override fun onLongClick(v: View?): Boolean {
+                            mOnBankClickListener.OnBankClick(v?.tag as BankCardListRep.DataBean)
+                            return true
+                        }
+                    })
+                }
             }
             is NearByShopRep.DataBean -> {
                 holder.header_one.visibility = View.GONE

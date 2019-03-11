@@ -3,12 +3,14 @@ package com.yc.phonerecycle.utils;
 import android.app.ActivityManager;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
-import android.os.Environment;
+import android.os.*;
 import android.os.Process;
-import android.os.StatFs;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
 import com.yc.phonerecycle.app.BaseApplication;
@@ -17,6 +19,8 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
+
+import static android.content.Context.BATTERY_SERVICE;
 
 /**
  * Created by jmyf on 17/5/23.
@@ -263,5 +267,109 @@ public final class DeviceUtil {
             return mBleInfo.isConnected();
         }
         return false;
+    }
+
+
+
+    /**
+     * Unknown network class
+     */
+    public static final int NETWORK_CLASS_UNKNOWN = 0;
+
+    /**
+     * wifi net work
+     */
+    public static final int NETWORK_WIFI = 1;
+
+    /**
+     * "2G" networks
+     */
+    public static final int NETWORK_CLASS_2_G = 2;
+
+    /**
+     * "3G" networks
+     */
+    public static final int NETWORK_CLASS_3_G = 3;
+
+    /**
+     * "4G" networks
+     */
+    public static final int NETWORK_CLASS_4_G = 4;
+    public static int getNetWorkClass() {
+        TelephonyManager telephonyManager = (TelephonyManager) BaseApplication.getAppContext().getSystemService(Context.TELEPHONY_SERVICE);
+
+        switch (telephonyManager.getNetworkType()) {
+            case TelephonyManager.NETWORK_TYPE_GPRS:
+            case TelephonyManager.NETWORK_TYPE_EDGE:
+            case TelephonyManager.NETWORK_TYPE_CDMA:
+            case TelephonyManager.NETWORK_TYPE_1xRTT:
+            case TelephonyManager.NETWORK_TYPE_IDEN:
+                return NETWORK_CLASS_2_G;
+
+            case TelephonyManager.NETWORK_TYPE_UMTS:
+            case TelephonyManager.NETWORK_TYPE_EVDO_0:
+            case TelephonyManager.NETWORK_TYPE_EVDO_A:
+            case TelephonyManager.NETWORK_TYPE_HSDPA:
+            case TelephonyManager.NETWORK_TYPE_HSUPA:
+            case TelephonyManager.NETWORK_TYPE_HSPA:
+            case TelephonyManager.NETWORK_TYPE_EVDO_B:
+            case TelephonyManager.NETWORK_TYPE_EHRPD:
+            case TelephonyManager.NETWORK_TYPE_HSPAP:
+                return NETWORK_CLASS_3_G;
+
+            case TelephonyManager.NETWORK_TYPE_LTE:
+                return NETWORK_CLASS_4_G;
+
+            default:
+                return NETWORK_CLASS_UNKNOWN;
+        }
+    }
+
+    public static int getNetWorkStatus() {
+        int netWorkType = NETWORK_CLASS_UNKNOWN;
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) BaseApplication.getAppContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            int type = networkInfo.getType();
+
+            if (type == ConnectivityManager.TYPE_WIFI) {
+                netWorkType = NETWORK_WIFI;
+            } else if (type == ConnectivityManager.TYPE_MOBILE) {
+                netWorkType = getNetWorkClass();
+            }
+        }
+        return netWorkType;
+    }
+
+    public static String getNetWorkString() {
+        int netWorkType = getNetWorkStatus();
+        switch (netWorkType) {
+            case NETWORK_CLASS_2_G:
+                return "2G";
+            case NETWORK_CLASS_3_G:
+                return "3G";
+            case NETWORK_CLASS_4_G:
+                return "4G";
+            case NETWORK_WIFI:
+                return "WIFI";
+            default:
+                return "未知";
+        }
+    }
+
+
+    public static int getBatteryLevel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BatteryManager batteryManager = (BatteryManager) BaseApplication.getAppContext().getSystemService(BATTERY_SERVICE);
+            return batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+        } else {
+            Intent intent = new ContextWrapper(BaseApplication.getAppContext()).
+                    registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+            return (intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) * 100) /
+                    intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+        }
     }
 }

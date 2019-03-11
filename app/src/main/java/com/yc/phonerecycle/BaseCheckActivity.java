@@ -180,7 +180,7 @@ public abstract class BaseCheckActivity<P extends BasePresenter> extends AppComp
                     getString(R.string.cancel),
                     getString(R.string.setting),
                     "",
-                    "",
+                    "0168b7",
                     new BaseDialog.IClickListener() {
                         @Override
                         public void click(Dialog dialog) {

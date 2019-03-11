@@ -95,10 +95,10 @@ public class CheckReqBody extends BaseBean {
     public String water;
     public int wifi;
     public String wirelessNetwork;
-
+    public String model;
+    public String checkTime;
     @NotNull
     public OrderDetailRep.DataBean cloneToOrderDetailRepDataBean() {
-//        new OrderDetailRep.DataBean(battery,bluetooth,brandId,brandName,call,camera,capacity,check)
-        return null;
+        return new OrderDetailRep.DataBean(battery, bluetooth, brandId, brandName, call, camera, capacity, checkTime, colour, compass, comprehensionAids, estimatePrice, facade, fingerprint, flashlight, goodsId, gravitySensor, gyroscope, id, imei, lightSensor, location, lockAccount, loudspeaker, memory, microphone, model, multiTouch, orderId, other, overhaul, proximitySenso, regional, screen, screenProblem, spiritLevel, startingState, status, system, type, vibrator, warranty, water, wifi, wirelessNetwork);
     }
 }

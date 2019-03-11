@@ -9,7 +9,7 @@ public class ThirdLoginInfoRep extends BaseRep {
      * data : {"accessToken":"","expiresIn":0,"gender":"","logo":"","nickName":"","openID":"","openType":"","qqAppId":"","qqAppSecret":"","qqRedirectUrl":"","redirectUrl":"","refreshToken":"","responseJson":"","userId":"","weCatAppId":"","weCatAppSecret":"","weCatRedirectUrl":""}
      */
 
-    public DataBean data;
+    public DataBean data = null;
 
 
     public static class DataBean {

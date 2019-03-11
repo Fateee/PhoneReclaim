@@ -494,7 +494,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onNext(Response<ThirdLoginInfoRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
-                        if (value.code() == 200 && value.body() != null ) {
+                        if (value.code() == 200 && value.body() != null && value.body().data != null) {
                             getSystemToekn(value.body().data.userId,value.body().data.openID);
                         }
                     }
@@ -1046,6 +1046,44 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
+
+    public void deleteCardbyId(String id) {
+        if (getView() != null ) {
+            getView().showLoading();
+        }
+        mCommonRequest.deleteCardbyId(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseRep>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() != null) {
+                            getView().dismissLoading();
+                        }
+                        if (value.code() == 200 && value.body() != null ) {
+                            if (getView() != null) {
+                                ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
     public void getUserBankCard() {
         if (getView() != null ) {
             getView().showLoading();
@@ -1534,10 +1572,10 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
-    public void getAssistantDetection() {
+    public void getMyDetection() {
         if (getView() == null) return;
         getView().showLoading();
-        mCommonRequest.getAssistantDetection()
+        mCommonRequest.getMyDetection()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<DetectionRep>>() {

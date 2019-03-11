@@ -35,8 +35,11 @@ public class BaseConst {
     public static final String WEIXIN_TYPE_AUTH_CODE = "authorization_code";
     public static final String WEIXIN_TYPE_REFRESH_CODE = "refresh_token";
 
-    public static final String QQ_APPID = "1103278945";//"1106223286";
-    public static final String QQ_SERCET = "1103278945";
+//    public static final String QQ_APPID = "1103278945";//"1106223286";
+//    public static final String QQ_SERCET = "1103278945";
+    public static final String QQ_APPID = "101548077";
+    public static final String QQ_SERCET = "25186c3e10a968cd1a883da8e249dc89";
+
     public static String qqScope="all";
 
     //0、已完成 1、待寄出 2、待收货 3、已退回 4、验机 5、待打款

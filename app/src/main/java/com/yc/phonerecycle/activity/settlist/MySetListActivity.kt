@@ -1,14 +1,15 @@
 package com.yc.phonerecycle.activity.settlist
 
+import android.app.Dialog
 import com.yc.phonerecycle.mvp.view.BaseActivity
-import com.yc.phonerecycle.utils.ActivityToActivity
 import android.view.View
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.LoginActivity
+import com.yc.phonerecycle.app.BaseApplication
+import com.yc.phonerecycle.model.bean.biz.BankCardListRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
-import com.yc.phonerecycle.utils.PhoneUtil
-import com.yc.phonerecycle.utils.UserInfoUtils
+import com.yc.phonerecycle.utils.*
 import kotlinx.android.synthetic.main.activity_setting_list.*
 
 
@@ -55,8 +56,10 @@ class MySetListActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginView
                     this@MySetListActivity, ResetBankPwdActivity::class.java)
             }
         })
+        initCacheSize()
         setlist_cache_clear.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
+                showDeleteDialog("清除缓存","确定要清除缓存吗？")
             }
         })
         recycle_flow.setOnClickListener(object : View.OnClickListener {
@@ -88,6 +91,11 @@ class MySetListActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginView
         })
     }
 
+    private fun initCacheSize() {
+        var size = DataCleanManager.getTotalCacheSize(BaseApplication.getAppContext())
+        setlist_cache_clear.setSubTitle(size)
+    }
+
     override fun loginResponse(data: Any?) {
     }
 
@@ -97,4 +105,30 @@ class MySetListActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginView
         setlist_phone.setSubTitle(phone)
     }
 
+    private var deleteDialog: Dialog? = null
+
+    fun showDeleteDialog(
+        title: String,
+        msg: String) {
+        if (deleteDialog == null) {
+            deleteDialog = DialogHelper.showDialog(
+                "1",
+                this@MySetListActivity, null,
+                "",
+                "",
+                title,
+                msg,
+                getString(R.string.cancel),
+                getString(R.string.sure),
+                "",
+                "0168b7",
+                { },
+                { DataCleanManager.clearAllCache(BaseApplication.getAppContext())
+                    initCacheSize()})
+            deleteDialog?.setCanceledOnTouchOutside(false)
+            deleteDialog?.setOnCancelListener { }
+        } else if (deleteDialog?.isShowing == false) {
+            deleteDialog?.show()
+        }
+    }
 }

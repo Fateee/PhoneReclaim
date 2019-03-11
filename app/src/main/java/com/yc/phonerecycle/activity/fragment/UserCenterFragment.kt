@@ -127,7 +127,11 @@ class UserCenterFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.UserInfo
     override fun userInfoSuccess(body: UserInfoRep?) {
         UserInfoUtils.saveUserInfo(body)
         item_name.text = body?.data?.name
-        item_sign.text = body?.data?.signature
+        if (TextUtils.isEmpty(body?.data?.signature)) {
+            item_sign.text = "无签名"
+        } else {
+            item_sign.text = body?.data?.signature ?: "无签名"
+        }
         if (UserInfoUtils.getUserType() == "1") {
             item1_num.text = body?.data?.orderCount.toString()
             item1_name.text = "订单"
@@ -150,8 +154,8 @@ class UserCenterFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.UserInfo
         }
 
         item2_num.text = body?.data?.money.toString()
-
-        Glide.with(activity as Context).load(body?.data?.logo).apply(RequestOptions.bitmapTransform(CircleCrop())).into(avatar)
+        if (!TextUtils.isEmpty(body?.data?.logo))
+            Glide.with(activity as Context).load(body?.data?.logo).apply(RequestOptions.bitmapTransform(CircleCrop())).into(avatar)
     }
 
 }

@@ -223,7 +223,6 @@ public class LogUtil {
                         }
                     }
                 } catch (Exception e) {
-                    // TODO: handle exception
                     e.printStackTrace();
                 }
 
@@ -267,7 +266,6 @@ public class LogUtil {
                 openLogFileOutStream();
 
             } catch (IOException e) {
-                // TODO: handle exception
                 e.printStackTrace();
             }
         }
@@ -336,7 +334,6 @@ public class LogUtil {
                 mFileSize = 0;
             }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
     }
@@ -430,7 +427,6 @@ public class LogUtil {
         }
 
         public void run() {
-            // TODO Auto-generated method stub
             try {
                 Log.i("PaintLogThread", "shutdown");
                 ArrayList<String> commandLine = new ArrayList<String>();

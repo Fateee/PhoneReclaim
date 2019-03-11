@@ -7,7 +7,6 @@
     <string name="about_us_tip2">地址：重庆市渝中区大坪百盛1号楼412</string>
     <string name="about_us_tip3">全国合作电话：203-68595677</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="all_cash_out_tip">可提现余额 ¥ %s</string>
     <string name="cash_account">收款账户: %s</string>
@@ -203,4 +202,5 @@
     <string name="contact_custom">联系客服</string>
     <string name="custom_phone">客服电话： %s</string>
     <string name="check_time">检测时间 %s</string>
+    <string name="sure">确定</string>
 </resources>

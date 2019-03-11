@@ -14,6 +14,7 @@ class MyWalletActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonIV{
     override fun getDataOK(rep: Any?) {
         if (rep is UserMoneyRep) {
             money_value.text = rep.data.toString()
+            //todo huyi
 //            if(rep.data > 0) submit.visibility = View.VISIBLE else submit.visibility = View.GONE
         }
     }

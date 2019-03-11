@@ -38,7 +38,7 @@ public class CacheUtils {
     }
 
     public static CacheUtils get(Context ctx, String cacheName) {
-        File f = new File(ctx.getCacheDir(), cacheName);
+        File f = new File(ctx.getFilesDir(), cacheName);
         return get(f, MAX_SIZE, MAX_COUNT);
     }
 
@@ -47,7 +47,7 @@ public class CacheUtils {
     }
 
     public static CacheUtils get(Context ctx, long max_zise, int max_count) {
-        File f = new File(ctx.getCacheDir(), CacheUtils.class.getSimpleName());
+        File f = new File(ctx.getFilesDir(), CacheUtils.class.getSimpleName());
         return get(f, max_zise, max_count);
     }
 

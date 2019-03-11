@@ -79,7 +79,11 @@ public abstract class BaseActivity <P extends BasePresenter> extends AppCompatAc
     }
 
     public void showLoading() {
-        loadingDialog = ProgressDialog.show(this,"","");
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            return;
+        }
+        if (isFinishing()) return;
+        loadingDialog = ProgressDialog.show(this,"","",false,true);
     }
 
     public void dismissLoading() {
@@ -138,7 +142,7 @@ public abstract class BaseActivity <P extends BasePresenter> extends AppCompatAc
                     getString(R.string.cancel),
                     getString(R.string.setting),
                     "",
-                    "",
+                    "0168b7",
                     new BaseDialog.IClickListener() {
                         @Override
                         public void click(Dialog dialog) {

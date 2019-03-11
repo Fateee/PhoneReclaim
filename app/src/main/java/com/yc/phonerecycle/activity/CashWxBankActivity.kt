@@ -94,7 +94,7 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
 
     override fun saveMoneyBankOK(rep: BaseRep?) {
         var map = HashMap<String,String?>()
-        map["money"] = mMoneyStr
+        map["money"] = moneyValue
         map["mCashType"] = mCashType.toString()
         map["account"] = mAccount
         ActivityToActivity.toActivity(

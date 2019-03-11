@@ -115,7 +115,6 @@ public class AndroidDeviceIMEIUtil {
         return PropertiesGet.getString("ro.bootloader");
     }
 
-    //    //TODO 17-7-31 by lishang : 暂时这么获取，不太重要
     public static String getIMSI(Context context) {
         TelephonyManager telephonyManager = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE));
         return telephonyManager.getSubscriberId();

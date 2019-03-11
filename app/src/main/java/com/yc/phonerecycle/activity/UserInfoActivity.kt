@@ -180,6 +180,8 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
                 val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 val photoUri = FileProvider.getUriForFile(this@UserInfoActivity, "$packageName.fileprovider", cameraPhoto)
                 takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                takePhotoIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                takePhotoIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 startActivityForResult(takePhotoIntent, CROP)
             }
 
@@ -206,7 +208,7 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
                 getString(R.string.cancel),
                 getString(R.string.setting),
                 "",
-                "",
+                "0168b7",
                 object : BaseDialog.IClickListener {
                     override fun click(dialog: Dialog) {
                     }
@@ -271,7 +273,7 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
                 }
                 CROP_PICTURE -> {
                     val photo = File(mUploadfilePath, mUploadfileName)
-                    if (!TextUtils.isEmpty(photo.absolutePath))
+                    if (!TextUtils.isEmpty(photo.absolutePath) && photo.length() > 0)
                         presenter.uploadFile(photo)
                 }
             }
@@ -287,20 +289,31 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
      * @param requestCode
      */
     internal fun cropImage(uri: Uri, outputX: Int, outputY: Int, requestCode: Int) {
-        //酷派手机系统定制，剪切有问题，采用自定义控件的方式剪切
-        if (DeviceUtil.isCoolpad || DeviceUtil.isHuawei || DeviceUtil.isNexus || DeviceUtil.isMeitu || DeviceUtil.isZTE || DeviceUtil.isViVo || DeviceUtil.isSony || DeviceUtil.isXiaomi) {
-            val i = Intent(this@UserInfoActivity, CropPictureActivity::class.java)
-            i.putExtra(CropPictureActivity.PIC_URI, uri.toString())
-            i.putExtra(CropPictureActivity.UPLOAD_FILE_PATH, mUploadfilePath)
-            i.putExtra(CropPictureActivity.UPLOAD_FILE_NAME, mUploadfileName)
-            startActivityForResult(i, CROP_PICTURE)
-        } else {
-            cropImageByDefault(uri, outputX, outputY, requestCode)
-        }
+        val i = Intent(this@UserInfoActivity, CropPictureActivity::class.java)
+        i.putExtra(CropPictureActivity.PIC_URI, uri.toString())
+        i.putExtra(CropPictureActivity.UPLOAD_FILE_PATH, mUploadfilePath)
+        i.putExtra(CropPictureActivity.UPLOAD_FILE_NAME, mUploadfileName)
+        startActivityForResult(i, CROP_PICTURE)
+
+//        //酷派手机系统定制，剪切有问题，采用自定义控件的方式剪切
+//        if (DeviceUtil.isCoolpad || DeviceUtil.isHuawei || DeviceUtil.isNexus || DeviceUtil.isMeitu || DeviceUtil.isZTE || DeviceUtil.isViVo || DeviceUtil.isSony || DeviceUtil.isXiaomi) {
+//            val i = Intent(this@UserInfoActivity, CropPictureActivity::class.java)
+//            i.putExtra(CropPictureActivity.PIC_URI, uri.toString())
+//            i.putExtra(CropPictureActivity.UPLOAD_FILE_PATH, mUploadfilePath)
+//            i.putExtra(CropPictureActivity.UPLOAD_FILE_NAME, mUploadfileName)
+//            startActivityForResult(i, CROP_PICTURE)
+//        } else {
+////            val i = Intent(this@UserInfoActivity, CropPictureActivity::class.java)
+////            i.putExtra(CropPictureActivity.PIC_URI, uri.toString())
+////            i.putExtra(CropPictureActivity.UPLOAD_FILE_PATH, mUploadfilePath)
+////            i.putExtra(CropPictureActivity.UPLOAD_FILE_NAME, mUploadfileName)
+////            startActivityForResult(i, CROP_PICTURE)
+//            cropImageByDefault(uri, outputX, outputY, requestCode)
+//        }
     }
 
     // 拍照截取图片
-    internal fun cropImageByDefault(uri: Uri, outputX: Int, outputY: Int, requestCode: Int) {
+    fun cropImageByDefault(uri: Uri, outputX: Int, outputY: Int, requestCode: Int) {
         val intent = Intent("com.android.camera.action.CROP")
         intent.setDataAndType(uri, "image/*")
         intent.putExtra("crop", "true")
@@ -314,7 +327,8 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
         intent.putExtra("scaleUpIfNeeded", true)
         intent.putExtra("scale", true)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(File(mUploadfilePath, mUploadfileName)))
-        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
         startActivityForResult(intent, requestCode)
     }
 

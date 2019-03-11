@@ -1,5 +1,6 @@
 package com.yc.phonerecycle.activity
 
+import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.net.wifi.WifiManager
 import android.os.Build
@@ -93,13 +94,13 @@ class AllParamsActivity : BaseActivity<CommonPresenter>() {
             "不支持"
         }
 
-//        video_record.text
+        video_record.text = "4K"
 
-        network_model.text = phone.getNetworkType().toString()
-//        gps_value.text = android.os.Build.FINGERPRINT
-//        wifi_value.text = android.os.Build.DISPLAY
-        bluetooth_value.text
-        battery_value.text
+        network_model.text = DeviceUtil.getNetWorkString()
+        gps_value.text = "内置A-GPS，支持GLONASS"
+        wifi_value.text = "wi-fi802.11a/b/g/n/ac"
+        bluetooth_value.text = "蓝牙4.2"
+        battery_value.text = DeviceUtil.getBatteryLevel().toString()+"%"
         os_value.text = Build.VERSION.RELEASE
 
         gravity_value.text = if (CameraUtils.isSupportGravity(applicationContext)) {

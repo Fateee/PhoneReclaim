@@ -42,7 +42,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             app:title="清理缓存"
-            app:sub_title="240M"
+            app:sub_title="0"
             app:show_arraw="true"/>
     <com.yc.phonerecycle.widget.SetItemLayout
             android:id="@+id/setlist_feedback"

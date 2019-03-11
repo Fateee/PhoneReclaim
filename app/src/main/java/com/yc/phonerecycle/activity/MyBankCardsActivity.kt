@@ -1,15 +1,20 @@
 package com.yc.phonerecycle.activity
 
+import android.app.Dialog
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.adapter.MenulistAdapter
+import com.yc.phonerecycle.interfaces.OnBankClickListener
+import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.model.bean.biz.BankCardListRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.ActivityToActivity
+import com.yc.phonerecycle.utils.DialogHelper
+import com.yc.phonerecycle.utils.PermissionUtils
 import kotlinx.android.synthetic.main.common_mainlist.*
 import kotlinx.android.synthetic.main.titleview.*
 
@@ -57,6 +62,12 @@ class MyBankCardsActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
         val mGridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_list.layoutManager = mGridLayoutManager
         mMenulistAdapter = MenulistAdapter(this)
+        mMenulistAdapter.setViewType(11)
+        mMenulistAdapter.mOnBankClickListener = object : OnBankClickListener {
+            override fun OnBankClick(dataBean: BankCardListRep.DataBean?) {
+                showDeleteDialog("删除银行卡","确定要删除银行卡吗？",dataBean)
+            }
+        }
         rv_list.adapter = mMenulistAdapter
 
     }
@@ -70,7 +81,36 @@ class MyBankCardsActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
         swipe_refresh_list.isRefreshing = false
         if (rep is BankCardListRep) {
             mMenulistAdapter.refreshUI(rep.data,true)
+        } else if (rep is BaseRep) {
+            presenter.getUserBankCard()
         }
     }
 
+    private var deleteDialog: Dialog? = null
+
+    fun showDeleteDialog(
+        title: String,
+        msg: String,
+        dataBean: BankCardListRep.DataBean?
+    ) {
+        if (deleteDialog == null) {
+            deleteDialog = DialogHelper.showDialog(
+                "1",
+                this@MyBankCardsActivity, null,
+                "",
+                "",
+                title,
+                msg,
+                getString(R.string.cancel),
+                getString(R.string.sure),
+                "",
+                "0168b7",
+                { },
+                { presenter.deleteCardbyId(dataBean?.id) })
+            deleteDialog?.setCanceledOnTouchOutside(false)
+            deleteDialog?.setOnCancelListener { }
+        } else if (deleteDialog?.isShowing == false) {
+            deleteDialog?.show()
+        }
+    }
 }

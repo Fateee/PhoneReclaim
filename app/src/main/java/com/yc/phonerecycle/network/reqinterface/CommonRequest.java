@@ -157,12 +157,11 @@ public interface CommonRequest {
     @GET("v1/detection/getGoodsInstanceReportVO/{goodsInstanceId}")
     Observable<Response<PhoneReportRep>> getGoodsInstanceReportVO(@Path("goodsInstanceId") String goodsInstanceId);
 
-    //获取我的检测记录(店员)
+    //获取我的检测记录
     @GET("v1/detection/getMyDetection")
-    Observable<Response<DetectionRep>> getAssistantDetection();
+    Observable<Response<DetectionRep>> getMyDetection();
 
 
-    //估价 todo
 
 
     //钱包-提现
