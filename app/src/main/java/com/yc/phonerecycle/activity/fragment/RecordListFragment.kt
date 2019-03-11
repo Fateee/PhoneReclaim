@@ -119,6 +119,7 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
     }
 
     override fun getDataOK(rep: Any?) {
+        swipe_refresh_list.isRefreshing = false
         if (rep is MyOrderListlRep) {
             mRecordListAdapter.refreshUI(rep.data,true)
         } else if (rep is DetectionRep) {

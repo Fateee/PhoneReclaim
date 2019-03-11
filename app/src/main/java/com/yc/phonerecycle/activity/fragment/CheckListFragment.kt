@@ -29,6 +29,7 @@ class CheckListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV
 
     private val mReefreshListener: SwipeRefreshLayout.OnRefreshListener = object : SwipeRefreshLayout.OnRefreshListener {
         override fun onRefresh() {
+            presenter.getAssistantDetection()
         }
     }
 
@@ -79,6 +80,7 @@ class CheckListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV
     }
 
     override fun getDataOK(rep: Any?) {
+        swipe_refresh_list.isRefreshing = false
         if (rep is DetectionRep) {
             mRecordListAdapter.refreshUI(rep.data,true)
         }

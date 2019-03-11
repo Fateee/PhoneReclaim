@@ -72,6 +72,7 @@ class MyNearShopActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonIV
 
     private val mReefreshListener: SwipeRefreshLayout.OnRefreshListener = object : SwipeRefreshLayout.OnRefreshListener {
         override fun onRefresh() {
+            requestShops()
         }
     }
 
@@ -146,6 +147,7 @@ class MyNearShopActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonIV
     }
 
     override fun getDataOK(rep: Any?) {
+        swipe_refresh_list.isRefreshing = false
         if (rep is NearByShopRep) {
 //            var bean = NearByShopRep.DataBean()
 //            bean.name = "沁园蛋糕（东和春天）"

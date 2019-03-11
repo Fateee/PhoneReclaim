@@ -67,6 +67,7 @@ class MyBankCardsActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
     }
 
     override fun getDataOK(rep: Any?) {
+        swipe_refresh_list.isRefreshing = false
         if (rep is BankCardListRep) {
             mMenulistAdapter.refreshUI(rep.data,true)
         }
