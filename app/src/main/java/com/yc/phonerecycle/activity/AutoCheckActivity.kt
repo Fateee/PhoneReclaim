@@ -473,5 +473,6 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 //        map["recordid"] = data.data
         ActivityToActivity.toActivity(
             this@AutoCheckActivity, CheckResulttActivity::class.java,map)
+        finish()
     }
 }
