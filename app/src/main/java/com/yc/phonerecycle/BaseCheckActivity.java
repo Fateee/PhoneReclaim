@@ -3,6 +3,7 @@ package com.yc.phonerecycle;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.*;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.fingerprint.FingerprintManager;
@@ -46,6 +47,7 @@ public abstract class BaseCheckActivity<P extends BasePresenter> extends AppComp
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initBundle();
         setContentView(getContentView());
         ButterKnife.bind(this);

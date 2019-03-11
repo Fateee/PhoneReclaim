@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.SystemProperties;
 import android.support.annotation.Nullable;
@@ -46,6 +47,7 @@ public abstract class BaseActivity <P extends BasePresenter> extends AppCompatAc
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initBundle();
         setContentView(getContentView());
         ButterKnife.bind(this);
