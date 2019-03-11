@@ -25,8 +25,13 @@ class CallTestFragment : BaseFragment<EmptyPresenter>(),View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.getId()) {
             R.id.refuse -> {
-                (activity as AutoCheckActivity).checkResult.call = 1
-                (activity as AutoCheckActivity).doHandCheck()
+                if ((activity as AutoCheckActivity).isAutoTabCheck) {
+                    (activity as AutoCheckActivity).autoCheckTabDone()
+                } else {
+                    (activity as AutoCheckActivity).checkResult.call = 1
+                    (activity as AutoCheckActivity).doHandCheck()
+                }
+
             }
             R.id.grant -> callPhone("10086")
         }
@@ -68,8 +73,12 @@ class CallTestFragment : BaseFragment<EmptyPresenter>(),View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CALL) {
-            (activity as AutoCheckActivity).checkResult.call = 0
-            (activity as AutoCheckActivity).doHandCheck()
+            if ((activity as AutoCheckActivity).isAutoTabCheck) {
+                (activity as AutoCheckActivity).autoCheckTabDone()
+            } else {
+                (activity as AutoCheckActivity).checkResult.call = 0
+                (activity as AutoCheckActivity).doHandCheck()
+            }
         }
     }
 }

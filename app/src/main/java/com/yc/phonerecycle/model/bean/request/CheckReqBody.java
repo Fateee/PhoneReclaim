@@ -1,6 +1,8 @@
 package com.yc.phonerecycle.model.bean.request;
 
 import com.yc.phonerecycle.model.bean.BaseBean;
+import com.yc.phonerecycle.model.bean.biz.OrderDetailRep;
+import org.jetbrains.annotations.NotNull;
 
 public class CheckReqBody extends BaseBean {
 
@@ -94,4 +96,9 @@ public class CheckReqBody extends BaseBean {
     public int wifi;
     public String wirelessNetwork;
 
+    @NotNull
+    public OrderDetailRep.DataBean cloneToOrderDetailRepDataBean() {
+//        new OrderDetailRep.DataBean(battery,bluetooth,brandId,brandName,call,camera,capacity,check)
+        return null;
+    }
 }

@@ -35,6 +35,7 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
     private var mEmsDialog: EmsDialog? = null
     private val mReefreshListener: SwipeRefreshLayout.OnRefreshListener = object : SwipeRefreshLayout.OnRefreshListener {
         override fun onRefresh() {
+            requestData()
         }
     }
 
@@ -96,6 +97,10 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
         })
         rv_list.adapter = mRecordListAdapter
 
+        requestData()
+    }
+
+    private fun requestData() {
         var userId = UserInfoUtils.getUser().data?.userInfoVO?.id
         when (type) {
             "1" -> {//-1 查询全部 0、已完成 1、待寄出 2、待收货 3、已退回 4、验机 5、待打款
@@ -111,7 +116,6 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
                 }
             }
         }
-
     }
 
     override fun getDataOK(rep: Any?) {

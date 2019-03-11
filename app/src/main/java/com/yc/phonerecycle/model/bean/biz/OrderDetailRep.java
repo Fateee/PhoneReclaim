@@ -107,5 +107,55 @@ public class OrderDetailRep extends BaseRep implements Serializable {
         public int wifi;
         public String wirelessNetwork;
 
+
+//        public DataBean(){}
+
+        public DataBean(int battery, int bluetooth, String brandId, String brandName, int call, int camera, String capacity, String checkTime, String colour, int compass, int comprehensionAids, int estimatePrice, String facade, int fingerprint, int flashlight, String goodsId, int gravitySensor, int gyroscope, String id, String imei, int lightSensor, int location, String lockAccount, int loudspeaker, String memory, int microphone, String model, int multiTouch, String orderId, String other, String overhaul, int proximitySenso, String regional, int screen, String screenProblem, int spiritLevel, String startingState, int status, String system, String type, int vibrator, String warranty, String water, int wifi, String wirelessNetwork) {
+            this.battery = battery;
+            this.bluetooth = bluetooth;
+            this.brandId = brandId;
+            this.brandName = brandName;
+            this.call = call;
+            this.camera = camera;
+            this.capacity = capacity;
+            this.checkTime = checkTime;
+            this.colour = colour;
+            this.compass = compass;
+            this.comprehensionAids = comprehensionAids;
+            this.estimatePrice = estimatePrice;
+            this.facade = facade;
+            this.fingerprint = fingerprint;
+            this.flashlight = flashlight;
+            this.goodsId = goodsId;
+            this.gravitySensor = gravitySensor;
+            this.gyroscope = gyroscope;
+            this.id = id;
+            this.imei = imei;
+            this.lightSensor = lightSensor;
+            this.location = location;
+            this.lockAccount = lockAccount;
+            this.loudspeaker = loudspeaker;
+            this.memory = memory;
+            this.microphone = microphone;
+            this.model = model;
+            this.multiTouch = multiTouch;
+            this.orderId = orderId;
+            this.other = other;
+            this.overhaul = overhaul;
+            this.proximitySenso = proximitySenso;
+            this.regional = regional;
+            this.screen = screen;
+            this.screenProblem = screenProblem;
+            this.spiritLevel = spiritLevel;
+            this.startingState = startingState;
+            this.status = status;
+            this.system = system;
+            this.type = type;
+            this.vibrator = vibrator;
+            this.warranty = warranty;
+            this.water = water;
+            this.wifi = wifi;
+            this.wirelessNetwork = wirelessNetwork;
+        }
     }
 }

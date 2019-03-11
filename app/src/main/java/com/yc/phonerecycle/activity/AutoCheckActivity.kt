@@ -62,11 +62,14 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     override fun createPresenter() = CommonPresenter()
 
 
+    var isAutoTabCheck: Boolean = false
+
     override fun initBundle() {
-        var goodbean = intent.getSerializableExtra("goodbean") as BrandGoodsRep.DataBean
+        var goodbean = intent.getSerializableExtra("goodbean") as BrandGoodsRep.DataBean?
         var brandid = intent.getStringExtra("brandid")
+        isAutoTabCheck = intent.getBooleanExtra("isAutoTabCheck",false)
         checkResult.brandId = brandid
-        checkResult.goodsId = goodbean.id
+        checkResult.goodsId = goodbean?.id
         checkResult.system = Build.VERSION.RELEASE
         checkResult.brandName = Build.BRAND
         checkResult.type = Build.MODEL
@@ -155,19 +158,19 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_GRAVITY){
-            ToastUtil.showShortToast("TYPE_GRAVITY: "+event.values[0])
+//            ToastUtil.showShortToast("TYPE_GRAVITY: "+event.values[0])
             checkResult.gravitySensor = 0
         }else if (event?.sensor?.type == Sensor.TYPE_PROXIMITY) {
-            ToastUtil.showShortToast("Distance: "+event.values[0])
+//            ToastUtil.showShortToast("Distance: "+event.values[0])
             checkResult.proximitySenso = 0
         } else if (event?.sensor?.type == Sensor.TYPE_LIGHT ) {
-            ToastUtil.showShortToast("Light: "+event.values[0])
+//            ToastUtil.showShortToast("Light: "+event.values[0])
             checkResult.lightSensor = 0
         } else if (event?.sensor?.type == Sensor.TYPE_ORIENTATION) {
-            ToastUtil.showShortToast("spiritLevel: "+event.values[0])
+//            ToastUtil.showShortToast("spiritLevel: "+event.values[0])
             checkResult.spiritLevel = 0
         } else if (event?.sensor?.type == Sensor.TYPE_MAGNETIC_FIELD) {
-            ToastUtil.showShortToast("Compass: "+event.values[0])
+//            ToastUtil.showShortToast("Compass: "+event.values[0])
             checkResult.compass = 0
         }
     }
@@ -462,5 +465,13 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     override fun onDestroy() {
         mSensorManager?.unregisterListener(this)
         super.onDestroy()
+    }
+
+    fun autoCheckTabDone() {
+        var map = HashMap<String, Any>()
+        map["checkbean"] = checkResult
+//        map["recordid"] = data.data
+        ActivityToActivity.toActivity(
+            this@AutoCheckActivity, CheckResulttActivity::class.java,map)
     }
 }

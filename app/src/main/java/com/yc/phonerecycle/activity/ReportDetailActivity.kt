@@ -64,7 +64,7 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
         } else {
             name.text = mCheckReqBody?.brandName+" "+mCheckReqBody?.type+" "+mCheckReqBody?.regional
             var memoryForm = getFromDict("1", mCheckReqBody?.memory)
-            var romForm = getFromDict("2", mCheckReqBody?.memory)
+            var romForm = getFromDict("2", mCheckReqBody?.capacity)
             if (memoryForm == null) {
                 name.postDelayed({memoryForm= getFromDict("1", mCheckReqBody?.memory)
                     content.text = memoryForm?.value+"+"+romForm?.name},2000)

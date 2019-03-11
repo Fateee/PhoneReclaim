@@ -18,6 +18,7 @@ class MyBankCardsActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
 
     private val mReefreshListener: SwipeRefreshLayout.OnRefreshListener = object : SwipeRefreshLayout.OnRefreshListener {
         override fun onRefresh() {
+            presenter.getUserBankCard()
         }
     }
 
