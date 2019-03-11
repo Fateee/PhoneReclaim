@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/cf8f8f8"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.yc.phonerecycle.widget.SimpleToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:toolbar_title="回收流程"/>
+    <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent" android:layout_height="0.5dp"
+            android:background="@color/ceeeeee"/>
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/bg_recycle_flow_header"/>
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/bg_recycle_flow_body"/>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+        <TextView
+                android:id="@+id/custom_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/custom_phone"
+                android:textSize="14sp"
+                android:textColor="@color/c999999"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"/>
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_above="@id/custom_phone"
+                        android:layout_height="match_parent">
+            <com.yc.phonerecycle.widget.SimpleCornerTextView
+                    android:id="@+id/contact_custom"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_centerInParent="true"
+                    app:bgColor="@color/c0168b7"
+                    app:radius="5dp"
+                    android:text="@string/contact_custom"
+                    android:textSize="17sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

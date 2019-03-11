@@ -43,6 +43,11 @@ object PermissionUtils {
     }
 
     @JvmStatic
+    fun checkCallPermission(context: Context, callback: Callback?) {
+        checkPermission(context, callback, Manifest.permission.CALL_PHONE)
+    }
+
+    @JvmStatic
     fun checkCameraPermission(context: Context, callback: Callback?) {
         checkPermission(context, callback, Manifest.permission.CAMERA)
     }

@@ -16,7 +16,7 @@ import com.yc.phonerecycle.R;
  *create on: 2016/10/24
  */
 public class EmsDialog extends AlertDialog implements View.OnClickListener{
-    private TextView tvSure;
+    public TextView tvSure;
     private ImageView tvCancle;
     private Context context;
     private EditText ems_company_et;

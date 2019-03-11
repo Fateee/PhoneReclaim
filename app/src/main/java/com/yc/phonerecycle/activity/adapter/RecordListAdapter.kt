@@ -7,21 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.CheckResulttActivity
-import com.yc.phonerecycle.activity.HandCheckActivity
 import com.yc.phonerecycle.activity.OrderDetailActivity
 import com.yc.phonerecycle.activity.ReportDetailActivity
-import com.yc.phonerecycle.constant.UrlConst
-import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
-import com.yc.phonerecycle.model.bean.biz.BrandRep
 import com.yc.phonerecycle.model.bean.biz.DetectionRep
 import com.yc.phonerecycle.model.bean.biz.MyOrderListlRep
 import com.yc.phonerecycle.utils.ActivityToActivity
-import kotlinx.android.synthetic.main.brand_listitem.view.*
 import kotlinx.android.synthetic.main.item_list_common.view.*
-import kotlinx.android.synthetic.main.phone_listitem.view.*
 
 
 import java.util.ArrayList
@@ -73,7 +66,7 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                         holder.wait_ems.setOnClickListener(object :View.OnClickListener{
                             override fun onClick(p0: View?) {
                                 //立即邮寄
-
+                                mOnItemClick?.onItemClick(position,holder.wait_ems.tag)
                             }
                         })
                     }
@@ -90,7 +83,7 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                         holder.status.text = "待打款"
                     }
                 }
-                holder.name.text = temp.brandName+"+"+temp.brandId+"+"+temp.capacity
+                holder.name.text = temp.brandName+"+"+temp.type+"+"+temp.capacity
                 holder.content.setTextColor(mContext.getColor(R.color.ce84b2d))
                 holder.content.text = mContext.getString(R.string.order_price_value,temp.estimatePrice)
                 holder.detail.visibility = View.GONE
@@ -112,7 +105,7 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                 holder.status.visibility = View.VISIBLE
                 holder.divider.visibility = View.GONE
                 holder.wait_ems.visibility = View.GONE
-                holder.name.text = temp.brandName+"+"+temp.brandId+"+"+temp.capacity
+                holder.name.text = temp.brandName+"+"+temp.type+"+"+temp.capacity
                 holder.content.text = temp.customerName
                 when (temp.status) { //0、已完成 1、待寄出 2、待收货 3、已退回 4、验机 5、待打款
                     0 -> {

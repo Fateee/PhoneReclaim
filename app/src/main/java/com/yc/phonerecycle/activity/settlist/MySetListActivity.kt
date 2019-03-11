@@ -59,6 +59,12 @@ class MySetListActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginView
             override fun onClick(p0: View?) {
             }
         })
+        recycle_flow.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                ActivityToActivity.toActivity(
+                    this@MySetListActivity, RecycleFlowActivity::class.java)
+            }
+        })
         setlist_feedback.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 ActivityToActivity.toActivity(

@@ -200,4 +200,7 @@
     <string name="auto_check_text">正在检测： %s</string>
     <string name="shop_name_inmap">%s-</string>
     <string name="this_cash_value">本次提现金额: ¥ %s</string>
+    <string name="contact_custom">联系客服</string>
+    <string name="custom_phone">客服电话： %s</string>
+    <string name="check_time">检测时间 %s</string>
 </resources>

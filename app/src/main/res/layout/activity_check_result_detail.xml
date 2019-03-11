@@ -111,7 +111,20 @@
                     android:text="确定"
                     android:textSize="16sp"
                     android:textColor="@color/white"
+                    android:visibility="gone"
                     android:gravity="center"/>
+
+            <TextView
+                    android:id="@+id/custom_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/custom_phone"
+                    android:textSize="14sp"
+                    android:textColor="@color/c999999"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="20dp"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

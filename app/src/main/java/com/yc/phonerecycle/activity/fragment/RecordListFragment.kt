@@ -1,19 +1,25 @@
 package com.yc.phonerecycle.activity.fragment
 
 
+import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.view.View
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.activity.adapter.OnItemClick
 import com.yc.phonerecycle.activity.adapter.RecordListAdapter
+import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.model.bean.biz.DetectionRep
 import com.yc.phonerecycle.model.bean.biz.MyOrderListlRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
+import com.yc.phonerecycle.utils.ToastUtil
 import com.yc.phonerecycle.utils.UserInfoUtils
+import com.yc.phonerecycle.widget.EmsDialog
 import kotlinx.android.synthetic.main.common_mainlist.*
 import kotlinx.android.synthetic.main.titleview.*
 
@@ -26,7 +32,7 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
 
     private var mStatus: String? = "-1"
     private var type: String? = "0"
-
+    private var mEmsDialog: EmsDialog? = null
     private val mReefreshListener: SwipeRefreshLayout.OnRefreshListener = object : SwipeRefreshLayout.OnRefreshListener {
         override fun onRefresh() {
         }
@@ -53,9 +59,22 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
         type = arguments?.getString("type")
         isCheckList = arguments?.getBoolean("checklist",false)!!
         simple_toolbar.visibility=View.GONE
+        mEmsDialog = object : EmsDialog(activity as Context){}
+
+        mEmsDialog?.setViewClickListener(object : EmsDialog.ViewClickListener {
+            override fun click(company: String?, num: String?) {
+                if (TextUtils.isEmpty(orderId)) {
+                    ToastUtil.showShortToastCenter("订单id为空")
+                    return
+                }
+                presenter.writeTracking(company,orderId,num)
+            }
+        })
     }
 
     private lateinit var mRecordListAdapter: RecordListAdapter
+
+    private var orderId: String? = ""
 
     override fun initData() {
         if (context == null) return
@@ -66,6 +85,15 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
         rv_list.layoutManager = mGridLayoutManager
 
         mRecordListAdapter = RecordListAdapter(context!!)
+
+        mRecordListAdapter.setOnItemClickListener(object : OnItemClick {
+            override fun onItemClick(pos: Int, tag: Any) {
+                if (tag is MyOrderListlRep.DataBean) {
+                    orderId = tag.id
+                    mEmsDialog?.show()
+                }
+            }
+        })
         rv_list.adapter = mRecordListAdapter
 
         var userId = UserInfoUtils.getUser().data?.userInfoVO?.id
@@ -91,6 +119,11 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
             mRecordListAdapter.refreshUI(rep.data,true)
         } else if (rep is DetectionRep) {
             mRecordListAdapter.refreshUI(rep.data,true)
+        }else if (rep is BaseRep) {
+            if (rep.code == 0) {
+                orderId=""
+                ToastUtil.showShortToastCenter("快递信息保存成功")
+            }
         }
     }
 }

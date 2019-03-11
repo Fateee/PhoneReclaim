@@ -51,6 +51,12 @@
             app:title="用户反馈"
             app:show_arraw="true"/>
     <com.yc.phonerecycle.widget.SetItemLayout
+            android:id="@+id/recycle_flow"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:title="回收流程"
+            app:show_arraw="true"/>
+    <com.yc.phonerecycle.widget.SetItemLayout
             android:id="@+id/setlist_about_us"
             android:layout_width="match_parent"
             android:layout_height="50dp"

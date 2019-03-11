@@ -31,7 +31,7 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
     private var recordid: String? = ""
 
     override fun initBundle() {
-//        mCheckReqBody = intent.getSerializableExtra("checkbean") as CheckReqBody
+        mCheckReqBody = intent.getSerializableExtra("checkbean") as CheckReqBody
         result_type = intent.getStringExtra("result_type")
         recordid = intent.getStringExtra("recordid")
     }
@@ -58,6 +58,10 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
         addRowView("屏幕触控",mCheckReqBody?.multiTouch == 0,"","拨打电话",mCheckReqBody?.call==0,"")
         addRowView("屏幕坏点",mCheckReqBody?.screen == 0,"","语音助手",mCheckReqBody?.comprehensionAids==0,"")
         addRowView("电池状态",false,"83%","",true,"")
+        if(this@CheckResulttActivity.mCheckReqBody == null) {
+            custom_phone.visibility = View.VISIBLE
+            custom_phone.text = getString(R.string.check_time,mCheckReqBody?.checkTime)
+        }
     }
 
     private fun addRowView(leftTitle: String, leftOk: Boolean, leftValue: String,rightTitle: String, rightOk: Boolean, rightValue: String) {
@@ -91,30 +95,34 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
 
     override fun initDatas() {
         presenter.getGoodsInstanceById(recordid)
-        var type = UserInfoUtils.getUser().data?.userInfoVO?.type
-        when (type) {
-            "1" -> {
-                submit.text="立即回收"
-            }
-            "4" -> {
-                submit.text="返回主页"
-            }
-        }
-        submit.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                when (type) {
-                    "1" -> {
-                        var map = HashMap<String, Any?>()
-                        map["recordid"] = recordid
-                        ActivityToActivity.toActivity(
-                            this@CheckResulttActivity, RecycleInputUserInfoActivity::class.java,map)
-                    }
-                    "4" -> {
-                        finish()
-                    }
+        if(mCheckReqBody != null) {
+            submit.visibility = View.VISIBLE
+            var type = UserInfoUtils.getUser().data?.userInfoVO?.type
+            when (type) {
+                "1" -> {
+                    submit.text="立即回收"
+                    custom_phone.visibility = View.VISIBLE
+                }
+                "4" -> {
+                    submit.text="返回主页"
                 }
             }
-        })
+            submit.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(p0: View?) {
+                    when (type) {
+                        "1" -> {
+                            var map = HashMap<String, Any?>()
+                            map["recordid"] = recordid
+                            ActivityToActivity.toActivity(
+                                this@CheckResulttActivity, RecycleInputUserInfoActivity::class.java,map)
+                        }
+                        "4" -> {
+                            finish()
+                        }
+                    }
+                }
+            })
+        }
     }
 
 }
