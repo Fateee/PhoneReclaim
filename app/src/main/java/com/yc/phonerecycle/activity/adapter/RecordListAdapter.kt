@@ -2,15 +2,18 @@ package com.yc.phonerecycle.activity.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.CheckResulttActivity
 import com.yc.phonerecycle.activity.OrderDetailActivity
 import com.yc.phonerecycle.activity.ReportDetailActivity
+import com.yc.phonerecycle.constant.UrlConst
 import com.yc.phonerecycle.model.bean.biz.DetectionRep
 import com.yc.phonerecycle.model.bean.biz.MyOrderListlRep
 import com.yc.phonerecycle.utils.ActivityToActivity
@@ -36,7 +39,7 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
 //        mContext.startActivity(intent)
 //    }
 
-    public fun setOnItemClickListener(onItemClick : OnItemClick) {
+    fun setOnItemClickListener(onItemClick : OnItemClick) {
         mOnItemClick = onItemClick
     }
 
@@ -83,7 +86,8 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                         holder.status.text = "待打款"
                     }
                 }
-                holder.name.text = temp.brandName+"+"+temp.type+"+"+temp.capacity
+                showLogo(temp.logo,holder.icon)
+                holder.name.text = temp.brandName+"-"+temp.type+"+"+temp.capacityValue+"GB"
                 holder.content.setTextColor(mContext.getColor(R.color.ce84b2d))
                 holder.content.text = mContext.getString(R.string.order_price_value,temp.estimatePrice)
                 holder.detail.visibility = View.GONE
@@ -93,8 +97,9 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                     override fun onClick(p0: View?) {
                         //订单详情
                         var tmp = p0?.tag as MyOrderListlRep.DataBean
-                        var map = HashMap<String,String?>()
+                        var map = HashMap<String,Any?>()
                         map["ord_id"] = tmp.id
+                        map["order_bean"] = tmp
                         ActivityToActivity.toActivity(
                             mContext, OrderDetailActivity::class.java,map)
                     }
@@ -105,7 +110,7 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                 holder.status.visibility = View.VISIBLE
                 holder.divider.visibility = View.GONE
                 holder.wait_ems.visibility = View.GONE
-                holder.name.text = temp.brandName+"+"+temp.type+"+"+temp.capacity
+                holder.name.text = temp.brandName+"-"+temp.type+"+"+temp.capacity
                 holder.content.text = temp.customerName
                 when (temp.status) { //0、已完成 1、待寄出 2、待收货 3、已退回 4、验机 5、待打款
                     0 -> {
@@ -135,13 +140,15 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                         holder.status.text = "待打款"
                     }
                 }
+                showLogo(temp.logo,holder.icon)
                 holder.itemView.tag = temp
                 holder.itemView.setOnClickListener(object :View.OnClickListener{
                     override fun onClick(v: View?) {
                         //订单详情
                         var tag = v?.tag as DetectionRep.DataBean
-                        var map = HashMap<String,String?>()
+                        var map = HashMap<String,Any?>()
                         map["recordid"] = tag.id
+                        map["detection_bean"] = tag
                         if (tag.status == 3 || tag.status == 5) {
                             ActivityToActivity.toActivity(
                                 mContext, ReportDetailActivity::class.java,map)
@@ -151,6 +158,24 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                         }
                     }
                 })
+            }
+        }
+    }
+
+    private fun getCapacity(capacity: Int) {
+    }
+
+    private fun showLogo(logos: String?, icon: ImageView) {
+        if (logos?.contains("@") == true) {
+            var logonames = logos.split("@")
+            if (logonames.size >0) {
+                var url = UrlConst.FILE_DOWNLOAD_URL+logonames[0]
+                Glide.with(mContext).load(url).into(icon)
+            }
+        } else {
+            if (!TextUtils.isEmpty(logos)) {
+                var url = UrlConst.FILE_DOWNLOAD_URL+logos
+                Glide.with(mContext).load(url).into(icon)
             }
         }
     }

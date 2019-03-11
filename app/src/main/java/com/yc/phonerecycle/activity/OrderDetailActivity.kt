@@ -1,12 +1,17 @@
 package com.yc.phonerecycle.activity
 
+import android.text.TextUtils
 import android.view.View
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.constant.UrlConst
 import com.yc.phonerecycle.model.bean.BaseBean
 import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.model.bean.biz.MyOrderDetailRep
+import com.yc.phonerecycle.model.bean.biz.MyOrderListlRep
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.ActivityToActivity
 import com.yc.phonerecycle.utils.ToastUtil
@@ -62,12 +67,18 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
                 order_ems_address.text = getString(R.string.order_ems_address,rep.data.trackingNumber)
             }
             date.text = rep.data.dealTime
-            name.text = rep.data.goodsInstanceVO.brandName+"+"+rep.data.goodsInstanceVO.brandId+"+"+rep.data.goodsInstanceVO.capacity
+            if (order_bean != null) {
+                showLogo(order_bean?.logo,icon)
+                name.text = order_bean?.brandName+"-"+order_bean?.type+"+"+order_bean?.capacityValue+"GB"
+            } else {
+                name.text = rep.data.goodsInstanceVO.brandName+"-"+rep.data.goodsInstanceVO.type+"+"+rep.data.goodsInstanceVO.capacity
+            }
             detail.tag = rep.data
             detail.setOnClickListener {
                 var tag = detail.tag as MyOrderDetailRep.DataBean
-                var map = HashMap<String,String?>()
+                var map = HashMap<String,Any?>()
                 map["recordid"] = tag.goodsInstanceVO?.id
+                map["order_bean"] = order_bean
                 if (tag.status == 3 || tag.status == 5) {
                     ActivityToActivity.toActivity(
                         this@OrderDetailActivity, ReportDetailActivity::class.java,map)
@@ -86,8 +97,11 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
 
     override fun createPresenter() = CommonPresenter()
 
+    private var order_bean: MyOrderListlRep.DataBean? = null
+
     override fun initBundle() {
         ord_id = intent?.getStringExtra("ord_id")
+        order_bean = intent?.getSerializableExtra("order_bean") as MyOrderListlRep.DataBean?
     }
 
     override fun getContentView(): Int = R.layout.activity_order_detail
@@ -106,4 +120,18 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
         })
     }
 
+    private fun showLogo(logos: String?, icon: ImageView) {
+        if (logos?.contains("@") == true) {
+            var logonames = logos.split("@")
+            if (logonames.size >0) {
+                var url = UrlConst.FILE_DOWNLOAD_URL+logonames[0]
+                Glide.with(this@OrderDetailActivity).load(url).into(icon)
+            }
+        } else {
+            if (!TextUtils.isEmpty(logos)) {
+                var url = UrlConst.FILE_DOWNLOAD_URL+logos
+                Glide.with(this@OrderDetailActivity).load(url).into(icon)
+            }
+        }
+    }
 }

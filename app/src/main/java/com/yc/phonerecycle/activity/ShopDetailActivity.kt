@@ -9,6 +9,8 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.request.RequestOptions
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.model.bean.biz.NearByShopRep
@@ -39,7 +41,7 @@ class ShopDetailActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.CommonI
 
                 when (type) {
                     "1"-> {
-                        Glide.with(this@ShopDetailActivity).load(rep.mainImage).into(shop_avatar)
+                        Glide.with(this@ShopDetailActivity).load(rep.mainImage).apply(RequestOptions.bitmapTransform(CenterCrop()).placeholder(R.drawable.ic_shop_avatar)).into(shop_avatar)
                         shop_info_name.text = getString(R.string.shop_name,rep.name)
                         shop_info_addr.text = getString(R.string.shop_addr,rep.address)
 

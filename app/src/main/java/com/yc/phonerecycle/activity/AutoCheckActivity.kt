@@ -68,7 +68,8 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         checkResult.brandId = brandid
         checkResult.goodsId = goodbean.id
         checkResult.system = Build.VERSION.RELEASE
-        checkResult.brandName = Build.MODEL
+        checkResult.brandName = Build.BRAND
+        checkResult.type = Build.MODEL
         checkResult.capacity = "0201"
         var totleSize = DeviceUtil.getTotalRomSize()
         if (totleSize.contains("GB")) {

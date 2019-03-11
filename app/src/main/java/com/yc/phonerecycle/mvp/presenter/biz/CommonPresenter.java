@@ -110,7 +110,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     public void getDictMappingByType(final String dicTypeId) {
         mCommonRequest.getDictMappingByType(dicTypeId)
                 .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<DictMapRep>>() {
 
                     @Override

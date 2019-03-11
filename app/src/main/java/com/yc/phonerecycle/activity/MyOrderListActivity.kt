@@ -80,7 +80,7 @@ class MyOrderListActivity : BaseActivity<EmptyPresenter>(){
         mAdapter.setFragments(listFragments)
 //        val mAdapter = MyFragmentPagerAdapter(supportFragmentManager,menuItems)
         view_pager.setAdapter(mAdapter)
-        view_pager.setOffscreenPageLimit(2)
+        view_pager.setOffscreenPageLimit(1)
         tab_layout.setupWithViewPager(view_pager)//关联
 
         for (i in list.indices) {

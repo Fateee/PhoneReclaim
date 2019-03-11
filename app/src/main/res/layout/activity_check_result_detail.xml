@@ -16,6 +16,7 @@
         <LinearLayout
                       android:layout_width="match_parent"
                       android:layout_height="match_parent"
+                      android:background="@color/cfafafa"
                       android:orientation="vertical">
             <RelativeLayout
                     android:layout_width="match_parent"
@@ -87,9 +88,42 @@
 
 
             <LinearLayout
+                    android:id="@+id/check_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:layout_marginTop="15dp"
+                        android:text="检测结果"
+                        android:maxLines="1"
+                        android:textColor="@color/c6ccb7c"
+                        android:textSize="14sp"/>
+                <TextView
+                        android:id="@+id/report_remark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:maxLines="3"
+                        android:textColor="@color/c333333"
+                        android:textSize="14sp"/>
+            </LinearLayout>
+
+            <LinearLayout
                     android:id="@+id/detail_container"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
+                    android:background="@color/white"
                     android:layout_height="wrap_content">
                     <!--<include layout="@layout/item_check_result_container"/>-->
                 <!--<include layout="@layout/item_check_result_container"/>-->

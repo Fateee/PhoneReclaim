@@ -1,16 +1,20 @@
 package com.yc.phonerecycle.activity
 
 import android.text.TextUtils
+import android.view.View
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.R
-import com.yc.phonerecycle.model.bean.biz.MyOrderDetailRep
-import com.yc.phonerecycle.model.bean.biz.OrderDetailRep
-import com.yc.phonerecycle.model.bean.biz.PhoneReportRep
+import com.yc.phonerecycle.app.BaseApplication
+import com.yc.phonerecycle.constant.UrlConst
+import com.yc.phonerecycle.model.bean.biz.*
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import kotlinx.android.synthetic.main.activity_check_result_detail.*
 import kotlinx.android.synthetic.main.item_check_result.view.*
 import kotlinx.android.synthetic.main.item_check_result_container.view.*
+import kotlinx.android.synthetic.main.titleview.*
 
 
 class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonIV{
@@ -22,12 +26,16 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
 
     private var goodsInstanceVO: MyOrderDetailRep.DataBean.GoodsInstanceVOBean? = null
     private var recordid: String? = ""
+    private var order_bean: MyOrderListlRep.DataBean? = null
+    private var detection_bean: DetectionRep.DataBean? = null
 
     override fun createPresenter() = CommonPresenter()
 
     override fun initBundle() {
-        goodsInstanceVO = intent?.getSerializableExtra("obj") as MyOrderDetailRep.DataBean.GoodsInstanceVOBean
+        goodsInstanceVO = intent?.getSerializableExtra("obj") as MyOrderDetailRep.DataBean.GoodsInstanceVOBean?
         recordid = intent.getStringExtra("recordid")
+        order_bean = intent?.getSerializableExtra("order_bean") as MyOrderListlRep.DataBean?
+        detection_bean = intent?.getSerializableExtra("detection_bean") as DetectionRep.DataBean?
     }
 
     override fun getContentView(): Int = R.layout.activity_check_result_detail
@@ -37,11 +45,40 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
 
     override fun initDatas() {
         presenter.getGoodsInstanceReport(recordid)
+        txt_main_title.text = "验机报告"
     }
 
     private fun refreshView(mCheckReqBody: PhoneReportRep.DataBean?) {
         name.text = mCheckReqBody?.brandName+" "+mCheckReqBody?.type+" "+mCheckReqBody?.regional
         content.text = mCheckReqBody?.memory+" "+mCheckReqBody?.capacity
+        if (order_bean != null) {
+            showLogo(order_bean?.logo,icon)
+            name.text = order_bean?.brandName+"  "+order_bean?.type
+            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
+            content.text = memoryForm?.value+"+"+order_bean?.capacityValue+"GB"
+        } else if (detection_bean != null) {
+            showLogo(detection_bean?.logo,icon)
+            name.text = detection_bean?.brandName+"  "+detection_bean?.type
+            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
+            content.text = memoryForm?.value+"+"+detection_bean?.capacityValue+"GB"
+        } else {
+            name.text = mCheckReqBody?.brandName+" "+mCheckReqBody?.type+" "+mCheckReqBody?.regional
+            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
+            var romForm = getFromDict("2", mCheckReqBody?.memory)
+            if (memoryForm == null) {
+                name.postDelayed({memoryForm= getFromDict("1", mCheckReqBody?.memory)
+                    content.text = memoryForm?.value+"+"+romForm?.name},2000)
+            }
+            if (romForm == null) {
+                name.postDelayed({romForm = getFromDict("2", mCheckReqBody?.memory)
+                    content.text = memoryForm?.value+"+"+romForm?.name},2000)
+            }
+            content.text = memoryForm?.value+"+"+romForm?.name
+        }
+        if (!TextUtils.isEmpty(mCheckReqBody?.remark)) {
+            check_report.visibility = View.VISIBLE
+            report_remark.text = mCheckReqBody?.remark
+        }
         //1 有 0无
         addRowView("无线网络",mCheckReqBody?.wifi == 1601,"","距离感应器",mCheckReqBody?.proximitySenso ==0,"")
         addRowView("蓝牙",mCheckReqBody?.bluetooth == 0,"","光线感应器",mCheckReqBody?.lightSensor==0,"")
@@ -85,4 +122,33 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
         detail_container.addView(rowView,detail_container.childCount)
     }
 
+    private fun showLogo(logos: String?, icon: ImageView) {
+        if (logos?.contains("@") == true) {
+            var logonames = logos.split("@")
+            if (logonames.size >0) {
+                var url = UrlConst.FILE_DOWNLOAD_URL+logonames[0]
+                Glide.with(this@ReportDetailActivity).load(url).into(icon)
+            }
+        } else {
+            if (!TextUtils.isEmpty(logos)) {
+                var url = UrlConst.FILE_DOWNLOAD_URL+logos
+                Glide.with(this@ReportDetailActivity).load(url).into(icon)
+            }
+        }
+    }
+
+    private fun getFromDict(dicTypeId: String, value :String?): DictMapRep.DataBean? {
+        if (TextUtils.isEmpty(value)) return null
+        var listData = BaseApplication.mOptionMap.get(dicTypeId)
+        if (listData != null && !listData.isEmpty()) {
+            for (i in listData.indices) {
+                if (value == listData[i].id) {
+                    return listData[i]
+                }
+            }
+        } else {
+            presenter.getDictMappingByType(dicTypeId)
+        }
+        return null
+    }
 }

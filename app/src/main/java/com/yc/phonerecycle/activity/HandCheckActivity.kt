@@ -66,7 +66,8 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
         mCheckReqBody.brandId = brandid
         mCheckReqBody.goodsId = goodbean.id
         mCheckReqBody.system = Build.VERSION.RELEASE
-        mCheckReqBody.brandName = Build.MODEL
+        mCheckReqBody.brandName = Build.BRAND
+        mCheckReqBody.type = Build.MODEL
         PermissionUtils.checkPhoneStatePermission(this@HandCheckActivity, object : PermissionUtils.Callback() {
             override fun onGranted() {
                 mCheckReqBody.imei = DeviceIdUtil.getDeviceId(this@HandCheckActivity)
