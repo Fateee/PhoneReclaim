@@ -65,7 +65,6 @@ public class CallTest extends BaseTest implements View.OnClickListener {
         Intent intent = new Intent(Intent.ACTION_CALL);
         Uri data = Uri.parse("tel:" + phoneNum);
         intent.setData(data);
-        startActivity(intent);
         startActivityForResult(intent, REQUEST_CALL);
     }
 

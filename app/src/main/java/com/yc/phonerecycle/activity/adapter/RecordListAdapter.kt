@@ -41,7 +41,7 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordVH {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_list_common, null)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_order_list, null)
         return RecordVH(view)
     }
 

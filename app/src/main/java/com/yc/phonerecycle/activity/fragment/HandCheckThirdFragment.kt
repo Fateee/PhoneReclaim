@@ -152,15 +152,19 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
                 object : DialogInterface.OnClickListener {
                     override fun onClick(dialog: DialogInterface?, which: Int) {
                         chooseIndex = which
+                        var chosedData = listData.get(chooseIndex)
+                        layout.setSubTitle(chosedData.name)
+                        layout.tag = chosedData
+                        dialog?.dismiss()
                     }
                 })
-            builder.setPositiveButton("确定", object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    var chosedData = listData.get(chooseIndex)
-                    layout.setSubTitle(chosedData.name)
-                    layout.tag = chosedData
-                }
-            })
+//            builder.setPositiveButton("确定", object : DialogInterface.OnClickListener {
+//                override fun onClick(dialog: DialogInterface?, which: Int) {
+//                    var chosedData = listData.get(chooseIndex)
+//                    layout.setSubTitle(chosedData.name)
+//                    layout.tag = chosedData
+//                }
+//            })
             builder.create().show()
         } else {
             ToastUtil.showShortToastCenter("获取选项中...请稍后点击重试")

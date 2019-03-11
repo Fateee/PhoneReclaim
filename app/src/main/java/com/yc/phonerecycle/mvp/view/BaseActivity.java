@@ -39,6 +39,7 @@ public abstract class BaseActivity <P extends BasePresenter> extends AppCompatAc
             mPresenter = createPresenter();
             if (mPresenter != null) mPresenter.attach(this);
         }
+        if (mPresenter != null && mPresenter.getView() == null) mPresenter.attach(this);
         return (P) mPresenter;
     }
 

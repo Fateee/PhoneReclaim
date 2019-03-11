@@ -25,6 +25,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
             mPresenter = createPresenter();
             if (mPresenter != null) mPresenter.attach(this);
         }
+        if (mPresenter != null && mPresenter.getView() == null) mPresenter.attach(this);
         return (P) mPresenter;
     }
 

@@ -141,7 +141,7 @@ class MyNearShopActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonIV
     }
 
     private fun requestShops() {
-//        if (longitude == 0.0 && latitude == 0.0) return
+        if (longitude == 0.0 && latitude == 0.0) return
         presenter.getNearbyShop(longitude.toString(),latitude.toString())
     }
 

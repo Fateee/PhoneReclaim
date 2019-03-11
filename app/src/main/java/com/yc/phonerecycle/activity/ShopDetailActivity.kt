@@ -201,7 +201,6 @@ class ShopDetailActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.CommonI
                 val data = Uri.parse("tel:$phoneNum")
                 intent.data = data
                 startActivity(intent)
-                startActivityForResult(intent, REQUEST_CALL)
             }
 
             override fun onRationale() {

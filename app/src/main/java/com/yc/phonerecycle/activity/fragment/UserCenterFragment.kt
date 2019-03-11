@@ -3,6 +3,7 @@ package com.yc.phonerecycle.activity.fragment
 
 import android.content.Context
 import android.support.v4.app.Fragment
+import android.text.TextUtils
 import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -35,7 +36,8 @@ class UserCenterFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.UserInfo
 
     override fun initData() {
         item_name.text = UserInfoUtils.getUser().data?.userInfoVO?.userName
-        Glide.with(activity as Context).load(UserInfoUtils.getUserInfo().data?.logo).apply(RequestOptions.bitmapTransform(CircleCrop())).into(avatar)
+        if (!TextUtils.isEmpty(UserInfoUtils.getUserInfo().data?.logo))
+            Glide.with(activity as Context).load(UserInfoUtils.getUserInfo().data?.logo).apply(RequestOptions.bitmapTransform(CircleCrop()).placeholder(R.drawable.logo)).into(avatar)
         iv_to_setlist.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 ActivityToActivity.toActivity(

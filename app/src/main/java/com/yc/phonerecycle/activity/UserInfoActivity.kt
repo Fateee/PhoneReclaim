@@ -85,6 +85,7 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
 
     override fun initDatas() {
         presenter.getInfo()
+        user_id.text = "ID:"+UserInfoUtils.getUser().data?.userInfoVO?.id
         avatar.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 handleWithIconClick()
@@ -125,7 +126,7 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
         userinfo_nick.setSubTitle(UserInfoUtils.getUserInfo().data?.name)
         userinfo_sign.setSubTitle(UserInfoUtils.getUserInfo().data?.signature)
 //        Glide.with(this@UserInfoActivity).load(body?.data?.logo).centerCrop().into(avatar)
-        Glide.with(this@UserInfoActivity).load(body?.data?.logo).apply(RequestOptions.bitmapTransform(CircleCrop())).into(avatar)
+        Glide.with(this@UserInfoActivity).load(body?.data?.logo).apply(RequestOptions.bitmapTransform(CircleCrop()).placeholder(R.drawable.logo)).into(avatar)
     }
 
     fun handleWithIconClick() {

@@ -2,7 +2,10 @@ package com.yc.phonerecycle.activity.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +19,10 @@ import com.yc.phonerecycle.interfaces.OnBankClickListener
 import com.yc.phonerecycle.model.bean.BaseBean
 import com.yc.phonerecycle.model.bean.biz.BankCardListRep
 import com.yc.phonerecycle.model.bean.biz.NearByShopRep
+import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.utils.ActivityToActivity
+import com.yc.phonerecycle.utils.PermissionUtils
+import com.yc.phonerecycle.utils.ToastUtil
 import kotlinx.android.synthetic.main.commont_listitem.view.*
 
 
@@ -118,11 +124,16 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
                 holder.contact_shop.setOnClickListener(object :View.OnClickListener{
                     override fun onClick(p0: View?) {
                         var tmp = p0?.tag as NearByShopRep.DataBean
-                        var map = HashMap<String,String?>()
-                        map["id"] = tmp.id
-                        map["type"] = "1"
-                        ActivityToActivity.toActivity(
-                            mContext, ShopDetailActivity::class.java,map)
+                        if (TextUtils.isEmpty(tmp.fixedLine)) {
+                            ToastUtil.showShortToast("空电话号码")
+                            return
+                        }
+                        callPhone(tmp.fixedLine)
+//                        var map = HashMap<String,String?>()
+//                        map["id"] = tmp.id
+//                        map["type"] = "1"
+//                        ActivityToActivity.toActivity(
+//                            mContext, ShopDetailActivity::class.java,map)
                     }
                 })
                 holder.map_detail.tag = temp
@@ -181,6 +192,29 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
         mType = mViewType
     }
 
+    /**
+     * 拨打电话（直接拨打电话）
+     * @param phoneNum 电话号码
+     */
+    fun callPhone(phoneNum: String) {
+        PermissionUtils.checkCallPermission(mContext,object : PermissionUtils.Callback() {
+            override fun onGranted() {
+                val intent = Intent(Intent.ACTION_CALL)
+                val data = Uri.parse("tel:$phoneNum")
+                intent.data = data
+                mContext.startActivity(intent)
+            }
+
+            override fun onRationale() {
+                ToastUtil.showShortToast("请开启打电话权限才能正常使用")
+            }
+
+            override fun onDenied(context: Context) {
+                if (mContext is BaseActivity<*>)
+                    mContext.showPermissionDialog("开启打电话权限","你还没有开启打电话权限，开启之后才可打电话")
+            }
+        })
+    }
 }
 
 class ChildMenuVH(val mView: View) : RecyclerView.ViewHolder(mView) {

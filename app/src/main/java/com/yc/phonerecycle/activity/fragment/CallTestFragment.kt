@@ -62,7 +62,6 @@ class CallTestFragment : BaseFragment<EmptyPresenter>(),View.OnClickListener {
         val intent = Intent(Intent.ACTION_CALL)
         val data = Uri.parse("tel:$phoneNum")
         intent.data = data
-        startActivity(intent)
         startActivityForResult(intent, REQUEST_CALL)
     }
 
