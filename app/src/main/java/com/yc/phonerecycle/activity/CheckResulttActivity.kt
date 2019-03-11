@@ -139,7 +139,14 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
             presenter.getGoodsInstanceById(recordid)
         else {
             var ret = mCheckReqBody?.cloneToOrderDetailRepDataBean()
+            submit.text="自动检测"
+            //todo huyi
 //            refreshView(ret)
+            submit.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(p0: View?) {
+                    finish()
+                }
+            })
         }
         if(mCheckReqBody != null) {
             submit.visibility = View.VISIBLE
