@@ -11,6 +11,7 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yc.phonerecycle.app.BaseApplication;
 import com.yc.phonerecycle.constant.BaseConst;
+import com.yc.phonerecycle.interfaces.RequestObserver;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 import com.yc.phonerecycle.model.bean.biz.*;
 import com.yc.phonerecycle.model.bean.request.*;
@@ -79,16 +80,45 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
+//    public void getDictType() {
+//        mCommonRequest.getDictType()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(Schedulers.io())
+//                .subscribe(new Observer<Response<DictTypeRep>>() {
+//
+//                    @Override
+//                    public void onSubscribe(Disposable d) {}
+//                    @Override
+//                    public void onNext(Response<DictTypeRep> value) {
+//                        if (value.code() == 200 && value.body() != null) {
+//                            BaseApplication.mRootItems = value.body().data;
+//                            if (BaseApplication.mRootItems != null && !BaseApplication.mRootItems.isEmpty()) {
+//                                for (DictTypeRep.DataBean obj :BaseApplication.mRootItems) {
+//                                    getDictMappingByType(obj.id);
+//                                }
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {}
+//
+//                    @Override
+//                    public void onComplete() {}
+//                });
+//    }
+
     public void getDictType() {
         mCommonRequest.getDictType()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe(new Observer<Response<DictTypeRep>>() {
+                .subscribe(new RequestObserver<Response<DictTypeRep>>() {
 
                     @Override
                     public void onSubscribe(Disposable d) {}
                     @Override
                     public void onNext(Response<DictTypeRep> value) {
+                        super.onNext(value);
                         if (value.code() == 200 && value.body() != null) {
                             BaseApplication.mRootItems = value.body().data;
                             if (BaseApplication.mRootItems != null && !BaseApplication.mRootItems.isEmpty()) {
