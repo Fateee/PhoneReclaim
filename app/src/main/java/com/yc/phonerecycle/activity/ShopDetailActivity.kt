@@ -2,12 +2,17 @@ package com.yc.phonerecycle.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
+import com.amap.api.maps.CameraUpdateFactory
+import com.amap.api.maps.model.BitmapDescriptorFactory
+import com.amap.api.maps.model.LatLng
+import com.amap.api.maps.model.MarkerOptions
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
@@ -72,6 +77,13 @@ class ShopDetailActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.CommonI
                                 handleWithIconClick()
                             }
                         })
+
+                        //初始化定位
+                        var latLng = LatLng(latitude,longitude);
+                        var markerOptions = MarkerOptions().position(latLng).icon(
+                            BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(resources,R.drawable.ic_locate_point)))
+                        mapview.map.addMarker(markerOptions);
+                        mapview.map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,14f))
                     }
                     "4" -> {
                         Glide.with(this@ShopDetailActivity).load(rep.mainImage).into(shopper_avatar)

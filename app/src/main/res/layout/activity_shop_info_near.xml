@@ -83,5 +83,10 @@
             app:title_width="270dp"
             app:right_icon="@drawable/ic_guide_lead"
             app:title_color="@color/c080808"/>
+    <com.amap.api.maps.MapView
+            android:id="@+id/mapview"
+            android:layout_width="match_parent"
+            android:layout_height="110dp">
 
+    </com.amap.api.maps.MapView>
 </LinearLayout>

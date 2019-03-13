@@ -25,8 +25,8 @@ public abstract class RequestObserver<P> implements Observer<P> {
         if (p instanceof Response) {
             Response value = (Response) p;
             if (value.code() == 200 && value.body() != null && value.body() instanceof BaseRep) {
-                Log.e(TAG,"--------------------");
                 int code = ((BaseRep) value.body()).code;
+                Log.e(TAG,"code == "+code);
                 if (code == 401) {
                     onTokenExpire();
                 } else {
