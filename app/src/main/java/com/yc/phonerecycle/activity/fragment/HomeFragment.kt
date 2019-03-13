@@ -93,35 +93,4 @@ class HomeFragment : BaseFragment<EmptyPresenter>() {
         })
     }
 
-//    internal fun showPermissionDialog() {
-//        if (cameraDialog == null) {
-//            cameraDialog = DialogHelper.showDialog(
-//                "1",
-//                activity as Context,
-//                null,
-//                "",
-//                "",
-//                getString(R.string.open_camera_rights),
-//                "你还没有开启电话权限，开启之后才可读取手机信息",
-//                getString(R.string.cancel),
-//                getString(R.string.setting),
-//                "",
-//                "",
-//                object : BaseDialog.IClickListener {
-//                    override fun click(dialog: Dialog) {
-//                    }
-//                },
-//                object : BaseDialog.IClickListener {
-//                    override fun click(dialog: Dialog) {
-//                        PermissionUtils.openPermissionSettings(activity as Context)
-//                    }
-//                }
-//            )
-//            cameraDialog?.setCanceledOnTouchOutside(false)
-//            cameraDialog?.setOnCancelListener(DialogInterface.OnCancelListener {
-//            })
-//        } else if (!cameraDialog?.isShowing()!!) {
-//            cameraDialog?.show()
-//        }
-//    }
 }
