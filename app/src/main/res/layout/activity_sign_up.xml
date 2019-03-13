@@ -9,8 +9,8 @@
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:text="用户注册"
               android:layout_gravity="center_horizontal"
-              android:layout_marginTop="100dp"
-              android:textSize="29sp"
+              android:layout_marginTop="80dp"
+              android:textSize="28.5sp"
               android:textColor="@color/c333333"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                 android:hint="手机号码"
                 android:inputType="phone"
                 android:textColorHint="@color/cb3b3b3"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:drawablePadding="15dp"/>
         <View android:layout_width="match_parent" android:layout_height="1dp"
               android:background="@color/cc1c1c1"/>
@@ -55,7 +55,7 @@
                     android:hint="短信验证码"
                     android:inputType="phone"
                     android:textColorHint="@color/cb3b3b3"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:drawablePadding="15dp"/>
             <TextView
                     android:id="@+id/signup_verfy_code"
@@ -65,7 +65,7 @@
                     android:layout_gravity="right|center_vertical"
                     android:gravity="center_vertical"
                     android:layout_marginRight="20dp"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     android:textColor="@color/c0168b7"/>
         </FrameLayout>
 
@@ -85,7 +85,7 @@
                     android:hint="设置登录密码"
                     android:inputType="textPassword"
                     android:textColorHint="@color/cb3b3b3"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:drawablePadding="15dp"/>
             <android.support.v7.widget.SwitchCompat
                     android:id="@+id/signup_pwd_switch"
@@ -107,11 +107,11 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="30dp"
-            android:paddingLeft="15dp"
+            android:paddingLeft="20dp"
             android:hint="推荐人手机号(选填)"
             android:inputType="phone"
             android:textColorHint="@color/cb3b3b3"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
 
     <com.yc.phonerecycle.widget.SimpleCornerTextView
             android:id="@+id/tv_signup_action"

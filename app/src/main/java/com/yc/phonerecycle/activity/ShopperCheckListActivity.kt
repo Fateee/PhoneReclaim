@@ -2,11 +2,13 @@ package com.yc.phonerecycle.activity
 
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.adapter.MenuListPageAdapter
 import com.yc.phonerecycle.activity.fragment.RecordListFragment
+import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.biz.AboutUsRep
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
@@ -73,7 +75,7 @@ class ShopperCheckListActivity : BaseActivity<EmptyPresenter>(){
             //mTitleIcons[i]和mTitleNames[i]是放图片和文字的资源的数组
 //            tab_layout.getTabAt(i)!!.setIcon(mTitleIcons[i])//.setText(mTitleNames[i])
             //这个是设置选中和没选中的文字的颜色
-            tab_layout.setTabTextColors(getColor(R.color.c3c3c3c), getColor(R.color.c0168b7))
+            tab_layout.setTabTextColors(ContextCompat.getColor(BaseApplication.getAppContext(),R.color.c3c3c3c),ContextCompat.getColor(BaseApplication.getAppContext(),R.color.c0168b7))
         }
     }
 

@@ -34,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:title="新的登录密码"
+            app:title_width="120dp"
             app:edit_hint="请输入密码"
             app:hide_divider="true"
             app:is_show_switch="true"/>

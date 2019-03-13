@@ -1,6 +1,7 @@
 package com.yc.phonerecycle.activity.adapter
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.CheckResulttActivity
 import com.yc.phonerecycle.activity.OrderDetailActivity
 import com.yc.phonerecycle.activity.ReportDetailActivity
+import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.constant.UrlConst
 import com.yc.phonerecycle.model.bean.biz.DetectionRep
 import com.yc.phonerecycle.model.bean.biz.MyOrderListlRep
@@ -88,7 +90,7 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                 }
                 showLogo(temp.logo,holder.icon)
                 holder.name.text = temp.brandName+"-"+temp.type+"+"+temp.capacityValue+"GB"
-                holder.content.setTextColor(mContext.getColor(R.color.ce84b2d))
+                holder.content.setTextColor(ContextCompat.getColor(BaseApplication.getAppContext(),R.color.ce84b2d))
                 holder.content.text = mContext.getString(R.string.order_price_value,temp.estimatePrice)
                 holder.detail.visibility = View.GONE
 

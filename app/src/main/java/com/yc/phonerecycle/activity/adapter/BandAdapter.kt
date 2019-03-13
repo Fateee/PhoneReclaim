@@ -1,6 +1,7 @@
 package com.yc.phonerecycle.activity.adapter
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.AutoCheckActivity
 import com.yc.phonerecycle.activity.HandCheckActivity
+import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.constant.UrlConst
 import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
 import com.yc.phonerecycle.model.bean.biz.BrandRep
@@ -64,10 +66,10 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
             is BrandRep.DataBean -> {
                 if (holder is BrandMenuVH) {
                     if (mCheckIndex == position) {
-                        holder.name.setTextColor(mContext.getColor(R.color.c0168b7))
+                        holder.name.setTextColor(ContextCompat.getColor(BaseApplication.getAppContext(),R.color.c0168b7))
                         holder.right_divider.visibility = View.GONE
                     } else {
-                        holder.name.setTextColor(mContext.getColor(R.color.c323232))
+                        holder.name.setTextColor(ContextCompat.getColor(BaseApplication.getAppContext(),R.color.c323232))
                         holder.right_divider.visibility = View.VISIBLE
                     }
                     holder.name.text = temp.name

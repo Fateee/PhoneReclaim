@@ -25,13 +25,12 @@ class CallTestFragment : BaseFragment<EmptyPresenter>(),View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.getId()) {
             R.id.refuse -> {
+                (activity as AutoCheckActivity).checkResult.call = 1
                 if ((activity as AutoCheckActivity).isAutoTabCheck) {
                     (activity as AutoCheckActivity).autoCheckTabDone()
                 } else {
-                    (activity as AutoCheckActivity).checkResult.call = 1
                     (activity as AutoCheckActivity).doHandCheck()
                 }
-
             }
             R.id.grant -> callPhone("10086")
         }

@@ -437,7 +437,6 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 //                        getView().dismissLoading();
 //                        if (value.code() == 200 && value.body() != null) {
 //                            if (value.body().data != null) {
-//                                //todo 是否过期
 //                                boolean expire = false;
 //                                if (expire) {
 //

@@ -108,16 +108,16 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
                 holder.bank_account.text = PhoneUtil.hideCardNo(temp.acount)
                 holder.header_one.visibility = View.VISIBLE
                 holder.header_two.visibility = View.GONE
-                holder.header_one.tag = temp
+                holder.bank_card.tag = temp
                 if (mType == 10) {
-                    holder.header_one.setOnClickListener(object :View.OnClickListener{
+                    holder.bank_card.setOnClickListener(object :View.OnClickListener{
                         override fun onClick(v: View?) {
                             mOnBankClickListener.OnBankClick(v?.tag as BankCardListRep.DataBean)
                         }
                     })
                 }
                 if (mType == 11) {
-                    holder.header_one.setOnLongClickListener(object :View.OnLongClickListener{
+                    holder.bank_card.setOnLongClickListener(object :View.OnLongClickListener{
                         override fun onLongClick(v: View?): Boolean {
                             mOnBankClickListener.OnBankClick(v?.tag as BankCardListRep.DataBean)
                             return true
@@ -229,6 +229,7 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
 
 class ChildMenuVH(val mView: View) : RecyclerView.ViewHolder(mView) {
     val header_one: RelativeLayout = mView.header_one
+    val bank_card: CardView = mView.bank_card
     val name: TextView = mView.name
     val bank_name: TextView = mView.bank_name
     val bank_account: TextView = mView.bank_account
