@@ -1,36 +1,18 @@
 package com.yc.phonerecycle.interfaces;
 
+import android.content.Intent;
 import android.util.Log;
+import com.yc.phonerecycle.activity.LoginActivity;
 import com.yc.phonerecycle.app.BaseApplication;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
-import com.yc.phonerecycle.model.bean.biz.DictTypeRep;
+import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter;
+import com.yc.phonerecycle.utils.UserInfoUtils;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 
-public class RequestObserver<P> implements Observer<P> {
-
-//    Observer mObserver = new Observer<P>() {
-//        @Override
-//        public void onSubscribe(Disposable d) {
-//
-//        }
-//
-//        @Override
-//        public void onNext(P o) {
-//
-//        }
-//
-//        @Override
-//        public void onError(Throwable e) {
-//
-//        }
-//
-//        @Override
-//        public void onComplete() {
-//
-//        }
-//    };
+public abstract class RequestObserver<P> implements Observer<P> {
+    public static CommonPresenter logoutPresenter = new CommonPresenter();
 
 
     @Override
@@ -43,16 +25,37 @@ public class RequestObserver<P> implements Observer<P> {
         if (p instanceof Response) {
             Response value = (Response) p;
             if (value.code() == 200 && value.body() != null && value.body() instanceof BaseRep) {
-                Log.e(TAG,"--------");
+                Log.e(TAG,"--------------------");
+                int code = ((BaseRep) value.body()).code;
+                if (code == 401) {
+                    onTokenExpire();
+                } else {
+                    onResponse(p);
+                }
+            } else if (value.code() == 401) {
+                onTokenExpire();
             }
         }
     }
+
+    protected void onTokenExpire() {
+        logoutPresenter.logout();
+        UserInfoUtils.cleanUser();
+        UserInfoUtils.cleanUserInfo();
+        UserInfoUtils.cleanUserWxTokenRep();
+        UserInfoUtils.cleanUserQQTokenRep();
+        Intent intent = new Intent(BaseApplication.getAppContext(),LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        BaseApplication.getAppContext().startActivity(intent);
+    }
+
+    public abstract void onResponse(P p);
 
     private static final String TAG = "RequestObserver";
 
     @Override
     public void onError(Throwable e) {
-
+        Log.w(TAG, "onError : " + e.getMessage());
     }
 
     @Override

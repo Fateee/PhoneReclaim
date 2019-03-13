@@ -21,7 +21,6 @@ import com.yc.phonerecycle.network.BaseRetrofit;
 import com.yc.phonerecycle.network.reqinterface.CommonRequest;
 import com.yc.phonerecycle.network.reqinterface.WeiXinRequest;
 import com.yc.phonerecycle.utils.UserInfoUtils;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -58,12 +57,12 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.uploadFile(firstBody,fileparam)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<UploadFileRep>>() {
+                .subscribe(new RequestObserver<Response<UploadFileRep>>() {
 
                     @Override
                     public void onSubscribe(Disposable d) {}
                     @Override
-                    public void onNext(Response<UploadFileRep> value) {
+                    public void onResponse(Response<UploadFileRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (getView() == null) return;
                         getView().dismissLoading();
@@ -72,8 +71,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         }
                     }
 
-                    @Override
-                    public void onError(Throwable e) {}
+                    
 
                     @Override
                     public void onComplete() {}
@@ -84,12 +82,12 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 //        mCommonRequest.getDictType()
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(Schedulers.io())
-//                .subscribe(new Observer<Response<DictTypeRep>>() {
+//                .subscribe(new RequestObserver<Response<DictTypeRep>>() {
 //
 //                    @Override
 //                    public void onSubscribe(Disposable d) {}
 //                    @Override
-//                    public void onNext(Response<DictTypeRep> value) {
+//                    public void onResponse(Response<DictTypeRep> value) {
 //                        if (value.code() == 200 && value.body() != null) {
 //                            BaseApplication.mRootItems = value.body().data;
 //                            if (BaseApplication.mRootItems != null && !BaseApplication.mRootItems.isEmpty()) {
@@ -116,9 +114,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onSubscribe(Disposable d) {}
+
                     @Override
                     public void onNext(Response<DictTypeRep> value) {
                         super.onNext(value);
+                    }
+
+                    public void onResponse(Response<DictTypeRep> value) {
                         if (value.code() == 200 && value.body() != null) {
                             BaseApplication.mRootItems = value.body().data;
                             if (BaseApplication.mRootItems != null && !BaseApplication.mRootItems.isEmpty()) {
@@ -129,8 +131,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         }
                     }
 
-                    @Override
-                    public void onError(Throwable e) {}
+                    
 
                     @Override
                     public void onComplete() {}
@@ -141,20 +142,17 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getDictMappingByType(dicTypeId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<DictMapRep>>() {
+                .subscribe(new RequestObserver<Response<DictMapRep>>() {
 
                     @Override
                     public void onSubscribe(Disposable d) {}
 
                     @Override
-                    public void onNext(Response<DictMapRep> value) {
+                    public void onResponse(Response<DictMapRep> value) {
                         if (value.code() == 200 && value.body() != null) {
                             BaseApplication.mOptionMap.put(dicTypeId,value.body().data);
                         }
                     }
-
-                    @Override
-                    public void onError(Throwable e) {}
 
                     @Override
                     public void onComplete() {}
@@ -168,7 +166,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.login(body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<LoginRep>>() {
+                .subscribe(new RequestObserver<Response<LoginRep>>() {
 
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -176,7 +174,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     }
 
                     @Override
-                    public void onNext(Response<LoginRep> value) {
+                    public void onResponse(Response<LoginRep> value) {
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null) {
                             ((CommonBaseIV.LoginViewIV) getView()).loginResponse(value.body());
@@ -318,156 +316,156 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 //        });
     }
 
-    public void getWXToken(Map<String, Object> body) {
-        WeiXinRequest wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest.class);
-        wxRequest.getAccessToken(BaseConst.WEIXIN_APPID,BaseConst.WEIXIN_SERCET, (String) body.get("code"),BaseConst.WEIXIN_TYPE_AUTH_CODE)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<WxTokenRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+//    public void getWXToken(Map<String, Object> body) {
+//        WeiXinRequest wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest.class);
+//        wxRequest.getAccessToken(BaseConst.WEIXIN_APPID,BaseConst.WEIXIN_SERCET, (String) body.get("code"),BaseConst.WEIXIN_TYPE_AUTH_CODE)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new RequestObserver<Response<WxTokenRep>>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                    }
+//
+//                    @Override
+//                    public void onResponse(Response<WxTokenRep> value) {
+//                        getView().dismissLoading();
+//                        Log.i(TAG, "value.code() == " + value.code());
+//                        if (value.code() == 200 && value.body() != null ) {
+//                            UserInfoUtils.saveUserWxTokenRep(value.body());
+//                            refreshWXToken();
+////                            ThirdLoginInfoRep.DataBean thirdVO = new ThirdLoginInfoRep.DataBean();
+////                            thirdVO.updateInfo(value.body().access_token,value.body().openid,value.body().refresh_token,value.body().expires_in);
+////                            getUserWXInfo(thirdVO);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.w(TAG, "onError : " + e.getMessage());
+//                        getView().dismissLoading();
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                    }
+//                });
+//    }
 
-                    @Override
-                    public void onNext(Response<WxTokenRep> value) {
-                        getView().dismissLoading();
-                        Log.i(TAG, "value.code() == " + value.code());
-                        if (value.code() == 200 && value.body() != null ) {
-                            UserInfoUtils.saveUserWxTokenRep(value.body());
-                            refreshWXToken();
+//    public void refreshWXToken() {
+//        WeiXinRequest wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest.class);
+//        String refresh_token = UserInfoUtils.getUserWxTokenRep().refresh_token;
+//        if (TextUtils.isEmpty(refresh_token)) return;
+//        wxRequest.refreshAccessToken(BaseConst.WEIXIN_APPID,refresh_token, BaseConst.WEIXIN_TYPE_REFRESH_CODE)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new RequestObserver<Response<WxTokenRep>>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                    }
+//
+//                    @Override
+//                    public void onResponse(Response<WxTokenRep> value) {
+//                        getView().dismissLoading();
+//                        Log.i(TAG, "value.code() == " + value.code());
+//                        if (value.code() == 200 && value.body() != null ) {
+//                            UserInfoUtils.saveUserWxTokenRep(value.body());
 //                            ThirdLoginInfoRep.DataBean thirdVO = new ThirdLoginInfoRep.DataBean();
 //                            thirdVO.updateInfo(value.body().access_token,value.body().openid,value.body().refresh_token,value.body().expires_in);
 //                            getUserWXInfo(thirdVO);
-                        }
-                    }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.w(TAG, "onError : " + e.getMessage());
+//                        getView().dismissLoading();
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                    }
+//                });
+//    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.w(TAG, "onError : " + e.getMessage());
-                        getView().dismissLoading();
-                    }
+//    public void getUserWXInfo(final ThirdLoginInfoRep.DataBean thirdVO) {
+//        String openid = thirdVO.openID;
+//        String access_token = thirdVO.accessToken;
+//        WeiXinRequest wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest.class);
+//        wxRequest.getWxUserInfo(openid,access_token)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new RequestObserver<Response<WxUserInfoRep>>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                    }
+//
+//                    @Override
+//                    public void onResponse(Response<WxUserInfoRep> value) {
+//                        getView().dismissLoading();
+//                        Log.i(TAG, "value.code() == " + value.code());
+//                        if (value.code() == 200 && value.body() != null ) {
+//                            thirdVO.nickName = value.body().nickname;
+//                            thirdVO.logo = value.body().headimgurl;
+//                            thirdVO.gender = value.body().sex+"";
+//                            saveThirdTokenInfo(thirdVO,SsoLoginType.WEIXIN);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.w(TAG, "onError : " + e.getMessage());
+//                        getView().dismissLoading();
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                    }
+//                });
+//    }
 
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-    }
-
-    public void refreshWXToken() {
-        WeiXinRequest wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest.class);
-        String refresh_token = UserInfoUtils.getUserWxTokenRep().refresh_token;
-        if (TextUtils.isEmpty(refresh_token)) return;
-        wxRequest.refreshAccessToken(BaseConst.WEIXIN_APPID,refresh_token, BaseConst.WEIXIN_TYPE_REFRESH_CODE)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<WxTokenRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(Response<WxTokenRep> value) {
-                        getView().dismissLoading();
-                        Log.i(TAG, "value.code() == " + value.code());
-                        if (value.code() == 200 && value.body() != null ) {
-                            UserInfoUtils.saveUserWxTokenRep(value.body());
-                            ThirdLoginInfoRep.DataBean thirdVO = new ThirdLoginInfoRep.DataBean();
-                            thirdVO.updateInfo(value.body().access_token,value.body().openid,value.body().refresh_token,value.body().expires_in);
-                            getUserWXInfo(thirdVO);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.w(TAG, "onError : " + e.getMessage());
-                        getView().dismissLoading();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-    }
-
-    public void getUserWXInfo(final ThirdLoginInfoRep.DataBean thirdVO) {
-        String openid = thirdVO.openID;
-        String access_token = thirdVO.accessToken;
-        WeiXinRequest wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest.class);
-        wxRequest.getWxUserInfo(openid,access_token)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<WxUserInfoRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(Response<WxUserInfoRep> value) {
-                        getView().dismissLoading();
-                        Log.i(TAG, "value.code() == " + value.code());
-                        if (value.code() == 200 && value.body() != null ) {
-                            thirdVO.nickName = value.body().nickname;
-                            thirdVO.logo = value.body().headimgurl;
-                            thirdVO.gender = value.body().sex+"";
-                            saveThirdTokenInfo(thirdVO,SsoLoginType.WEIXIN);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.w(TAG, "onError : " + e.getMessage());
-                        getView().dismissLoading();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-    }
-
-    public void getThirdTokenByOpenId(final Context context,String openId,@SsoLoginType final String type) {
-        if (getView() == null) return;
-        mCommonRequest.getThirdTokenByOpenId(openId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<ThirdLoginInfoRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {}
-
-                    @Override
-                    public void onNext(Response<ThirdLoginInfoRep> value) {
-                        getView().dismissLoading();
-                        if (value.code() == 200 && value.body() != null) {
-                            if (value.body().data != null) {
-                                //todo 是否过期
-                                boolean expire = false;
-                                if (expire) {
-
-                                } else {
-                                    if (type.equals(SsoLoginType.WEIXIN)) {
-                                        refreshWXToken();
-                                    } else if (type.equals(SsoLoginType.QQ)) {
-
-                                    }
-//                                    login(context,type);
-                                }
-                            } else {
-                                login(context,type);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getView().dismissLoading();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        getView().dismissLoading();
-                    }
-                });
-    }
+//    public void getThirdTokenByOpenId(final Context context,String openId,@SsoLoginType final String type) {
+//        if (getView() == null) return;
+//        mCommonRequest.getThirdTokenByOpenId(openId)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new RequestObserver<Response<ThirdLoginInfoRep>>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {}
+//
+//                    @Override
+//                    public void onResponse(Response<ThirdLoginInfoRep> value) {
+//                        getView().dismissLoading();
+//                        if (value.code() == 200 && value.body() != null) {
+//                            if (value.body().data != null) {
+//                                //todo 是否过期
+//                                boolean expire = false;
+//                                if (expire) {
+//
+//                                } else {
+//                                    if (type.equals(SsoLoginType.WEIXIN)) {
+//                                        refreshWXToken();
+//                                    } else if (type.equals(SsoLoginType.QQ)) {
+//
+//                                    }
+////                                    login(context,type);
+//                                }
+//                            } else {
+//                                login(context,type);
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        getView().dismissLoading();
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        getView().dismissLoading();
+//                    }
+//                });
+//    }
 
     public void saveThirdTokenInfo(final ThirdLoginInfoRep.DataBean thirdVO, final String type) {
         if (getView() == null) return;
@@ -482,12 +480,12 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.saveThirdTokenInfo(thirdVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<ThirdLoginInfoRep>>() {
+                .subscribe(new RequestObserver<Response<ThirdLoginInfoRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) { }
 
                     @Override
-                    public void onNext(Response<ThirdLoginInfoRep> value) {
+                    public void onResponse(Response<ThirdLoginInfoRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             if (value.body().data == null || TextUtils.isEmpty(value.body().data.userId)) {
@@ -517,12 +515,12 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.saveUserPhone(thirdLoginSaveUserVo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<ThirdLoginInfoRep>>() {
+                .subscribe(new RequestObserver<Response<ThirdLoginInfoRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) { }
 
                     @Override
-                    public void onNext(Response<ThirdLoginInfoRep> value) {
+                    public void onResponse(Response<ThirdLoginInfoRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null && value.body().data != null) {
                             getSystemToekn(value.body().data.userId,value.body().data.openID);
@@ -548,13 +546,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getSystemToken(body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<LoginRep>>() {
+                .subscribe(new RequestObserver<Response<LoginRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<LoginRep> value) {
+                    public void onResponse(Response<LoginRep> value) {
                         getView().dismissLoading();
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
@@ -578,29 +576,30 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
 
     public void logout() {
-        if (getView() == null) return;
-        getView().showLoading();
+        if (getView() != null) getView().showLoading();
         mCommonRequest.loginout()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
-                        getView().dismissLoading();
+                    public void onResponse(Response<BaseRep> value) {
+                        if (getView() != null) getView().dismissLoading();
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
-                            ((CommonBaseIV.LoginViewIV) getView()).loginResponse(value.body());
+                            if (getView() != null) {
+                                ((CommonBaseIV.LoginViewIV) getView()).loginResponse(value.body());
+                            }
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.w(TAG, "onError : " + e.getMessage());
-                        getView().dismissLoading();
+                        if (getView() != null) getView().dismissLoading();
                     }
 
                     @Override
@@ -614,13 +613,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.sendCode(phoneBody)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.SignUpIv) getView()).requestCodeOK(value.body());
@@ -646,13 +645,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.register(info)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         getView().dismissLoading();
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
@@ -680,13 +679,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.restPasswordByPhone(info)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         getView().dismissLoading();
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
@@ -711,27 +710,20 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getInfo()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<UserInfoRep>>() {
+                .subscribe(new RequestObserver<Response<UserInfoRep>>() {
+
                     @Override
-                    public void onSubscribe(Disposable d) {
+                    public void onNext(Response<UserInfoRep> userInfoRepResponse) {
+                        super.onNext(userInfoRepResponse);
                     }
 
                     @Override
-                    public void onNext(Response<UserInfoRep> value) {
+                    public void onResponse(Response<UserInfoRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (getView() == null) return;
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.UserInfoIV) getView()).userInfoSuccess(value.body());
                         }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.w(TAG, "onError : " + e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
                     }
                 });
     }
@@ -742,13 +734,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.changeLog(changeLogoVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.UploadFileIV) getView()).uploadFileSuccess(value.body());
@@ -772,13 +764,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.changeName(changeLogoVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.EditUserInfoIV) getView()).editNickNameSuccess(value.body());
@@ -802,13 +794,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.changeSignature(changeSignBody)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.EditUserInfoIV) getView()).editUserSignSuccess(value.body());
@@ -832,13 +824,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.resetWithdrawPassword(body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.resetWithdrawPasswordIV) getView()).resetWithdrawPasswordOK(value.body());
@@ -862,13 +854,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.resetPassword(body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.resetPasswordIV) getView()).resetPasswordOK(value.body());
@@ -892,13 +884,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.createWithdrawPassword(changePasswordVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.createWithdrawPasswordIV) getView()).createWithdrawPassword(value.body());
@@ -922,13 +914,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.changePhone(body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.changePhoneIV) getView()).changePhone(value.body());
@@ -953,13 +945,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.addFeedback(ticklingVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -985,13 +977,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getAboutUsVO()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<AboutUsRep>>() {
+                .subscribe(new RequestObserver<Response<AboutUsRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<AboutUsRep> value) {
+                    public void onResponse(Response<AboutUsRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1019,13 +1011,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.saveOrUpdate(goodsInstanceVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<SaveRecordRep>>() {
+                .subscribe(new RequestObserver<Response<SaveRecordRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<SaveRecordRep> value) {
+                    public void onResponse(Response<SaveRecordRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.saveOrUpdateIV) getView()).saveOrUpdate(value.body());
@@ -1050,13 +1042,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.saveBankCard(ticklingVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1084,13 +1076,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.deleteCardbyId(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (getView() != null) {
                             getView().dismissLoading();
@@ -1121,13 +1113,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getUserBankCard()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BankCardListRep>>() {
+                .subscribe(new RequestObserver<Response<BankCardListRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BankCardListRep> value) {
+                    public void onResponse(Response<BankCardListRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (getView() != null) {
                             getView().dismissLoading();
@@ -1160,13 +1152,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getUserMoney()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<UserMoneyRep>>() {
+                .subscribe(new RequestObserver<Response<UserMoneyRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<UserMoneyRep> value) {
+                    public void onResponse(Response<UserMoneyRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1192,13 +1184,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.inputWithdrawPassword(password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1224,13 +1216,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.saveUserMoney(writeTrackingVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1256,13 +1248,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.saveWXBankCard(openId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1289,13 +1281,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getNearby(longitude,latitude)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<NearByShopRep>>() {
+                .subscribe(new RequestObserver<Response<NearByShopRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<NearByShopRep> value) {
+                    public void onResponse(Response<NearByShopRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1322,13 +1314,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getStoreDetail(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<ShopDetailRep>>() {
+                .subscribe(new RequestObserver<Response<ShopDetailRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<ShopDetailRep> value) {
+                    public void onResponse(Response<ShopDetailRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1354,13 +1346,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getMyStore()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<ShopDetailRep>>() {
+                .subscribe(new RequestObserver<Response<ShopDetailRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<ShopDetailRep> value) {
+                    public void onResponse(Response<ShopDetailRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1385,13 +1377,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getBrandSelect(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BrandRep>>() {
+                .subscribe(new RequestObserver<Response<BrandRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BrandRep> value) {
+                    public void onResponse(Response<BrandRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonTypeIV) getView()).getDataOK(value.body(),type);
@@ -1415,13 +1407,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getGoodsByBrandId(brandId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BrandGoodsRep>>() {
+                .subscribe(new RequestObserver<Response<BrandGoodsRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BrandGoodsRep> value) {
+                    public void onResponse(Response<BrandGoodsRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1447,13 +1439,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getGoodsInstanceById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<OrderDetailRep>>() {
+                .subscribe(new RequestObserver<Response<OrderDetailRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<OrderDetailRep> value) {
+                    public void onResponse(Response<OrderDetailRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1479,13 +1471,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getAssistantMyOrderList(status)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<MyOrderListlRep>>() {
+                .subscribe(new RequestObserver<Response<MyOrderListlRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<MyOrderListlRep> value) {
+                    public void onResponse(Response<MyOrderListlRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1512,13 +1504,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getMyOrderList(userId,status)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<MyOrderListlRep>>() {
+                .subscribe(new RequestObserver<Response<MyOrderListlRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<MyOrderListlRep> value) {
+                    public void onResponse(Response<MyOrderListlRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1544,13 +1536,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getAssistantDetection(status)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<DetectionRep>>() {
+                .subscribe(new RequestObserver<Response<DetectionRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<DetectionRep> value) {
+                    public void onResponse(Response<DetectionRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1576,13 +1568,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getGoodsInstanceReportVO(goodsInstanceId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<PhoneReportRep>>() {
+                .subscribe(new RequestObserver<Response<PhoneReportRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<PhoneReportRep> value) {
+                    public void onResponse(Response<PhoneReportRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1608,13 +1600,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getMyDetection()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<DetectionRep>>() {
+                .subscribe(new RequestObserver<Response<DetectionRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<DetectionRep> value) {
+                    public void onResponse(Response<DetectionRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1640,13 +1632,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.getOrderDetailbyId(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<MyOrderDetailRep>>() {
+                .subscribe(new RequestObserver<Response<MyOrderDetailRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<MyOrderDetailRep> value) {
+                    public void onResponse(Response<MyOrderDetailRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1673,13 +1665,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.writeTracking(writeTrackingVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
@@ -1704,13 +1696,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.queryDivision(divisionQueryVo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<DivisionRep>>() {
+                .subscribe(new RequestObserver<Response<DivisionRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<DivisionRep> value) {
+                    public void onResponse(Response<DivisionRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null && divisionListener !=null) {
                             divisionListener.onDivisionGetOk(value.body(),type);
@@ -1732,13 +1724,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.addOrder(orderVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<BaseRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<BaseRep> value) {
+                    public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
@@ -1760,13 +1752,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.saveOrUpdateAddress(addressVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<StringDataRep>>() {
+                .subscribe(new RequestObserver<Response<StringDataRep>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<StringDataRep> value) {
+                    public void onResponse(Response<StringDataRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.SaveAddrIV) getView()).saveAddrOK(value.body());

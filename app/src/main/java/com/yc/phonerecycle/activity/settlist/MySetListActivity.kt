@@ -84,6 +84,9 @@ class MySetListActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginView
             override fun onClick(p0: View?) {
                 presenter.logout()
                 UserInfoUtils.cleanUser()
+                UserInfoUtils.cleanUserInfo()
+                UserInfoUtils.cleanUserWxTokenRep()
+                UserInfoUtils.cleanUserQQTokenRep()
                 ActivityToActivity.toActivity(
                     this@MySetListActivity, LoginActivity::class.java)
                 finish()

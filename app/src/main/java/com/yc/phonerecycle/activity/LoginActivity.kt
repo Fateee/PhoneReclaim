@@ -29,8 +29,6 @@ import third.wx.SsoLoginType
 
 class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV,CommonBaseIV.ThirdLoginViewIV {
 
-    var QQAppID: String = "1103278945"
-
     override fun createPresenter(): CommonPresenter? = CommonPresenter()
 
     override fun initBundle() {
@@ -127,20 +125,20 @@ class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV,C
         wholeData: String,
         body: MutableMap<String, Any>
     ) {
-        var wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest::class.java)
-        wxRequest.getAccessToken(BaseConst.WEIXIN_APPID,BaseConst.WEIXIN_SERCET, body["code"] as String?,BaseConst.WEIXIN_TYPE_AUTH_CODE)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<Response<WxTokenRep>> {
-                override fun onComplete() {}
-                override fun onSubscribe(d: Disposable) {}
-                override fun onError(e: Throwable) {}
-                override fun onNext(value: Response<WxTokenRep>) {
-                    if (value.code() == 200 && value.body() != null) {
-                        Log.e("huyi",value.body().toString()+" ")
-                    }
-                }
-            })
+//        var wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest::class.java)
+//        wxRequest.getAccessToken(BaseConst.WEIXIN_APPID,BaseConst.WEIXIN_SERCET, body["code"] as String?,BaseConst.WEIXIN_TYPE_AUTH_CODE)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(object : Observer<Response<WxTokenRep>> {
+//                override fun onComplete() {}
+//                override fun onSubscribe(d: Disposable) {}
+//                override fun onError(e: Throwable) {}
+//                override fun onNext(value: Response<WxTokenRep>) {
+//                    if (value.code() == 200 && value.body() != null) {
+//                        Log.e("huyi",value.body().toString()+" ")
+//                    }
+//                }
+//            })
     }
 
     override fun loginQQ(accessToken: String?, uId: String?, expiresIn: Long, wholeData: String?) {

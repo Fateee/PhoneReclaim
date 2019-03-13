@@ -96,8 +96,7 @@ public class UserInfoUtils {
         return "";
     }
 
-    public static void saveUserInfo(@Nullable UserInfoRep body) {
-        if (body == null) return;
+    public static void saveUserInfo(UserInfoRep body) {
         CacheUtils.get(BaseApplication.getApplication())
                 .put(CacheKey.USER_INFO_UC, body);
     }
@@ -114,6 +113,10 @@ public class UserInfoUtils {
             userInfo = new UserInfoRep();
         }
         return userInfo;
+    }
+
+    public static void cleanUserInfo() {
+        saveUserInfo(null);
     }
 
 
