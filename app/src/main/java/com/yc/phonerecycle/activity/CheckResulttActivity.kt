@@ -99,7 +99,7 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
             if (!TextUtils.isEmpty(recordid)) {
                 custom_phone.visibility = View.VISIBLE
                 //todo huyi
-                custom_phone.text = getString(R.string.custom_phone,mCheckReqBody?.checkTime)
+                custom_phone.text = getString(R.string.custom_phone,getString(R.string.custom_tele))
             }
         }
     }
@@ -141,6 +141,8 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
             submit.visibility = View.VISIBLE
             submit.text="自动检测"
             refreshView(ret)
+            price.visibility = View.GONE
+            price_tip.visibility = View.GONE
             submit.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(p0: View?) {
                     finish()
