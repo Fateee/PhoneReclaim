@@ -145,9 +145,9 @@ class RecycleInputUserInfoActivity : BaseActivity<CommonPresenter>(),CommonBaseI
             dialog?.setOnAddressSelectedListener(this@RecycleInputUserInfoActivity)
             dialog?.setDialogDismisListener(this@RecycleInputUserInfoActivity)
             dialog?.setTextSize(14f);//设置字体的大小
-            dialog?.setIndicatorBackgroundColor(android.R.color.holo_orange_light);//设置指示器的颜色
-            dialog?.setTextSelectedColor(android.R.color.holo_orange_light);//设置字体获得焦点的颜色
-            dialog?.setTextUnSelectedColor(android.R.color.holo_blue_light);//设置字体没有获得焦点的颜色
+            dialog?.setIndicatorBackgroundColor(R.color.c0168b7);//设置指示器的颜色
+            dialog?.setTextSelectedColor(R.color.black);//设置字体获得焦点的颜色
+            dialog?.setTextUnSelectedColor(R.color.c0168b7);//设置字体没有获得焦点的颜色
 //            dialog.setDisplaySelectorArea("31",1,"2704",1,"2711",0,"15582",1);//设置已选中的地区
             dialog?.setSelectorAreaPositionListener(this@RecycleInputUserInfoActivity);
             dialog?.show();

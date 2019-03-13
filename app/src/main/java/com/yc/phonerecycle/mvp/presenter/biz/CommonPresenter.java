@@ -503,9 +503,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -532,9 +530,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -547,9 +543,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<LoginRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<LoginRep> value) {
@@ -568,9 +562,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         getView().dismissLoading();
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -581,9 +573,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -602,9 +592,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         if (getView() != null) getView().dismissLoading();
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
     public void sendCode(int businessType, String phone) {//1 注册验证码 2 忘记密码
@@ -614,9 +602,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -632,9 +618,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         ((CommonBaseIV.SignUpIv) getView()).requestCodeError();
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -646,9 +630,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -666,9 +648,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         ((CommonBaseIV.SignUpIv) getView()).registerError(e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -680,9 +660,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -699,9 +677,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         getView().dismissLoading();
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -735,9 +711,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -752,9 +726,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -765,9 +737,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -782,9 +752,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -795,9 +763,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -812,9 +778,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -825,9 +789,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -842,9 +804,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -855,9 +815,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -872,9 +830,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -885,9 +841,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -902,9 +856,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -915,9 +867,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -932,9 +882,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -946,9 +894,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -965,9 +911,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -978,9 +922,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<AboutUsRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<AboutUsRep> value) {
@@ -997,9 +939,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1012,9 +952,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<SaveRecordRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<SaveRecordRep> value) {
@@ -1029,9 +967,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+
                 });
     }
 
@@ -1043,9 +979,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -1062,9 +996,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1077,9 +1009,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -1100,9 +1030,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1114,9 +1042,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BankCardListRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BankCardListRep> value) {
@@ -1140,9 +1066,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1153,9 +1077,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<UserMoneyRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<UserMoneyRep> value) {
@@ -1172,9 +1094,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1185,9 +1105,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -1204,9 +1122,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1217,9 +1133,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -1236,9 +1150,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1249,9 +1161,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -1268,9 +1178,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1282,9 +1190,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<NearByShopRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<NearByShopRep> value) {
@@ -1301,9 +1207,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1315,9 +1219,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<ShopDetailRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<ShopDetailRep> value) {
@@ -1334,9 +1236,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1347,9 +1247,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<ShopDetailRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<ShopDetailRep> value) {
@@ -1366,9 +1264,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1378,9 +1274,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BrandRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BrandRep> value) {
@@ -1395,9 +1289,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1408,9 +1300,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BrandGoodsRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BrandGoodsRep> value) {
@@ -1427,9 +1317,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1440,9 +1328,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<OrderDetailRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<OrderDetailRep> value) {
@@ -1459,9 +1345,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1472,9 +1356,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<MyOrderListlRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<MyOrderListlRep> value) {
@@ -1491,9 +1373,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1505,9 +1385,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<MyOrderListlRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<MyOrderListlRep> value) {
@@ -1524,9 +1402,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1537,9 +1413,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<DetectionRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<DetectionRep> value) {
@@ -1556,9 +1430,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1569,9 +1441,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<PhoneReportRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<PhoneReportRep> value) {
@@ -1588,9 +1458,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1601,9 +1469,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<DetectionRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<DetectionRep> value) {
@@ -1620,9 +1486,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1633,9 +1497,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<MyOrderDetailRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<MyOrderDetailRep> value) {
@@ -1652,9 +1514,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1666,9 +1526,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
@@ -1685,9 +1543,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
@@ -1697,9 +1553,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<DivisionRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<DivisionRep> value) {
@@ -1714,24 +1568,23 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
     public void addOrder(RecycleReqBody orderVO) {
+        if (getView() == null) return;
         mCommonRequest.addOrder(orderVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BaseRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
+                        getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
                         }
@@ -1742,20 +1595,18 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 
     public void saveOrUpdateAddress(RecycleAddrRep.DataBean addressVO) {
+        if (getView() == null) return;
+        getView().showLoading();
         mCommonRequest.saveOrUpdateAddress(addressVO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<StringDataRep>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+                    
 
                     @Override
                     public void onResponse(Response<StringDataRep> value) {
@@ -1770,9 +1621,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                    }
+                    
                 });
     }
 

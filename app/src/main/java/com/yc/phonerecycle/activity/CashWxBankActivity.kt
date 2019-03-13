@@ -1,13 +1,16 @@
 package com.yc.phonerecycle.activity
 
 import android.content.Intent
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.utils.ActivityToActivity
 import android.view.View
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.settlist.CreateBankPwdActivity
 import com.yc.phonerecycle.constant.BaseConst
+import com.yc.phonerecycle.constant.UrlConst
 import com.yc.phonerecycle.interfaces.OnBankClickListener
 import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.model.bean.biz.BankCardListRep
@@ -126,7 +129,7 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
     private var mPayDialog: PasswordDialog? = null
     private var mBankDialog: BottomCardsDialog? = null
 
-    private lateinit var moneyValue: String
+    private var moneyValue: String="0"
 
     override fun initDatas() {
         all_cash_out.setOnClickListener(object : View.OnClickListener {
@@ -156,14 +159,27 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
                 presenter.inputWithdrawPassword(pwd)
             }
         })
+        money_et.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                moneyValue = money_et.text.toString()
+                all_cash_out_tip.text = getString(R.string.all_cash_out_tip,moneyValue)
+            }
+        })
         submit.setOnClickListener(object : View.OnClickListener {
 
             override fun onClick(p0: View?) {
                 money_et.clearFocus()
+                if (TextUtils.isEmpty(moneyValue)) return
+                if (moneyValue.toDouble() > mMoneyStr.toDouble()&& UrlConst.realease) {
+                    ToastUtil.showShortToastCenter(getString(R.string.all_cash_out_tip,mMoneyStr))
+                    return
+                }
                 //验证提现密码，提现密码接口
                 //调用提现接口,成功后跳转
-                moneyValue = money_et.text.toString()
                 if (mCashType == 0) {
                     presenter.login(this@CashWxBankActivity, SsoLoginType.WEIXIN)
                 } else if (mCashType == 1) {

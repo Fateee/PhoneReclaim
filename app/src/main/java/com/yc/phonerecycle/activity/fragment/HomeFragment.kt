@@ -50,7 +50,7 @@ class HomeFragment : BaseFragment<EmptyPresenter>() {
 
         val macAddress = android.provider.Settings.Secure.getString(context?.getContentResolver(), "bluetooth_address")
         bluetooth_mac.text = macAddress
-        wifi_mac.text = MacAddressUtils.getMacAddress(context)
+        wifi_mac.text = MacAddressUtils.getMacAddress(context).toUpperCase()
         os_version.text = Build.VERSION.RELEASE
         Log.e("wifi",DeviceUtil.isWifiAvailable().toString()+" wifi "+DeviceUtil.isWifiConect())
 //        Log.e("ble",DeviceUtil.isBleAvailable().toString()+" wifi "+DeviceUtil.isBleConect())
@@ -83,8 +83,6 @@ class HomeFragment : BaseFragment<EmptyPresenter>() {
                 map["checktype"] = "1"
                 ActivityToActivity.toActivity(
                     activity, ChoosePhoneActivity::class.java,map)
-//                ActivityToActivity.toActivity(
-//                    activity, AutoCheckActivity::class.java)
             }
         })
         to_detail.setOnClickListener(object : View.OnClickListener {

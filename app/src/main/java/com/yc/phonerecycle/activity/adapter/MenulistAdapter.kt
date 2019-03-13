@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.support.v4.content.ContextCompat.startActivity
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ import com.yc.phonerecycle.model.bean.biz.NearByShopRep
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.utils.ActivityToActivity
 import com.yc.phonerecycle.utils.PermissionUtils
+import com.yc.phonerecycle.utils.PhoneUtil
 import com.yc.phonerecycle.utils.ToastUtil
 import kotlinx.android.synthetic.main.commont_listitem.view.*
 
@@ -103,7 +105,7 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
             is BankCardListRep.DataBean -> {
                 holder.name.text = temp.cardholder?.replaceRange(0,1,"*")
                 holder.bank_name.text = temp.openingBank
-                holder.bank_account.text = temp.acount
+                holder.bank_account.text = PhoneUtil.hideCardNo(temp.acount)
                 holder.header_one.visibility = View.VISIBLE
                 holder.header_two.visibility = View.GONE
                 holder.header_one.tag = temp
