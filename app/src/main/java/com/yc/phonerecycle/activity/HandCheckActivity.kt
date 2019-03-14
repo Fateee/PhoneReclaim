@@ -62,10 +62,10 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
 
 
     override fun initBundle() {
-        var goodbean = intent.getSerializableExtra("goodbean") as BrandGoodsRep.DataBean
+        var goodbean = intent.getSerializableExtra("goodbean") as BrandGoodsRep.DataBean?
         var brandid = intent.getStringExtra("brandid")
         mCheckReqBody.brandId = brandid
-        mCheckReqBody.goodsId = goodbean.id
+        mCheckReqBody.goodsId = goodbean?.id
         mCheckReqBody.system = Build.VERSION.RELEASE
         mCheckReqBody.brandName = Build.BRAND
         mCheckReqBody.type = Build.MODEL

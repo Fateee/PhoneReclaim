@@ -50,19 +50,19 @@ class ShopInMapActivity : BaseActivity<CommonPresenter>(){
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
 
-    private lateinit var mShopBean: NearByShopRep.DataBean
+    private var mShopBean: NearByShopRep.DataBean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mapview.onCreate(savedInstanceState);
-        var pos = mShopBean.longitudeLatitude.split("@")
-        if (pos.size>1) {
+        var pos = mShopBean?.longitudeLatitude?.split("@")
+        if (pos != null && pos?.size>1) {
             longitude = pos[0].toDouble()
             latitude = pos[1].toDouble()
         }
         //初始化定位
         var latLng = LatLng(latitude,longitude);
-        var markerOptions = MarkerOptions().position(latLng).title(mShopBean.name).snippet(mShopBean.address).icon(
+        var markerOptions = MarkerOptions().position(latLng).title(mShopBean?.name).snippet(mShopBean?.address).icon(
             BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(resources,R.drawable.ic_locate_point)))
         var marker = mapview.map.addMarker(markerOptions);
         marker.showInfoWindow()
@@ -75,8 +75,8 @@ class ShopInMapActivity : BaseActivity<CommonPresenter>(){
         //mapview.map.getUiSettings().setMyLocationButtonEnabled(true);设置默认定位按钮是否显示，非必需设置。
         mapview.map.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
 
-        shop_map_name.text = getString(R.string.shop_name_inmap,mShopBean.name)
-        shop_map_addr.text = getString(R.string.shop_addr,mShopBean.address)
+        shop_map_name.text = getString(R.string.shop_name_inmap,mShopBean?.name)
+        shop_map_addr.text = getString(R.string.shop_addr,mShopBean?.address)
         ic_guide.visibility=View.VISIBLE
         ic_guide.setOnClickListener { handleWithIconClick() }
         click_for_more.setOnClickListener { finish() }
@@ -86,7 +86,7 @@ class ShopInMapActivity : BaseActivity<CommonPresenter>(){
     override fun createPresenter() = CommonPresenter()
 
     override fun initBundle() {
-        mShopBean = intent.getSerializableExtra("shopbean") as NearByShopRep.DataBean
+        mShopBean = intent.getSerializableExtra("shopbean") as NearByShopRep.DataBean?
     }
 
     override fun getContentView(): Int = R.layout.activity_shop_in_map
@@ -134,7 +134,7 @@ class ShopInMapActivity : BaseActivity<CommonPresenter>(){
                     when (position) {
                         0 -> {
                             if (MapUtil.isGdMapInstalled()) {
-                                MapUtil.openGaoDeNavi(this@ShopInMapActivity, 0.0, 0.0, null, latitude, longitude, mShopBean.address);
+                                MapUtil.openGaoDeNavi(this@ShopInMapActivity, 0.0, 0.0, null, latitude, longitude, mShopBean?.address);
                             } else {
                                 //这里必须要写逻辑，不然如果手机没安装该应用，程序会闪退，这里可以实现下载安装该地图应用
                                 ToastUtil.showShortToast("尚未安装高德地图")
@@ -143,7 +143,7 @@ class ShopInMapActivity : BaseActivity<CommonPresenter>(){
                         }
                         1 -> {
                             if (MapUtil.isBaiduMapInstalled()) {
-                                MapUtil.openBaiDuNavi(this@ShopInMapActivity, 0.0, 0.0, null, latitude, longitude, mShopBean.address);
+                                MapUtil.openBaiDuNavi(this@ShopInMapActivity, 0.0, 0.0, null, latitude, longitude, mShopBean?.address);
                             } else {
                                 //这里必须要写逻辑，不然如果手机没安装该应用，程序会闪退，这里可以实现下载安装该地图应用
                                 ToastUtil.showShortToast("尚未安装百度地图")
@@ -151,7 +151,7 @@ class ShopInMapActivity : BaseActivity<CommonPresenter>(){
                         }
                         2 -> {
                             if (MapUtil.isTencentMapInstalled()) {
-                                MapUtil.openTencentMap(this@ShopInMapActivity, 0.0, 0.0, null, latitude, longitude, mShopBean.address);
+                                MapUtil.openTencentMap(this@ShopInMapActivity, 0.0, 0.0, null, latitude, longitude, mShopBean?.address);
                             } else {
                                 //这里必须要写逻辑，不然如果手机没安装该应用，程序会闪退，这里可以实现下载安装该地图应用
                                 ToastUtil.showShortToast("尚未安装腾讯地图")
