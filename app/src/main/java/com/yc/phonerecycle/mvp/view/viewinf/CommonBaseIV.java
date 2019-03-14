@@ -2,7 +2,6 @@ package com.yc.phonerecycle.mvp.view.viewinf;
 
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 import com.yc.phonerecycle.model.bean.biz.AboutUsRep;
-import com.yc.phonerecycle.model.bean.biz.BankCardListRep;
 import com.yc.phonerecycle.model.bean.biz.UserInfoRep;
 import com.yc.phonerecycle.mvp.presenter.base.BaseViewInf;
 
@@ -28,7 +27,7 @@ public interface CommonBaseIV extends BaseViewInf {
     interface SignUpIv extends CommonBaseIV {
         void requestCodeOK(Object data);
         void registerSuccess(Object data);
-        void requestCodeError();
+        void requestCodeError(String message);
         void registerError(String message);
     }
 

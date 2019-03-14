@@ -596,6 +596,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     }
     public void sendCode(int businessType, String phone) {//1 注册验证码 2 忘记密码
         if (getView() == null) return;
+        getView().showLoading();
         SendCodeBody phoneBody = new SendCodeBody(businessType, phone);
         mCommonRequest.sendCode(phoneBody)
                 .subscribeOn(Schedulers.io())
@@ -606,6 +607,8 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
+                        getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.SignUpIv) getView()).requestCodeOK(value.body());
                         }
@@ -614,7 +617,9 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onError(Throwable e) {
                         Log.w(TAG, "onError : " + e.getMessage());
-                        ((CommonBaseIV.SignUpIv) getView()).requestCodeError();
+                        if (getView() == null) return;
+                        getView().dismissLoading();
+                        ((CommonBaseIV.SignUpIv) getView()).requestCodeError(e.getMessage());
                     }
 
                     

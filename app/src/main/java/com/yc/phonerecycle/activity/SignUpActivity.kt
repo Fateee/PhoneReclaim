@@ -1,6 +1,5 @@
 package com.yc.phonerecycle.activity
 
-import android.icu.util.TimeUnit
 import android.os.CountDownTimer
 import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
@@ -9,13 +8,10 @@ import android.view.View
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
-import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
-import com.yc.phonerecycle.utils.ActivityToActivity
 import com.yc.phonerecycle.utils.PhoneUtil
 import com.yc.phonerecycle.utils.ToastUtil
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.SignUpIv {
@@ -97,8 +93,8 @@ class SignUpActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.SignUpIv {
         }
     }
 
-    override fun requestCodeError() {
-
+    override fun requestCodeError(message: String) {
+        ToastUtil.showShortToastCenter("error : $message")
     }
 
     override fun registerError(message: String?) {

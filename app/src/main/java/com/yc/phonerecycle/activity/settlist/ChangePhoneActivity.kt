@@ -84,7 +84,8 @@ class ChangePhoneActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.SignUp
 
     }
 
-    override fun requestCodeError() {
+    override fun requestCodeError(message: String) {
+        ToastUtil.showShortToastCenter("error : $message")
     }
 
     override fun registerError(message: String?) {

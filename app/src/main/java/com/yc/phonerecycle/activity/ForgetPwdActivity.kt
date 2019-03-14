@@ -100,7 +100,8 @@ class ForgetPwdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV.SignUpI
 
     }
 
-    override fun requestCodeError() {
+    override fun requestCodeError(message: String) {
+        ToastUtil.showShortToastCenter("error : $message")
     }
 
     override fun registerError(message: String?) {

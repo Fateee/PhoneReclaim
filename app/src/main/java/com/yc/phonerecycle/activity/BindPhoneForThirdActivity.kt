@@ -11,7 +11,6 @@ import com.yc.phonerecycle.constant.BaseConst
 import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.model.bean.biz.LoginRep
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
-import com.yc.phonerecycle.utils.ActivityToActivity
 import com.yc.phonerecycle.utils.PhoneUtil
 import com.yc.phonerecycle.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_forget_pwd.*
@@ -132,7 +131,8 @@ class BindPhoneForThirdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV
 
     }
 
-    override fun requestCodeError() {
+    override fun requestCodeError(message: String) {
+        ToastUtil.showShortToastCenter("error : $message")
     }
 
     override fun registerError(message: String?) {
