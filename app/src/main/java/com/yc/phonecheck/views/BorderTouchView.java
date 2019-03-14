@@ -11,9 +11,12 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import com.yc.phonerecycle.R;
+import com.yc.phonerecycle.utils.DensityUtil;
 
 public class BorderTouchView extends View {
 
+    private float textWidth;
+    private final int screenWidht;
     private Paint mPaint;
 
     private OnTouchChangedListener mListener;
@@ -30,14 +33,14 @@ public class BorderTouchView extends View {
     private boolean mAllFlags[][];
     private int yCount;
     private int xCount;
-
+    String text="单指在屏幕上滑动填满所有色块(45S)";
     public BorderTouchView(Context context) {
         this(context, null);
     }
 
     public BorderTouchView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setBackgroundResource(R.drawable.touch_bg);
+
         DisplayMetrics dm = getResources().getDisplayMetrics();
         mRectWidth = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 40, dm);
@@ -50,6 +53,9 @@ public class BorderTouchView extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(Color.WHITE);
+        mPaint.setTextSize(DensityUtil.dip2px(15));
+        textWidth = mPaint.measureText(text);
+        screenWidht = dm.widthPixels;
     }
 
     public void setOnTouchChangedListener(OnTouchChangedListener listener) {
@@ -100,15 +106,20 @@ public class BorderTouchView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.BLACK);
+        if (textWidth == 0 ){
+            textWidth = mPaint.measureText(text);
+        }
+        setBackgroundResource(R.drawable.touch_bg);
 
         for (int i = 0; i < mAll.length; i++) {
             for (int j = 0; j < mAll[i].length; j++) {
-                mPaint.setColor(mAllFlags[i][j] ? Color.GREEN : Color.WHITE);
+                mPaint.setColor(mAllFlags[i][j] ? Color.GREEN : Color.TRANSPARENT);
                 canvas.drawRect(mAll[i][j], mPaint);
             }
         }
-
+        mPaint.setColor(Color.WHITE);
+        float x =  (screenWidht - textWidth)/2;
+        canvas.drawText(text,x,530,mPaint);
     }
 
     private void touchDown(int x, int y) {
