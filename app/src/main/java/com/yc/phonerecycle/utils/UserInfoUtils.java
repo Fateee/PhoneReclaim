@@ -1,6 +1,7 @@
 package com.yc.phonerecycle.utils;
 
 
+import android.text.TextUtils;
 import com.yc.phonerecycle.app.BaseApplication;
 import com.yc.phonerecycle.constant.CacheKey;
 import com.yc.phonerecycle.model.bean.biz.LoginRep;
@@ -81,12 +82,17 @@ public class UserInfoUtils {
     }
 
     public static String getUserType() {
-        if (getUser().data != null) {
-            if (getUser().data.getUserInfoVO() != null) {
-                return getUser().data.getUserInfoVO().getType();
+        LoginRep.DataBean user = getUser().data;
+        if (user != null) {
+            if (user.getUserInfoVO() != null) {
+                if (TextUtils.isEmpty(user.getUserInfoVO().getType())){
+                    return "1";
+                } else {
+                    return user.getUserInfoVO().getType();
+                }
             }
         }
-        return "-1";
+        return "1";
     }
 
     public static String getUserToken() {

@@ -22,15 +22,28 @@ class TouchTestFragment : BaseFragment<EmptyPresenter>(), OnTouchChangedListener
     override fun onTouchFinish(v: View?) {
         if (v?.id == R.id.touch_border) {
             val msg = Message.obtain()
+            msg.what=1
             msg.arg1 = MSG_END
-            mHandler.sendMessageDelayed(msg, 1000)
+            mHandler.sendMessageDelayed(msg, 600)
         }
     }
+
 
     var mHandler: Handler = object : Handler() {
 
         override fun handleMessage(msg: Message) {
-            onHandleMessage(msg.arg1)
+            when (msg.what) {
+                0 -> {
+                    touch_border.count_down_time--
+                    if (touch_border.count_down_time >= 0) {
+                        touch_border.refreshText()
+                        sendEmptyMessageDelayed(0, 1000)
+                    }
+                }
+                1 -> {
+                    onHandleMessage(msg.arg1)
+                }
+            }
         }
     }
     override fun createPresenter(): EmptyPresenter? = null
@@ -39,6 +52,7 @@ class TouchTestFragment : BaseFragment<EmptyPresenter>(), OnTouchChangedListener
 
     override fun initViews(view: View?) {
         touch_border?.setOnTouchChangedListener(this)
+        mHandler.sendEmptyMessageDelayed(0, 1000)
     }
 
     override fun initData() {

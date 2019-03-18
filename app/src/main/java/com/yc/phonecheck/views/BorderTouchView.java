@@ -1,10 +1,13 @@
 package com.yc.phonecheck.views;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -33,7 +36,17 @@ public class BorderTouchView extends View {
     private boolean mAllFlags[][];
     private int yCount;
     private int xCount;
-    String text="单指在屏幕上滑动填满所有色块(45S)";
+    public int count_down_time = 45;
+    String text="单指在屏幕上滑动填满所有色块(%dS)";
+    @SuppressLint("HandlerLeak")
+    private static Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+
+            super.handleMessage(msg);
+        }
+    };
+
     public BorderTouchView(Context context) {
         this(context, null);
     }
@@ -118,6 +131,8 @@ public class BorderTouchView extends View {
             }
         }
         mPaint.setColor(Color.WHITE);
+        text = String.format(text,count_down_time);
+        textWidth = mPaint.measureText(text);
         float x =  (screenWidht - textWidth)/2;
         canvas.drawText(text,x,530,mPaint);
     }
@@ -168,5 +183,9 @@ public class BorderTouchView extends View {
             }
         }
         return true;
+    }
+
+    public void refreshText() {
+        invalidate();
     }
 }

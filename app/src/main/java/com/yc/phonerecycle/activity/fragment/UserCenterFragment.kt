@@ -141,7 +141,7 @@ class UserCenterFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.UserInfo
             item3_num.text = body?.data?.instance.toString()
             item3_name.text = "评估记录"
         } else if (UserInfoUtils.getUserType() == "4") {
-            item1_num.text = body?.data?.instance.toString()
+            item1_num.text = body?.data?.orderCount.toString()
             item1_name.text = "回收记录"
 
             item2_name.text = "余额"
