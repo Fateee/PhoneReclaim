@@ -32,17 +32,17 @@ class BindPhoneForThirdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV
         }
     }
 
-    override fun loginWX(
-        accessToken: String?,
-        uId: String?,
-        expiresIn: Long,
-        wholeData: String?,
-        body: MutableMap<String, Any>?
-    ) {
-    }
-
-    override fun loginQQ(accessToken: String?, uId: String?, expiresIn: Long, wholeData: String?) {
-    }
+//    override fun loginWX(
+//        accessToken: String?,
+//        uId: String?,
+//        expiresIn: Long,
+//        wholeData: String?,
+//        body: MutableMap<String, Any>?
+//    ) {
+//    }
+//
+//    override fun loginQQ(accessToken: String?, uId: String?, expiresIn: Long, wholeData: String?) {
+//    }
 
 //    override fun thirdBindOKGetSystemTokenResponse(data: Any?) {
 //        if (data is LoginRep) {

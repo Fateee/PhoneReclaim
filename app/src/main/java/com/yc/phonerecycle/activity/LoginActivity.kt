@@ -118,13 +118,13 @@ class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV,C
             this@LoginActivity, BindPhoneForThirdActivity::class.java,map,BaseConst.REQUEST_BIND_PHONE)
     }
 
-    override fun loginWX(
-        accessToken: String,
-        uId: String,
-        expiresIn: Long,
-        wholeData: String,
-        body: MutableMap<String, Any>
-    ) {
+//    override fun loginWX(
+//        accessToken: String,
+//        uId: String,
+//        expiresIn: Long,
+//        wholeData: String,
+//        body: MutableMap<String, Any>
+//    ) {
 //        var wxRequest = BaseRetrofit.getWxInstance().createRequest(WeiXinRequest::class.java)
 //        wxRequest.getAccessToken(BaseConst.WEIXIN_APPID,BaseConst.WEIXIN_SERCET, body["code"] as String?,BaseConst.WEIXIN_TYPE_AUTH_CODE)
 //            .subscribeOn(Schedulers.io())
@@ -139,11 +139,11 @@ class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV,C
 //                    }
 //                }
 //            })
-    }
-
-    override fun loginQQ(accessToken: String?, uId: String?, expiresIn: Long, wholeData: String?) {
-
-    }
+//    }
+//
+//    override fun loginQQ(accessToken: String?, uId: String?, expiresIn: Long, wholeData: String?) {
+//
+//    }
 
 //    fun initOpenidAndToken(jsonObject: JSONObject) {
 //        try {

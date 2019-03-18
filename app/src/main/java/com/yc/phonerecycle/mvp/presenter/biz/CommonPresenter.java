@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.yc.phonerecycle.activity.CashWxBankActivity;
 import com.yc.phonerecycle.app.BaseApplication;
 import com.yc.phonerecycle.constant.BaseConst;
 import com.yc.phonerecycle.interfaces.RequestObserver;
@@ -237,7 +238,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 thirdVO.logo = iconurl;
                 thirdVO.gender = gender;
                 String json = JSON.toJSONString(thirdVO);
-                Log.i(TAG, "saveThirdTokenInfo == " + json);
+                Log.i(TAG, "login == " + json);
                 thirdVO.responseJson = json;
 
                 if (type.equals(SsoLoginType.WEIXIN)) {
@@ -251,6 +252,13 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     UserInfoUtils.saveUserQQTokenRep(result);
                     thirdVO.openType = "1";
                 }
+                if (context instanceof CashWxBankActivity) {
+                    if (getView() != null) {
+                        getView().dismissLoading();
+                        ((CommonBaseIV.ThirdAuthIV) getView()).thirdAuthResponse(true);
+                    }
+                    return;
+                }
                 saveThirdTokenInfo(thirdVO,type);
             }
 
@@ -258,12 +266,24 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
             public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
                 Toast.makeText(context, "授权失败", Toast.LENGTH_LONG).show();
                 Log.e("onError", "onError: " + "授权失败");
+                if (context instanceof CashWxBankActivity) {
+                    if (getView() != null) {
+                        ((CommonBaseIV.ThirdAuthIV) getView()).thirdAuthResponse(false);
+                    }
+                    return;
+                }
             }
 
             @Override
             public void onCancel(SHARE_MEDIA share_media, int i) {
                 Toast.makeText(context, "授权取消", Toast.LENGTH_LONG).show();
                 Log.e("onError", "onError: " + "授权取消");
+                if (context instanceof CashWxBankActivity) {
+                    if (getView() != null) {
+                        ((CommonBaseIV.ThirdAuthIV) getView()).thirdAuthResponse(false);
+                    }
+                    return;
+                }
             }
         });
 //        SsoLoginManager.login(context, type, new SsoLoginManager.LoginListener() {
@@ -1071,6 +1091,37 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     }
 
                     
+                });
+    }
+
+    public void existDrawPassword() {
+        if (getView() != null) {
+            getView().showLoading();
+        }
+        mCommonRequest.existDrawPassword()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RequestObserver<Response<ExistDrawPasswordRep>>() {
+
+
+                    @Override
+                    public void onResponse(Response<ExistDrawPasswordRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() != null) {
+                            getView().dismissLoading();
+                        }
+                        if (value.code() == 200 && value.body() != null && getView() != null) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (getView() != null) {
+                            getView().dismissLoading();
+                        }
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
                 });
     }
 

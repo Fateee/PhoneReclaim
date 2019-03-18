@@ -119,4 +119,12 @@ public class PasswordDialog extends AlertDialog implements View.OnClickListener{
     public interface ViewClickListener{
         void click(String pwd);
     }
+
+    @Override
+    public void show() {
+        if (mPasswordInputView != null) {
+            mPasswordInputView.setText("");
+        }
+        super.show();
+    }
 }

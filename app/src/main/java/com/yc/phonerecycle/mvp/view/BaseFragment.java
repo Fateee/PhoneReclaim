@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import com.yc.phonerecycle.mvp.presenter.base.BasePresenter;
 import com.yc.phonerecycle.mvp.presenter.base.BaseViewInf;
+import com.yc.phonerecycle.utils.NetUtil;
+import com.yc.phonerecycle.utils.ToastUtil;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements BaseViewInf {
 
@@ -67,6 +69,13 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         getPresenter().deAttach();
     }
     public void showLoading() {
+        if (!NetUtil.checkNetworkState()) {
+            ToastUtil.showShortToastCenter("无网络连接");
+        }
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            return;
+        }
+        if (getActivity()!=null && getActivity().isFinishing()) return;
         loadingDialog = ProgressDialog.show(getContext(),"","");
     }
 

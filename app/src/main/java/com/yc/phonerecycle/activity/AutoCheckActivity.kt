@@ -28,6 +28,7 @@ import android.location.Location
 import android.location.LocationListener
 import android.media.AudioManager
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
 import com.yc.phonecheck.item.CallTest
@@ -51,6 +52,10 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     var checkResult = CheckReqBody()
     var check_array: Array<String> =
         arrayOf("无线网络","蓝牙","重力感应器","距离感应器","光线感应器","水平仪","指南针","定位","指纹","麦克风","扬声器","闪光灯","振动器","摄像头")
+
+    var mHandler = object:Handler() {
+
+    }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
     }

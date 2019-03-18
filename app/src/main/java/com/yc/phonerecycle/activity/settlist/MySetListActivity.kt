@@ -3,28 +3,42 @@ package com.yc.phonerecycle.activity.settlist
 import android.app.Dialog
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import android.view.View
+import com.umeng.socialize.UMShareAPI
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.LoginActivity
 import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.biz.BankCardListRep
+import com.yc.phonerecycle.model.bean.biz.ExistDrawPasswordRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.*
 import kotlinx.android.synthetic.main.activity_setting_list.*
 
 
-class MySetListActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV{
-    override fun loginWX(
-        accessToken: String?,
-        uId: String?,
-        expiresIn: Long,
-        wholeData: String?,
-        body: MutableMap<String, Any>?
-    ) {
+class MySetListActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV,CommonBaseIV.CommonIV{
+    override fun getDataOK(rep: Any?) {
+        if (rep is ExistDrawPasswordRep) {
+            if (rep.data) {
+                ActivityToActivity.toActivity(
+                    this@MySetListActivity, ResetBankPwdActivity::class.java)
+            } else {
+                ActivityToActivity.toActivity(
+                    this@MySetListActivity, CreateBankPwdActivity::class.java)
+            }
+        }
     }
 
-    override fun loginQQ(accessToken: String?, uId: String?, expiresIn: Long, wholeData: String?) {
-    }
+//    override fun loginWX(
+//        accessToken: String?,
+//        uId: String?,
+//        expiresIn: Long,
+//        wholeData: String?,
+//        body: MutableMap<String, Any>?
+//    ) {
+//    }
+//
+//    override fun loginQQ(accessToken: String?, uId: String?, expiresIn: Long, wholeData: String?) {
+//    }
 
     override fun createPresenter(): CommonPresenter? = CommonPresenter()
 
@@ -52,8 +66,7 @@ class MySetListActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginView
         })
         setlist_bankpwd_change.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                ActivityToActivity.toActivity(
-                    this@MySetListActivity, ResetBankPwdActivity::class.java)
+                presenter.existDrawPassword()
             }
         })
         initCacheSize()

@@ -9,7 +9,15 @@
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
-
+        <TextView
+                android:id="@+id/add_bank_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="5dp"
+                android:text="添加银行卡"
+                android:textColor="#000000"
+                android:textSize="14sp"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -11,10 +11,12 @@ import com.yc.library.utils.Dev;
 import com.yc.library.widget.AddressSelector;
 import com.yc.library.widget.OnAddressSelectedListener;
 import com.yc.phonerecycle.R;
+import com.yc.phonerecycle.activity.BindCardActivity;
 import com.yc.phonerecycle.activity.adapter.MenulistAdapter;
 import com.yc.phonerecycle.interfaces.OnBankClickListener;
 import com.yc.phonerecycle.model.bean.biz.BankCardListRep;
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter;
+import com.yc.phonerecycle.utils.ActivityToActivity;
 
 
 /**
@@ -27,6 +29,7 @@ public class BottomCardsDialog extends Dialog implements CommonPresenter.Bankcar
     private TextView cash_money_tip;
     private ImageView iv_colse;
     private MenulistAdapter mMenulistAdapter;
+    private TextView add_bank_card;
 
     public BottomCardsDialog(Context context) {
         super(context, R.style.bottom_dialog);
@@ -48,13 +51,22 @@ public class BottomCardsDialog extends Dialog implements CommonPresenter.Bankcar
      *
      * @param context
      */
-    private void init(Context context) {
+    private void init(final Context context) {
         mCommonPresenter = new CommonPresenter();
         mCommonPresenter.setBankcardListener(this);
         View view = LayoutInflater.from(context).inflate(R.layout.cardlist_for_dialog, null);
         setContentView(view);
         this.cash_money_tip = (TextView) view.findViewById(R.id.cash_money_tip);//省份
         this.iv_colse = (ImageView) view.findViewById(R.id.iv_colse);
+        this.add_bank_card = (TextView) view.findViewById(R.id.add_bank_card);
+        add_bank_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityToActivity.toActivity(
+                        context, BindCardActivity.class);
+                dismiss();
+            }
+        });
         iv_colse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

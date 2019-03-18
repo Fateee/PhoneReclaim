@@ -13,15 +13,15 @@ public interface CommonBaseIV extends BaseViewInf {
 
     interface LoginViewIV extends CommonBaseIV {
         void loginResponse(Object data);
-        void loginWX(String accessToken, String uId, long expiresIn, final String wholeData, Map<String, Object> body);
-        void loginQQ(String accessToken, String uId, long expiresIn, final String wholeData);
+//        void loginWX(String accessToken, String uId, long expiresIn, final String wholeData, Map<String, Object> body);
+//        void loginQQ(String accessToken, String uId, long expiresIn, final String wholeData);
     }
     interface ThirdLoginViewIV extends LoginViewIV {
         void goBindPhoneView(String openID, String type);
     }
 
-    interface ThirdBindIV extends LoginViewIV {
-        void thirdBindOKGetSystemTokenResponse(Object data);
+    interface ThirdAuthIV extends LoginViewIV {
+        void thirdAuthResponse(boolean success);
     }
 
     interface SignUpIv extends CommonBaseIV {

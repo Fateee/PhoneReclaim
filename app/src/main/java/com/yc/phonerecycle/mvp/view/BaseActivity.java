@@ -18,9 +18,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yc.phonerecycle.R;
 import com.yc.phonerecycle.mvp.presenter.base.BasePresenter;
 import com.yc.phonerecycle.mvp.presenter.base.BaseViewInf;
-import com.yc.phonerecycle.utils.BaseDialog;
-import com.yc.phonerecycle.utils.DialogHelper;
-import com.yc.phonerecycle.utils.PermissionUtils;
+import com.yc.phonerecycle.utils.*;
 
 import java.util.Map;
 
@@ -81,6 +79,9 @@ public abstract class BaseActivity <P extends BasePresenter> extends AppCompatAc
     }
 
     public void showLoading() {
+        if (!NetUtil.checkNetworkState()) {
+            ToastUtil.showShortToastCenter("无网络连接");
+        }
         if (loadingDialog != null && loadingDialog.isShowing()) {
             return;
         }

@@ -26,36 +26,42 @@ import kotlinx.android.synthetic.main.activity_cash_wx_bank.*
 import third.wx.SsoLoginType
 
 
-class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV, OnBankClickListener,CommonBaseIV.LoginViewIV,CommonBaseIV.ThirdLoginViewIV {
-    override fun loginResponse(data: Any?) {
-        if (data is LoginRep) {
-            if(data.code == 0) {
-                mPayDialog?.show()
-            } else {
-                if (!TextUtils.isEmpty(data.info))
-                    ToastUtil.showShortToastCenter(data.info)
-            }
+class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV, OnBankClickListener,CommonBaseIV.ThirdAuthIV {
+    override fun thirdAuthResponse(success: Boolean) {
+        if (success) {
+            mPayDialog?.show()
         }
     }
 
-    override fun loginWX(
-        accessToken: String?,
-        uId: String?,
-        expiresIn: Long,
-        wholeData: String?,
-        body: MutableMap<String, Any>?
-    ) {
+    override fun loginResponse(data: Any?) {
+//        if (data is LoginRep) {
+//            if(data.code == 0) {
+//                mPayDialog?.show()
+//            } else {
+//                if (!TextUtils.isEmpty(data.info))
+//                    ToastUtil.showShortToastCenter(data.info)
+//            }
+//        }
     }
 
-    override fun loginQQ(accessToken: String?, uId: String?, expiresIn: Long, wholeData: String?) {
-    }
+//    override fun loginWX(
+//        accessToken: String?,
+//        uId: String?,
+//        expiresIn: Long,
+//        wholeData: String?,
+//        body: MutableMap<String, Any>?
+//    ) {
+//    }
+//
+//    override fun loginQQ(accessToken: String?, uId: String?, expiresIn: Long, wholeData: String?) {
+//    }
 
-    override fun goBindPhoneView(openID: String?, type: String?) {
-        var map = HashMap<String,String?>()
-        map["openid"] = openID
-        map["type"] = type
-        ActivityToActivity.toActivity(this@CashWxBankActivity, BindPhoneForThirdActivity::class.java,map, BaseConst.REQUEST_BIND_PHONE)
-    }
+//    override fun goBindPhoneView(openID: String?, type: String?) {
+//        var map = HashMap<String,String?>()
+//        map["openid"] = openID
+//        map["type"] = type
+//        ActivityToActivity.toActivity(this@CashWxBankActivity, BindPhoneForThirdActivity::class.java,map, BaseConst.REQUEST_BIND_PHONE)
+//    }
 
     private var mDataBean: BankCardListRep.DataBean? = null
 
@@ -189,10 +195,10 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
         })
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == BaseConst.REQUEST_BIND_PHONE && resultCode == BaseConst.REQUEST_BIND_PHONE) {
-            mPayDialog?.show()
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == BaseConst.REQUEST_BIND_PHONE && resultCode == BaseConst.REQUEST_BIND_PHONE) {
+//            mPayDialog?.show()
+//        }
+//    }
 }

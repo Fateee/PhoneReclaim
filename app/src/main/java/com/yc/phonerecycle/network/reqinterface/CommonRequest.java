@@ -166,6 +166,10 @@ public interface CommonRequest {
 
     //钱包-提现
     //余额没有返回数字
+    @GET("v1/userMoney/existDrawPassword")
+    Observable<Response<ExistDrawPasswordRep>> existDrawPassword();
+
+    //余额没有返回数字
     @GET("v1/userMoney/getUserBankCard")
     Observable<Response<UserMoneyRep>> getUserMoney();
 
