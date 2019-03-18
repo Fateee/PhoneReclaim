@@ -131,8 +131,8 @@ public class BorderTouchView extends View {
             }
         }
         mPaint.setColor(Color.WHITE);
-        text = String.format(text,count_down_time);
-        textWidth = mPaint.measureText(text);
+        String localtext = String.format(text, count_down_time);
+        textWidth = mPaint.measureText(localtext);
         float x =  (screenWidht - textWidth)/2;
         canvas.drawText(text,x,530,mPaint);
     }
