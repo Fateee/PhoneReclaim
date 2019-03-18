@@ -134,7 +134,7 @@ public class BorderTouchView extends View {
         String localtext = String.format(text, count_down_time);
         textWidth = mPaint.measureText(localtext);
         float x =  (screenWidht - textWidth)/2;
-        canvas.drawText(text,x,530,mPaint);
+        canvas.drawText(localtext,x,530,mPaint);
     }
 
     private void touchDown(int x, int y) {

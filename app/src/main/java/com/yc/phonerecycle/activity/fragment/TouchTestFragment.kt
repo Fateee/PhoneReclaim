@@ -34,6 +34,7 @@ class TouchTestFragment : BaseFragment<EmptyPresenter>(), OnTouchChangedListener
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 0 -> {
+                    if (touch_border == null) return
                     touch_border.count_down_time--
                     if (touch_border.count_down_time >= 0) {
                         touch_border.refreshText()

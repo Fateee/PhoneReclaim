@@ -91,7 +91,7 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
         addRowView("摄像头",mCheckReqBody?.camera == 0,"","指纹",mCheckReqBody?.fingerprint==0,"")
         addRowView("屏幕触控",mCheckReqBody?.multiTouch == 0,"","拨打电话",mCheckReqBody?.call==0,"")
         addRowView("屏幕坏点",mCheckReqBody?.screen == 0,"","语音助手",mCheckReqBody?.comprehensionAids==0,"")
-        addRowView("电池状态",false,"83%","",true,"")
+//        addRowView("电池状态",false,"83%","",true,"")
         if(this@CheckResulttActivity.mCheckReqBody == null) {
             custom_phone.visibility = View.VISIBLE
             custom_phone.text = getString(R.string.check_time,mCheckReqBody?.checkTime)
