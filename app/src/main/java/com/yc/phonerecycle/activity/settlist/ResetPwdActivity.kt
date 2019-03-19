@@ -52,7 +52,7 @@ class ResetPwdActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.resetPass
                     ToastUtil.showShortToastCenter("新密码不一致")
                     return
                 }
-                presenter.resetPassword(old,new,UserInfoUtils.getUser().data?.userInfoVO?.id)
+                presenter.resetPassword(old,new,UserInfoUtils.getUserId())
             }
         })
     }

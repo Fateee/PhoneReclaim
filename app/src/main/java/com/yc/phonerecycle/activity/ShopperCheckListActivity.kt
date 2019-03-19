@@ -35,7 +35,7 @@ class ShopperCheckListActivity : BaseActivity<EmptyPresenter>(){
     override fun initDatas() {
         txt_right_title.text = ""
         txt_main_title.text = "检测记录"
-        type = UserInfoUtils.getUser().data?.userInfoVO?.type
+        type = UserInfoUtils.getUserType()
         var list = ArrayList<String>()
         listFragments = ArrayList<RecordListFragment>()
         when (type) {

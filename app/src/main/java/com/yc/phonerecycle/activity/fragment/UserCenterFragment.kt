@@ -78,7 +78,7 @@ class UserCenterFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.UserInfo
         })
         uc_shop_nearby.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                var type = UserInfoUtils.getUser().data?.userInfoVO?.type
+                var type = UserInfoUtils.getUserType()
                 when (type) {
                     "1" -> {
                         ActivityToActivity.toActivity(
@@ -102,7 +102,7 @@ class UserCenterFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.UserInfo
         })
         item3_layout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                var type = UserInfoUtils.getUser().data?.userInfoVO?.type
+                var type = UserInfoUtils.getUserType()
                 when (type) {
                     "1" -> {
                         ActivityToActivity.toActivity(

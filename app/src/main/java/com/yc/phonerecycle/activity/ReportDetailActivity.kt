@@ -49,20 +49,43 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
     }
 
     private fun refreshView(mCheckReqBody: PhoneReportRep.DataBean?) {
+        var tip = StringBuilder()
         name.text = mCheckReqBody?.brandName+" "+mCheckReqBody?.type+" "+mCheckReqBody?.regional
         content.text = mCheckReqBody?.memory+" "+mCheckReqBody?.capacity
         if (order_bean != null) {
             showLogo(order_bean?.logo,icon)
-            name.text = order_bean?.brandName+"  "+order_bean?.type
+            if (!TextUtils.isEmpty(order_bean?.brandName)) {
+                tip.append(order_bean?.brandName+"  ")
+            }
+            if (!TextUtils.isEmpty(order_bean?.type)) {
+                tip.append(order_bean?.type)
+            }
+            name.text = tip.toString()
             var memoryForm = getFromDict("1", mCheckReqBody?.memory)
             content.text = memoryForm?.value+"+"+order_bean?.capacityValue+"GB"
         } else if (detection_bean != null) {
             showLogo(detection_bean?.logo,icon)
-            name.text = detection_bean?.brandName+"  "+detection_bean?.type
+            if (!TextUtils.isEmpty(detection_bean?.brandName)) {
+                tip.append(detection_bean?.brandName+"  ")
+            }
+            if (!TextUtils.isEmpty(detection_bean?.type)) {
+                tip.append(detection_bean?.type)
+            }
+            name.text = tip.toString()
             var memoryForm = getFromDict("1", mCheckReqBody?.memory)
-            content.text = memoryForm?.value+"+"+detection_bean?.capacityValue+"GB"
+            content.text = memoryForm?.value+"+"+detection_bean?.capacity
         } else {
-            name.text = mCheckReqBody?.brandName+" "+mCheckReqBody?.type+" "+mCheckReqBody?.regional
+            if (!TextUtils.isEmpty(mCheckReqBody?.brandName)) {
+                tip.append(mCheckReqBody?.brandName+"  ")
+            }
+            if (!TextUtils.isEmpty(mCheckReqBody?.type)) {
+                tip.append(mCheckReqBody?.type+" ")
+            }
+            if (!TextUtils.isEmpty(mCheckReqBody?.regional)) {
+                tip.append(mCheckReqBody?.regional)
+            }
+            name.text = tip.toString()
+//            name.text = mCheckReqBody?.brandName+" "+mCheckReqBody?.type+" "+mCheckReqBody?.regional
             var memoryForm = getFromDict("1", mCheckReqBody?.memory)
             var romForm = getFromDict("2", mCheckReqBody?.capacity)
             if (memoryForm == null) {

@@ -55,7 +55,7 @@ class BindCardActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.saveBankC
 //                    ToastUtil.showShortToastCenter("卡号须为16位")
 //                    return
 //                }
-                presenter.saveBankCard(card_num,bind_owner,"",bank_name, UserInfoUtils.getUser().data?.userInfoVO?.id)
+                presenter.saveBankCard(card_num,bind_owner,"",bank_name, UserInfoUtils.getUserId())
             }
         })
     }

@@ -1,5 +1,6 @@
 package com.yc.phonerecycle.activity.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
@@ -108,7 +109,9 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
                                         mContext, AutoCheckActivity::class.java,map)
                                 }
                             }
-
+                            if (mContext is Activity) {
+                                mContext.finish()
+                            }
                         }
                     })
                 }

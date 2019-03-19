@@ -48,7 +48,7 @@ class ResetBankPwdActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.reset
                     ToastUtil.showShortToastCenter("新密码不一致")
                     return
                 }
-                presenter.resetWithdrawPassword(old,new,UserInfoUtils.getUser().data?.userInfoVO?.id)
+                presenter.resetWithdrawPassword(old,new,UserInfoUtils.getUserId())
             }
         })
     }

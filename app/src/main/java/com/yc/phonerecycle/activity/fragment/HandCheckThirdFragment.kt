@@ -43,6 +43,7 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
                 map["recordid"] = data.data
                 ActivityToActivity.toActivity(
                     activity, CheckResulttActivity::class.java,map)
+                activity?.finish()
             }
         }
     }

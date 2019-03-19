@@ -89,7 +89,17 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                     }
                 }
                 showLogo(temp.logo,holder.icon)
-                holder.name.text = temp.brandName+"-"+temp.type+"+"+temp.capacityValue+"GB"
+                var tip = StringBuilder()
+                if (!TextUtils.isEmpty(temp.brandName)) {
+                    tip.append(temp.brandName+"-")
+                }
+                if (!TextUtils.isEmpty(temp.type)) {
+                    tip.append(temp.type+"+")
+                }
+                if (!TextUtils.isEmpty(temp.capacityValue)) {
+                    tip.append(temp.capacityValue+"G")
+                }
+                holder.name.text = tip.toString()
                 holder.content.setTextColor(ContextCompat.getColor(BaseApplication.getAppContext(),R.color.ce84b2d))
                 holder.content.text = mContext.getString(R.string.order_price_value,temp.estimatePrice)
                 holder.detail.visibility = View.GONE
@@ -112,7 +122,17 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                 holder.status.visibility = View.VISIBLE
                 holder.divider.visibility = View.GONE
                 holder.wait_ems.visibility = View.GONE
-                holder.name.text = temp.brandName+"-"+temp.type+"+"+temp.capacity
+                var tip = StringBuilder()
+                if (!TextUtils.isEmpty(temp.brandName)) {
+                    tip.append(temp.brandName+"-")
+                }
+                if (!TextUtils.isEmpty(temp.type)) {
+                    tip.append(temp.type+"+")
+                }
+                if (!TextUtils.isEmpty(temp.capacity)) {
+                    tip.append(temp.capacity)
+                }
+                holder.name.text = tip.toString()
                 holder.content.text = temp.customerName
                 when (temp.status) { //0、已完成 1、待寄出 2、待收货 3、已退回 4、验机 5、待打款
                     0 -> {

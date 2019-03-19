@@ -53,7 +53,7 @@ class CreateBankPwdActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.crea
                     ToastUtil.showShortToastCenter("密码不一致")
                     return
                 }
-                presenter.createWithdrawPassword(new,UserInfoUtils.getUser().data?.userInfoVO?.id)
+                presenter.createWithdrawPassword(new,UserInfoUtils.getUserId())
             }
         })
     }

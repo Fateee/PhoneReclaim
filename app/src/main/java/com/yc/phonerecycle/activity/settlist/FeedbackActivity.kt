@@ -34,7 +34,7 @@ class FeedbackActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.FeedbakcIV
                     ToastUtil.showShortToastCenter("内容不能为空")
                     return
                 }
-                presenter.addFeedback(UserInfoUtils.getUser().data?.userInfoVO?.id,content)
+                presenter.addFeedback(UserInfoUtils.getUserId(),content)
             }
         })
     }

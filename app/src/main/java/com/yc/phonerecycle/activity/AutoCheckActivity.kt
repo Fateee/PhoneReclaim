@@ -194,7 +194,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     }
 
     private fun doWifiTest() {
-        ic_circle.postDelayed({
+        mHandler.postDelayed({
             var list = BaseApplication.mOptionMap.get("16")
             var ret = DeviceUtil.isWifiAvailable()
             checkResult.wifi = if (ret) {
@@ -209,7 +209,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 
 
     private fun doBlueToothTest() {
-        ic_circle.postDelayed({
+        mHandler.postDelayed({
             var list = BaseApplication.mOptionMap.get("16")
             var ret = DeviceUtil.isWifiAvailable()
             checkResult.bluetooth = if (ret) { 0 } else { 1 }
@@ -219,7 +219,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     }
 
     private fun doGravitySensorTest() {
-        ic_circle.postDelayed({
+        mHandler.postDelayed({
             initView()
             doDistanceSensorTest()
         },2500)
@@ -229,7 +229,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 
 
     private fun doDistanceSensorTest() {
-        ic_circle.postDelayed({
+        mHandler.postDelayed({
             initView()
             doLightSensorTest()},3000)
         val hasProxSensor = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY)
@@ -239,7 +239,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     }
 
     private fun doLightSensorTest() {
-        ic_circle.postDelayed({ initView()
+        mHandler.postDelayed({ initView()
             doOrientationSensorTest()},3000)
         val hasLightSensor = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_LIGHT)
         if (!hasLightSensor) checkResult.lightSensor = 1
@@ -247,14 +247,14 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     }
 
     private fun doOrientationSensorTest() {
-        ic_circle.postDelayed({ initView()
+        mHandler.postDelayed({ initView()
             doCompassTest()},3000)
         checkResult.spiritLevel = 1
         mSensorManager.registerListener(this,ORIENTATION,SensorManager.SENSOR_DELAY_FASTEST)
     }
 
     private fun doCompassTest() {
-        ic_circle.postDelayed({ initView()
+        mHandler.postDelayed({ initView()
             doLocationTest()},3000)
         val hasCompass = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_COMPASS)
         if (!hasCompass) checkResult.compass = 1
@@ -268,7 +268,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 
 
     private fun doLocationTest() {
-        ic_circle.postDelayed({
+        mHandler.postDelayed({
             initView()
             locationManager?.removeUpdates(locationListener)
             doFingerTest()},6000)
@@ -312,7 +312,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 
     }
     private fun doFingerTest() {
-        ic_circle.postDelayed({ initView()
+        mHandler.postDelayed({ initView()
             doMicroTest()},3000)
         val hasFINGERPRINT = pm.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
         if (!hasFINGERPRINT) checkResult.fingerprint = 1
@@ -343,13 +343,13 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         }
     }
     private fun doMicroTest() {
-        ic_circle.postDelayed({ initView()
+        mHandler.postDelayed({ initView()
             doSpeakerTest()},2500)
         val hasMicrophone = microTest()
         checkResult.microphone = if (hasMicrophone) {0} else {1}
     }
     private fun doSpeakerTest() {
-        ic_circle.postDelayed({ initView()
+        mHandler.postDelayed({ initView()
             doFlashLightTest()},2500)
         var ret = CheckPhoneUtil.doSpeakerTest()
         checkResult.loudspeaker = if (ret) {0} else {1}
@@ -363,7 +363,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     }
 
     private fun doFlashLightTest() {
-        ic_circle.postDelayed({ initView()
+        mHandler.postDelayed({ initView()
             doVibratorTest()},4000)
         checkResult.flashlight = 1
         PermissionUtils.checkCameraPermission(this@AutoCheckActivity, object : PermissionUtils.Callback() {
@@ -382,13 +382,13 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         })
     }
     private fun doVibratorTest() {
-        ic_circle.postDelayed({ initView()
+        mHandler.postDelayed({ initView()
             doCameraTest()},2500)
         var ret = isVibratorGood()
         checkResult.vibrator = if (ret) {0} else {1}
     }
     private fun doCameraTest() {
-        ic_circle.postDelayed({
+        mHandler.postDelayed({
 //            doLCDTest()
             touchTest()
         },2500)
@@ -401,7 +401,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     fun touchTest() {
         ic_rorato.visibility = View.GONE
         checkResult.multiTouch = 1
-        ic_circle.postDelayed(lcdTestRunnable,45*1000)
+        mHandler.postDelayed(lcdTestRunnable,45*1000)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.screen_check_layout,mTouchTest)
         transaction.commit()
@@ -468,6 +468,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     }
 
     override fun onDestroy() {
+        mHandler.removeCallbacksAndMessages(null)
         mSensorManager?.unregisterListener(this)
         super.onDestroy()
     }

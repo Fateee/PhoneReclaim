@@ -51,10 +51,10 @@ class EditUserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.EditU
                 when(mType) {
                     "0" -> {
                         if (TextUtils.isEmpty(content)) return
-                        presenter.changeName(content, UserInfoUtils.getUser().data?.userInfoVO?.id)
+                        presenter.changeName(content, UserInfoUtils.getUserId())
                     }
                     "1" -> {
-                        presenter.changeSignature( UserInfoUtils.getUser().data?.userInfoVO?.id,content)
+                        presenter.changeSignature( UserInfoUtils.getUserId(),content)
                     }
                 }
             }

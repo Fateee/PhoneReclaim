@@ -54,18 +54,38 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
     }
 
     private fun refreshView(mCheckReqBody: OrderDetailRep.DataBean?) {
+        var tip = StringBuilder()
         if (order_bean != null) {
             showLogo(order_bean?.logo,icon)
-            name.text = order_bean?.brandName+"  "+order_bean?.type
+            if (!TextUtils.isEmpty(order_bean?.brandName)) {
+                tip.append(order_bean?.brandName+"  ")
+            }
+            if (!TextUtils.isEmpty(order_bean?.type)) {
+                tip.append(order_bean?.type)
+            }
+            name.text = tip.toString()
+//            name.text = order_bean?.brandName+"  "+order_bean?.type
             var memoryForm = getFromDict("1", mCheckReqBody?.memory)
             content.text = memoryForm?.value+"+"+order_bean?.capacityValue+"GB"
         } else if (detection_bean != null) {
             showLogo(detection_bean?.logo,icon)
-            name.text = detection_bean?.brandName+"  "+detection_bean?.type
+            if (!TextUtils.isEmpty(detection_bean?.brandName)) {
+                tip.append(detection_bean?.brandName+"  ")
+            }
+            if (!TextUtils.isEmpty(detection_bean?.type)) {
+                tip.append(detection_bean?.type)
+            }
+            name.text = tip.toString()
             var memoryForm = getFromDict("1", mCheckReqBody?.memory)
-            content.text = memoryForm?.value+"+"+detection_bean?.capacityValue+"GB"
+            content.text = memoryForm?.value+"+"+detection_bean?.capacity
         } else {
-            name.text = mCheckReqBody?.brandName+" "+mCheckReqBody?.type//+" "+mCheckReqBody?.regional
+            if (!TextUtils.isEmpty(mCheckReqBody?.brandName)) {
+                tip.append(mCheckReqBody?.brandName+"  ")
+            }
+            if (!TextUtils.isEmpty(mCheckReqBody?.type)) {
+                tip.append(mCheckReqBody?.type)
+            }
+            name.text = tip.toString()
             var memoryForm = getFromDict("1", mCheckReqBody?.memory)
             var romForm = getFromDict("2", mCheckReqBody?.capacity)
             if (memoryForm == null) {
@@ -152,7 +172,7 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
         }
         if(mCheckReqBody != null) {
             submit.visibility = View.VISIBLE
-            var type = UserInfoUtils.getUser().data?.userInfoVO?.type
+            var type = UserInfoUtils.getUserType()
             when (type) {
                 "1" -> {
                     submit.text="立即回收"
@@ -170,6 +190,7 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
                             map["recordid"] = recordid
                             ActivityToActivity.toActivity(
                                 this@CheckResulttActivity, RecycleInputUserInfoActivity::class.java,map)
+                            finish()
                         }
                         "4" -> {
                             finish()

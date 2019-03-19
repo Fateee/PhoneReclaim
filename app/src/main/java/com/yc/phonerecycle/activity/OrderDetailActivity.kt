@@ -29,33 +29,44 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
             when(rep.data.status) {//0、已完成 1、待寄出 2、待收货 3、已退回 4、验机 5、待打款
                 0->{
                     order_done.visibility = View.VISIBLE
+                    order_sendby.visibility = View.GONE
+                    order_getby.visibility = View.GONE
+                    order_return.visibility = View.GONE
+                    order_waitcash.visibility = View.GONE
                     order_price_tip.text = "最终回收价："
                 }
                 1->{
-                    order_userinfo_content.visibility = View.VISIBLE
-                    order_userinfo_tip.text = "收货地址"
+                    order_done.visibility = View.GONE
                     order_sendby.visibility = View.VISIBLE
-                    order_ems_content.visibility = View.GONE
-                    order_send_now.visibility = View.VISIBLE
-                    order_send_now.setOnClickListener{
-                        mEmsDialog?.show()
-                    }
+                    order_getby.visibility = View.GONE
+                    order_return.visibility = View.GONE
+                    order_waitcash.visibility = View.GONE
+                    order_userinfo_tip.text = "收货地址"
                 }
                 2->{
+                    order_done.visibility = View.GONE
+                    order_sendby.visibility = View.GONE
                     order_getby.visibility = View.VISIBLE
-                    order_ems_change.visibility = View.VISIBLE
-                    order_ems_change.setOnClickListener{
-                        mEmsDialog?.show()
-                    }
+                    order_return.visibility = View.GONE
+                    order_waitcash.visibility = View.GONE
                 }
                 3->{
-                    order_ems_tip.text = "退回物流信息"
+                    order_done.visibility = View.GONE
+                    order_sendby.visibility = View.GONE
+                    order_getby.visibility = View.GONE
                     order_return.visibility = View.VISIBLE
+                    order_waitcash.visibility = View.GONE
+
+                    order_ems_tip.text = "退回物流信息"
                     order_price_tip.text = "最终回收价："
                 }
                 4->{
                 }
                 5->{
+                    order_done.visibility = View.GONE
+                    order_sendby.visibility = View.GONE
+                    order_getby.visibility = View.GONE
+                    order_return.visibility = View.GONE
                     order_waitcash.visibility = View.VISIBLE
                 }
             }
@@ -63,15 +74,59 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
             order_userinfo_address.text = rep.data.address
             order_userinfo_phone.text = rep.data.consigneePhone
             if (rep.data.status != 1) {
+                order_ems_content.visibility = View.VISIBLE
+                order_userinfo_content.visibility = View.GONE
+                order_send_now.visibility = View.GONE
                 order_ems_name.text = getString(R.string.order_ems_name,rep.data.courierCompany)
                 order_ems_address.text = getString(R.string.order_ems_address,rep.data.trackingNumber)
+                order_ems_change.visibility = View.GONE
+                if (rep.data.status == 2) {
+                    order_ems_change.visibility = View.VISIBLE
+                    order_ems_change.setOnClickListener{
+                        mEmsDialog?.show()
+                    }
+                }
+            } else {
+                order_ems_content.visibility = View.GONE
+                order_userinfo_content.visibility = View.VISIBLE
+                order_send_now.visibility = View.VISIBLE
+                order_send_now.setOnClickListener{
+                    mEmsDialog?.show()
+                }
             }
-            date.text = rep.data.dealTime
+            if (TextUtils.isEmpty(rep.data.dealTime)) {
+                if (order_bean != null) {
+                    date.text = order_bean?.dealTime
+                }
+            } else {
+                date.text = rep.data.dealTime
+            }
+            var tip = StringBuilder()
             if (order_bean != null) {
                 showLogo(order_bean?.logo,icon)
-                name.text = order_bean?.brandName+"-"+order_bean?.type+"+"+order_bean?.capacityValue+"GB"
+                if (!TextUtils.isEmpty(order_bean?.brandName)) {
+                    tip.append(order_bean?.brandName+"-")
+                }
+                if (!TextUtils.isEmpty(order_bean?.type)) {
+                    tip.append(order_bean?.type+"+")
+                }
+                if (!TextUtils.isEmpty(order_bean?.capacityValue)) {
+                    tip.append(order_bean?.capacityValue+"G")
+                }
+                name.text = tip.toString()
+//                name.text = order_bean?.brandName+"-"+order_bean?.type+"+"+order_bean?.capacityValue+"G"
             } else {
-                name.text = rep.data.goodsInstanceVO.brandName+"-"+rep.data.goodsInstanceVO.type+"+"+rep.data.goodsInstanceVO.capacity
+                if (!TextUtils.isEmpty(rep.data.goodsInstanceVO.brandName)) {
+                    tip.append(rep.data.goodsInstanceVO.brandName+"-")
+                }
+                if (!TextUtils.isEmpty(rep.data.goodsInstanceVO.type)) {
+                    tip.append(rep.data.goodsInstanceVO.type+"+")
+                }
+                if (!TextUtils.isEmpty(rep.data.goodsInstanceVO.capacity)) {
+                    tip.append(rep.data.goodsInstanceVO.capacity)
+                }
+                name.text = tip.toString()
+//                name.text = rep.data.goodsInstanceVO.brandName+"-"+rep.data.goodsInstanceVO.type+"+"+rep.data.goodsInstanceVO.capacity
             }
             detail.tag = rep.data
             detail.setOnClickListener {
@@ -90,6 +145,7 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
             order_price_value.text = getString(R.string.order_price_value,rep.data.estimatePrice)
         } else if (rep is BaseRep) {
             if (rep.code == 0) {
+                presenter.getOrderDetailbyId(ord_id)
                 ToastUtil.showShortToastCenter("快递信息保存成功")
             }
         }

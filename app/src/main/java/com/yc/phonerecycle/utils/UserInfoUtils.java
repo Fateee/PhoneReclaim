@@ -85,7 +85,7 @@ public class UserInfoUtils {
         LoginRep.DataBean user = getUser().data;
         if (user != null) {
             if (user.getUserInfoVO() != null) {
-                if (TextUtils.isEmpty(user.getUserInfoVO().getType())){
+                if (TextUtils.isEmpty(user.getUserInfoVO().getType())||"null".equals(user.getUserInfoVO().getType())){
                     return "1";
                 } else {
                     return user.getUserInfoVO().getType();
@@ -93,6 +93,39 @@ public class UserInfoUtils {
             }
         }
         return "1";
+    }
+
+    public static String getUserId() {
+        String ret="";
+        LoginRep.DataBean user = getUser().data;
+        if (user != null) {
+            LoginRep.DataBean.UserInfoVOBean userinfo = user.getUserInfoVO();
+            if (userinfo != null) {
+                if (TextUtils.isEmpty(userinfo.getId())||"null".equals(userinfo.getId())){
+                    return ret;
+                } else {
+                    ret = userinfo.getId();
+                }
+            } else {
+                ret = getUserIdFromInfo();
+            }
+        } else {
+            ret = getUserIdFromInfo();
+        }
+        return ret;
+    }
+
+    public static String getUserIdFromInfo() {
+        String ret="";
+        UserInfoRep.DataBean user = getUserInfo().data;
+        if (user != null) {
+            if (TextUtils.isEmpty(user.userId)||"null".equals(user.userId)){
+                return ret;
+            } else {
+                ret = user.userId;
+            }
+        }
+        return ret;
     }
 
     public static String getUserToken() {

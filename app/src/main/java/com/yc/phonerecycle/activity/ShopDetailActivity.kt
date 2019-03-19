@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
@@ -115,6 +116,12 @@ class ShopDetailActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.CommonI
 
     private var mId: String? = null
     private var type: String? = "1"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mapview.onCreate(savedInstanceState);
+    }
+
     override fun initBundle() {
         mId = intent.getStringExtra("id")
         type = intent.getStringExtra("type")
@@ -152,6 +159,23 @@ class ShopDetailActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.CommonI
             else -> {
             }
         }
+        mapview.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapview.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapview.onDestroy()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
+        mapview.onSaveInstanceState(outState)
     }
 
     fun handleWithIconClick() {

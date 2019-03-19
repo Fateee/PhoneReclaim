@@ -78,8 +78,8 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
     override fun cashPwdOK(rep: BaseRep?) {
         if ((rep as BaseRep).code == 0) {
             var writeTrackingVO = CashAccountReqBody()
-            writeTrackingVO.userId = UserInfoUtils.getUser().data?.userInfoVO?.id
-            writeTrackingVO.userType = UserInfoUtils.getUser().data?.userInfoVO?.type
+            writeTrackingVO.userId = UserInfoUtils.getUserId()
+            writeTrackingVO.userType = UserInfoUtils.getUserType()
             writeTrackingVO.meoney = mMoneyStr.toFloat()
             if (mCashType == 0) {
                 var openid = UserInfoUtils.getUserWxTokenRep().openid

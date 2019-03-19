@@ -1,9 +1,11 @@
 package com.yc.phonerecycle.activity
 
+import android.content.Intent
 import android.view.View
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.R
+import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.ActivityToActivity
@@ -35,14 +37,16 @@ class OrderSubmitSuccessActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.
     override fun initDatas() {
         back_home.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                ActivityToActivity.toActivity(
-                    this@OrderSubmitSuccessActivity, MainActivity::class.java)
+                val intent = Intent(this@OrderSubmitSuccessActivity, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
             }
         })
         order_detail.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 ActivityToActivity.toActivity(
                     this@OrderSubmitSuccessActivity, MyOrderListActivity::class.java)
+                finish()
             }
         })
     }

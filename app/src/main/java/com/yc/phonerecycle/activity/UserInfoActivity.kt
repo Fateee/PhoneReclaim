@@ -48,7 +48,7 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
                     ToastUtil.showShortToast("上传头像失败")
                     return
                 }
-                presenter.changeLog(rep.data,UserInfoUtils.getUser().data?.userInfoVO?.id)
+                presenter.changeLog(rep.data,UserInfoUtils.getUserId())
             }
         }
     }
@@ -85,7 +85,7 @@ class UserInfoActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.UserInfoI
 
     override fun initDatas() {
         presenter.getInfo()
-        user_id.text = "ID:"+UserInfoUtils.getUser().data?.userInfoVO?.id
+        user_id.text = "ID:"+UserInfoUtils.getUserId()
         avatar.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 handleWithIconClick()

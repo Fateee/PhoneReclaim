@@ -27,7 +27,7 @@ class RecycleFlowActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.AboutUs
     }
 
     override fun initDatas() {
-        contact_custom.setOnClickListener { callPhone("10086") }
+        contact_custom.setOnClickListener { callPhone(getString(R.string.custom_tele)) }
         //todo huyi custom phone
         custom_phone.text = getString(R.string.custom_phone,getString(R.string.custom_tele))
     }
