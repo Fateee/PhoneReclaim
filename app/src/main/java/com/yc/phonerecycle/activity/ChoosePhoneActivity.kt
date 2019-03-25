@@ -1,8 +1,8 @@
 package com.yc.phonerecycle.activity
 
-import android.app.Activity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.umeng.commonsdk.stateless.UMSLEnvelopeBuild.mContext
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
@@ -32,11 +32,11 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
                 when(checktype) {
                     "0" -> {
                         ActivityToActivity.toActivity(
-                            mContext, HandCheckActivity::class.java,goodMap)
+                            this@ChoosePhoneActivity, HandCheckActivity::class.java,goodMap)
                     }
                     "1" -> {
                         ActivityToActivity.toActivity(
-                            mContext, AutoCheckActivity::class.java,goodMap)
+                            this@ChoosePhoneActivity, AutoCheckActivity::class.java,goodMap)
                     }
                 }
                 finish()
@@ -65,8 +65,11 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
     private lateinit var goodMap: HashMap<String, Any?>
 
     override fun initDatas() {
-        //todo huyi search
-
+        search_et.setOnClickListener(object :View.OnClickListener{
+            override fun onClick(v: View?) {
+                search_phone_view.showSearchView()
+            }
+        })
         presenter.getBrandSelect("",0)
         val mLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         brand_list.layoutManager = mLinearLayoutManager
@@ -93,8 +96,8 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
                     goodMap = tag as HashMap<String,Any?>
 //                    map["goodbean"] = tmp
 //                    map["brandid"] = mBrandId
-                    var brandid = goodMap["brandid"] as String
-                    presenter.getConfigPriceSystemById(brandid)
+                    var good = goodMap["goodbean"] as BrandGoodsRep.DataBean
+                    presenter.getConfigPriceSystemById(good.id)
                 }
             }
         })
@@ -107,6 +110,14 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
                 presenter.getGoodsByBrandId(1,rep.data[0].id)
         } else if (type == 1 && rep is BrandGoodsRep) {
             mPhoneAdapter.refreshUI(rep.data,true)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (search_phone_view.isShown()) {
+            search_phone_view.hideSearchView()
+        } else {
+            super.onBackPressed()
         }
     }
 }

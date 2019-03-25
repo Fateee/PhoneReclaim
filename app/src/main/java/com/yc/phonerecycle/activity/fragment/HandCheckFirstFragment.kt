@@ -114,8 +114,8 @@ class HandCheckFirstFragment : BaseFragment<CommonPresenter>() {
                 var v = config_container.getChildAt(i)
                 if (v is SetItemLayout) {
                     if (v.tag == null) return false
-//                    var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
-                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
+                    var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
+//                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
                     when (bean.code) {
                         "1" -> (activity as HandCheckActivity).mCheckReqBody.regional=bean.id
                         "2" -> (activity as HandCheckActivity).mCheckReqBody.memory=bean.id

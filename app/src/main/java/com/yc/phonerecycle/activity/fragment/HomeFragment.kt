@@ -90,7 +90,7 @@ class HomeFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV{
                 map["checktype"] = "0"
                 //todo huyi
                 ActivityToActivity.toActivity(
-                    activity, HandCheckActivity::class.java,map)
+                    activity, ChoosePhoneActivity::class.java,map)
             }
         })
         auto_check.setOnClickListener(object : View.OnClickListener {
@@ -98,9 +98,9 @@ class HomeFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV{
                 var map = HashMap<String,String?>()
                 map["checktype"] = "1"
                 //todo huyi
-                ActivityToActivity.toActivity(
-                    activity, AutoCheckActivity::class.java,map)
-//                presenter.getConfigPriceSystemByName(Build.MODEL)
+//                ActivityToActivity.toActivity(
+//                    activity, AutoCheckActivity::class.java,map)
+                presenter.getConfigPriceSystemByName(Build.MODEL)
             }
         })
         to_detail.setOnClickListener(object : View.OnClickListener {

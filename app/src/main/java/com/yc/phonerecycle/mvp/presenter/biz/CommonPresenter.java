@@ -1324,18 +1324,19 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     }
 
     public void getBrandSelect(String name,final int type) {
-        if (getView() == null) return;
         mCommonRequest.getBrandSelect(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BrandRep>>() {
-                    
 
                     @Override
                     public void onResponse(Response<BrandRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
-                            ((CommonBaseIV.CommonTypeIV) getView()).getDataOK(value.body(),type);
+                            if (getView() != null) {
+                                ((CommonBaseIV.CommonTypeIV) getView()).getDataOK(value.body(),type);
+                            }
+                            if (mClubCallback != null) mClubCallback.onGetDataSuccess(type,value.body());
                         }
                     }
 
@@ -1344,25 +1345,29 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    
                 });
     }
 
     public void getGoodsByBrandId(final int type,String brandId) {
-        if (getView() == null) return;
-        getView().showLoading();
+        if (getView() != null) {
+            getView().showLoading();
+        }
         mCommonRequest.getGoodsByBrandId(brandId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<BrandGoodsRep>>() {
-                    
 
                     @Override
                     public void onResponse(Response<BrandGoodsRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
-                        getView().dismissLoading();
+                        if (getView() != null) {
+                            getView().dismissLoading();
+                        }
                         if (value.code() == 200 && value.body() != null ) {
-                            ((CommonBaseIV.CommonTypeIV) getView()).getDataOK(value.body(),type);
+                            if (getView() != null) {
+                                ((CommonBaseIV.CommonTypeIV) getView()).getDataOK(value.body(),type);
+                            }
+                            if (mClubCallback != null) mClubCallback.onGetDataSuccess(type,value.body());
                         }
                     }
 
@@ -1372,7 +1377,6 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
 
-                    
                 });
     }
 
@@ -1681,8 +1685,9 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     }
 
     public void getConfigPriceSystemById(String goodsId) {
-        if (getView() == null) return;
-        getView().showLoading();
+        if (getView() != null) {
+            getView().showLoading();
+        }
         mCommonRequest.getConfigPriceSystemById(goodsId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -1692,10 +1697,14 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<ConfigPriceRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
-                        if (getView() == null) return;
-                        getView().dismissLoading();
+                        if (getView() != null) {
+                            getView().dismissLoading();
+                        }
                         if (value.code() == 200 && value.body() != null ) {
-                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                            if (getView() != null) {
+                                ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                            }
+                            if (mClubCallback != null) mClubCallback.onGetDataSuccess(3,value.body());
                         }
                     }
 
@@ -1754,5 +1763,19 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
     public interface BankcardListener{
         void onBankcardGetOk(BankCardListRep dataBean);
+    }
+
+    private GetClubCallback mClubCallback;
+
+    public void setClubCallback(GetClubCallback mClubCallback) {
+        this.mClubCallback = mClubCallback;
+    }
+
+    public interface GetClubCallback<T> {
+        void onGetDataSuccess(int type, T result);
+
+        void onGetDataFailNetErr(String msg);
+
+        void onGetDataFailDataErr(String msg);
     }
 }

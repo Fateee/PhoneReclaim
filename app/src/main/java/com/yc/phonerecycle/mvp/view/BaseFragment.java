@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
+import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep;
 import com.yc.phonerecycle.model.bean.biz.ConfigPriceTempRep;
 import com.yc.phonerecycle.mvp.presenter.base.BasePresenter;
 import com.yc.phonerecycle.mvp.presenter.base.BaseViewInf;
@@ -82,7 +83,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
             return;
         }
         if (getActivity()!=null && getActivity().isFinishing()) return;
-        loadingDialog = ProgressDialog.show(getContext(),"","");
+        loadingDialog = ProgressDialog.show(getContext(),"","",false,true);
     }
 
     public void dismissLoading() {
@@ -92,18 +93,19 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     /**
      * 单选
      */
-    public void dialogChoice(final SetItemLayout layout , ConfigPriceTempRep.ConfigPriceSystemVOsBean dicTypeId ) {
+    public void dialogChoice(final SetItemLayout layout , ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean dicTypeId ) {
         if (getActivity() == null) return;
 //        var listData = BaseApplication.mOptionMap.get(dicTypeId)
-        final List<ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean> listData = dicTypeId.childs;
+        final List<ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX> listData = dicTypeId.childs;
         if (listData != null && !listData.isEmpty()) {
             Object chosedData = layout.getTag();
             int chooseIndex = 0;
             String[] items = new String[listData.size()];
             for (int i = 0; i <listData.size() ; i++) {
                 items[i] = listData.get(i).name;
-                if (chosedData != null && (chosedData instanceof ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean)) {
-                    if (((ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean)chosedData).id == listData.get(i).id) {
+//                if (chosedData != null && (chosedData instanceof ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean)) {
+                if (chosedData != null && (chosedData instanceof ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX)) {
+                    if (((ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX)chosedData).id == listData.get(i).id) {
                         chooseIndex = i;
                     }
                 }

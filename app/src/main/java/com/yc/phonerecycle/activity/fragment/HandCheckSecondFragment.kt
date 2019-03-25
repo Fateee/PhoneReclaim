@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.HandCheckActivity
 import com.yc.phonerecycle.app.BaseApplication
+import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
 import com.yc.phonerecycle.model.bean.biz.ConfigPriceTempRep
 import com.yc.phonerecycle.model.bean.biz.DictMapRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
@@ -126,8 +127,8 @@ class HandCheckSecondFragment : BaseFragment<CommonPresenter>() {
                 var v = config_container.getChildAt(i)
                 if (v is SetItemLayout) {
                     if (v.tag == null) return false
-//                    var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
-                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
+                    var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
+//                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
                     when (bean.code) {
                         "1" -> (activity as HandCheckActivity).mCheckReqBody.regional=bean.id
                         "2" -> (activity as HandCheckActivity).mCheckReqBody.memory=bean.id

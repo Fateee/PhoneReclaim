@@ -12,6 +12,7 @@ import com.yc.phonerecycle.activity.CheckResulttActivity
 import com.yc.phonerecycle.activity.HandCheckActivity
 import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.base.BaseRep
+import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
 import com.yc.phonerecycle.model.bean.biz.ConfigPriceTempRep
 import com.yc.phonerecycle.model.bean.biz.DictMapRep
 import com.yc.phonerecycle.model.bean.biz.SaveRecordRep
@@ -108,13 +109,13 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
 //        })
     }
 
-    private var pageOneList: MutableList<ConfigPriceTempRep.ConfigPriceSystemVOsBean>? = null
+    private var pageOneList: MutableList<ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean>? = null
 
     private fun addConfigView() {
         if (activity is HandCheckActivity) {
             pageOneList = (activity as HandCheckActivity).configPageList?.get(2)
         } else if(activity is AutoCheckActivity) {
-            pageOneList = (activity as AutoCheckActivity).config?.configPriceSystemVOs
+            pageOneList = (activity as AutoCheckActivity).configRep?.configPriceSystemVOs
         }
         for (temp in pageOneList!!) {
             var setItemLayout = SetItemLayout(activity)
@@ -143,8 +144,8 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
                 var v = config_container.getChildAt(i)
                 if (v is SetItemLayout) {
                     if (v.tag == null) return false
-//                    var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
-                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
+                    var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
+//                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
                     when (bean.code) {
                         "1" -> (activity as HandCheckActivity).mCheckReqBody.regional=bean.id
                         "2" -> (activity as HandCheckActivity).mCheckReqBody.memory=bean.id
@@ -157,7 +158,15 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
                     }
                 }
             }
-            return true
+            return if (activity is HandCheckActivity) {
+                presenter.saveOrUpdate((activity as HandCheckActivity).mCheckReqBody)
+                true
+            } else if (activity is AutoCheckActivity) {
+                presenter.saveOrUpdate((activity as AutoCheckActivity).checkResult)
+                true
+            } else{
+                false
+            }
         }
         return false
 //        if (phone_color.tag == null || fix_condition.tag == null ||

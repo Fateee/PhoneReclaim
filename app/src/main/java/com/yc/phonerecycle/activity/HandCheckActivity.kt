@@ -360,7 +360,7 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
     }
     var configRep: ConfigPriceRep.DataBean? = null
     var config: ConfigPriceTempRep? = null
-    var configPageList: MutableList<MutableList<ConfigPriceTempRep.ConfigPriceSystemVOsBean>>? = null
+    var configPageList: MutableList<MutableList<ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean>>? = null
 
     override fun initBundle() {
         configRep = intent.getSerializableExtra("configRep") as ConfigPriceRep.DataBean?
@@ -385,9 +385,9 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
             }
         })
         //todo huyi
-        var gsong = Gson()
-        config = gsong.fromJson(json,ConfigPriceTempRep::class.java) ?: ConfigPriceTempRep()
-        configPageList = StringUtils.averageAssign(config?.configPriceSystemVOs,3)
+//        var gsong = Gson()
+//        config = gsong.fromJson(json,ConfigPriceTempRep::class.java) ?: ConfigPriceTempRep()
+        configPageList = StringUtils.averageAssign(configRep?.configPriceSystemVOs,3)
     }
 
     override fun getContentView(): Int = R.layout.activity_hand_check

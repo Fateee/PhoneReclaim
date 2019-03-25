@@ -51,11 +51,13 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
         if (mType == 0) {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.brand_listitem, null)
             return BrandMenuVH(view)
-        } else {
+        } else if(mType == 1) {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.phone_listitem, null)
             return PhoneVH(view)
+        } else {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.phone_search, null)
+            return SearchPhoneVH(view)
         }
-
     }
 
 
@@ -103,6 +105,19 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
                             mOnItemClick?.onItemClick(position,map)
                         }
                     })
+                } else if (holder is SearchPhoneVH) {
+                    holder.name.setTextColor(ContextCompat.getColor(BaseApplication.getAppContext(),R.color.c323232))
+                    holder.name.text = temp.type
+                    holder.itemView.tag = temp
+                    holder.itemView.setOnClickListener(object :View.OnClickListener{
+                        override fun onClick(p0: View?) {
+                            var tmp = p0?.tag as BrandGoodsRep.DataBean
+                            var map = HashMap<String,Any?>()
+                            map["goodbean"] = tmp
+                            map["brandid"] = mBrandId
+                            mOnItemClick?.onItemClick(position,map)
+                        }
+                    })
                 }
             }
         }
@@ -135,7 +150,10 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
         this.mImgId = mImgId
     }
 
-
+    fun clearAdapter() {
+        mDataList.clear()
+        notifyDataSetChanged()
+    }
 }
 
 class BrandMenuVH(val mView: View) : RecyclerView.ViewHolder(mView) {
@@ -146,6 +164,10 @@ class BrandMenuVH(val mView: View) : RecyclerView.ViewHolder(mView) {
 class PhoneVH(val mView: View) : RecyclerView.ViewHolder(mView) {
     val phone_logo: ImageView = mView.phone_logo
     val phone_name: TextView = mView.phone_name
+}
+
+class SearchPhoneVH(val mView: View) : RecyclerView.ViewHolder(mView) {
+    val name: TextView = mView.brand_name
 }
 
 interface OnItemClick {

@@ -61,5 +61,7 @@
     <color name="transparent">#00000000</color>
     <color name="cf8f8f8">#f8f8f8</color>
     <color name="c6ccb7c">#6ccb7c</color>
+    <color name="F8F8F8">#f8f8f8</color>
+    <color name="c0c0f0f">#0c0f0f</color>
 
 </resources>

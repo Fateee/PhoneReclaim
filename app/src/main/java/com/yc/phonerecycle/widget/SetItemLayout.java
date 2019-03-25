@@ -25,14 +25,14 @@ public class SetItemLayout extends LinearLayout {
     public TextView mSubTitle1;
     public View mDivider;
     public TextView mVerfyCode;
-    public ConfigPriceTempRep.ConfigPriceSystemVOsBean temp;
-//    public void setObj(ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean tep) {
-//        temp = tep;
-//    }
-
-    public void setObj(@NotNull ConfigPriceTempRep.ConfigPriceSystemVOsBean tep) {
+    public ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean temp;
+    public void setObj(ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean tep) {
         temp = tep;
     }
+
+//    public void setObj(@NotNull ConfigPriceTempRep.ConfigPriceSystemVOsBean tep) {
+//        temp = tep;
+//    }
 
     public interface OnSwitchListener {
         void onSwitch(View v, boolean isOpen);
