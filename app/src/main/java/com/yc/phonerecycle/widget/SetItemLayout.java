@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 import com.yc.phonerecycle.R;
+import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by ycx on 2017/11/1.
@@ -22,6 +24,10 @@ public class SetItemLayout extends LinearLayout {
     public TextView mSubTitle1;
     public View mDivider;
     public TextView mVerfyCode;
+    public ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean temp;
+    public void setObj(ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean tep) {
+        temp = tep;
+    }
 
     public interface OnSwitchListener {
         void onSwitch(View v, boolean isOpen);

@@ -9,9 +9,9 @@ import android.widget.LinearLayout
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.HandCheckActivity
 import com.yc.phonerecycle.app.BaseApplication
+import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
 import com.yc.phonerecycle.model.bean.biz.DictMapRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
-import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
 import com.yc.phonerecycle.utils.DensityUtil
 import com.yc.phonerecycle.utils.ToastUtil
@@ -84,15 +84,23 @@ class HandCheckFirstFragment : BaseFragment<CommonPresenter>() {
         if (pageOneList != null) {
             for (temp in pageOneList) {
                 var setItemLayout = SetItemLayout(activity)
-                var params = setItemLayout.layoutParams
+                var params = setItemLayout.layoutParams as LinearLayout.LayoutParams
                 params.width = LinearLayout.LayoutParams.MATCH_PARENT
                 params.height = DensityUtil.dip2px(50f)
+                params.topMargin = DensityUtil.dip2px(10f)
                 setItemLayout.layoutParams = params
                 setItemLayout.setBackgroundResource(R.drawable.hand_check_bg)
                 setItemLayout.title = temp.name
                 setItemLayout.setSubTitle("请选择")
                 setItemLayout.showImageItemTip()
                 setItemLayout.hideDivider()
+                setItemLayout.setObj(temp)
+                setItemLayout.setOnClickListener(object : View.OnClickListener {
+                    override fun onClick(p0: View?) {
+//                        var tem = p0?.getTag() as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean
+                        dialogChoice(setItemLayout,setItemLayout.temp)
+                    }
+                })
                 config_container.addView(setItemLayout,config_container.childCount)
             }
         }
@@ -117,9 +125,10 @@ class HandCheckFirstFragment : BaseFragment<CommonPresenter>() {
     /**
      * 单选
      */
-    private fun dialogChoice(layout: SetItemLayout, dicTypeId: String) {
+    private fun dialogChoice(layout: SetItemLayout, dicTypeId: ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean) {
         if (context == null) return
-        var listData = BaseApplication.mOptionMap.get(dicTypeId)
+//        var listData = BaseApplication.mOptionMap.get(dicTypeId)
+        var listData = dicTypeId.childs
         if (listData != null && !listData.isEmpty()) {
             var chosedData = layout.tag
             var chooseIndex = 0
@@ -151,7 +160,7 @@ class HandCheckFirstFragment : BaseFragment<CommonPresenter>() {
             builder.create().show()
         } else {
             ToastUtil.showShortToastCenter("获取选项中...请稍后点击重试")
-            presenter.getDictMappingByType(dicTypeId)
+//            presenter.getDictMappingByType(dicTypeId)
         }
     }
 }
