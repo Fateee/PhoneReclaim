@@ -30,6 +30,7 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import com.google.gson.Gson
 import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
 import com.yc.phonecheck.item.CallTest
 import com.yc.phonecheck.item.LCDTest
@@ -41,6 +42,8 @@ import com.yc.phonerecycle.activity.fragment.LcdTestFragment
 import com.yc.phonerecycle.activity.fragment.TouchTestFragment
 import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
+import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
+import com.yc.phonerecycle.model.bean.biz.ConfigPriceTempRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
 import com.yc.phonerecycle.utils.*
 
@@ -52,6 +55,9 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     var checkResult = CheckReqBody()
     var check_array: Array<String> =
         arrayOf("无线网络","蓝牙","重力感应器","距离感应器","光线感应器","水平仪","指南针","定位","指纹","麦克风","扬声器","闪光灯","振动器","摄像头")
+
+    var configRep: ConfigPriceRep.DataBean? = null
+    var config: ConfigPriceTempRep? = null
 
     var mHandler = object:Handler() {
 
@@ -70,6 +76,10 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     var isAutoTabCheck: Boolean = false
 
     override fun initBundle() {
+        //todo huyi
+        var gsong = Gson()
+        config = gsong.fromJson(HandCheckActivity.json,ConfigPriceTempRep::class.java) ?: ConfigPriceTempRep()
+
         var goodbean = intent.getSerializableExtra("goodbean") as BrandGoodsRep.DataBean?
         var brandid = intent.getStringExtra("brandid")
         isAutoTabCheck = intent.getBooleanExtra("isAutoTabCheck",false)

@@ -88,17 +88,19 @@ class HomeFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV{
             override fun onClick(p0: View?) {
                 var map = HashMap<String,String?>()
                 map["checktype"] = "0"
+                //todo huyi
                 ActivityToActivity.toActivity(
-                    activity, ChoosePhoneActivity::class.java,map)
+                    activity, HandCheckActivity::class.java,map)
             }
         })
         auto_check.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-//                var map = HashMap<String,String?>()
-//                map["checktype"] = "1"
-//                ActivityToActivity.toActivity(
-//                    activity, ChoosePhoneActivity::class.java,map)
-                presenter.getConfigPriceSystemByName(Build.MODEL)
+                var map = HashMap<String,String?>()
+                map["checktype"] = "1"
+                //todo huyi
+                ActivityToActivity.toActivity(
+                    activity, AutoCheckActivity::class.java,map)
+//                presenter.getConfigPriceSystemByName(Build.MODEL)
             }
         })
         to_detail.setOnClickListener(object : View.OnClickListener {

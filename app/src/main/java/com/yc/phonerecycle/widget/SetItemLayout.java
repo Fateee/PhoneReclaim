@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.*;
 import com.yc.phonerecycle.R;
 import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep;
+import com.yc.phonerecycle.model.bean.biz.ConfigPriceTempRep;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -24,8 +25,12 @@ public class SetItemLayout extends LinearLayout {
     public TextView mSubTitle1;
     public View mDivider;
     public TextView mVerfyCode;
-    public ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean temp;
-    public void setObj(ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean tep) {
+    public ConfigPriceTempRep.ConfigPriceSystemVOsBean temp;
+//    public void setObj(ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean tep) {
+//        temp = tep;
+//    }
+
+    public void setObj(@NotNull ConfigPriceTempRep.ConfigPriceSystemVOsBean tep) {
         temp = tep;
     }
 

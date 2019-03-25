@@ -1,17 +1,23 @@
 package com.yc.phonerecycle.mvp.view;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
+import com.yc.phonerecycle.model.bean.biz.ConfigPriceTempRep;
 import com.yc.phonerecycle.mvp.presenter.base.BasePresenter;
 import com.yc.phonerecycle.mvp.presenter.base.BaseViewInf;
 import com.yc.phonerecycle.utils.NetUtil;
 import com.yc.phonerecycle.utils.ToastUtil;
+import com.yc.phonerecycle.widget.SetItemLayout;
+
+import java.util.List;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements BaseViewInf {
 
@@ -81,5 +87,43 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     public void dismissLoading() {
         loadingDialog.dismiss();
+    }
+
+    /**
+     * 单选
+     */
+    public void dialogChoice(final SetItemLayout layout , ConfigPriceTempRep.ConfigPriceSystemVOsBean dicTypeId ) {
+        if (getActivity() == null) return;
+//        var listData = BaseApplication.mOptionMap.get(dicTypeId)
+        final List<ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean> listData = dicTypeId.childs;
+        if (listData != null && !listData.isEmpty()) {
+            Object chosedData = layout.getTag();
+            int chooseIndex = 0;
+            String[] items = new String[listData.size()];
+            for (int i = 0; i <listData.size() ; i++) {
+                items[i] = listData.get(i).name;
+                if (chosedData != null && (chosedData instanceof ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean)) {
+                    if (((ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean)chosedData).id == listData.get(i).id) {
+                        chooseIndex = i;
+                    }
+                }
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),0);
+            builder.setTitle(layout.mItemName.getText().toString());
+            builder.setSingleChoiceItems(items, chooseIndex,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            layout.setSubTitle(listData.get(which).name);
+                            layout.setTag(listData.get(which));
+                            dialog.dismiss();
+                        }
+            });
+            builder.create().show();
+        } else {
+            ToastUtil.showShortToastCenter("获取选项中...请稍后点击重试");
+//            presenter.getDictMappingByType(dicTypeId)
+        }
     }
 }

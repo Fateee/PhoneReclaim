@@ -22,6 +22,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import com.google.gson.Gson
 import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
 import com.yc.phonecheck.item.MicrophoneTest
 import com.yc.phonerecycle.BaseCheckActivity
@@ -30,6 +31,7 @@ import com.yc.phonerecycle.activity.fragment.*
 import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
 import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
+import com.yc.phonerecycle.model.bean.biz.ConfigPriceTempRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
@@ -58,10 +60,307 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
 
     override fun createPresenter(): EmptyPresenter? = null
 
-
+    companion object {
+        const val json = "{    \"id\": \"307164482558365696\",\n" +
+                "        \"name\": \"华为估价体系\",\n" +
+                "        \"remark\": \"华为估价体系 涉及到 Meta、荣耀系列和Nova \",\n" +
+                "        \"configPriceSystemVOs\": [\n" +
+                "        {\n" +
+                "        \"id\": \"\",\n" +
+                "        \"name\": \"网络制式\",\n" +
+                "        \"priceConfigId\": \"\",\n" +
+                "        \"childs\": [\n" +
+                "        {\n" +
+                "        \"id\": \"307164482575142913\",\n" +
+                "        \"name\": \"全网通\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1290.0\",\n" +
+                "        \"code\": \"4\",\n" +
+                "        \"codeName\": \"网络制式\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"307164482604503040\",\n" +
+                "        \"name\": \"联通\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1270.0\",\n" +
+                "        \"code\": \"4\",\n" +
+                "        \"codeName\": \"网络制式\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        }\n" +
+                "        ],\n" +
+                "        \"price\": \"\",\n" +
+                "        \"code\": \"4\",\n" +
+                "        \"codeName\": \"网络制式\",\n" +
+                "        \"type\": \"\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"\",\n" +
+                "        \"name\": \"区域\",\n" +
+                "        \"priceConfigId\": \"\",\n" +
+                "        \"childs\": [\n" +
+                "        {\n" +
+                "        \"id\": \"307164482629668864\",\n" +
+                "        \"name\": \"大陆\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1290.0\",\n" +
+                "        \"code\": \"1\",\n" +
+                "        \"codeName\": \"区域\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"307164482638057472\",\n" +
+                "        \"name\": \"美版\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1270.0\",\n" +
+                "        \"code\": \"1\",\n" +
+                "        \"codeName\": \"区域\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        }\n" +
+                "        ],\n" +
+                "        \"price\": \"\",\n" +
+                "        \"code\": \"1\",\n" +
+                "        \"codeName\": \"区域\",\n" +
+                "        \"type\": \"\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"\",\n" +
+                "        \"name\": \"内存\",\n" +
+                "        \"priceConfigId\": \"\",\n" +
+                "        \"childs\": [\n" +
+                "        {\n" +
+                "        \"id\": \"307164482654834689\",\n" +
+                "        \"name\": \"64G\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1290.0\",\n" +
+                "        \"code\": \"2\",\n" +
+                "        \"codeName\": \"内存\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"307164482667417600\",\n" +
+                "        \"name\": \"128G\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1270.0\",\n" +
+                "        \"code\": \"2\",\n" +
+                "        \"codeName\": \"内存\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        }\n" +
+                "        ],\n" +
+                "        \"price\": \"\",\n" +
+                "        \"code\": \"2\",\n" +
+                "        \"codeName\": \"内存\",\n" +
+                "        \"type\": \"\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"\",\n" +
+                "        \"name\": \"颜色\",\n" +
+                "        \"priceConfigId\": \"\",\n" +
+                "        \"childs\": [\n" +
+                "        {\n" +
+                "        \"id\": \"307164482680000513\",\n" +
+                "        \"name\": \"红色\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1290.0\",\n" +
+                "        \"code\": \"5\",\n" +
+                "        \"codeName\": \"颜色\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"307164482692583424\",\n" +
+                "        \"name\": \"黑色\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1270.0\",\n" +
+                "        \"code\": \"5\",\n" +
+                "        \"codeName\": \"颜色\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        }\n" +
+                "        ],\n" +
+                "        \"price\": \"\",\n" +
+                "        \"code\": \"5\",\n" +
+                "        \"codeName\": \"颜色\",\n" +
+                "        \"type\": \"\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"\",\n" +
+                "        \"name\": \"存储空间\",\n" +
+                "        \"priceConfigId\": \"\",\n" +
+                "        \"childs\": [\n" +
+                "        {\n" +
+                "        \"id\": \"307164482705166337\",\n" +
+                "        \"name\": \"128G\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1290.0\",\n" +
+                "        \"code\": \"3\",\n" +
+                "        \"codeName\": \"存储空间\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"307164482713554944\",\n" +
+                "        \"name\": \"256G\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1270.0\",\n" +
+                "        \"code\": \"3\",\n" +
+                "        \"codeName\": \"存储空间\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        }\n" +
+                "        ],\n" +
+                "        \"price\": \"\",\n" +
+                "        \"code\": \"3\",\n" +
+                "        \"codeName\": \"存储空间\",\n" +
+                "        \"type\": \"\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"\",\n" +
+                "        \"name\": \"进水\",\n" +
+                "        \"priceConfigId\": \"\",\n" +
+                "        \"childs\": [\n" +
+                "        {\n" +
+                "        \"id\": \"307164482839384065\",\n" +
+                "        \"name\": \"没有进水\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1290.0\",\n" +
+                "        \"code\": \"9\",\n" +
+                "        \"codeName\": \"进水\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"307164482851966976\",\n" +
+                "        \"name\": \"有进水\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1270.0\",\n" +
+                "        \"code\": \"9\",\n" +
+                "        \"codeName\": \"进水\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        }\n" +
+                "        ],\n" +
+                "        \"price\": \"\",\n" +
+                "        \"code\": \"9\",\n" +
+                "        \"codeName\": \"进水\",\n" +
+                "        \"type\": \"\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"\",\n" +
+                "        \"name\": \"账户锁\",\n" +
+                "        \"priceConfigId\": \"\",\n" +
+                "        \"childs\": [\n" +
+                "        {\n" +
+                "        \"id\": \"307164482872938497\",\n" +
+                "        \"name\": \"有账户锁\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1290.0\",\n" +
+                "        \"code\": \"11\",\n" +
+                "        \"codeName\": \"账户锁\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"307164482877132800\",\n" +
+                "        \"name\": \"没有账户锁\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1270.0\",\n" +
+                "        \"code\": \"11\",\n" +
+                "        \"codeName\": \"账户锁\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        }\n" +
+                "        ],\n" +
+                "        \"price\": \"\",\n" +
+                "        \"code\": \"11\",\n" +
+                "        \"codeName\": \"账户锁\",\n" +
+                "        \"type\": \"\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"\",\n" +
+                "        \"name\": \"开机\",\n" +
+                "        \"priceConfigId\": \"\",\n" +
+                "        \"childs\": [\n" +
+                "        {\n" +
+                "        \"id\": \"307164482893910016\",\n" +
+                "        \"name\": \"不能开机\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1290.0\",\n" +
+                "        \"code\": \"12\",\n" +
+                "        \"codeName\": \"开机\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "        \"id\": \"307164482898104320\",\n" +
+                "        \"name\": \"可以开机\",\n" +
+                "        \"priceConfigId\": \"307164482558365696\",\n" +
+                "        \"childs\": \"\",\n" +
+                "        \"price\": \"1270.0\",\n" +
+                "        \"code\": \"12\",\n" +
+                "        \"codeName\": \"开机\",\n" +
+                "        \"type\": \"0\"\n" +
+                "        }\n" +
+                "        ],\n" +
+                "        \"price\": \"\",\n" +
+                "        \"code\": \"12\",\n" +
+                "        \"codeName\": \"开机\",\n" +
+                "        \"type\": \"\"\n" +
+                "        }\n" +
+                "        ],\n" +
+                "        \"hardwarePriceSystemVO\": {\n" +
+                "        \"id\": \"\",\n" +
+                "        \"priceConfig\": \"307164482558365696\",\n" +
+                "        \"wirelessNetwork\": 0,\n" +
+                "        \"wirelessNetworkType\": 0,\n" +
+                "        \"gravitySensor\": 0,\n" +
+                "        \"gravitySensorType\": 0,\n" +
+                "        \"bluetooth\": 0,\n" +
+                "        \"bluetoothType\": 0,\n" +
+                "        \"proximitySenso\": 0,\n" +
+                "        \"proximitySensoType\": 0,\n" +
+                "        \"lightSensor\": 0,\n" +
+                "        \"lightSensorType\": 0,\n" +
+                "        \"compass\": 0,\n" +
+                "        \"compassType\": 0,\n" +
+                "        \"spiritLevel\": 0,\n" +
+                "        \"spiritLevelType\": 0,\n" +
+                "        \"location\": 0,\n" +
+                "        \"locationType\": 0,\n" +
+                "        \"call\": 0,\n" +
+                "        \"callType\": 0,\n" +
+                "        \"fingerprint\": 0,\n" +
+                "        \"fingerprintType\": 0,\n" +
+                "        \"comprehensionAids\": 0,\n" +
+                "        \"comprehensionAidsType\": 0,\n" +
+                "        \"loudspeaker\": 0,\n" +
+                "        \"loudspeakerType\": 0,\n" +
+                "        \"vibrator\": 0,\n" +
+                "        \"vibratorType\": 0,\n" +
+                "        \"microphone\": 0,\n" +
+                "        \"microphoneType\": 0,\n" +
+                "        \"camera\": 0,\n" +
+                "        \"cameraType\": 0,\n" +
+                "        \"flashlight\": 0,\n" +
+                "        \"flashlightType\": 0,\n" +
+                "        \"multiTouch\": 0,\n" +
+                "        \"multiTouchType\": 0,\n" +
+                "        \"battery\": 0,\n" +
+                "        \"batteryType\": 0,\n" +
+                "        \"screen\": 0,\n" +
+                "        \"screenType\": 0\n" +
+                "        }\n" +
+                "        }"
+    }
     var configRep: ConfigPriceRep.DataBean? = null
-
-    var configPageList: MutableList<MutableList<ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean>>? = null
+    var config: ConfigPriceTempRep? = null
+    var configPageList: MutableList<MutableList<ConfigPriceTempRep.ConfigPriceSystemVOsBean>>? = null
 
     override fun initBundle() {
         configRep = intent.getSerializableExtra("configRep") as ConfigPriceRep.DataBean?
@@ -85,7 +384,10 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
                 showPermissionDialog("开启电话权限","你还没有开启电话权限，开启之后才可读取手机信息")
             }
         })
-        configPageList = StringUtils.averageAssign(configRep?.configPriceSystemVOs,3)
+        //todo huyi
+        var gsong = Gson()
+        config = gsong.fromJson(json,ConfigPriceTempRep::class.java) ?: ConfigPriceTempRep()
+        configPageList = StringUtils.averageAssign(config?.configPriceSystemVOs,3)
     }
 
     override fun getContentView(): Int = R.layout.activity_hand_check
