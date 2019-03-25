@@ -189,7 +189,7 @@ public class SetItemLayout extends LinearLayout {
         mItemIcon.setImageResource(resid);
     }
 
-    private void hideDivider() {
+    public void hideDivider() {
         mDivider.setVisibility(GONE);
     }
 

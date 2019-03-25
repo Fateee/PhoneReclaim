@@ -29,13 +29,11 @@ import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.fragment.*
 import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
+import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
-import com.yc.phonerecycle.utils.CameraUtils
-import com.yc.phonerecycle.utils.CheckPhoneUtil
-import com.yc.phonerecycle.utils.PermissionUtils
-import com.yc.phonerecycle.utils.ToastUtil
+import com.yc.phonerecycle.utils.*
 import kotlinx.android.synthetic.main.activity_auto_check.*
 import kotlinx.android.synthetic.main.fragment_main_home.*
 
@@ -61,7 +59,12 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
     override fun createPresenter(): EmptyPresenter? = null
 
 
+    var configRep: ConfigPriceRep.DataBean? = null
+
+    var configPageList: MutableList<MutableList<ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean>>? = null
+
     override fun initBundle() {
+        configRep = intent.getSerializableExtra("configRep") as ConfigPriceRep.DataBean?
         var goodbean = intent.getSerializableExtra("goodbean") as BrandGoodsRep.DataBean?
         var brandid = intent.getStringExtra("brandid")
         mCheckReqBody.brandId = brandid
@@ -82,6 +85,7 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
                 showPermissionDialog("开启电话权限","你还没有开启电话权限，开启之后才可读取手机信息")
             }
         })
+        configPageList = StringUtils.averageAssign(configRep?.configPriceSystemVOs,3)
     }
 
     override fun getContentView(): Int = R.layout.activity_hand_check

@@ -232,4 +232,10 @@ public interface CommonRequest {
     @Headers("Content-Type: application/json")
     @POST("v1/adminDivision/list")
     Observable<Response<DivisionRep>> queryDivision(/*@Path("page") String page,@Path("size") String size,*/@Body DivisionQueryBody adminDivisionQueryVo);
+
+    @GET("v1/config/getConfigPriceSystemById/{goodsId}")
+    Observable<Response<ConfigPriceRep>> getConfigPriceSystemById(@Path("goodsId") String goodsId);
+
+    @GET("v1/config/getConfigPriceSystemByName")
+    Observable<Response<ConfigPriceRep>> getConfigPriceSystemByName(@Query("name") String name);
 }

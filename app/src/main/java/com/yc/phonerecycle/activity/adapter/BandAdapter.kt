@@ -99,19 +99,8 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
                             var map = HashMap<String,Any?>()
                             map["goodbean"] = tmp
                             map["brandid"] = mBrandId
-                            when(mCheckType) {
-                                "0" -> {
-                                    ActivityToActivity.toActivity(
-                                        mContext, HandCheckActivity::class.java,map)
-                                }
-                                "1" -> {
-                                    ActivityToActivity.toActivity(
-                                        mContext, AutoCheckActivity::class.java,map)
-                                }
-                            }
-                            if (mContext is Activity) {
-                                mContext.finish()
-                            }
+
+                            mOnItemClick?.onItemClick(position,map)
                         }
                     })
                 }

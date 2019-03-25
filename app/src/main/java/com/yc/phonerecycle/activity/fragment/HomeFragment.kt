@@ -16,9 +16,12 @@ import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
 import com.snail.antifake.deviceid.macaddress.MacAddressUtils
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.*
+import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
+import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.mvp.view.BaseFragment
+import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_main_home.*
@@ -30,9 +33,21 @@ import java.net.NetworkInterface
  * A simple [Fragment] subclass.
  *
  */
-class HomeFragment : BaseFragment<EmptyPresenter>() {
+class HomeFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV{
+    override fun getDataOK(rep: Any?) {
+        if (rep is ConfigPriceRep) {
+            if (rep.data == null) {
+                var map = HashMap<String,String?>()
+                map["checktype"] = "1"
+                ActivityToActivity.toActivity(
+                    activity, ChoosePhoneActivity::class.java,map)
+            } else {
 
-    override fun createPresenter(): EmptyPresenter? = null
+            }
+        }
+    }
+
+    override fun createPresenter() = CommonPresenter()
 
     override fun getContentView(): Int = R.layout.fragment_main_home
 
@@ -79,10 +94,11 @@ class HomeFragment : BaseFragment<EmptyPresenter>() {
         })
         auto_check.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                var map = HashMap<String,String?>()
-                map["checktype"] = "1"
-                ActivityToActivity.toActivity(
-                    activity, ChoosePhoneActivity::class.java,map)
+//                var map = HashMap<String,String?>()
+//                map["checktype"] = "1"
+//                ActivityToActivity.toActivity(
+//                    activity, ChoosePhoneActivity::class.java,map)
+                presenter.getConfigPriceSystemByName(Build.MODEL)
             }
         })
         to_detail.setOnClickListener(object : View.OnClickListener {

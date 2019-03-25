@@ -1,7 +1,9 @@
 package com.yc.phonerecycle.activity
 
+import android.app.Activity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import com.umeng.commonsdk.stateless.UMSLEnvelopeBuild.mContext
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.R
@@ -9,11 +11,38 @@ import com.yc.phonerecycle.activity.adapter.BandAdapter
 import com.yc.phonerecycle.activity.adapter.OnItemClick
 import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
 import com.yc.phonerecycle.model.bean.biz.BrandRep
+import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
+import com.yc.phonerecycle.utils.ActivityToActivity
+import com.yc.phonerecycle.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_choose_phone.*
 
 
-class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonTypeIV{
+class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonTypeIV,CommonBaseIV.CommonIV{
+    override fun getDataOK(rep: Any?) {
+        if (rep is ConfigPriceRep) {
+            if (rep.data == null) {
+//                var map = HashMap<String,String?>()
+//                map["checktype"] = "1"
+//                ActivityToActivity.toActivity(
+//                    activity, ChoosePhoneActivity::class.java,map)
+                ToastUtil.showShortToastCenter("没有匹配到该机型的配置")
+            } else {
+                goodMap["configRep"] = rep.data
+                when(checktype) {
+                    "0" -> {
+                        ActivityToActivity.toActivity(
+                            mContext, HandCheckActivity::class.java,goodMap)
+                    }
+                    "1" -> {
+                        ActivityToActivity.toActivity(
+                            mContext, AutoCheckActivity::class.java,goodMap)
+                    }
+                }
+                finish()
+            }
+        }
+    }
 
     override fun createPresenter() = CommonPresenter()
 
@@ -32,6 +61,8 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
     private lateinit var mBandAdapter: BandAdapter
 
     private lateinit var mPhoneAdapter: BandAdapter
+
+    private lateinit var goodMap: HashMap<String, Any?>
 
     override fun initDatas() {
         //todo huyi search
@@ -56,7 +87,17 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
         mPhoneAdapter = BandAdapter(this,1)
         mPhoneAdapter.mCheckType = checktype
         brand_detail_list.adapter = mPhoneAdapter
-
+        mPhoneAdapter.setOnItemClickListener(object : OnItemClick{
+            override fun onItemClick(pos: Int, tag: Any) {
+                if (tag is HashMap<*, *>) {
+                    goodMap = tag as HashMap<String,Any?>
+//                    map["goodbean"] = tmp
+//                    map["brandid"] = mBrandId
+                    var brandid = goodMap["brandid"] as String
+                    presenter.getConfigPriceSystemById(brandid)
+                }
+            }
+        })
     }
 
     override fun getDataOK(rep: Any?, type: Int) {

@@ -1680,6 +1680,62 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
+    public void getConfigPriceSystemById(String goodsId) {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.getConfigPriceSystemById(goodsId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RequestObserver<Response<ConfigPriceRep>>() {
+
+
+                    @Override
+                    public void onResponse(Response<ConfigPriceRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (getView() == null) return;
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+
+                });
+    }
+
+    public void getConfigPriceSystemByName(String name) {
+        if (getView() == null) return;
+        getView().showLoading();
+        mCommonRequest.getConfigPriceSystemByName(name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RequestObserver<Response<ConfigPriceRep>>() {
+
+                    @Override
+                    public void onResponse(Response<ConfigPriceRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
+                        getView().dismissLoading();
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (getView() == null) return;
+                        getView().dismissLoading();
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+                });
+    }
     private DivisionListener divisionListener;
 
     public void setDivisionListener(DivisionListener divisionListener) {

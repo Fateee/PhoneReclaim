@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.view.View
+import android.widget.LinearLayout
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.HandCheckActivity
 import com.yc.phonerecycle.app.BaseApplication
@@ -12,6 +13,7 @@ import com.yc.phonerecycle.model.bean.biz.DictMapRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
+import com.yc.phonerecycle.utils.DensityUtil
 import com.yc.phonerecycle.utils.ToastUtil
 import com.yc.phonerecycle.widget.SetItemLayout
 import kotlinx.android.synthetic.main.activity_hand_check_stepone.*
@@ -42,36 +44,58 @@ class HandCheckFirstFragment : BaseFragment<CommonPresenter>() {
                 activity?.finish()
             }
         })
-        ram.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                dialogChoice(ram,"1")
+
+        addConfigView()
+
+//        ram.setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(p0: View?) {
+//                dialogChoice(ram,"1")
+//            }
+//        })
+//        rom.setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(p0: View?) {
+//                dialogChoice(rom,"2")
+//            }
+//        })
+//        color.setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(p0: View?) {
+//                dialogChoice(color,"3")
+//            }
+//        })
+//        net_type.setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(p0: View?) {
+//                dialogChoice(net_type,"5")
+//            }
+//        })
+//        version.setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(p0: View?) {
+//                dialogChoice(version,"4")
+//            }
+//        })
+//        account_lock.setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(p0: View?) {
+//                dialogChoice(account_lock,"15")
+//            }
+//        })
+    }
+
+    private fun addConfigView() {
+        var pageOneList = (activity as HandCheckActivity).configPageList?.get(0)
+        if (pageOneList != null) {
+            for (temp in pageOneList) {
+                var setItemLayout = SetItemLayout(activity)
+                var params = setItemLayout.layoutParams
+                params.width = LinearLayout.LayoutParams.MATCH_PARENT
+                params.height = DensityUtil.dip2px(50f)
+                setItemLayout.layoutParams = params
+                setItemLayout.setBackgroundResource(R.drawable.hand_check_bg)
+                setItemLayout.title = temp.name
+                setItemLayout.setSubTitle("请选择")
+                setItemLayout.showImageItemTip()
+                setItemLayout.hideDivider()
+                config_container.addView(setItemLayout,config_container.childCount)
             }
-        })
-        rom.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                dialogChoice(rom,"2")
-            }
-        })
-        color.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                dialogChoice(color,"3")
-            }
-        })
-        net_type.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                dialogChoice(net_type,"5")
-            }
-        })
-        version.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                dialogChoice(version,"4")
-            }
-        })
-        account_lock.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                dialogChoice(account_lock,"15")
-            }
-        })
+        }
     }
 
     private fun setCheckValue(): Boolean {
