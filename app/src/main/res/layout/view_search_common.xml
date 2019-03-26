@@ -55,6 +55,7 @@
                 android:drawableLeft="@drawable/ic_search"
                 android:singleLine="true"
                 android:paddingLeft="15dp"
+                android:paddingRight="10dp"
                 android:drawablePadding="10dp"
                 android:hint="输入您需要搜索的内容"
                 android:imeOptions="actionSearch"

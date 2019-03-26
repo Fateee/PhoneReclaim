@@ -6,10 +6,13 @@ import com.yc.phonerecycle.activity.LoginActivity;
 import com.yc.phonerecycle.app.BaseApplication;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter;
+import com.yc.phonerecycle.utils.ToastUtil;
 import com.yc.phonerecycle.utils.UserInfoUtils;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
+
+import java.io.IOException;
 
 public abstract class RequestObserver<P> implements Observer<P> {
     public static CommonPresenter logoutPresenter = new CommonPresenter();
@@ -34,6 +37,13 @@ public abstract class RequestObserver<P> implements Observer<P> {
                 }
             } else if (value.code() == 401) {
                 onTokenExpire();
+            } else {
+                try {
+                    ToastUtil.showShortToastCenter(value.code()+" "+value.message()+"\n"
+                    +value.errorBody().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

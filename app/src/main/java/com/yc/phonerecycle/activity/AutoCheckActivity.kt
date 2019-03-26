@@ -59,9 +59,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     var configRep: ConfigPriceRep.DataBean? = null
     var config: ConfigPriceTempRep? = null
 
-    var mHandler = object:Handler() {
-
-    }
+    var mHandler = object:Handler() {}
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
     }
@@ -77,9 +75,9 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 
     override fun initBundle() {
         //todo huyi
-        var gsong = Gson()
-        config = gsong.fromJson(HandCheckActivity.json,ConfigPriceTempRep::class.java) ?: ConfigPriceTempRep()
-
+//        var gsong = Gson()
+//        config = gsong.fromJson(HandCheckActivity.json,ConfigPriceTempRep::class.java) ?: ConfigPriceTempRep()
+        configRep = intent.getSerializableExtra("configRep") as ConfigPriceRep.DataBean?
         var goodbean = intent.getSerializableExtra("goodbean") as BrandGoodsRep.DataBean?
         var brandid = intent.getStringExtra("brandid")
         isAutoTabCheck = intent.getBooleanExtra("isAutoTabCheck",false)

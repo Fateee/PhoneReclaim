@@ -22,10 +22,6 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
     override fun getDataOK(rep: Any?) {
         if (rep is ConfigPriceRep) {
             if (rep.data == null) {
-//                var map = HashMap<String,String?>()
-//                map["checktype"] = "1"
-//                ActivityToActivity.toActivity(
-//                    activity, ChoosePhoneActivity::class.java,map)
                 ToastUtil.showShortToastCenter("没有匹配到该机型的配置")
             } else {
                 goodMap["configRep"] = rep.data
@@ -39,7 +35,7 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
                             this@ChoosePhoneActivity, AutoCheckActivity::class.java,goodMap)
                     }
                 }
-                finish()
+//                finish()
             }
         }
     }

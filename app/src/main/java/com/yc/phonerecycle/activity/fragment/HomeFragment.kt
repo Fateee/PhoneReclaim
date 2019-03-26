@@ -42,7 +42,10 @@ class HomeFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV{
                 ActivityToActivity.toActivity(
                     activity, ChoosePhoneActivity::class.java,map)
             } else {
-
+                var goodMap = HashMap<String, Any?>()
+                goodMap["configRep"] = rep.data
+                ActivityToActivity.toActivity(
+                    activity, AutoCheckActivity::class.java,goodMap)
             }
         }
     }
@@ -88,7 +91,6 @@ class HomeFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV{
             override fun onClick(p0: View?) {
                 var map = HashMap<String,String?>()
                 map["checktype"] = "0"
-                //todo huyi
                 ActivityToActivity.toActivity(
                     activity, ChoosePhoneActivity::class.java,map)
             }
