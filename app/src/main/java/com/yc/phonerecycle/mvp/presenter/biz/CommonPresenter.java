@@ -1379,7 +1379,33 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                 });
     }
+    public void search(String name,final int type) {
+        if (getView() != null) {
+            getView().showLoading();
+        }
+        mCommonRequest.search(name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RequestObserver<Response<BrandRep>>() {
 
+                    @Override
+                    public void onResponse(Response<BrandRep> value) {
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() != null) {
+                            getView().dismissLoading();
+                        }
+                        if (value.code() == 200 && value.body() != null ) {
+                            if (mClubCallback != null) mClubCallback.onGetDataSuccess(type,value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+                    }
+
+                });
+    }
     public void getGoodsInstanceById(String id) {
         if (getView() == null) return;
         getView().showLoading();

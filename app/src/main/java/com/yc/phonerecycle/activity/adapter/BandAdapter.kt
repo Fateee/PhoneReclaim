@@ -86,6 +86,19 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
                             notifyDataSetChanged()
                         }
                     })
+                } else if (holder is SearchPhoneVH) {
+                    holder.name.setTextColor(ContextCompat.getColor(BaseApplication.getAppContext(),R.color.c323232))
+                    holder.name.text = temp.name
+                    holder.itemView.tag = temp
+                    holder.itemView.setOnClickListener(object :View.OnClickListener{
+                        override fun onClick(p0: View?) {
+                            var tmp = p0?.tag as BrandRep.DataBean
+                            var map = HashMap<String,Any?>()
+//                            map["goodbean"] = tmp
+                            map["brandid"] = tmp.id
+                            mOnItemClick?.onItemClick(position,map)
+                        }
+                    })
                 }
             }
             is BrandGoodsRep.DataBean -> {
@@ -102,19 +115,6 @@ class BandAdapter(private val mContext: Context, private val mType: Int) : Recyc
                             map["goodbean"] = tmp
                             map["brandid"] = mBrandId
 
-                            mOnItemClick?.onItemClick(position,map)
-                        }
-                    })
-                } else if (holder is SearchPhoneVH) {
-                    holder.name.setTextColor(ContextCompat.getColor(BaseApplication.getAppContext(),R.color.c323232))
-                    holder.name.text = temp.type
-                    holder.itemView.tag = temp
-                    holder.itemView.setOnClickListener(object :View.OnClickListener{
-                        override fun onClick(p0: View?) {
-                            var tmp = p0?.tag as BrandGoodsRep.DataBean
-                            var map = HashMap<String,Any?>()
-                            map["goodbean"] = tmp
-                            map["brandid"] = mBrandId
                             mOnItemClick?.onItemClick(position,map)
                         }
                     })

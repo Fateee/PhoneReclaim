@@ -194,6 +194,9 @@ public interface CommonRequest {
     @GET("v1/mBrand/getGoodsByBrandId/{brandId}/")
     Observable<Response<BrandGoodsRep>> getGoodsByBrandId(@Path("brandId") String brandId);
 
+    //搜索
+    @GET("v1/mBrand/search")
+    Observable<Response<BrandRep>> search(@Query("name") String name);
 
     //评估 回收信息 地址
 

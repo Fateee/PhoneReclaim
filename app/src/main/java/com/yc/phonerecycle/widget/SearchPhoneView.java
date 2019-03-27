@@ -35,7 +35,7 @@ public class SearchPhoneView extends CommonSearchView implements CommonSearchVie
     /**
      * 搜索结果
      */
-    private List<BrandGoodsRep.DataBean> mSearchUserlist = new ArrayList<>();
+    private List<BrandRep.DataBean> mSearchUserlist = new ArrayList<>();
 
     private BandAdapter mSearchUserAdapter;
     private TextView mNoNetTv;
@@ -67,10 +67,8 @@ public class SearchPhoneView extends CommonSearchView implements CommonSearchVie
             public void onItemClick(int pos, @NotNull Object tag) {
                 if (tag instanceof HashMap) {
                     goodMap = (HashMap<String, Object>) tag;
-//                    map["goodbean"] = tmp
-//                    map["brandid"] = mBrandId
-                    BrandGoodsRep.DataBean brandid = (BrandGoodsRep.DataBean) goodMap.get("goodbean");
-                    mSearchUserManager.getConfigPriceSystemById(brandid.id);
+                    String brandid = (String) goodMap.get("brandid");
+                    mSearchUserManager.getConfigPriceSystemById(brandid);
                 }
             }
         });
@@ -85,15 +83,23 @@ public class SearchPhoneView extends CommonSearchView implements CommonSearchVie
                 showLoadingView(false);
                 if (type == 0) {
                     BrandRep bean = (BrandRep) result;
-                    for (BrandRep.DataBean temp : bean.data) {
-                        mSearchUserManager.getGoodsByBrandId(1,temp.id);
+                    if (bean.data == null || bean.data.size()==0) {
+                        showEmptyView();
                     }
-                } else if (type == 1){
-                    BrandGoodsRep mSearchClubResult = (BrandGoodsRep) result;
-                    mSearchUserlist.addAll(mSearchClubResult.data);
+                    mSearchUserlist.addAll(bean.data);
                     mSearchUserAdapter.refreshUI(mSearchUserlist,true);
                     mSearchUserAdapter.notifyDataSetChanged();
-                } else {
+//                    for (BrandRep.DataBean temp : bean.data) {
+//                        mSearchUserManager.getGoodsByBrandId(1,temp.id);
+//                    }
+                }
+//                else if (type == 1){
+//                    BrandGoodsRep mSearchClubResult = (BrandGoodsRep) result;
+//                    mSearchUserlist.addAll(mSearchClubResult.data);
+//                    mSearchUserAdapter.refreshUI(mSearchUserlist,true);
+//                    mSearchUserAdapter.notifyDataSetChanged();
+//                }
+                else if (type == 3){
                     if (result instanceof ConfigPriceRep) {
                         if (((ConfigPriceRep)result).data == null) {
                             ToastUtil.showShortToastCenter("没有匹配到该机型的配置");
@@ -123,7 +129,7 @@ public class SearchPhoneView extends CommonSearchView implements CommonSearchVie
         showLoadingView(true);
         mSearchUserlist.clear();
         //执行搜索的方法
-        mSearchUserManager.getBrandSelect(keywords,0);
+        mSearchUserManager.search(keywords,0);
     }
 
     @Override

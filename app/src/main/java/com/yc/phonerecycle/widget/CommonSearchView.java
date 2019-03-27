@@ -364,6 +364,10 @@ public class CommonSearchView extends RelativeLayout implements
         }
     }
 
+    public void showEmptyView() {
+        mSearchListNoContent.setVisibility(View.VISIBLE);
+        mLoadingProBar.setVisibility(GONE);
+    }
     /**
      * 清除编辑框的焦点和文字
      */

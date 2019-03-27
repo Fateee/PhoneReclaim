@@ -345,7 +345,7 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
                 "        \"vibratorType\": 0,\n" +
                 "        \"microphone\": 0,\n" +
                 "        \"microphoneType\": 0,\n" +
-                "        \"camera\": 0,\n" +
+                "        \"\": 0,\n" +
                 "        \"cameraType\": 0,\n" +
                 "        \"flashlight\": 0,\n" +
                 "        \"flashlightType\": 0,\n" +
