@@ -65,8 +65,8 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
             }
             name.text = tip.toString()
 //            name.text = order_bean?.brandName+"  "+order_bean?.type
-            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
-            content.text = memoryForm?.value+"+"+order_bean?.capacityValue+"GB"
+//            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
+            content.text = mCheckReqBody?.memory+"+"+order_bean?.capacityValue+"GB"
         } else if (detection_bean != null) {
             showLogo(detection_bean?.logo,icon)
             if (!TextUtils.isEmpty(detection_bean?.brandName)) {
@@ -76,8 +76,8 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
                 tip.append(detection_bean?.type)
             }
             name.text = tip.toString()
-            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
-            content.text = memoryForm?.value+"+"+detection_bean?.capacity
+//            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
+            content.text = mCheckReqBody?.memory+"+"+detection_bean?.capacity
         } else {
             if (!TextUtils.isEmpty(mCheckReqBody?.brandName)) {
                 tip.append(mCheckReqBody?.brandName+"  ")
@@ -86,17 +86,17 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
                 tip.append(mCheckReqBody?.type)
             }
             name.text = tip.toString()
-            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
-            var romForm = getFromDict("2", mCheckReqBody?.capacity)
-            if (memoryForm == null) {
-                name.postDelayed({memoryForm= getFromDict("1", mCheckReqBody?.memory)
-                    content.text = memoryForm?.value+"+"+romForm?.name},2000)
-            }
-            if (romForm == null) {
-                name.postDelayed({romForm = getFromDict("2", mCheckReqBody?.memory)
-                    content.text = memoryForm?.value+"+"+romForm?.name},2000)
-            }
-            content.text = memoryForm?.value+"+"+romForm?.name
+//            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
+//            var romForm = getFromDict("2", mCheckReqBody?.capacity)
+//            if (memoryForm == null) {
+//                name.postDelayed({memoryForm= getFromDict("1", mCheckReqBody?.memory)
+//                    content.text = memoryForm?.value+"+"+romForm?.name},2000)
+//            }
+//            if (romForm == null) {
+//                name.postDelayed({romForm = getFromDict("2", mCheckReqBody?.memory)
+//                    content.text = memoryForm?.value+"+"+romForm?.name},2000)
+//            }
+            content.text = mCheckReqBody?.memory+"+"+mCheckReqBody?.capacity
         }
 
         price.text = getString(R.string.order_price_value,mCheckReqBody?.estimatePrice.toString())

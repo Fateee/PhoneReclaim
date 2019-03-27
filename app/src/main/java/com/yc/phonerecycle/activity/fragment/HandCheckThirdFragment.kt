@@ -63,7 +63,6 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
         appraisal.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 if(!setCheckValue()) return
-
             }
         })
         txt_left_title.setOnClickListener(object : View.OnClickListener {
@@ -159,9 +158,11 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
                 }
             }
             return if (activity is HandCheckActivity) {
+                (activity as HandCheckActivity).mCheckReqBody.other = remark_edit.getText().toString()
                 presenter.saveOrUpdate((activity as HandCheckActivity).mCheckReqBody)
                 true
             } else if (activity is AutoCheckActivity) {
+                (activity as AutoCheckActivity).checkResult.other = remark_edit.getText().toString()
                 presenter.saveOrUpdate((activity as AutoCheckActivity).checkResult)
                 true
             } else{

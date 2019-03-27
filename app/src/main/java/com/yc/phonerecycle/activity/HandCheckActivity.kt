@@ -366,10 +366,11 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
         configRep = intent.getSerializableExtra("configRep") as ConfigPriceRep.DataBean?
         var goodbean = intent.getSerializableExtra("goodbean") as BrandGoodsRep.DataBean?
         var brandid = intent.getStringExtra("brandid")
-        mCheckReqBody.brandId = brandid
+        mCheckReqBody.brandId = goodbean?.brandId
         mCheckReqBody.goodsId = goodbean?.id
         mCheckReqBody.system = Build.VERSION.RELEASE
-        mCheckReqBody.brandName = Build.BRAND
+//        mCheckReqBody.brandName = Build.BRAND
+        mCheckReqBody.brandName = goodbean?.brandName
         mCheckReqBody.type = Build.MODEL
         PermissionUtils.checkPhoneStatePermission(this@HandCheckActivity, object : PermissionUtils.Callback() {
             override fun onGranted() {

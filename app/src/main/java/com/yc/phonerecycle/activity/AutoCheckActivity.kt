@@ -81,7 +81,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         var goodbean = intent.getSerializableExtra("goodbean") as BrandGoodsRep.DataBean?
         var brandid = intent.getStringExtra("brandid")
         isAutoTabCheck = intent.getBooleanExtra("isAutoTabCheck",false)
-        checkResult.brandId = brandid
+        checkResult.brandId = goodbean?.brandId
         checkResult.goodsId = goodbean?.id
         checkResult.system = Build.VERSION.RELEASE
         checkResult.brandName = Build.BRAND

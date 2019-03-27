@@ -37,12 +37,12 @@ class HandCheckSecondFragment : BaseFragment<CommonPresenter>() {
     override fun initData() {
         last.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                if(!setCheckValue()) return
                 (activity as HandCheckActivity).changeFragment((activity as HandCheckActivity).mFirstFragment)
             }
         })
         next.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
+                if(!setCheckValue()) return
                 (activity as HandCheckActivity).changeFragment((activity as HandCheckActivity).mThirdFragment)
             }
         })

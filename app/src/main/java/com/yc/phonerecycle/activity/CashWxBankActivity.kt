@@ -135,7 +135,7 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
     private var mPayDialog: PasswordDialog? = null
     private var mBankDialog: BottomCardsDialog? = null
 
-    private var moneyValue: String="0"
+    private var moneyValue: String=""
 
     override fun initDatas() {
         all_cash_out.setOnClickListener(object : View.OnClickListener {
@@ -172,7 +172,7 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
 
             override fun afterTextChanged(s: Editable?) {
                 moneyValue = money_et.text.toString()
-                all_cash_out_tip.text = getString(R.string.all_cash_out_tip,moneyValue)
+//                all_cash_out_tip.text = getString(R.string.all_cash_out_tip,moneyValue)
             }
         })
         submit.setOnClickListener(object : View.OnClickListener {
@@ -180,7 +180,7 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
             override fun onClick(p0: View?) {
                 money_et.clearFocus()
                 if (TextUtils.isEmpty(moneyValue)) return
-                if (moneyValue.toDouble() > mMoneyStr.toDouble()&& UrlConst.realease) {
+                if (moneyValue.toDouble() > mMoneyStr.toDouble()) {
                     ToastUtil.showShortToastCenter(getString(R.string.all_cash_out_tip,mMoneyStr))
                     return
                 }
