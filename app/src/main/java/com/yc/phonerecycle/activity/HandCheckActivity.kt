@@ -405,6 +405,8 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
         COMPASS = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
         changeFragment(mFirstFragment)
+        doWifiTest()
+        doBlueToothTest()
         doGravitySensorTest()
         doDistanceSensorTest()
         doLightSensorTest()
@@ -463,6 +465,17 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
         }
     }
 
+
+    private fun doWifiTest() {
+        var ret = DeviceUtil.isWifiAvailable()
+        mCheckReqBody.wifi = if (ret) { 0 } else { 1 }
+    }
+
+
+    private fun doBlueToothTest() {
+        var ret = DeviceUtil.isBleAvailable()
+        mCheckReqBody.bluetooth = if (ret) { 0 } else { 1 }
+    }
 
     private fun doGravitySensorTest() {
         mCheckReqBody.gravitySensor = if (CameraUtils.isSupportGravity(BaseApplication.getAppContext())) {0} else {1}

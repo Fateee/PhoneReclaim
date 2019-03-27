@@ -205,11 +205,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         mHandler.postDelayed({
             var list = BaseApplication.mOptionMap.get("16")
             var ret = DeviceUtil.isWifiAvailable()
-            checkResult.wifi = if (ret) {
-                list?.get(1)?.id?.toInt() ?: 1601
-            } else {
-                list?.get(0)?.id?.toInt() ?: 1602
-            }
+            checkResult.wifi = if (ret) { 0 } else { 1 }
             initView()
             doBlueToothTest()
         },2500)
@@ -219,7 +215,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     private fun doBlueToothTest() {
         mHandler.postDelayed({
             var list = BaseApplication.mOptionMap.get("16")
-            var ret = DeviceUtil.isWifiAvailable()
+            var ret = DeviceUtil.isBleAvailable()
             checkResult.bluetooth = if (ret) { 0 } else { 1 }
             initView()
             doGravitySensorTest()
