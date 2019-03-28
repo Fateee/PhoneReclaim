@@ -17,7 +17,8 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             app:title="手机号码"
-            app:edit_hint="请输入新的手机号码"/>
+            app:edit_hint="请输入新的手机号码"
+            app:edit_type="number"/>
 
     <com.yc.phonerecycle.widget.SetItemLayout
             android:id="@+id/reset_pwd_vercode"
@@ -25,7 +26,8 @@
             android:layout_height="50dp"
             app:title="短信验证码"
             app:edit_hint="请输入收到的验证码"
-            app:sub_title_code="获取验证码"/>
+            app:sub_title_code="获取验证码"
+            app:edit_type="number"/>
     <com.yc.phonerecycle.widget.SimpleCornerTextView
             android:id="@+id/submit"
             android:layout_width="match_parent" android:layout_height="44dp"

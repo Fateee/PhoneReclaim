@@ -179,7 +179,10 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
 
             override fun onClick(p0: View?) {
                 money_et.clearFocus()
-                if (TextUtils.isEmpty(moneyValue)) return
+                if (TextUtils.isEmpty(moneyValue)) {
+                    ToastUtil.showShortToastCenter("请输入金额")
+                    return
+                }
                 if (moneyValue.toDouble() > mMoneyStr.toDouble()) {
                     ToastUtil.showShortToastCenter(getString(R.string.all_cash_out_tip,mMoneyStr))
                     return

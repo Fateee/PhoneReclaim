@@ -19,21 +19,24 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             app:title="旧密码"
-            app:edit_hint="请输入旧密码"/>
+            app:edit_hint="请输入旧密码"
+            app:edit_type="char_num"/>
 
     <com.yc.phonerecycle.widget.SetItemLayout
             android:id="@+id/reset_pwd_new"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:title="新密码"
-            app:edit_hint="请输入新密码(6至20位数字或字母)"/>
+            app:edit_hint="请输入新密码(6至20位数字或字母)"
+            app:edit_type="char_num"/>
     <com.yc.phonerecycle.widget.SetItemLayout
             android:id="@+id/reset_pwd_confirm"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:title="确认密码"
             app:edit_hint="请再次输入新密码"
-            app:hide_divider="true"/>
+            app:hide_divider="true"
+            app:edit_type="char_num"/>
 
     <com.yc.phonerecycle.widget.SimpleCornerTextView
             android:id="@+id/submit"

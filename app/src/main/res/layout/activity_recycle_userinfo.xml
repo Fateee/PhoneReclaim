@@ -25,7 +25,8 @@
             android:layout_height="50dp"
             app:title="手机号码"
             app:edit_hint="请输入您的手机号码"
-            app:hide_divider="true"/>
+            app:hide_divider="true"
+            app:edit_type="number"/>
 
     <com.yc.phonerecycle.widget.SetItemLayout
             android:id="@+id/recycle_addr_city"

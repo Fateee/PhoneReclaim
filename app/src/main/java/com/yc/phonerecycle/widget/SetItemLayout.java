@@ -5,7 +5,9 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,6 +110,10 @@ public class SetItemLayout extends LinearLayout {
 
         boolean hideDivider = a.getBoolean(R.styleable.setItemLayout_hide_divider, false);
         if (hideDivider) hideDivider();
+
+        int inputType = a.getInt(R.styleable.setItemLayout_edit_type,0);
+        setInputType(inputType);
+
         a.recycle();
     }
 
@@ -216,5 +222,27 @@ public class SetItemLayout extends LinearLayout {
 
     public String getTitle() {
         return mItemName.getText().toString();
+    }
+
+    String digits = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    public void setInputType(int type) {
+        switch (type) {
+            case 0:
+                mItemEdit.setInputType(InputType.TYPE_CLASS_TEXT);
+                break;
+            case 1:
+                mItemEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
+                break;
+            case 2:
+//                mItemEdit.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_NUMBER_VARIATION_NORMAL);
+                mItemEdit.setKeyListener(DigitsKeyListener.getInstance(digits));
+                break;
+            case 3:
+                mItemEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                break;
+            case 4:
+                mItemEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                break;
+        }
     }
 }
