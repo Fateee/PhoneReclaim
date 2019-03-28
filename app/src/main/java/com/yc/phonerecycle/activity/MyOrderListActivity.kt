@@ -53,6 +53,7 @@ class MyOrderListActivity : BaseActivity<EmptyPresenter>(){
                 init(list)
             }
             "4" -> {
+                txt_main_title.text = "回收记录"
                 list.add("全部订单")
                 list.add("待收货")
                 list.add("待打款")

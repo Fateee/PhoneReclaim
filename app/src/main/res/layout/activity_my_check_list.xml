@@ -6,7 +6,7 @@
     <com.yc.phonerecycle.widget.SimpleToolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:toolbar_title="检测记录"/>
+            app:toolbar_title="评估记录"/>
 
     <fragment
             android:id="@+id/add_family_fragment"

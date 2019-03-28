@@ -328,6 +328,16 @@ public class CommonSearchView extends RelativeLayout implements
 //        if (s.length() > 0) {
 //            onSearchListener.loadSearchResultByKeyword(s.toString());
 //        }
+        if (null == onSearchListener) return ;
+        //开始搜索
+        String keywords = s.toString();
+        //嗯，那没有输入的时候，点搜索没反应就好
+        onSearchListener.clearSearchResult();
+        mSearchListNoContent.setVisibility(View.GONE);
+        if (keywords.length() > 0) {
+            //先清除list的结果
+            onSearchListener.loadSearchResultByKeyword(keywords);
+        }
     }
 
 //    private SearchListener onSearchListener;
