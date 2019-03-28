@@ -1,24 +1,18 @@
 package com.yc.phonerecycle.activity.fragment
 
 
-import android.content.DialogInterface
 import android.support.v4.app.Fragment
-import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.LinearLayout
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.AutoCheckActivity
 import com.yc.phonerecycle.activity.CheckResulttActivity
 import com.yc.phonerecycle.activity.HandCheckActivity
-import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.base.BaseRep
 import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
-import com.yc.phonerecycle.model.bean.biz.ConfigPriceTempRep
-import com.yc.phonerecycle.model.bean.biz.DictMapRep
 import com.yc.phonerecycle.model.bean.biz.SaveRecordRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
-import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.ActivityToActivity
@@ -139,29 +133,16 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
 
     private fun setCheckValue(): Boolean {
         if (config_container.childCount>0) {
-            for (i in 0 until config_container.childCount) {
-                var v = config_container.getChildAt(i)
-                if (v is SetItemLayout) {
-                    if (v.tag == null) return false
-                    var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
-//                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
-                    when (bean.code) {
-                        "1" -> (activity as HandCheckActivity).mCheckReqBody.regional=bean.id
-                        "2" -> (activity as HandCheckActivity).mCheckReqBody.memory=bean.id
-                        "3" -> (activity as HandCheckActivity).mCheckReqBody.capacity=bean.id
-                        "4" -> (activity as HandCheckActivity).mCheckReqBody.wirelessNetwork=bean.id
-                        "5" -> (activity as HandCheckActivity).mCheckReqBody.colour=bean.id
-                        "9" -> (activity as HandCheckActivity).mCheckReqBody.water=bean.id
-                        "11" -> (activity as HandCheckActivity).mCheckReqBody.lockAccount=bean.id
-                        "12" -> (activity as HandCheckActivity).mCheckReqBody.startingState=bean.id
-                    }
-                }
-            }
+
             return if (activity is HandCheckActivity) {
+                var ret = setValue((activity as HandCheckActivity).mCheckReqBody)
+                if (!ret) return false
                 (activity as HandCheckActivity).mCheckReqBody.other = remark_edit.getText().toString()
                 presenter.saveOrUpdate((activity as HandCheckActivity).mCheckReqBody)
                 true
             } else if (activity is AutoCheckActivity) {
+                var ret =setValue((activity as AutoCheckActivity).checkResult)
+                if (!ret) return false
                 (activity as AutoCheckActivity).checkResult.other = remark_edit.getText().toString()
                 presenter.saveOrUpdate((activity as AutoCheckActivity).checkResult)
                 true
@@ -195,6 +176,28 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
 //        } else{
 //            false
 //        }
+    }
+
+    private fun setValue(checkResult: CheckReqBody): Boolean {
+        for (i in 0 until config_container.childCount) {
+            var v = config_container.getChildAt(i)
+            if (v is SetItemLayout) {
+                if (v.tag == null) return false
+                var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
+//                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
+                when (bean.code) {
+                    "1" -> checkResult.regional=bean.id
+                    "2" -> checkResult.memory=bean.id
+                    "3" -> checkResult.capacity=bean.id
+                    "4" -> checkResult.wirelessNetwork=bean.id
+                    "5" -> checkResult.colour=bean.id
+                    "9" -> checkResult.water=bean.id
+                    "11" -> checkResult.lockAccount=bean.id
+                    "12" -> checkResult.startingState=bean.id
+                }
+            }
+        }
+        return true
     }
 
 //    /**
