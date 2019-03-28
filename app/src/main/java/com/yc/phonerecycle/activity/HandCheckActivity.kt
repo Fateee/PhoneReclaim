@@ -13,6 +13,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.hardware.camera2.CameraManager
 import android.hardware.fingerprint.FingerprintManager
 import android.location.Location
 import android.location.LocationListener
@@ -20,6 +21,7 @@ import android.location.LocationManager
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Vibrator
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import com.google.gson.Gson
@@ -418,6 +420,7 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
         doMicroTest()
         doSpeakerTest()
         checkOther()
+        doCameraTest()
     }
 
     fun changeFragment(mfragment: Fragment) {
@@ -597,6 +600,18 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
         val hasGYROSCOPE = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE)
         if (!hasGYROSCOPE) mCheckReqBody.gyroscope = 1
 
+        mCheckReqBody.multiTouch = if (CameraUtils.isSupportMultiTouch(applicationContext)) {0} else {1}
+
+        val localVibrator = BaseApplication.getAppContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        mCheckReqBody.vibrator = if (localVibrator != null && localVibrator.hasVibrator()) {0} else {1}
+
+        val hasFlash = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)
+        if (!hasFlash) mCheckReqBody.flashlight = 1
+    }
+
+    private fun doCameraTest() {
+        var ret = CameraUtils.HasBackCamera() !=2 || CameraUtils.HasFrontCamera() != 2
+        mCheckReqBody.camera = if (ret) {0} else {1}
     }
 
     override fun onDestroy() {
