@@ -134,11 +134,17 @@ class MenulistAdapter(private val mContext: Context) : RecyclerView.Adapter<Chil
                 holder.contact_shop.setOnClickListener(object :View.OnClickListener{
                     override fun onClick(p0: View?) {
                         var tmp = p0?.tag as NearByShopRep.DataBean
-                        if (TextUtils.isEmpty(tmp.fixedLine)) {
+                        var phoneNumber: String
+                        if (!TextUtils.isEmpty(tmp.fixedLine)) {
+                            phoneNumber = tmp.fixedLine
+                        } else {
+                            phoneNumber = tmp.phone
+                        }
+                        if (TextUtils.isEmpty(phoneNumber)) {
                             ToastUtil.showShortToast("空电话号码")
                             return
                         }
-                        callPhone(tmp.fixedLine)
+                        callPhone(phoneNumber)
 //                        var map = HashMap<String,String?>()
 //                        map["id"] = tmp.id
 //                        map["type"] = "1"
