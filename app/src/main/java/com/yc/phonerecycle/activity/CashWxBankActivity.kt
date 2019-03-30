@@ -80,7 +80,7 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
             var writeTrackingVO = CashAccountReqBody()
             writeTrackingVO.userId = UserInfoUtils.getUserId()
             writeTrackingVO.userType = UserInfoUtils.getUserType()
-            writeTrackingVO.meoney = mMoneyStr.toFloat()
+            writeTrackingVO.meoney = moneyValue.toFloat()
             if (mCashType == 0) {
                 var openid = UserInfoUtils.getUserWxTokenRep().openid
 //                presenter.saveWXBankCard(openid)
@@ -117,17 +117,17 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
 
     override fun createPresenter() = CommonPresenter()
 
-    private lateinit var mMoneyStr: String
+    private lateinit var moneyMaxValue: String
     private var mCashType = 0
 
     override fun initBundle() {
-        mMoneyStr = intent.getStringExtra("money")
+        moneyMaxValue = intent.getStringExtra("money")
     }
 
     override fun getContentView(): Int = R.layout.activity_cash_wx_bank
 
     override fun initView() {
-        all_cash_out_tip.text = getString(R.string.all_cash_out_tip,mMoneyStr)
+        all_cash_out_tip.text = getString(R.string.all_cash_out_tip,moneyMaxValue)
         mPayDialog = object : PasswordDialog(this@CashWxBankActivity){}
         mBankDialog = object : BottomCardsDialog(this@CashWxBankActivity){}
     }
@@ -140,7 +140,7 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
     override fun initDatas() {
         all_cash_out.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                money_et.setText(mMoneyStr)
+                money_et.setText(moneyMaxValue)
             }
         })
 
@@ -183,8 +183,8 @@ class CashWxBankActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.MoneyIV
                     ToastUtil.showShortToastCenter("请输入金额")
                     return
                 }
-                if (moneyValue.toDouble() > mMoneyStr.toDouble()) {
-                    ToastUtil.showShortToastCenter(getString(R.string.all_cash_out_tip,mMoneyStr))
+                if (moneyValue.toDouble() > moneyMaxValue.toDouble()) {
+                    ToastUtil.showShortToastCenter(getString(R.string.all_cash_out_tip,moneyMaxValue))
                     return
                 }
                 //验证提现密码，提现密码接口
