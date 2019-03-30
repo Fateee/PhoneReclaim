@@ -32,6 +32,7 @@ public class DetectionRep extends BaseRep {
         public String customerName;
         public String customerPhone;
         public String dealTime;
+        public String createTime;
         public String goodsInstance;
         public String id;
         public String logo;
