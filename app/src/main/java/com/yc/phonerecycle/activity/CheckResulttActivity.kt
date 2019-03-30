@@ -17,6 +17,7 @@ import com.yc.phonerecycle.model.bean.biz.MyOrderListlRep
 import com.yc.phonerecycle.model.bean.biz.OrderDetailRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
+import com.yc.phonerecycle.utils.DeviceUtil
 import kotlinx.android.synthetic.main.activity_check_result_detail.*
 import kotlinx.android.synthetic.main.item_check_result.view.*
 import kotlinx.android.synthetic.main.item_check_result_container.view.*
@@ -167,6 +168,7 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
             refreshView(ret)
             price.visibility = View.GONE
             price_tip.visibility = View.GONE
+            content.text = DeviceUtil.getTotalRamSize()+"+"+ DeviceUtil.getTotalRomSize()
             submit.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(p0: View?) {
                     finish()

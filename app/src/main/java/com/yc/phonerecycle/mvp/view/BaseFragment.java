@@ -28,6 +28,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     public static final int CHOSEN_TYPE = 3;
     private ProgressDialog loadingDialog;
     BasePresenter mPresenter;
+    protected boolean isInit = false;
+    protected boolean isLoad = false;
 
     public P getPresenter() {
         if (mPresenter == null) {
@@ -57,6 +59,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
+        isInit = true;
+        /**初始化的时候去加载数据**/
+        isCanLoadData();
         initData();
     }
 
@@ -67,6 +72,48 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     protected abstract void initViews(View view);
 
     protected abstract void initData();
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        isCanLoadData();
+    }
+
+    /**
+     * 是否可以加载数据
+     * 可以加载数据的条件：
+     * 1.视图已经初始化
+     * 2.视图对用户可见
+     */
+    private void isCanLoadData() {
+        if (!isInit) {
+            return;
+        }
+
+        if (getUserVisibleHint()) {
+            lazyLoad();
+            isLoad = true;
+        } else {
+            if (isLoad) {
+                stopLoad();
+            }
+        }
+    }
+
+    protected void stopLoad() {
+
+    }
+
+    protected void lazyLoad() {
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        isInit = false;
+        isLoad = false;
+    }
 
     @Override
     public void onDestroy() {

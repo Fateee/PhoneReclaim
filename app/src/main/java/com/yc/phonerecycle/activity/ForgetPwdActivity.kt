@@ -9,6 +9,7 @@ import com.yc.phonerecycle.mvp.view.BaseActivity
 import android.view.View
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.model.bean.base.BaseRep
+import com.yc.phonerecycle.model.bean.biz.StringDataRep
 import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.PhoneUtil
 import com.yc.phonerecycle.utils.ToastUtil
@@ -109,9 +110,13 @@ class ForgetPwdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV.SignUpI
     }
 
     override fun resetPwdByPhoneOK(data: Any?) {
-        if ((data as BaseRep).code == 0) {
-            ToastUtil.showShortToastCenter("修改成功")
-            finish()
+        if (data is StringDataRep) {
+            if (data.code == 0) {
+                ToastUtil.showShortToastCenter("修改成功")
+                finish()
+            } else {
+                ToastUtil.showShortToastCenter(data.data)
+            }
         }
     }
 }

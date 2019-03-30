@@ -653,11 +653,11 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.register(info)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RequestObserver<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<StringDataRep>>() {
                     
 
                     @Override
-                    public void onResponse(Response<BaseRep> value) {
+                    public void onResponse(Response<StringDataRep> value) {
                         getView().dismissLoading();
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
@@ -683,11 +683,11 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
         mCommonRequest.restPasswordByPhone(info)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RequestObserver<Response<BaseRep>>() {
+                .subscribe(new RequestObserver<Response<StringDataRep>>() {
                     
 
                     @Override
-                    public void onResponse(Response<BaseRep> value) {
+                    public void onResponse(Response<StringDataRep> value) {
                         getView().dismissLoading();
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {

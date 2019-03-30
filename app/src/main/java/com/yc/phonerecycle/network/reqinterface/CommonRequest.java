@@ -40,11 +40,11 @@ public interface CommonRequest {
 
     @Headers("Content-Type: application/json")
     @POST("v1/account/register")
-    Observable<Response<BaseRep>> register(@Body RegisterReqBody info);
+    Observable<Response<StringDataRep>> register(@Body RegisterReqBody info);
 
     @Headers("Content-Type: application/json")
     @POST("v1/account/restPasswordByPhone")
-    Observable<Response<BaseRep>> restPasswordByPhone(@Body ResetPwdByPhoneReqBody info);
+    Observable<Response<StringDataRep>> restPasswordByPhone(@Body ResetPwdByPhoneReqBody info);
 
 
     @GET("v1/userCenter/getInfo")

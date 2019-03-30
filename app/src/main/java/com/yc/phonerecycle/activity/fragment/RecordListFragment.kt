@@ -78,6 +78,9 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
     private var orderId: String? = ""
 
     override fun initData() {
+    }
+
+    override fun lazyLoad() {
         if (context == null) return
         swipe_refresh_list.setOnRefreshListener(mReefreshListener)
         rv_list.useDefaultLoadMore()
@@ -127,6 +130,7 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
         }else if (rep is BaseRep) {
             if (rep.code == 0) {
                 orderId=""
+                requestData()
                 ToastUtil.showShortToastCenter("快递信息保存成功")
             }
         }
