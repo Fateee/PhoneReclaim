@@ -82,61 +82,61 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         var brandid = intent.getStringExtra("brandid")
         isAutoTabCheck = intent.getBooleanExtra("isAutoTabCheck",false)
         checkResult.brandId = goodbean?.brandId
-        checkResult.goodsId = goodbean?.id
+        checkResult.goodsId = configRep?.goodsId ?: goodbean?.id
         checkResult.system = Build.VERSION.RELEASE
         checkResult.brandName = Build.BRAND
         checkResult.type = Build.MODEL
-        checkResult.capacity = "0201"
-        var totleSize = DeviceUtil.getTotalRomSize()
-        if (totleSize.contains("GB")) {
-            var temp = totleSize.removeSuffix("GB")
-            var totle = temp.trimEnd().toDouble()
-            if (totle < 16) {
-                checkResult.capacity = "0201"
-            } else if (totle < 32) {
-                checkResult.capacity = "0202"
-            } else if (totle < 64) {
-                checkResult.capacity = "0203"
-            } else if (totle < 128) {
-                checkResult.capacity = "0204"
-            } else if (totle < 256) {
-                checkResult.capacity = "0205"
-            } else if (totle < 512) {
-                checkResult.capacity = "0206"
-            } else {
-                checkResult.capacity = "0201"
-            }
-        }
-
-        var totleRamSize = DeviceUtil.getTotalRamSize()
-        var totleRam :Double = 0.0
-        if (totleRamSize.contains("GB")) {
-            var temp = totleSize.removeSuffix("GB")
-            totleRam = temp.trimEnd().toDouble()
-        }
-        if (totleRamSize.contains("MB")) {
-            var temp = totleSize.removeSuffix("MB")
-            totleRam = temp.trimEnd().toDouble()
-        }
-        if (totleRam < 1) {
-            checkResult.memory = "0101"
-        } else if (totleRam < 2) {
-            checkResult.memory = "0102"
-        } else if (totleRam < 3) {
-            checkResult.memory = "0103"
-        } else if (totleRam < 4) {
-            checkResult.memory = "0104"
-        } else if (totleRam < 6) {
-            checkResult.memory = "0105"
-        } else if (totleRam < 8) {
-            checkResult.memory = "0106"
-        } else if (totleRam < 10) {
-            checkResult.memory = "0107"
-        } else if (totleRam < 12) {
-            checkResult.memory = "0108"
-        } else {
-            checkResult.memory = "0101"
-        }
+//        checkResult.capacity = "0201"
+//        var totleSize = DeviceUtil.getTotalRomSize()
+//        if (totleSize.contains("GB")) {
+//            var temp = totleSize.removeSuffix("GB")
+//            var totle = temp.trimEnd().toDouble()
+//            if (totle < 16) {
+//                checkResult.capacity = "0201"
+//            } else if (totle < 32) {
+//                checkResult.capacity = "0202"
+//            } else if (totle < 64) {
+//                checkResult.capacity = "0203"
+//            } else if (totle < 128) {
+//                checkResult.capacity = "0204"
+//            } else if (totle < 256) {
+//                checkResult.capacity = "0205"
+//            } else if (totle < 512) {
+//                checkResult.capacity = "0206"
+//            } else {
+//                checkResult.capacity = "0201"
+//            }
+//        }
+//
+//        var totleRamSize = DeviceUtil.getTotalRamSize()
+//        var totleRam :Double = 0.0
+//        if (totleRamSize.contains("GB")) {
+//            var temp = totleSize.removeSuffix("GB")
+//            totleRam = temp.trimEnd().toDouble()
+//        }
+//        if (totleRamSize.contains("MB")) {
+//            var temp = totleSize.removeSuffix("MB")
+//            totleRam = temp.trimEnd().toDouble()
+//        }
+//        if (totleRam < 1) {
+//            checkResult.memory = "0101"
+//        } else if (totleRam < 2) {
+//            checkResult.memory = "0102"
+//        } else if (totleRam < 3) {
+//            checkResult.memory = "0103"
+//        } else if (totleRam < 4) {
+//            checkResult.memory = "0104"
+//        } else if (totleRam < 6) {
+//            checkResult.memory = "0105"
+//        } else if (totleRam < 8) {
+//            checkResult.memory = "0106"
+//        } else if (totleRam < 10) {
+//            checkResult.memory = "0107"
+//        } else if (totleRam < 12) {
+//            checkResult.memory = "0108"
+//        } else {
+//            checkResult.memory = "0101"
+//        }
         PermissionUtils.checkPhoneStatePermission(this@AutoCheckActivity, object : PermissionUtils.Callback() {
             override fun onGranted() {
                 checkResult.imei = DeviceIdUtil.getDeviceId(this@AutoCheckActivity)
@@ -420,7 +420,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     private var mLCDTest = LcdTestFragment()
 
     fun doLCDTest() {
-        screen_check_layout.removeCallbacks(lcdTestRunnable)
+        mHandler.removeCallbacks(lcdTestRunnable)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.screen_check_layout,mLCDTest)
         transaction.commit()

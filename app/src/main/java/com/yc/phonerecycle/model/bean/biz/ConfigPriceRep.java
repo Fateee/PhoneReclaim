@@ -26,6 +26,7 @@ public class ConfigPriceRep extends BaseRep {
         public HardwarePriceSystemVOBean hardwarePriceSystemVO;
         public String id;
         public String name;
+        public String goodsId;
         public String remark;
         public List<ConfigPriceSystemVOsBean> configPriceSystemVOs;
 
