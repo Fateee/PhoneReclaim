@@ -149,7 +149,7 @@ class UserCenterFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.UserInfo
             item3_num.text = body?.data?.testCount.toString()
             item3_name.text = "检测记录"
             uc_my_user.visibility = View.VISIBLE
-
+            uc_shop_nearby.title = "店铺信息"
             uc_my_user.title = getString(R.string.my_user_count,body?.data?.myUser)
         }
 

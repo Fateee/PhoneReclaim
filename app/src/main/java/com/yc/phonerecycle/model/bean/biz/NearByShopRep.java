@@ -3,6 +3,7 @@ package com.yc.phonerecycle.model.bean.biz;
 
 import com.yc.phonerecycle.model.bean.BaseBean;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -53,5 +54,7 @@ public class NearByShopRep extends BaseRep {
         public String phone;
         public String remark;
         public int status;
+        public String count;
+        public String adminCount;
     }
 }

@@ -87,12 +87,12 @@ class ShopDetailActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.CommonI
                         mapview.map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,14f))
                     }
                     "4" -> {
-                        Glide.with(this@ShopDetailActivity).load(rep.mainImage).into(shopper_avatar)
+                        Glide.with(this@ShopDetailActivity).load(rep.mainImage).apply(RequestOptions.bitmapTransform(CenterCrop()).placeholder(R.drawable.ic_shop_avatar)).into(shopper_avatar)
                         shop_info_name_shopper.text = getString(R.string.shop_name,rep.name)
                         shop_info_addr_shopper.text = getString(R.string.shop_addr,rep.address)
 
-                        shopper_count.title = getString(R.string.shopper_count,rep.adminUser)
-                        admin_count.title = getString(R.string.admin_count,rep.adminUser)
+                        shopper_count.title = getString(R.string.shopper_count,rep.count)
+                        admin_count.title = getString(R.string.admin_count,rep.adminCount)
                     }
                     else -> {
                         shop_info_name.text = getString(R.string.shop_name,rep.name)
@@ -119,7 +119,7 @@ class ShopDetailActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.CommonI
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mapview.onCreate(savedInstanceState);
+        mapview?.onCreate(savedInstanceState);
     }
 
     override fun initBundle() {
@@ -159,23 +159,23 @@ class ShopDetailActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.CommonI
             else -> {
             }
         }
-        mapview.onResume()
+        mapview?.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        mapview.onPause()
+        mapview?.onPause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mapview.onDestroy()
+        mapview?.onDestroy()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
-        mapview.onSaveInstanceState(outState)
+        mapview?.onSaveInstanceState(outState)
     }
 
     fun handleWithIconClick() {

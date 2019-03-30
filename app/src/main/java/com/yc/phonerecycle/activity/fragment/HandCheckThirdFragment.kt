@@ -18,6 +18,7 @@ import com.yc.phonerecycle.mvp.view.viewinf.CommonBaseIV
 import com.yc.phonerecycle.utils.ActivityToActivity
 import com.yc.phonerecycle.utils.DensityUtil
 import com.yc.phonerecycle.utils.ToastUtil
+import com.yc.phonerecycle.utils.UserInfoUtils
 import com.yc.phonerecycle.widget.SetItemLayout
 import kotlinx.android.synthetic.main.activity_hand_check_stepthree.*
 import kotlinx.android.synthetic.main.titleview.*
@@ -69,6 +70,9 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
                 }
             }
         })
+        if (UserInfoUtils.getUserType() == "4") {
+            appraisal.text = "下一步"
+        }
         addConfigView()
 //        phone_color.setOnClickListener(object : View.OnClickListener {
 //            override fun onClick(p0: View?) {

@@ -16,7 +16,6 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/cfafafa"
                 android:orientation="vertical">
             <RelativeLayout
                     android:layout_width="match_parent"
@@ -92,7 +91,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
                     android:visibility="gone"
                     android:orientation="vertical">
 
@@ -117,6 +115,9 @@
                         android:maxLines="3"
                         android:textColor="@color/c333333"
                         android:textSize="14sp"/>
+                <View android:layout_width="match_parent"
+                      android:layout_height="6dp"
+                      android:background="@color/cfafafa"/>
             </LinearLayout>
 
             <LinearLayout

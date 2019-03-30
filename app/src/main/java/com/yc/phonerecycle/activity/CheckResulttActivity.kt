@@ -1,5 +1,6 @@
 package com.yc.phonerecycle.activity
 
+import android.content.Intent
 import android.text.TextUtils
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
@@ -122,7 +123,15 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
             custom_phone.text = getString(R.string.check_time,mCheckReqBody?.checkTime)
         } else {
             if (!TextUtils.isEmpty(recordid)) {
-                custom_phone.visibility = View.VISIBLE
+                var type = UserInfoUtils.getUserType()
+                when (type) {
+                    "1" -> {
+                        custom_phone.visibility = View.VISIBLE
+                    }
+                    "4" -> {
+                        custom_phone.visibility = View.GONE
+                    }
+                }
                 //todo huyi
                 custom_phone.text = getString(R.string.custom_phone,getString(R.string.custom_tele))
             }
@@ -199,6 +208,9 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
                             finish()
                         }
                         "4" -> {
+                            val intent = Intent(this@CheckResulttActivity, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(intent)
                             finish()
                         }
                     }
