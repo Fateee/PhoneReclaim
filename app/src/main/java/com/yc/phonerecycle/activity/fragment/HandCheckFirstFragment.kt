@@ -122,7 +122,11 @@ class HandCheckFirstFragment : BaseFragment<CommonPresenter>() {
                         "3" -> (activity as HandCheckActivity).mCheckReqBody.capacity=bean.id
                         "4" -> (activity as HandCheckActivity).mCheckReqBody.wirelessNetwork=bean.id
                         "5" -> (activity as HandCheckActivity).mCheckReqBody.colour=bean.id
+                        "6" -> (activity as HandCheckActivity).mCheckReqBody.warranty=bean.id
+                        "7" -> (activity as HandCheckActivity).mCheckReqBody.facade=bean.id
+                        "8" -> (activity as HandCheckActivity).mCheckReqBody.screenProblem = bean.id
                         "9" -> (activity as HandCheckActivity).mCheckReqBody.water=bean.id
+                        "10" -> (activity as HandCheckActivity).mCheckReqBody.overhaul = bean.id
                         "11" -> (activity as HandCheckActivity).mCheckReqBody.lockAccount=bean.id
                         "12" -> (activity as HandCheckActivity).mCheckReqBody.startingState=bean.id
                     }

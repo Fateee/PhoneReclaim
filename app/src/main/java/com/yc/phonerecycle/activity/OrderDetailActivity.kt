@@ -105,24 +105,36 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
             if (order_bean != null) {
                 showLogo(order_bean?.logo,icon)
                 if (!TextUtils.isEmpty(order_bean?.brandName)) {
-                    tip.append(order_bean?.brandName+"-")
+                    tip.append(order_bean?.brandName)
                 }
                 if (!TextUtils.isEmpty(order_bean?.type)) {
-                    tip.append(order_bean?.type+"+")
+                    if (!TextUtils.isEmpty(tip)) {
+                        tip.append("-")
+                    }
+                    tip.append(order_bean?.type)
                 }
                 if (!TextUtils.isEmpty(order_bean?.capacityValue)) {
-                    tip.append(order_bean?.capacityValue+"G")
+                    if (!TextUtils.isEmpty(tip)) {
+                        tip.append("+")
+                    }
+                    tip.append(order_bean?.capacityValue)
                 }
                 name.text = tip.toString()
 //                name.text = order_bean?.brandName+"-"+order_bean?.type+"+"+order_bean?.capacityValue+"G"
             } else {
                 if (!TextUtils.isEmpty(rep.data.goodsInstanceVO.brandName)) {
-                    tip.append(rep.data.goodsInstanceVO.brandName+"-")
+                    tip.append(rep.data.goodsInstanceVO.brandName)
                 }
                 if (!TextUtils.isEmpty(rep.data.goodsInstanceVO.type)) {
-                    tip.append(rep.data.goodsInstanceVO.type+"+")
+                    if (!TextUtils.isEmpty(tip)) {
+                        tip.append("-")
+                    }
+                    tip.append(rep.data.goodsInstanceVO.type)
                 }
                 if (!TextUtils.isEmpty(rep.data.goodsInstanceVO.capacity)) {
+                    if (!TextUtils.isEmpty(tip)) {
+                        tip.append("+")
+                    }
                     tip.append(rep.data.goodsInstanceVO.capacity)
                 }
                 name.text = tip.toString()

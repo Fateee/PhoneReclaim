@@ -68,6 +68,7 @@ public class PhoneReportRep extends BaseRep {
         public int call;
         public int camera;
         public String capacity;
+        public String capacityName;
         public String checkTime;
         public String colour;
         public int compass;
@@ -87,6 +88,7 @@ public class PhoneReportRep extends BaseRep {
         public String lockAccount;
         public int loudspeaker;
         public String memory;
+        public String memoryName;
         public int microphone;
         public String model;
         public int multiTouch;
@@ -96,6 +98,7 @@ public class PhoneReportRep extends BaseRep {
         public int price;
         public int proximitySenso;
         public String regional;
+        public String regionalName;
         public String remark;
         public int screen;
         public String screenProblem;

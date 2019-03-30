@@ -91,13 +91,19 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                 showLogo(temp.logo,holder.icon)
                 var tip = StringBuilder()
                 if (!TextUtils.isEmpty(temp.brandName)) {
-                    tip.append(temp.brandName+"-")
+                    tip.append(temp.brandName)
                 }
                 if (!TextUtils.isEmpty(temp.type)) {
-                    tip.append(temp.type+"+")
+                    if (!TextUtils.isEmpty(tip)) {
+                        tip.append("-")
+                    }
+                    tip.append(temp.type)
                 }
                 if (!TextUtils.isEmpty(temp.capacityValue)) {
-                    tip.append(temp.capacityValue+"G")
+                    if (!TextUtils.isEmpty(tip)) {
+                        tip.append("+")
+                    }
+                    tip.append(temp.capacityValue)
                 }
                 holder.name.text = tip.toString()
                 holder.content.setTextColor(ContextCompat.getColor(BaseApplication.getAppContext(),R.color.ce84b2d))
@@ -124,13 +130,19 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                 holder.wait_ems.visibility = View.GONE
                 var tip = StringBuilder()
                 if (!TextUtils.isEmpty(temp.brandName)) {
-                    tip.append(temp.brandName+"-")
+                    tip.append(temp.brandName)
                 }
                 if (!TextUtils.isEmpty(temp.type)) {
-                    tip.append(temp.type+"+")
+                    if (!TextUtils.isEmpty(tip)) {
+                        tip.append("-")
+                    }
+                    tip.append(temp.type)
                 }
-                if (!TextUtils.isEmpty(temp.capacity)) {
-                    tip.append(temp.capacity)
+                if (!TextUtils.isEmpty(temp.capacityValue)) {
+                    if (!TextUtils.isEmpty(tip)) {
+                        tip.append("+")
+                    }
+                    tip.append(temp.capacityValue)
                 }
                 holder.name.text = tip.toString()
                 holder.content.text = temp.customerName

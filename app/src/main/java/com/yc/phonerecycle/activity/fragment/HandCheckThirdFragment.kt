@@ -191,7 +191,11 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
                     "3" -> checkResult.capacity=bean.id
                     "4" -> checkResult.wirelessNetwork=bean.id
                     "5" -> checkResult.colour=bean.id
+                    "6" -> checkResult.warranty=bean.id
+                    "7" -> checkResult.facade=bean.id
+                    "8" -> checkResult.screenProblem = bean.id
                     "9" -> checkResult.water=bean.id
+                    "10" -> checkResult.overhaul = bean.id
                     "11" -> checkResult.lockAccount=bean.id
                     "12" -> checkResult.startingState=bean.id
                 }

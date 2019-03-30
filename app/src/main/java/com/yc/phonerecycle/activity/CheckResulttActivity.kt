@@ -63,10 +63,10 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
             if (!TextUtils.isEmpty(order_bean?.type)) {
                 tip.append(order_bean?.type)
             }
-            name.text = tip.toString()
+//            name.text = tip.toString()
 //            name.text = order_bean?.brandName+"  "+order_bean?.type
 //            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
-            content.text = mCheckReqBody?.memory+"+"+order_bean?.capacityValue+"GB"
+//            content.text = mCheckReqBody?.memoryName+"+"+mCheckReqBody?.capacityName
         } else if (detection_bean != null) {
             showLogo(detection_bean?.logo,icon)
             if (!TextUtils.isEmpty(detection_bean?.brandName)) {
@@ -75,9 +75,9 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
             if (!TextUtils.isEmpty(detection_bean?.type)) {
                 tip.append(detection_bean?.type)
             }
-            name.text = tip.toString()
+//            name.text = tip.toString()
 //            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
-            content.text = mCheckReqBody?.memory+"+"+detection_bean?.capacity
+//            content.text = mCheckReqBody?.memoryName+"+"+mCheckReqBody?.capacityName
         } else {
             if (!TextUtils.isEmpty(mCheckReqBody?.brandName)) {
                 tip.append(mCheckReqBody?.brandName+"  ")
@@ -85,7 +85,7 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
             if (!TextUtils.isEmpty(mCheckReqBody?.type)) {
                 tip.append(mCheckReqBody?.type)
             }
-            name.text = tip.toString()
+//            name.text = tip.toString()
 //            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
 //            var romForm = getFromDict("2", mCheckReqBody?.capacity)
 //            if (memoryForm == null) {
@@ -96,9 +96,13 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
 //                name.postDelayed({romForm = getFromDict("2", mCheckReqBody?.memory)
 //                    content.text = memoryForm?.value+"+"+romForm?.name},2000)
 //            }
-            content.text = mCheckReqBody?.memory+"+"+mCheckReqBody?.capacity
+//            content.text = mCheckReqBody?.memoryName+"+"+mCheckReqBody?.capacityName
         }
-
+        if (!TextUtils.isEmpty(mCheckReqBody?.regionalName)) {
+            tip.append("  "+mCheckReqBody?.regionalName)
+        }
+        name.text = tip.toString()
+        content.text = mCheckReqBody?.memoryName+"+"+mCheckReqBody?.capacityName
         price.text = getString(R.string.order_price_value,mCheckReqBody?.estimatePrice.toString())
         //1 有 0无
         addRowView("无线网络",mCheckReqBody?.wifi == 0,"","距离感应器",mCheckReqBody?.proximitySenso ==0,"")

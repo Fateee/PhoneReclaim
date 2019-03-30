@@ -68,6 +68,7 @@ public class OrderDetailRep extends BaseRep implements Serializable {
         public int call;
         public int camera;
         public String capacity;
+        public String capacityName;
         public String checkTime;
         public String colour;
         public int compass;
@@ -86,6 +87,7 @@ public class OrderDetailRep extends BaseRep implements Serializable {
         public String lockAccount;
         public int loudspeaker;
         public String memory;
+        public String memoryName;
         public int microphone;
         public String model;
         public int multiTouch;
@@ -94,6 +96,7 @@ public class OrderDetailRep extends BaseRep implements Serializable {
         public String overhaul;
         public int proximitySenso;
         public String regional;
+        public String regionalName;
         public int screen;
         public String screenProblem;
         public int spiritLevel;

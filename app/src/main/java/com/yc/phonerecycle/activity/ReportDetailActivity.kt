@@ -51,7 +51,8 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
     private fun refreshView(mCheckReqBody: PhoneReportRep.DataBean?) {
         var tip = StringBuilder()
         name.text = mCheckReqBody?.brandName+" "+mCheckReqBody?.type+" "+mCheckReqBody?.regional
-        content.text = mCheckReqBody?.memory+" "+mCheckReqBody?.capacity
+//        content.text = mCheckReqBody?.memory+" "+mCheckReqBody?.capacity
+        content.text = mCheckReqBody?.memoryName+"+"+mCheckReqBody?.capacityName
         if (order_bean != null) {
             showLogo(order_bean?.logo,icon)
             if (!TextUtils.isEmpty(order_bean?.brandName)) {
@@ -60,9 +61,6 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
             if (!TextUtils.isEmpty(order_bean?.type)) {
                 tip.append(order_bean?.type)
             }
-            name.text = tip.toString()
-            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
-            content.text = memoryForm?.value+"+"+order_bean?.capacityValue+"GB"
         } else if (detection_bean != null) {
             showLogo(detection_bean?.logo,icon)
             if (!TextUtils.isEmpty(detection_bean?.brandName)) {
@@ -71,9 +69,6 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
             if (!TextUtils.isEmpty(detection_bean?.type)) {
                 tip.append(detection_bean?.type)
             }
-            name.text = tip.toString()
-            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
-            content.text = memoryForm?.value+"+"+detection_bean?.capacity
         } else {
             if (!TextUtils.isEmpty(mCheckReqBody?.brandName)) {
                 tip.append(mCheckReqBody?.brandName+"  ")
@@ -81,27 +76,15 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
             if (!TextUtils.isEmpty(mCheckReqBody?.type)) {
                 tip.append(mCheckReqBody?.type+" ")
             }
-            if (!TextUtils.isEmpty(mCheckReqBody?.regional)) {
-                tip.append(mCheckReqBody?.regional)
-            }
-            name.text = tip.toString()
-//            name.text = mCheckReqBody?.brandName+" "+mCheckReqBody?.type+" "+mCheckReqBody?.regional
-            var memoryForm = getFromDict("1", mCheckReqBody?.memory)
-            var romForm = getFromDict("2", mCheckReqBody?.capacity)
-            if (memoryForm == null) {
-                name.postDelayed({memoryForm= getFromDict("1", mCheckReqBody?.memory)
-                    content.text = memoryForm?.value+"+"+romForm?.name},2000)
-            }
-            if (romForm == null) {
-                name.postDelayed({romForm = getFromDict("2", mCheckReqBody?.memory)
-                    content.text = memoryForm?.value+"+"+romForm?.name},2000)
-            }
-            content.text = memoryForm?.value+"+"+romForm?.name
         }
         if (!TextUtils.isEmpty(mCheckReqBody?.remark)) {
             check_report.visibility = View.VISIBLE
             report_remark.text = mCheckReqBody?.remark
         }
+        if (!TextUtils.isEmpty(mCheckReqBody?.regionalName)) {
+            tip.append("  "+mCheckReqBody?.regionalName)
+        }
+        name.text = tip.toString()
         //1 有 0无
         addRowView("无线网络",mCheckReqBody?.wifi == 0,"","距离感应器",mCheckReqBody?.proximitySenso ==0,"")
         addRowView("蓝牙",mCheckReqBody?.bluetooth == 0,"","光线感应器",mCheckReqBody?.lightSensor==0,"")
