@@ -1,24 +1,17 @@
 package com.yc.phonerecycle.activity.fragment
 
 
-import android.content.DialogInterface
 import android.support.v4.app.Fragment
-import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.LinearLayout
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.HandCheckActivity
-import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
-import com.yc.phonerecycle.model.bean.biz.ConfigPriceTempRep
-import com.yc.phonerecycle.model.bean.biz.DictMapRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
 import com.yc.phonerecycle.utils.DensityUtil
-import com.yc.phonerecycle.utils.ToastUtil
 import com.yc.phonerecycle.widget.SetItemLayout
 import kotlinx.android.synthetic.main.activity_hand_check_stepone.*
-import kotlinx.android.synthetic.main.activity_phone_all_params.*
 import kotlinx.android.synthetic.main.titleview.*
 
 
@@ -37,7 +30,7 @@ class HandCheckFirstFragment : BaseFragment<CommonPresenter>() {
     override fun initData() {
         next.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                if(!setCheckValue()) return
+                if(!(activity as HandCheckActivity).setCheckValue(config_container)) return
                 (activity as HandCheckActivity).changeFragment((activity as HandCheckActivity).mSecondFragment)
             }
         })
@@ -108,46 +101,46 @@ class HandCheckFirstFragment : BaseFragment<CommonPresenter>() {
         }
     }
 
-    private fun setCheckValue(): Boolean {
-        if (config_container.childCount>0) {
-            for (i in 0 until config_container.childCount) {
-                var v = config_container.getChildAt(i)
-                if (v is SetItemLayout) {
-                    if (v.tag == null) return false
-                    var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
-//                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
-                    when (bean.code) {
-                        "1" -> (activity as HandCheckActivity).mCheckReqBody.regional=bean.id
-                        "2" -> (activity as HandCheckActivity).mCheckReqBody.memory=bean.id
-                        "3" -> (activity as HandCheckActivity).mCheckReqBody.capacity=bean.id
-                        "4" -> (activity as HandCheckActivity).mCheckReqBody.wirelessNetwork=bean.id
-                        "5" -> (activity as HandCheckActivity).mCheckReqBody.colour=bean.id
-                        "6" -> (activity as HandCheckActivity).mCheckReqBody.warranty=bean.id
-                        "7" -> (activity as HandCheckActivity).mCheckReqBody.facade=bean.id
-                        "8" -> (activity as HandCheckActivity).mCheckReqBody.screenProblem = bean.id
-                        "9" -> (activity as HandCheckActivity).mCheckReqBody.water=bean.id
-                        "10" -> (activity as HandCheckActivity).mCheckReqBody.overhaul = bean.id
-                        "11" -> (activity as HandCheckActivity).mCheckReqBody.lockAccount=bean.id
-                        "12" -> (activity as HandCheckActivity).mCheckReqBody.startingState=bean.id
-                    }
-                }
-            }
-            return true
-        }
-        return false
-//        if (ram.tag == null || rom.tag == null || color.tag == null || net_type.tag == null || version.tag == null || account_lock.tag == null) return false
-//        return if (activity is HandCheckActivity) {
-//            (activity as HandCheckActivity).mCheckReqBody.memory = (ram.tag as DictMapRep.DataBean).id
-//            (activity as HandCheckActivity).mCheckReqBody.capacity = (rom.tag as DictMapRep.DataBean).id
-//            (activity as HandCheckActivity).mCheckReqBody.colour = (color.tag as DictMapRep.DataBean).id
-//            (activity as HandCheckActivity).mCheckReqBody.wirelessNetwork = (net_type.tag as DictMapRep.DataBean).id
-//            (activity as HandCheckActivity).mCheckReqBody.regional = (version.tag as DictMapRep.DataBean).id
-//            (activity as HandCheckActivity).mCheckReqBody.lockAccount = (account_lock.tag as DictMapRep.DataBean).id
-//            true
-//        } else{
-//            false
+//    private fun setCheckValue(): Boolean {
+//        if (config_container.childCount>0) {
+//            for (i in 0 until config_container.childCount) {
+//                var v = config_container.getChildAt(i)
+//                if (v is SetItemLayout) {
+//                    if (v.tag == null) return false
+//                    var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
+////                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
+//                    when (bean.code) {
+//                        "1" -> (activity as HandCheckActivity).mCheckReqBody.regional=bean.id
+//                        "2" -> (activity as HandCheckActivity).mCheckReqBody.memory=bean.id
+//                        "3" -> (activity as HandCheckActivity).mCheckReqBody.capacity=bean.id
+//                        "4" -> (activity as HandCheckActivity).mCheckReqBody.wirelessNetwork=bean.id
+//                        "5" -> (activity as HandCheckActivity).mCheckReqBody.colour=bean.id
+//                        "6" -> (activity as HandCheckActivity).mCheckReqBody.warranty=bean.id
+//                        "7" -> (activity as HandCheckActivity).mCheckReqBody.facade=bean.id
+//                        "8" -> (activity as HandCheckActivity).mCheckReqBody.screenProblem = bean.id
+//                        "9" -> (activity as HandCheckActivity).mCheckReqBody.water=bean.id
+//                        "10" -> (activity as HandCheckActivity).mCheckReqBody.overhaul = bean.id
+//                        "11" -> (activity as HandCheckActivity).mCheckReqBody.lockAccount=bean.id
+//                        "12" -> (activity as HandCheckActivity).mCheckReqBody.startingState=bean.id
+//                    }
+//                }
+//            }
+//            return true
 //        }
-    }
+//        return false
+////        if (ram.tag == null || rom.tag == null || color.tag == null || net_type.tag == null || version.tag == null || account_lock.tag == null) return false
+////        return if (activity is HandCheckActivity) {
+////            (activity as HandCheckActivity).mCheckReqBody.memory = (ram.tag as DictMapRep.DataBean).id
+////            (activity as HandCheckActivity).mCheckReqBody.capacity = (rom.tag as DictMapRep.DataBean).id
+////            (activity as HandCheckActivity).mCheckReqBody.colour = (color.tag as DictMapRep.DataBean).id
+////            (activity as HandCheckActivity).mCheckReqBody.wirelessNetwork = (net_type.tag as DictMapRep.DataBean).id
+////            (activity as HandCheckActivity).mCheckReqBody.regional = (version.tag as DictMapRep.DataBean).id
+////            (activity as HandCheckActivity).mCheckReqBody.lockAccount = (account_lock.tag as DictMapRep.DataBean).id
+////            true
+////        } else{
+////            false
+////        }
+//    }
 
 
 //    /**

@@ -139,7 +139,8 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
         if (config_container.childCount>0) {
 
             return if (activity is HandCheckActivity) {
-                var ret = setValue((activity as HandCheckActivity).mCheckReqBody)
+//                var ret = setValue((activity as HandCheckActivity).mCheckReqBody)
+                var ret = (activity as HandCheckActivity).setCheckValue(config_container)
                 if (!ret) return false
                 (activity as HandCheckActivity).mCheckReqBody.other = remark_edit.getText().toString()
                 presenter.saveOrUpdate((activity as HandCheckActivity).mCheckReqBody)

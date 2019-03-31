@@ -42,7 +42,7 @@ class HandCheckSecondFragment : BaseFragment<CommonPresenter>() {
         })
         next.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                if(!setCheckValue()) return
+                if(!(activity as HandCheckActivity).setCheckValue(config_container)) return
                 (activity as HandCheckActivity).changeFragment((activity as HandCheckActivity).mThirdFragment)
             }
         })
@@ -121,50 +121,50 @@ class HandCheckSecondFragment : BaseFragment<CommonPresenter>() {
         }
     }
 
-    private fun setCheckValue(): Boolean {
-        if (config_container.childCount>0) {
-            for (i in 0 until config_container.childCount) {
-                var v = config_container.getChildAt(i)
-                if (v is SetItemLayout) {
-                    if (v.tag == null) return false
-                    var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
-//                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
-                    when (bean.code) {
-                        "1" -> (activity as HandCheckActivity).mCheckReqBody.regional=bean.id
-                        "2" -> (activity as HandCheckActivity).mCheckReqBody.memory=bean.id
-                        "3" -> (activity as HandCheckActivity).mCheckReqBody.capacity=bean.id
-                        "4" -> (activity as HandCheckActivity).mCheckReqBody.wirelessNetwork=bean.id
-                        "5" -> (activity as HandCheckActivity).mCheckReqBody.colour=bean.id
-                        "6" -> (activity as HandCheckActivity).mCheckReqBody.warranty=bean.id
-                        "7" -> (activity as HandCheckActivity).mCheckReqBody.facade=bean.id
-                        "8" -> (activity as HandCheckActivity).mCheckReqBody.screenProblem = bean.id
-                        "9" -> (activity as HandCheckActivity).mCheckReqBody.water=bean.id
-                        "10" -> (activity as HandCheckActivity).mCheckReqBody.overhaul = bean.id
-                        "11" -> (activity as HandCheckActivity).mCheckReqBody.lockAccount=bean.id
-                        "12" -> (activity as HandCheckActivity).mCheckReqBody.startingState=bean.id
-                    }
-                }
-            }
-            return true
-        }
-        return false
-//        if (start_up.tag == null || fingerprint.tag == null ||
-//            wifi_fault.tag == null || bluetooth_fault.tag == null || call_fault.tag == null ||
-//            camrea_fault.tag == null|| gyro_fault.tag == null || gradienter_fault.tag == null) return false
-//        return if (activity is HandCheckActivity) {
-//            (activity as HandCheckActivity).mCheckReqBody.startingState = (start_up.tag as DictMapRep.DataBean).id
-//            (activity as HandCheckActivity).mCheckReqBody.fingerprint = (fingerprint.tag as DictMapRep.DataBean).id.toInt()
-//            (activity as HandCheckActivity).mCheckReqBody.wifi = (wifi_fault.tag as DictMapRep.DataBean).id.toInt()
-//            (activity as HandCheckActivity).mCheckReqBody.bluetooth = (bluetooth_fault.tag as DictMapRep.DataBean).id.toInt()
-//            (activity as HandCheckActivity).mCheckReqBody.call = (call_fault.tag as DictMapRep.DataBean).id.toInt()
-//            (activity as HandCheckActivity).mCheckReqBody.camera = (camrea_fault.tag as DictMapRep.DataBean).id.toInt()
-//            (activity as HandCheckActivity).mCheckReqBody.gyroscope = (gyro_fault.tag as DictMapRep.DataBean).id.toInt()
-//            (activity as HandCheckActivity).mCheckReqBody.spiritLevel = (gradienter_fault.tag as DictMapRep.DataBean).id.toInt()
-//            true
-//        } else{
-//            false
+//    private fun setCheckValue(): Boolean {
+//        if (config_container.childCount>0) {
+//            for (i in 0 until config_container.childCount) {
+//                var v = config_container.getChildAt(i)
+//                if (v is SetItemLayout) {
+//                    if (v.tag == null) return false
+//                    var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
+////                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
+//                    when (bean.code) {
+//                        "1" -> (activity as HandCheckActivity).mCheckReqBody.regional=bean.id
+//                        "2" -> (activity as HandCheckActivity).mCheckReqBody.memory=bean.id
+//                        "3" -> (activity as HandCheckActivity).mCheckReqBody.capacity=bean.id
+//                        "4" -> (activity as HandCheckActivity).mCheckReqBody.wirelessNetwork=bean.id
+//                        "5" -> (activity as HandCheckActivity).mCheckReqBody.colour=bean.id
+//                        "6" -> (activity as HandCheckActivity).mCheckReqBody.warranty=bean.id
+//                        "7" -> (activity as HandCheckActivity).mCheckReqBody.facade=bean.id
+//                        "8" -> (activity as HandCheckActivity).mCheckReqBody.screenProblem = bean.id
+//                        "9" -> (activity as HandCheckActivity).mCheckReqBody.water=bean.id
+//                        "10" -> (activity as HandCheckActivity).mCheckReqBody.overhaul = bean.id
+//                        "11" -> (activity as HandCheckActivity).mCheckReqBody.lockAccount=bean.id
+//                        "12" -> (activity as HandCheckActivity).mCheckReqBody.startingState=bean.id
+//                    }
+//                }
+//            }
+//            return true
 //        }
-    }
+//        return false
+////        if (start_up.tag == null || fingerprint.tag == null ||
+////            wifi_fault.tag == null || bluetooth_fault.tag == null || call_fault.tag == null ||
+////            camrea_fault.tag == null|| gyro_fault.tag == null || gradienter_fault.tag == null) return false
+////        return if (activity is HandCheckActivity) {
+////            (activity as HandCheckActivity).mCheckReqBody.startingState = (start_up.tag as DictMapRep.DataBean).id
+////            (activity as HandCheckActivity).mCheckReqBody.fingerprint = (fingerprint.tag as DictMapRep.DataBean).id.toInt()
+////            (activity as HandCheckActivity).mCheckReqBody.wifi = (wifi_fault.tag as DictMapRep.DataBean).id.toInt()
+////            (activity as HandCheckActivity).mCheckReqBody.bluetooth = (bluetooth_fault.tag as DictMapRep.DataBean).id.toInt()
+////            (activity as HandCheckActivity).mCheckReqBody.call = (call_fault.tag as DictMapRep.DataBean).id.toInt()
+////            (activity as HandCheckActivity).mCheckReqBody.camera = (camrea_fault.tag as DictMapRep.DataBean).id.toInt()
+////            (activity as HandCheckActivity).mCheckReqBody.gyroscope = (gyro_fault.tag as DictMapRep.DataBean).id.toInt()
+////            (activity as HandCheckActivity).mCheckReqBody.spiritLevel = (gradienter_fault.tag as DictMapRep.DataBean).id.toInt()
+////            true
+////        } else{
+////            false
+////        }
+//    }
 
 //    /**
 //     * 单选

@@ -2,18 +2,12 @@ package com.yc.phonerecycle.activity
 
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.hardware.camera2.CameraManager
 import android.hardware.fingerprint.FingerprintManager
 import android.location.Location
 import android.location.LocationListener
@@ -24,9 +18,8 @@ import android.os.Bundle
 import android.os.Vibrator
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
-import com.google.gson.Gson
+import android.widget.LinearLayout
 import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
-import com.yc.phonecheck.item.MicrophoneTest
 import com.yc.phonerecycle.BaseCheckActivity
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.fragment.*
@@ -36,10 +29,8 @@ import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
 import com.yc.phonerecycle.model.bean.biz.ConfigPriceTempRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
-import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.utils.*
-import kotlinx.android.synthetic.main.activity_auto_check.*
-import kotlinx.android.synthetic.main.fragment_main_home.*
+import com.yc.phonerecycle.widget.SetItemLayout
 
 class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListener {
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
@@ -408,19 +399,19 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
         COMPASS = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
         changeFragment(mFirstFragment)
-        doWifiTest()
-        doBlueToothTest()
-        doGravitySensorTest()
-        doDistanceSensorTest()
-        doLightSensorTest()
-        doOrientationSensorTest()
-        doCompassTest()
-        doLocationTest()
-        doFingerTest()
-        doMicroTest()
-        doSpeakerTest()
-        checkOther()
-        doCameraTest()
+//        doWifiTest()
+//        doBlueToothTest()
+//        doGravitySensorTest()
+//        doDistanceSensorTest()
+//        doLightSensorTest()
+//        doOrientationSensorTest()
+//        doCompassTest()
+//        doLocationTest()
+//        doFingerTest()
+//        doMicroTest()
+//        doSpeakerTest()
+//        checkOther()
+//        doCameraTest()
     }
 
     fun changeFragment(mfragment: Fragment) {
@@ -441,14 +432,14 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
         }
     }
 
-    private lateinit var mSensorManager: SensorManager
+    private var mSensorManager: SensorManager? = null
     private var mGRAVITY: Sensor? = null
     private var PROXIMITY: Sensor? = null
     private var LIGHT: Sensor? = null
     private var ORIENTATION: Sensor? = null
     private var COMPASS: Sensor? = null
-    private lateinit var fingerprintManager: FingerprintManager
-    private lateinit var locationManager: LocationManager
+    private var fingerprintManager: FingerprintManager? = null
+    private var locationManager: LocationManager? = null
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_GRAVITY){
@@ -535,7 +526,7 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
             return
         }
         // 获取所有可用的位置提供器
-        var providerList = locationManager.getProviders(true);
+        var providerList = locationManager?.getProviders(true);
         // 测试一般都在室内，这里颠倒了书上的判断顺序
         var provider = when {
             providerList.contains(LocationManager.NETWORK_PROVIDER) -> LocationManager.NETWORK_PROVIDER
@@ -548,13 +539,13 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
             }
         }
 
-        var location = locationManager.getLastKnownLocation(provider)
+        var location = locationManager?.getLastKnownLocation(provider)
         if(location!=null){
             //显示当前设备的位置信息
             mCheckReqBody.location = 0
             return
         }
-        locationManager.requestLocationUpdates(provider, 1000, 1f, locationListener)
+        locationManager?.requestLocationUpdates(provider, 1000, 1f, locationListener)
 
     }
 
@@ -618,6 +609,54 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
         locationManager?.removeUpdates(locationListener)
         mSensorManager?.unregisterListener(this)
         super.onDestroy()
+    }
+
+    fun setCheckValue(config_container: LinearLayout): Boolean {
+        if (config_container.childCount>0) {
+            for (i in 0 until config_container.childCount) {
+                var v = config_container.getChildAt(i)
+                if (v is SetItemLayout) {
+                    if (v.tag == null) return false
+                    var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
+//                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
+                    when (bean.code) {
+                        "1" -> mCheckReqBody.regional=bean.id
+                        "2" -> mCheckReqBody.memory=bean.id
+                        "3" -> mCheckReqBody.capacity=bean.id
+                        "4" -> mCheckReqBody.wirelessNetwork=bean.id
+                        "5" -> mCheckReqBody.colour=bean.id
+                        "6" -> mCheckReqBody.warranty=bean.id
+                        "7" -> mCheckReqBody.facade=bean.id
+                        "8" -> mCheckReqBody.screenProblem = bean.id
+                        "9" -> mCheckReqBody.water=bean.id
+                        "10" -> mCheckReqBody.overhaul = bean.id
+                        "11" -> mCheckReqBody.lockAccount=bean.id
+                        "12" -> mCheckReqBody.startingState=bean.id
+                        //TODO HUYI
+                        "13" -> mCheckReqBody.bluetooth=bean.id.toInt()
+                        "14" -> mCheckReqBody.call=bean.id.toInt()
+                        "15" -> mCheckReqBody.camera=bean.id.toInt()
+                        "16" -> mCheckReqBody.compass=bean.id.toInt()
+                        "17" -> mCheckReqBody.comprehensionAids=bean.id.toInt()
+                        "18" -> mCheckReqBody.fingerprint=bean.id.toInt()
+                        "19" -> mCheckReqBody.flashlight=bean.id.toInt()
+                        "20" -> mCheckReqBody.gravitySensor=bean.id.toInt()
+                        "21" -> mCheckReqBody.lightSensor=bean.id.toInt()
+                        "22" -> mCheckReqBody.location=bean.id.toInt()
+                        "23" -> mCheckReqBody.loudspeaker=bean.id.toInt()
+                        "24" -> mCheckReqBody.microphone=bean.id.toInt()
+                        "25" -> mCheckReqBody.multiTouch=bean.id.toInt()
+                        "26" -> mCheckReqBody.proximitySenso=bean.id.toInt()
+                        "27" -> mCheckReqBody.screen=bean.id.toInt()
+                        "28" -> mCheckReqBody.spiritLevel=bean.id.toInt()
+                        "29" -> mCheckReqBody.vibrator=bean.id.toInt()
+                        "30" -> mCheckReqBody.wifi=bean.id.toInt()
+                    }
+                }
+            }
+            return true
+        }
+        return false
     }
 
     private var locationListener : LocationListener = object : LocationListener {
