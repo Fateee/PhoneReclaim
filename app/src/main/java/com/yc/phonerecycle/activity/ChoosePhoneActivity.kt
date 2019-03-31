@@ -24,13 +24,15 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
             if (rep.data == null) {
                 ToastUtil.showShortToastCenter("没有匹配到该机型的配置")
             } else {
-                goodMap["configRep"] = rep.data
                 when(checktype) {
                     "0" -> {
+                        rep.data.addHardwareToConfigList()
+                        goodMap["configRep"] = rep.data
                         ActivityToActivity.toActivity(
                             this@ChoosePhoneActivity, HandCheckActivity::class.java,goodMap)
                     }
                     "1" -> {
+                        goodMap["configRep"] = rep.data
                         ActivityToActivity.toActivity(
                             this@ChoosePhoneActivity, AutoCheckActivity::class.java,goodMap)
                     }
@@ -61,6 +63,7 @@ class ChoosePhoneActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonT
     private lateinit var goodMap: HashMap<String, Any?>
 
     override fun initDatas() {
+        search_phone_view.checktype = checktype
         search_et.setOnClickListener(object :View.OnClickListener{
             override fun onClick(v: View?) {
                 search_phone_view.showSearchView()

@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
+import com.yc.phonerecycle.activity.AutoCheckActivity;
 import com.yc.phonerecycle.activity.HandCheckActivity;
 import com.yc.phonerecycle.activity.adapter.BandAdapter;
 import com.yc.phonerecycle.activity.adapter.OnItemClick;
@@ -17,6 +18,7 @@ import com.yc.phonerecycle.utils.ActivityToActivity;
 import com.yc.phonerecycle.utils.KeyboardUtil;
 import com.yc.phonerecycle.utils.ToastUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +43,7 @@ public class SearchPhoneView extends CommonSearchView implements CommonSearchVie
     private TextView mNoNetTv;
     private boolean mBackKeyToGoneSearchView;
     private HashMap<String, Object> goodMap = new HashMap<>();
+    public String checktype = "-1";
 
     public SearchPhoneView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -104,6 +107,7 @@ public class SearchPhoneView extends CommonSearchView implements CommonSearchVie
                         if (((ConfigPriceRep)result).data == null) {
                             ToastUtil.showShortToastCenter("没有匹配到该机型的配置");
                         } else {
+                            ((ConfigPriceRep)result).data.addHardwareToConfigList();
                             goodMap.put("configRep",((ConfigPriceRep)result).data);
                             ActivityToActivity.toActivity(
                                     mContext, HandCheckActivity.class,goodMap);

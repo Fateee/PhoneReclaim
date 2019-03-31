@@ -3,6 +3,7 @@ package com.yc.phonerecycle.model.bean.biz;
 import com.yc.phonerecycle.model.bean.BaseBean;
 import com.yc.phonerecycle.model.bean.base.BaseRep;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -76,45 +77,45 @@ public class ConfigPriceRep extends BaseRep {
              */
 
             public int battery;
-            public int batteryType;
+            public Integer batteryType;
             public int bluetooth;
-            public int bluetoothType;
+            public Integer bluetoothType;
             public int call;
-            public int callType;
+            public Integer callType;
             public int camera;
-            public int cameraType;
+            public Integer cameraType;
             public int compass;
-            public int compassType;
+            public Integer compassType;
             public int comprehensionAids;
-            public int comprehensionAidsType;
+            public Integer comprehensionAidsType;
             public int fingerprint;
-            public int fingerprintType;
+            public Integer fingerprintType;
             public int flashlight;
-            public int flashlightType;
+            public Integer flashlightType;
             public int gravitySensor;
-            public int gravitySensorType;
+            public Integer gravitySensorType;
             public String id;
             public int lightSensor;
-            public int lightSensorType;
+            public Integer lightSensorType;
             public int location;
-            public int locationType;
+            public Integer locationType;
             public int loudspeaker;
-            public int loudspeakerType;
+            public Integer loudspeakerType;
             public int microphone;
-            public int microphoneType;
+            public Integer microphoneType;
             public int multiTouch;
-            public int multiTouchType;
+            public Integer multiTouchType;
             public String priceConfig;
             public int proximitySenso;
-            public int proximitySensoType;
+            public Integer proximitySensoType;
             public int screen;
-            public int screenType;
+            public Integer screenType;
             public int spiritLevel;
-            public int spiritLevelType;
+            public Integer spiritLevelType;
             public int vibrator;
-            public int vibratorType;
+            public Integer vibratorType;
             public int wirelessNetwork;
-            public int wirelessNetworkType;
+            public Integer wirelessNetworkType;
 
         }
 
@@ -138,7 +139,7 @@ public class ConfigPriceRep extends BaseRep {
             public String price;
             public String priceConfigId;
             public String type;
-            public List<ChildsBeanX> childs;
+            public List<ChildsBeanX> childs = new ArrayList<>();
 
 
             public static class ChildsBeanX extends BaseBean{
@@ -167,6 +168,84 @@ public class ConfigPriceRep extends BaseRep {
                 public static class ChildsBean extends BaseBean{
                 }
             }
+        }
+
+        public void addHardwareToConfigList() {
+            if (configPriceSystemVOs == null) configPriceSystemVOs = new ArrayList<ConfigPriceSystemVOsBean>();
+            if (hardwarePriceSystemVO != null) {
+                if (hardwarePriceSystemVO.bluetoothType != null) {
+                    addOneHandCheckOption("蓝牙故障","13");
+                }
+                if (hardwarePriceSystemVO.callType != null) {
+                    addOneHandCheckOption("通话故障","14");
+                }
+                if (hardwarePriceSystemVO.cameraType != null) {
+                    addOneHandCheckOption("摄像头故障","15");
+                }
+                if (hardwarePriceSystemVO.compassType != null) {
+                    addOneHandCheckOption("指南针故障","16");
+                }
+                if (hardwarePriceSystemVO.comprehensionAidsType != null) {
+                    addOneHandCheckOption("语言助手故障","17");
+                }
+                if (hardwarePriceSystemVO.fingerprintType != null) {
+                    addOneHandCheckOption("指纹有无故障","18");
+                }
+                if (hardwarePriceSystemVO.flashlightType != null) {
+                    addOneHandCheckOption("闪光灯故障","19");
+                }
+                if (hardwarePriceSystemVO.gravitySensorType != null) {
+                    addOneHandCheckOption("重力感应器故障","20");
+                }
+                if (hardwarePriceSystemVO.lightSensorType != null) {
+                    addOneHandCheckOption("光线感应器故障","21");
+                }
+                if (hardwarePriceSystemVO.locationType != null) {
+                    addOneHandCheckOption("定位故障","22");
+                }
+                if (hardwarePriceSystemVO.loudspeakerType != null) {
+                    addOneHandCheckOption("扬声器故障","23");
+                }
+                if (hardwarePriceSystemVO.microphoneType != null) {
+                    addOneHandCheckOption("麦克风故障","24");
+                }
+                if (hardwarePriceSystemVO.multiTouchType != null) {
+                    addOneHandCheckOption("屏幕触控故障","25");
+                }
+                if (hardwarePriceSystemVO.proximitySensoType != null) {
+                    addOneHandCheckOption("距离感应器故障","26");
+                }
+                if (hardwarePriceSystemVO.screenType != null) {
+                    addOneHandCheckOption("屏幕显示故障","27");
+                }
+                if (hardwarePriceSystemVO.spiritLevelType != null) {
+                    addOneHandCheckOption("水平仪故障","28");
+                }
+                if (hardwarePriceSystemVO.vibratorType != null) {
+                    addOneHandCheckOption("振动器故障","29");
+                }
+                if (hardwarePriceSystemVO.wirelessNetworkType != null) {
+                    addOneHandCheckOption("WIFI故障","30");
+                }
+            }
+        }
+
+        private void addOneHandCheckOption(String name, String code) {
+            ConfigPriceSystemVOsBean tmp = new ConfigPriceSystemVOsBean();
+            tmp.name = name;
+            List<ConfigPriceSystemVOsBean.ChildsBeanX> childs = new ArrayList<>();
+            ConfigPriceSystemVOsBean.ChildsBeanX tempOne = new ConfigPriceSystemVOsBean.ChildsBeanX();
+            tempOne.code=code;
+            tempOne.id="0";
+            tempOne.name="无故障";
+            ConfigPriceSystemVOsBean.ChildsBeanX tempTwo = new ConfigPriceSystemVOsBean.ChildsBeanX();
+            tempTwo.code=code;
+            tempTwo.id="1";
+            tempTwo.name="有故障";
+            childs.add(tempOne);
+            childs.add(tempTwo);
+            tmp.childs.addAll(childs);
+            configPriceSystemVOs.add(tmp);
         }
     }
 }
