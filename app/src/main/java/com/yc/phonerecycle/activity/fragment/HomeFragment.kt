@@ -99,7 +99,6 @@ class HomeFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV{
             override fun onClick(p0: View?) {
                 var map = HashMap<String,String?>()
                 map["checktype"] = "1"
-                //todo huyi
 //                ActivityToActivity.toActivity(
 //                    activity, AutoCheckActivity::class.java,map)
                 presenter.getConfigPriceSystemByName(Build.MODEL)

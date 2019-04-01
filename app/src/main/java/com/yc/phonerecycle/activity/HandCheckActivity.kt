@@ -632,7 +632,7 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
                         "10" -> mCheckReqBody.overhaul = bean.id
                         "11" -> mCheckReqBody.lockAccount=bean.id
                         "12" -> mCheckReqBody.startingState=bean.id
-                        //TODO HUYI
+
                         "13" -> mCheckReqBody.bluetooth=bean.id.toInt()
                         "14" -> mCheckReqBody.call=bean.id.toInt()
                         "15" -> mCheckReqBody.camera=bean.id.toInt()

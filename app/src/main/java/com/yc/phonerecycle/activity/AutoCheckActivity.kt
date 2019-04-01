@@ -74,7 +74,6 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     var isAutoTabCheck: Boolean = false
 
     override fun initBundle() {
-        //todo huyi
 //        var gsong = Gson()
 //        config = gsong.fromJson(HandCheckActivity.json,ConfigPriceTempRep::class.java) ?: ConfigPriceTempRep()
         configRep = intent.getSerializableExtra("configRep") as ConfigPriceRep.DataBean?

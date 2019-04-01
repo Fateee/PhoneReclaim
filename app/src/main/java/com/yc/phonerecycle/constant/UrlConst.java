@@ -10,7 +10,6 @@ public class UrlConst {
     public static final String mHomePoUrl = "http://www.poshow18.com/";
 
     public static boolean debug = true;
-    //todo huyi
     public static boolean realease = false;
     public static final String mAppInfoUrl = "http://118.24.14.150:5000/";
 
