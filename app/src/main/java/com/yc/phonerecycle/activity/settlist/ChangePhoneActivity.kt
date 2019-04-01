@@ -47,8 +47,9 @@ class ChangePhoneActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.SignUp
                     ToastUtil.showShortToastCenter("请先填写手机号码")
                     return
                 }
-                if (!PhoneUtil.isMobileNO(content)) {
+                if (!PhoneUtil.isMobileLength(content)) {
                     ToastUtil.showShortToastCenter("手机号码格式不正确")
+                    return
                 }
                 presenter.sendCode(1,content)
             }
@@ -60,6 +61,10 @@ class ChangePhoneActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.SignUp
 
                 if (TextUtils.isEmpty(content)) {
                     ToastUtil.showShortToastCenter("请先填写手机号码")
+                    return
+                }
+                if (!PhoneUtil.isMobileLength(content)) {
+                    ToastUtil.showShortToastCenter("手机号码格式不正确")
                     return
                 }
                 if (TextUtils.isEmpty(code)) {

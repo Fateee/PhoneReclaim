@@ -96,8 +96,9 @@ class BindPhoneForThirdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV
                     ToastUtil.showShortToastCenter("请先填写手机号码")
                     return
                 }
-                if (!PhoneUtil.isMobileNO(content)) {
+                if (!PhoneUtil.isMobileLength(content)) {
                     ToastUtil.showShortToastCenter("手机号码格式不正确")
+                    return
                 }
                 presenter.sendCode(3,content)
             }
@@ -108,6 +109,10 @@ class BindPhoneForThirdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV
                 var code = reset_pwd_vercode.mItemEdit.text.toString()
                 if (TextUtils.isEmpty(content)) {
                     ToastUtil.showShortToastCenter("请先填写手机号码")
+                    return
+                }
+                if (!PhoneUtil.isMobileLength(content)) {
+                    ToastUtil.showShortToastCenter("手机号码格式不正确")
                     return
                 }
                 if (TextUtils.isEmpty(code)) {

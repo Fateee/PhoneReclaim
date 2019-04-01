@@ -392,11 +392,11 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
     override fun initDatas() {
         pm = applicationContext.packageManager
         mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        mGRAVITY = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
-        PROXIMITY = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
-        LIGHT = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
-        ORIENTATION = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION)
-        COMPASS = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+        mGRAVITY = mSensorManager!!.getDefaultSensor(Sensor.TYPE_GRAVITY)
+        PROXIMITY = mSensorManager!!.getDefaultSensor(Sensor.TYPE_PROXIMITY)
+        LIGHT = mSensorManager!!.getDefaultSensor(Sensor.TYPE_LIGHT)
+        ORIENTATION = mSensorManager!!.getDefaultSensor(Sensor.TYPE_ORIENTATION)
+        COMPASS = mSensorManager!!.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
         changeFragment(mFirstFragment)
 //        doWifiTest()
@@ -481,25 +481,25 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
     private fun doDistanceSensorTest() {
         val hasProxSensor = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY)
         if (!hasProxSensor) mCheckReqBody.proximitySenso = 1
-        mSensorManager.registerListener(this,PROXIMITY,SensorManager.SENSOR_DELAY_FASTEST)
+        mSensorManager?.registerListener(this,PROXIMITY,SensorManager.SENSOR_DELAY_FASTEST)
 
     }
 
     private fun doLightSensorTest() {
         val hasLightSensor = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_LIGHT)
         if (!hasLightSensor) mCheckReqBody.lightSensor = 1
-        mSensorManager.registerListener(this,LIGHT,SensorManager.SENSOR_DELAY_FASTEST)
+        mSensorManager?.registerListener(this,LIGHT,SensorManager.SENSOR_DELAY_FASTEST)
     }
 
     private fun doOrientationSensorTest() {
         mCheckReqBody.spiritLevel = 1
-        mSensorManager.registerListener(this,ORIENTATION,SensorManager.SENSOR_DELAY_FASTEST)
+        mSensorManager?.registerListener(this,ORIENTATION,SensorManager.SENSOR_DELAY_FASTEST)
     }
 
     private fun doCompassTest() {
         val hasCompass = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_COMPASS)
         if (!hasCompass) mCheckReqBody.compass = 1
-        mSensorManager.registerListener(this,COMPASS,SensorManager.SENSOR_DELAY_FASTEST)
+        mSensorManager?.registerListener(this,COMPASS,SensorManager.SENSOR_DELAY_FASTEST)
     }
 
     private fun checkLocationPermission() : Boolean {
@@ -526,11 +526,11 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
             return
         }
         // 获取所有可用的位置提供器
-        var providerList = locationManager?.getProviders(true);
+        var providerList = locationManager?.getProviders(true)
         // 测试一般都在室内，这里颠倒了书上的判断顺序
         var provider = when {
-            providerList.contains(LocationManager.NETWORK_PROVIDER) -> LocationManager.NETWORK_PROVIDER
-            providerList.contains(LocationManager.GPS_PROVIDER) -> LocationManager.GPS_PROVIDER
+            providerList?.contains(LocationManager.NETWORK_PROVIDER)!! -> LocationManager.NETWORK_PROVIDER
+            providerList?.contains(LocationManager.GPS_PROVIDER)!! -> LocationManager.GPS_PROVIDER
             else -> {
                 // 当没有可用的位置提供器时，弹出Toast提示用户
                 ToastUtil.showShortToast("Please Open Your GPS or Location Service")
@@ -559,7 +559,7 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
             }
             PermissionUtils.checkFingerPermission(this@HandCheckActivity, object : PermissionUtils.Callback() {
                 override fun onGranted() {
-                    if (fingerprintManager == null || !fingerprintManager.isHardwareDetected()) {
+                    if (fingerprintManager == null || !(fingerprintManager as FingerprintManager).isHardwareDetected()) {
                         mCheckReqBody.fingerprint = 1
                     } else {
                         mCheckReqBody.fingerprint = 0

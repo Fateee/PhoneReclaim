@@ -49,6 +49,10 @@ class SignUpActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.SignUpIv {
                     || TextUtils.isEmpty(pwd)) {
                     return
                 }
+                if (!PhoneUtil.isMobileLength(signup_phone_et.text.toString())) {
+                    ToastUtil.showShortToastCenter("手机号码格式不正确")
+                    return
+                }
                 if (pwd.length !in 6..20) {
                     ToastUtil.showShortToastCenter("密码需为6-20位字母或数字")
                     return
@@ -63,8 +67,9 @@ class SignUpActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.SignUpIv {
                     ToastUtil.showShortToastCenter("请先填写手机号码")
                     return
                 }
-                if (!PhoneUtil.isMobileNO(signup_phone_et.text.toString())) {
+                if (!PhoneUtil.isMobileLength(signup_phone_et.text.toString())) {
                     ToastUtil.showShortToastCenter("手机号码格式不正确")
+                    return
                 }
                 presenter.sendCode(1,signup_phone_et.text.toString())
             }

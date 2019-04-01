@@ -13,6 +13,13 @@ public class PhoneUtil {
         }
     }
 
+    public static boolean isMobileLength(String mobiles) {
+        if (TextUtils.isEmpty(mobiles)) {
+            return false;
+        } else {
+            return mobiles.length() == 11;
+        }
+    }
     public static String hidePhoneNum(String phone) {
         if (TextUtils.isEmpty(phone)) return "";
         String phone_s = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");

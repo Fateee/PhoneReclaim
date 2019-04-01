@@ -51,8 +51,9 @@ class ForgetPwdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV.SignUpI
                     ToastUtil.showShortToastCenter("请先填写手机号码")
                     return
                 }
-                if (!PhoneUtil.isMobileNO(content)) {
+                if (!PhoneUtil.isMobileLength(content)) {
                     ToastUtil.showShortToastCenter("手机号码格式不正确")
+                    return
                 }
                 presenter.sendCode(2,content)
             }
@@ -64,6 +65,10 @@ class ForgetPwdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV.SignUpI
                 var pwd = reset_pwd_pwd.mItemEdit.text.toString()
                 if (TextUtils.isEmpty(content)) {
                     ToastUtil.showShortToastCenter("请先填写手机号码")
+                    return
+                }
+                if (!PhoneUtil.isMobileLength(content)) {
+                    ToastUtil.showShortToastCenter("手机号码格式不正确")
                     return
                 }
                 if (TextUtils.isEmpty(code)) {

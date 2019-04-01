@@ -65,8 +65,9 @@ class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV,C
                     ToastUtil.showShortToastCenter("请输入登录手机号码")
                     return
                 }
-                if (!PhoneUtil.isMobileNO(login_phone_et.text.toString())) {
+                if (!PhoneUtil.isMobileLength(login_phone_et.text.toString())) {
                     ToastUtil.showShortToastCenter("手机号码格式不正确")
+                    return
                 }
                 presenter.loginAction(login_phone_et?.text.toString(), login_pwd_et?.text.toString())
 //                presenter.loginAction("admin", "123456")
