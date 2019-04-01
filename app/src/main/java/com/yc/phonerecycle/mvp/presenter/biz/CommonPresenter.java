@@ -553,7 +553,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
-    private void getSystemToekn(String userId, String openID) {
+    public void getSystemToekn(String userId, String openID) {
         if (getView() == null) return;
         GetTokenReqBody body = new GetTokenReqBody();
         body.userId = userId;
@@ -646,18 +646,17 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 });
     }
 
-    public void register(String code, String password, String phone, String referrer) {
+    public void register(String code, String openId, String password, String phone, String referrer) {
         if (getView() == null) return;
         getView().showLoading();
-        RegisterReqBody info = new RegisterReqBody(code, password, phone, referrer);
+        RegisterReqBody info = new RegisterReqBody(code,openId, password, phone, referrer);
         mCommonRequest.register(info)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RequestObserver<Response<StringDataRep>>() {
-                    
+                .subscribe(new RequestObserver<Response<RegisterRep>>() {
 
                     @Override
-                    public void onResponse(Response<StringDataRep> value) {
+                    public void onResponse(Response<RegisterRep> value) {
                         getView().dismissLoading();
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
@@ -671,8 +670,6 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                         getView().dismissLoading();
                         ((CommonBaseIV.SignUpIv) getView()).registerError(e.getMessage());
                     }
-
-                    
                 });
     }
 

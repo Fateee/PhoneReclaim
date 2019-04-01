@@ -13,9 +13,10 @@ public class RegisterReqBody {
     private String password;
     private String phone;
     private String referrer;
-
-    public RegisterReqBody(String code, String password, String phone, String referrer) {
+    public String openId;
+    public RegisterReqBody(String code, String openId, String password, String phone, String referrer) {
         this.code = code;
+        this.openId = openId;
         this.password = password;
         this.phone = phone;
         this.referrer = referrer;

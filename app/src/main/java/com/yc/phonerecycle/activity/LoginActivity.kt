@@ -116,7 +116,7 @@ class LoginActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.LoginViewIV,C
         map["openid"] = openID
         map["type"] = type
         ActivityToActivity.toActivity(
-            this@LoginActivity, BindPhoneForThirdActivity::class.java,map,BaseConst.REQUEST_BIND_PHONE)
+            this@LoginActivity, SignUpActivity::class.java,map,BaseConst.REQUEST_BIND_PHONE)
     }
 
 //    override fun loginWX(
