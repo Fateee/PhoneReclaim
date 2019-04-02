@@ -554,7 +554,9 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     }
 
     public void getSystemToekn(String userId, String openID) {
-        if (getView() == null) return;
+        if (getView() != null) {
+            getView().showLoading();
+        }
         GetTokenReqBody body = new GetTokenReqBody();
         body.userId = userId;
         body.openId = openID;
@@ -562,15 +564,16 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RequestObserver<Response<LoginRep>>() {
-                    
 
                     @Override
                     public void onResponse(Response<LoginRep> value) {
-                        getView().dismissLoading();
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             UserInfoUtils.cleanUser();
                             UserInfoUtils.saveUser(value.body());
+                            if (getView() != null) {
+                                getView().dismissLoading();
+                            }
                             ((CommonBaseIV.LoginViewIV) getView()).loginResponse(value.body());
                         }
                     }
@@ -578,7 +581,9 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onError(Throwable e) {
                         Log.w(TAG, "onError : " + e.getMessage());
-                        getView().dismissLoading();
+                        if (getView() != null) {
+                            getView().dismissLoading();
+                        }
                     }
 
                     
@@ -647,8 +652,9 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
     }
 
     public void register(String code, String openId, String password, String phone, String referrer) {
-        if (getView() == null) return;
-        getView().showLoading();
+        if (getView() != null) {
+            getView().showLoading();
+        }
         RegisterReqBody info = new RegisterReqBody(code,openId, password, phone, referrer);
         mCommonRequest.register(info)
                 .subscribeOn(Schedulers.io())
@@ -657,7 +663,9 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onResponse(Response<RegisterRep> value) {
-                        getView().dismissLoading();
+                        if (getView() != null) {
+                            getView().dismissLoading();
+                        }
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.SignUpIv) getView()).registerSuccess(value.body());
@@ -667,7 +675,9 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onError(Throwable e) {
                         Log.w(TAG, "onError : " + e.getMessage());
-                        getView().dismissLoading();
+                        if (getView() != null) {
+                            getView().dismissLoading();
+                        }
                         ((CommonBaseIV.SignUpIv) getView()).registerError(e.getMessage());
                     }
                 });

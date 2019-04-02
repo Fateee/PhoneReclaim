@@ -23,7 +23,7 @@ class SignUpActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.SignUpIv,Co
     override fun loginResponse(data: Any?) {
         if (data is LoginRep) {
             if(data.code == 0) {
-                ToastUtil.showShortToastCenter("注册成功")
+                ToastUtil.showShortToastCenter("注册成功,即将进入主页")
                 var intent = Intent()
                 intent.putExtra("result",true)
                 setResult(BaseConst.REQUEST_BIND_PHONE,intent)
