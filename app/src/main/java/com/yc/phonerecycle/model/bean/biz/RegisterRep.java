@@ -33,7 +33,7 @@ public class RegisterRep extends BaseRep {
          */
 
         public String accessToken;
-        public int expiresIn;
+        public long expiresIn;
         public String gender;
         public String logo;
         public String nickName;
