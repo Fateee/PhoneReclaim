@@ -6,7 +6,9 @@ import android.os.Handler
 import android.os.Message
 import android.support.v7.app.AlertDialog
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
+import android.widget.ImageSwitcher
 import com.yc.phonecheck.views.BorderTouchView
 import com.yc.phonecheck.views.OnTouchChangedListener
 import com.yc.phonerecycle.R
@@ -16,10 +18,52 @@ import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.biz.DictMapRep
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
+import com.yc.phonerecycle.utils.ToastUtil
 import kotlinx.android.synthetic.main.test_item.*
 
 
-class LcdTestFragment : BaseFragment<EmptyPresenter>() {
+class LcdTestFragment : BaseFragment<EmptyPresenter>(), View.OnTouchListener {
+    private var downX: Float=0f
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        if (screen_container.visibility != View.VISIBLE) return true
+        when (event?.getAction()) {
+            MotionEvent.ACTION_DOWN ->{
+                //手指按下的X坐标
+                downX = event.getX();
+            }
+            MotionEvent.ACTION_UP -> {
+                var lastX = event.getX();
+                //抬起的时候的X坐标大于按下的时候就显示上一张图片
+                if(lastX > downX){
+                    if(mColorIndex > 0){
+                        //设置动画，这里的动画比较简单，不明白的去网上看看相关内容
+//                        mImageSwitcher.setInAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.left_in));
+//                        mImageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.right_out));
+                        mColorIndex --
+                        vc.setBackgroundResource(COLORS[mColorIndex])
+                    }else{
+                        ToastUtil.showShortToastCenter("已经是第一张");
+                    }
+                }
+
+                if(lastX < downX){
+                    if(mColorIndex < COLORS.size - 1){
+//                        mImageSwitcher.setInAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.right_in));
+//                        mImageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.lift_out));
+                        mColorIndex ++ ;
+                        vc.setBackgroundResource(COLORS[mColorIndex])
+                    }else{
+                        ToastUtil.showShortToastCenter("已经是最后一张");
+                    }
+                }
+            }
+        }
+
+        return true;
+
+    }
+
     private val COLORS = intArrayOf(
         R.drawable.bg_screen_one,
         R.drawable.bg_screen_two,
@@ -48,6 +92,7 @@ class LcdTestFragment : BaseFragment<EmptyPresenter>() {
         if(view == null) return
         vc = view?.findViewById(R.id.lcd_color)
         vt = view?.findViewById(R.id.lcd_text)
+        vc.setOnTouchListener(this@LcdTestFragment)
     }
 
     override fun initData() {
@@ -67,7 +112,8 @@ class LcdTestFragment : BaseFragment<EmptyPresenter>() {
             }
             COLORS.size -> {
                 //            setButtonVisibility(true);
-                vc.visibility = View.GONE
+//                vc.visibility = View.GONE
+                mColorIndex = COLORS.size - 1
                 screen_container.setVisibility(View.VISIBLE)
                 shadow.setOnClickListener {
                     shadow.toggle()
