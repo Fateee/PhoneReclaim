@@ -1778,6 +1778,37 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     }
                 });
     }
+
+    public void getGoodsByName(String name) {
+//        if (getView() != null) {
+//            getView().showLoading();
+//        }
+        mCommonRequest.getGoodsByName(name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RequestObserver<Response<StringDataRep>>() {
+
+                    @Override
+                    public void onResponse(Response<StringDataRep> value) {
+//                        if (getView() != null) {
+//                            getView().dismissLoading();
+//                        }
+                        Log.i(TAG, "value.code() == " + value.code());
+                        if (value.code() == 200 && value.body() != null ) {
+                            ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError : " + e.getMessage());
+//                        if (getView() != null) {
+//                            getView().dismissLoading();
+//                        }
+                    }
+                });
+    }
+
     private DivisionListener divisionListener;
 
     public void setDivisionListener(DivisionListener divisionListener) {

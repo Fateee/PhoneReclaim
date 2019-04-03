@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +18,7 @@ import com.yc.phonerecycle.R;
 import com.yc.phonerecycle.utils.DensityUtil;
 
 public class BorderTouchView extends View {
-
+    private static final String TAG = "BorderTouchView";
     private float textWidth;
     private final int screenWidht;
     private Paint mPaint;
@@ -36,7 +37,7 @@ public class BorderTouchView extends View {
     private boolean mAllFlags[][];
     private int yCount;
     private int xCount;
-    public int count_down_time = 45;
+    public int count_down_time = 75;
     String text="单指在屏幕上滑动填满所有色块(%dS)";
     @SuppressLint("HandlerLeak")
     private static Handler mHandler = new Handler() {
@@ -55,8 +56,7 @@ public class BorderTouchView extends View {
         super(context, attrs);
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
-        mRectWidth = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 40, dm);
+        mRectWidth = DensityUtil.dip2px(25);
 //        mRectWidth = (int) dm.density * 16;
         mRectHeight = mRectWidth;
 
@@ -110,7 +110,7 @@ public class BorderTouchView extends View {
                 r = (j == xCount - 1) ? w : l + mRectWidth;
                 t = mRectHeight * i;
                 b = (i == yCount -1) ? h : t + mRectHeight;
-                mAll[i][j] = new Rect(l + 1, t + 1, r - 1, b - 1);
+                mAll[i][j] = new Rect(l , t , r , b );
                 mAllFlags[i][j] = false;
             }
         }
@@ -149,14 +149,14 @@ public class BorderTouchView extends View {
 
         mX = x;
         mY = y;
-
-        if (mDistanceValid) {
-            mDistanceValid = dx < mMaxDistance && dy < mMaxDistance;
-        }
-
-        if (mDistanceValid) {
-            setBorderFlag(x, y);
-        }
+//        Log.i(TAG,"before mDistanceValid == "+mDistanceValid+" dx == "+dx+" dy == "+dy+" mMaxDistance == "+mMaxDistance);
+//        if (mDistanceValid) {
+//            mDistanceValid = dx < mMaxDistance && dy < mMaxDistance;
+//        }
+//        Log.i(TAG,"after mDistanceValid == "+mDistanceValid+" dx == "+dx+" dy == "+dy+" mMaxDistance == "+mMaxDistance);
+//        if (mDistanceValid) {
+//        }
+        setBorderFlag(x, y);
     }
 
     private void touchUp() {

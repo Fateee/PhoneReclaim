@@ -29,7 +29,9 @@ import android.location.LocationListener
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.Handler
+import android.view.MotionEvent
 import android.view.View
+import android.view.WindowManager
 import com.google.gson.Gson
 import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
 import com.yc.phonecheck.item.CallTest
@@ -189,6 +191,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 
     //arrayOf("无线网络","蓝牙","重力感应器","距离感应器","光线感应器","水平仪","指南针","定位","指纹","麦克风","扬声器","闪光灯","振动器","摄像头")
     override fun initDatas() {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         pm = applicationContext.packageManager
         mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         mGRAVITY = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
@@ -207,7 +210,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
             checkResult.wifi = if (ret) { 0 } else { 1 }
             initView()
             doBlueToothTest()
-        },2500)
+        },2000)
     }
 
 
@@ -218,7 +221,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
             checkResult.bluetooth = if (ret) { 0 } else { 1 }
             initView()
             doGravitySensorTest()
-        },2500)
+        },2000)
     }
 
     private fun doGravitySensorTest() {
@@ -234,7 +237,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     private fun doDistanceSensorTest() {
         mHandler.postDelayed({
             initView()
-            doLightSensorTest()},3000)
+            doLightSensorTest()},2500)
         val hasProxSensor = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_PROXIMITY)
         if (!hasProxSensor) checkResult.proximitySenso = 1
         mSensorManager.registerListener(this,PROXIMITY,SensorManager.SENSOR_DELAY_FASTEST)
@@ -251,14 +254,14 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 
     private fun doOrientationSensorTest() {
         mHandler.postDelayed({ initView()
-            doCompassTest()},3000)
+            doCompassTest()},2500)
         checkResult.spiritLevel = 1
         mSensorManager.registerListener(this,ORIENTATION,SensorManager.SENSOR_DELAY_FASTEST)
     }
 
     private fun doCompassTest() {
         mHandler.postDelayed({ initView()
-            doLocationTest()},3000)
+            doLocationTest()},2500)
         val hasCompass = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_COMPASS)
         if (!hasCompass) checkResult.compass = 1
         mSensorManager.registerListener(this,COMPASS,SensorManager.SENSOR_DELAY_FASTEST)
@@ -274,7 +277,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         mHandler.postDelayed({
             initView()
             locationManager?.removeUpdates(locationListener)
-            doFingerTest()},6000)
+            doFingerTest()},3000)
         val haslocation = pm.hasSystemFeature(PackageManager.FEATURE_LOCATION)
         if (!haslocation) checkResult.location = 1
         if (Build.VERSION.SDK_INT >= 23) {// android6 执行运行时权限
@@ -404,7 +407,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     fun touchTest() {
         ic_rorato.visibility = View.GONE
         checkResult.multiTouch = 1
-        mHandler.postDelayed(lcdTestRunnable,45*1000)
+        mHandler.postDelayed(lcdTestRunnable,75*1000)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.screen_check_layout,mTouchTest)
         transaction.commit()

@@ -10,13 +10,17 @@ import android.os.storage.StorageVolume
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.support.v4.content.FileProvider
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import com.bumptech.glide.Glide
 import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
 import com.snail.antifake.deviceid.macaddress.MacAddressUtils
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.*
+import com.yc.phonerecycle.constant.UrlConst
 import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
+import com.yc.phonerecycle.model.bean.biz.StringDataRep
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseActivity
@@ -47,6 +51,11 @@ class HomeFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV{
                 ActivityToActivity.toActivity(
                     activity, AutoCheckActivity::class.java,goodMap)
             }
+        } else if(rep is StringDataRep) {
+            if (!TextUtils.isEmpty(rep.data)) {
+                var url = UrlConst.FILE_DOWNLOAD_URL+rep.data
+                Glide.with(activity as Context).load(url).into(home_header_logo)
+            }
         }
     }
 
@@ -60,6 +69,7 @@ class HomeFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV{
     }
 
     override fun initData() {
+        presenter.getGoodsByName(Build.MODEL)
         phone_model.text = Build.MODEL
         phone_storage.text = DeviceUtil.getTotalRomSize()
         pingpai_value.text = Build.BRAND

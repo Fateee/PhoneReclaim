@@ -241,4 +241,7 @@ public interface CommonRequest {
 
     @GET("v1/config/getConfigPriceSystemByName")
     Observable<Response<ConfigPriceRep>> getConfigPriceSystemByName(@Query("name") String name);
+
+    @GET("v1/index/getGoodsByName")
+    Observable<Response<StringDataRep>> getGoodsByName(@Query("name") String name);
 }
