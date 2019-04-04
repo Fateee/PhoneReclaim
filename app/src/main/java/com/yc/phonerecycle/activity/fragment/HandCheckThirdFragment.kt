@@ -118,6 +118,7 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
             var setItemLayout = SetItemLayout(activity)
             var params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DensityUtil.dip2px(50f))
             params.topMargin = DensityUtil.dip2px(10f)
+            setItemLayout.setTitleWidth(DensityUtil.dip2px(110f).toFloat())
             setItemLayout.layoutParams = params
             setItemLayout.setBackgroundResource(R.drawable.hand_check_bg)
             setItemLayout.title = temp.name
@@ -187,7 +188,10 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
         for (i in 0 until config_container.childCount) {
             var v = config_container.getChildAt(i)
             if (v is SetItemLayout) {
-                if (v.tag == null) return false
+                if (v.tag == null) {
+                    ToastUtil.showShortToastCenter("必须全部选择后才能继续")
+                    return false
+                }
                 var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
 //                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
                 when (bean.code) {

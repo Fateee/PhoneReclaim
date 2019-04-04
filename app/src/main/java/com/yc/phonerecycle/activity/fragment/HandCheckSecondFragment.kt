@@ -103,6 +103,7 @@ class HandCheckSecondFragment : BaseFragment<CommonPresenter>() {
 //                params.width = LinearLayout.LayoutParams.MATCH_PARENT
 //                params.height = DensityUtil.dip2px(50f)
                 params.topMargin = DensityUtil.dip2px(10f)
+                setItemLayout.setTitleWidth(DensityUtil.dip2px(110f).toFloat())
                 setItemLayout.layoutParams = params
                 setItemLayout.setBackgroundResource(R.drawable.hand_check_bg)
                 setItemLayout.title = temp.name

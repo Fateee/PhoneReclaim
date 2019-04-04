@@ -616,7 +616,10 @@ class HandCheckActivity : BaseCheckActivity<EmptyPresenter>() , SensorEventListe
             for (i in 0 until config_container.childCount) {
                 var v = config_container.getChildAt(i)
                 if (v is SetItemLayout) {
-                    if (v.tag == null) return false
+                    if (v.tag == null) {
+                        ToastUtil.showShortToastCenter("必须全部选择后才能继续")
+                        return false
+                    }
                     var bean = v.tag as ConfigPriceRep.DataBean.ConfigPriceSystemVOsBean.ChildsBeanX
 //                    var bean = v.tag as ConfigPriceTempRep.ConfigPriceSystemVOsBean.ChildsBean
                     when (bean.code) {

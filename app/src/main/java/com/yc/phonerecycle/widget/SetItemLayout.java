@@ -121,7 +121,7 @@ public class SetItemLayout extends LinearLayout {
         mItemName.setTextColor(titleColor);
     }
 
-    private void setTitleWidth(float titleWidth) {
+    public void setTitleWidth(float titleWidth) {
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mItemName.getLayoutParams();
         params.width = (int) titleWidth;
         mItemName.setLayoutParams(params);
