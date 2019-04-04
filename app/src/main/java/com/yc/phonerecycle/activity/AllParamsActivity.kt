@@ -2,6 +2,8 @@ package com.yc.phonerecycle.activity
 
 import android.bluetooth.BluetoothManager
 import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.telephony.TelephonyManager
@@ -18,6 +20,7 @@ import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
 import android.os.BatteryManager
+import android.provider.MediaStore.Images.ImageColumns.ORIENTATION
 import android.text.format.Formatter
 import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
 import com.yc.phonerecycle.utils.*
@@ -103,7 +106,13 @@ class AllParamsActivity : BaseActivity<CommonPresenter>() {
         battery_value.text = DeviceUtil.getBatteryLevel().toString()+"%"
         os_value.text = Build.VERSION.RELEASE
 
-        gravity_value.text = if (CameraUtils.isSupportGravity(applicationContext)) {
+        var mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        var mGRAVITY = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
+        var PROXIMITY = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
+        var LIGHT = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+        var COMPASS = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+
+        gravity_value.text = if (mGRAVITY!=null) {
             "支持"
         } else {
             "不支持"
@@ -113,17 +122,17 @@ class AllParamsActivity : BaseActivity<CommonPresenter>() {
         } else {
             "不支持"
         }
-        light_value.text = if (CameraUtils.isSupportSensorLight(applicationContext)) {
+        light_value.text = if (CameraUtils.isSupportSensorLight(applicationContext)|| LIGHT != null) {
             "支持"
         } else {
             "不支持"
         }
-        compass_value.text = if (CameraUtils.isSupportCompass(applicationContext)) {
+        compass_value.text = if (CameraUtils.isSupportCompass(applicationContext) || COMPASS!=null) {
             "支持"
         } else {
             "不支持"
         }
-        distance_value.text = if (CameraUtils.isSupportDistance()) {
+        distance_value.text = if (CameraUtils.isSupportDistance() || PROXIMITY!=null) {
             "支持"
         } else {
             "不支持"

@@ -29,6 +29,7 @@ import android.location.LocationListener
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
@@ -172,13 +173,13 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_GRAVITY){
-//            ToastUtil.showShortToast("TYPE_GRAVITY: "+event.values[0])
+//            ToastUtil.showShortToast("当前重力感应值: "+event.values[0])
             checkResult.gravitySensor = 0
         }else if (event?.sensor?.type == Sensor.TYPE_PROXIMITY) {
-//            ToastUtil.showShortToast("Distance: "+event.values[0])
+//            ToastUtil.showShortToast("当前距离感应值: "+event.values[0])
             checkResult.proximitySenso = 0
         } else if (event?.sensor?.type == Sensor.TYPE_LIGHT ) {
-//            ToastUtil.showShortToast("Light: "+event.values[0])
+//            ToastUtil.showShortToast("当前光线强度为: "+event.values[0])
             checkResult.lightSensor = 0
         } else if (event?.sensor?.type == Sensor.TYPE_ORIENTATION) {
 //            ToastUtil.showShortToast("spiritLevel: "+event.values[0])
@@ -199,6 +200,10 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         LIGHT = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
         ORIENTATION = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION)
         COMPASS = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+//        var sensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
+//        for (sensor in sensorList) {
+//            Log.i("sensor", "onResume: "+sensor.getName());
+//        }
         doWifiTest()
 //        doGravitySensorTest()
     }
@@ -229,8 +234,10 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
             initView()
             doDistanceSensorTest()
         },2500)
-        checkResult.gravitySensor = if (CameraUtils.isSupportGravity(BaseApplication.getAppContext())) {0} else {1}
-//        mSensorManager.registerListener(this,mGRAVITY,SensorManager.SENSOR_DELAY_FASTEST)
+//        checkResult.gravitySensor = if (CameraUtils.isSupportGravity(BaseApplication.getAppContext())) {0} else {1}
+//        if (!hasProxSensor) checkResult.proximitySenso = 1
+        checkResult.gravitySensor = 1
+        mSensorManager.registerListener(this,mGRAVITY,SensorManager.SENSOR_DELAY_FASTEST)
     }
 
 
@@ -398,7 +405,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 //            doLCDTest()
             touchTest()
         },2500)
-        var ret = CameraUtils.HasBackCamera() !=2 || CameraUtils.HasFrontCamera() != 2
+        var ret = CameraUtils.HasBackCamera() !=2 && CameraUtils.HasFrontCamera() != 2
         checkResult.camera = if (ret) {0} else {1}
     }
 
@@ -410,7 +417,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         mHandler.postDelayed(lcdTestRunnable,75*1000)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.screen_check_layout,mTouchTest)
-        transaction.commit()
+        transaction.commitAllowingStateLoss()
     }
 
     var lcdTestRunnable = object : Runnable{
@@ -425,21 +432,21 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         mHandler.removeCallbacks(lcdTestRunnable)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.screen_check_layout,mLCDTest)
-        transaction.commit()
+        transaction.commitAllowingStateLoss()
     }
 
     private var mCallTest = CallTestFragment()
     fun doCallTest() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.screen_check_layout,mCallTest)
-        transaction.commit()
+        transaction.commitAllowingStateLoss()
     }
 
     var mThirdFragment = HandCheckThirdFragment()
     fun doHandCheck() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.screen_check_layout,mThirdFragment)
-        transaction.commit()
+        transaction.commitAllowingStateLoss()
     }
 
     //LocationListener 用于当位置信息变化时由 locationManager 调用
@@ -474,6 +481,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     }
 
     override fun onDestroy() {
+        mHandler.removeCallbacks(lcdTestRunnable)
         mHandler.removeCallbacksAndMessages(null)
         mSensorManager?.unregisterListener(this)
         super.onDestroy()

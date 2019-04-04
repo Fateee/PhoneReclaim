@@ -21,6 +21,7 @@ public class BorderTouchView extends View {
     private static final String TAG = "BorderTouchView";
     private float textWidth;
     private final int screenWidht;
+    private final int screenHeight;
     private Paint mPaint;
 
     private OnTouchChangedListener mListener;
@@ -56,7 +57,7 @@ public class BorderTouchView extends View {
         super(context, attrs);
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
-        mRectWidth = DensityUtil.dip2px(25);
+        mRectWidth = DensityUtil.dip2px(20);
 //        mRectWidth = (int) dm.density * 16;
         mRectHeight = mRectWidth;
 
@@ -69,6 +70,7 @@ public class BorderTouchView extends View {
         mPaint.setTextSize(DensityUtil.dip2px(15));
         textWidth = mPaint.measureText(text);
         screenWidht = dm.widthPixels;
+        screenHeight = dm.heightPixels;
     }
 
     public void setOnTouchChangedListener(OnTouchChangedListener listener) {
@@ -134,7 +136,7 @@ public class BorderTouchView extends View {
         String localtext = String.format(text, count_down_time);
         textWidth = mPaint.measureText(localtext);
         float x =  (screenWidht - textWidth)/2;
-        canvas.drawText(localtext,x,530,mPaint);
+        canvas.drawText(localtext,x,screenHeight/2,mPaint);
     }
 
     private void touchDown(int x, int y) {
