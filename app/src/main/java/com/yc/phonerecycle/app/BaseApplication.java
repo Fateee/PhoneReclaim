@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.yc.phonerecycle.constant.BaseConst;
@@ -53,6 +55,8 @@ public class BaseApplication extends MultiDexApplication {
 //        initARouter();
 //        initLogger();
 //        initCrashManage();
+//        CrashReport.initCrashReport(getApplicationContext(),"b9d46e44d4",false);
+        Bugly.init(getApplicationContext(),"b9d46e44d4",true);
         UMConfigure.init(this,"5c8370ee3fc19556f5000b08","umeng",UMConfigure.DEVICE_TYPE_PHONE,"");//58edcfeb310c93091c000be2 5965ee00734be40b580001a0
 
         PlatformConfig.setWeixin(BaseConst.WEIXIN_APPID, BaseConst.WEIXIN_SERCET);
