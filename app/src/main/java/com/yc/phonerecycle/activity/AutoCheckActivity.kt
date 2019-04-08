@@ -364,7 +364,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         if (hasMicrophone) {
             PermissionUtils.checkRecordPermission(this@AutoCheckActivity, object : PermissionUtils.Callback() {
                 override fun onGranted() {
-                    ToastUtil.showShortToast("正在录音...")
+                    ToastUtil.showShortToast("麦克风正在录音...")
                     var ret = mAudioRecoderUtils.startRecord()
                     checkResult.microphone = if (ret) {0} else {1}
                 }
@@ -385,7 +385,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         mHandler.postDelayed({ initView()
             mAudioRecoderUtils.playEndOrFail(false)
             doFlashLightTest()},5000)
-        ToastUtil.showShortToast("正在播放录音...")
+        ToastUtil.showShortToast("正在播放录音,请调大音量...")
         var ret = mAudioRecoderUtils.startPlay()
 //        var ret = CheckPhoneUtil.doSpeakerTest()
         checkResult.loudspeaker = if (ret) {0} else {1}
