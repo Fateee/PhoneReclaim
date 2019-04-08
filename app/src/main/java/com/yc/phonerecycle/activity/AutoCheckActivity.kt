@@ -386,9 +386,8 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
             mAudioRecoderUtils.playEndOrFail(false)
             doFlashLightTest()},5000)
         ToastUtil.showShortToast("正在播放录音...")
-        //todo
-        mAudioRecoderUtils.playAudio()
-        var ret = CheckPhoneUtil.doSpeakerTest()
+        var ret = mAudioRecoderUtils.startPlay()
+//        var ret = CheckPhoneUtil.doSpeakerTest()
         checkResult.loudspeaker = if (ret) {0} else {1}
         checkOther()
     }

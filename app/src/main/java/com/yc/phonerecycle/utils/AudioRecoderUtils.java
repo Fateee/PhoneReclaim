@@ -177,7 +177,8 @@ public class AudioRecoderUtils {
         return false;
     }
 
-    private void startPlay() {
+    public boolean startPlay() {
+        boolean ret = false;
         try {
             //初始化播放器
             mMediaPlayer = new MediaPlayer();
@@ -206,11 +207,13 @@ public class AudioRecoderUtils {
             //准备及播放
             mMediaPlayer.prepare();
             mMediaPlayer.start();
+            ret = true;
         } catch (IOException e) {
             e.printStackTrace();
             //播放失败正理
             playEndOrFail(false);
         }
+        return ret;
     }
 
     /**

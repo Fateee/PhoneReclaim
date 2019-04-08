@@ -233,6 +233,7 @@ public class ConfigPriceRep extends BaseRep {
         private void addOneHandCheckOption(String name, String code) {
             ConfigPriceSystemVOsBean tmp = new ConfigPriceSystemVOsBean();
             tmp.name = name;
+            tmp.code = code;
             List<ConfigPriceSystemVOsBean.ChildsBeanX> childs = new ArrayList<>();
             ConfigPriceSystemVOsBean.ChildsBeanX tempOne = new ConfigPriceSystemVOsBean.ChildsBeanX();
             tempOne.code=code;

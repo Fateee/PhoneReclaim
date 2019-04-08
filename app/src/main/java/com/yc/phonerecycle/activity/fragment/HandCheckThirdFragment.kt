@@ -122,7 +122,13 @@ class HandCheckThirdFragment : BaseFragment<CommonPresenter>(),CommonBaseIV.save
             setItemLayout.layoutParams = params
             setItemLayout.setBackgroundResource(R.drawable.hand_check_bg)
             setItemLayout.title = temp.name
-            setItemLayout.setSubTitle("请选择")
+            var code = temp.code.toInt()
+            if (code > 12) {
+                setItemLayout.setSubTitle(temp.childs[0].name)
+                setItemLayout.tag = temp.childs[0]
+            } else {
+                setItemLayout.setSubTitle("请选择")
+            }
             setItemLayout.showImageItemTip()
             setItemLayout.hideDivider()
             setItemLayout.setObj(temp)
