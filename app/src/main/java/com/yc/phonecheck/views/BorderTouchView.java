@@ -57,7 +57,7 @@ public class BorderTouchView extends View {
         super(context, attrs);
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
-        mRectWidth = DensityUtil.dip2px(20);
+        mRectWidth = DensityUtil.dip2px(30);
 //        mRectWidth = (int) dm.density * 16;
         mRectHeight = mRectWidth;
 

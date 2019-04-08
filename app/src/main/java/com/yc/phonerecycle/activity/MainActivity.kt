@@ -63,7 +63,8 @@ class MainActivity : BaseActivity<EmptyPresenter>() {
                 Manifest.permission.GET_ACCOUNTS,
                 Manifest.permission.WRITE_APN_SETTINGS,
                 Manifest.permission.USE_FINGERPRINT,
-                Manifest.permission.CAMERA
+                Manifest.permission.CAMERA,
+                Manifest.permission.RECORD_AUDIO
             )
             ActivityCompat.requestPermissions(this, mPermissionList, 123)
         }

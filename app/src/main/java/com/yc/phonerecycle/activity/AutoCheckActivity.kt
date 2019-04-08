@@ -10,10 +10,10 @@ import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
+import android.hardware.*
+import android.hardware.camera2.CameraAccessException
+import android.hardware.camera2.CameraCharacteristics
+import android.hardware.camera2.CameraManager
 import android.hardware.fingerprint.FingerprintManager
 import android.net.wifi.WifiManager
 import android.net.wifi.WifiManager.*
@@ -355,15 +355,39 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
             checkResult.fingerprint = 1
         }
     }
+    var mAudioRecoderUtils = AudioRecoderUtils()
     private fun doMicroTest() {
         mHandler.postDelayed({ initView()
-            doSpeakerTest()},2500)
+            mAudioRecoderUtils.stopRecord()
+            doSpeakerTest()},5000)
         val hasMicrophone = microTest()
-        checkResult.microphone = if (hasMicrophone) {0} else {1}
+        if (hasMicrophone) {
+            PermissionUtils.checkRecordPermission(this@AutoCheckActivity, object : PermissionUtils.Callback() {
+                override fun onGranted() {
+                    ToastUtil.showShortToast("正在录音...")
+                    var ret = mAudioRecoderUtils.startRecord()
+                    checkResult.microphone = if (ret) {0} else {1}
+                }
+                override fun onRationale() {
+                    ToastUtil.showShortToast("请开启录音权限才能正常使用")
+                    checkResult.microphone = 1
+                }
+                override fun onDenied(context: Context) {
+                    showPermissionDialog("开启录音权限","你还没有开启录音权限，开启之后才可录音")
+                    checkResult.microphone = 1
+                }
+            })
+        } else {
+            checkResult.microphone = 1
+        }
     }
     private fun doSpeakerTest() {
         mHandler.postDelayed({ initView()
-            doFlashLightTest()},2500)
+            mAudioRecoderUtils.playEndOrFail(false)
+            doFlashLightTest()},5000)
+        ToastUtil.showShortToast("正在播放录音...")
+        //todo
+        mAudioRecoderUtils.playAudio()
         var ret = CheckPhoneUtil.doSpeakerTest()
         checkResult.loudspeaker = if (ret) {0} else {1}
         checkOther()
@@ -377,11 +401,12 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 
     private fun doFlashLightTest() {
         mHandler.postDelayed({ initView()
-            doVibratorTest()},4000)
+            changeFlashLight(false)
+            doVibratorTest()},2500)
         checkResult.flashlight = 1
         PermissionUtils.checkCameraPermission(this@AutoCheckActivity, object : PermissionUtils.Callback() {
             override fun onGranted() {
-                var ret = openLightOn()
+                var ret = changeFlashLight(true)
                 checkResult.flashlight = if (ret) {0} else {1}
             }
             override fun onRationale() {
@@ -429,6 +454,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     private var mLCDTest = LcdTestFragment()
 
     fun doLCDTest() {
+        DeviceUtil.setIsFullScreen(this@AutoCheckActivity,true)
         mHandler.removeCallbacks(lcdTestRunnable)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.screen_check_layout,mLCDTest)
@@ -437,6 +463,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 
     private var mCallTest = CallTestFragment()
     fun doCallTest() {
+        DeviceUtil.setIsFullScreen(this@AutoCheckActivity,false)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.screen_check_layout,mCallTest)
         transaction.commitAllowingStateLoss()
@@ -494,5 +521,49 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         ActivityToActivity.toActivity(
             this@AutoCheckActivity, CheckResulttActivity::class.java,map)
         finish()
+    }
+
+    private var camera: Camera? = null
+
+    fun changeFlashLight(openOrClose: Boolean) :Boolean {
+        var ret = false
+        //判断API是否大于24（安卓7.0系统对应的API）
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                //获取CameraManager
+                val mCameraManager =
+                    BaseApplication.getAppContext().getSystemService(Context.CAMERA_SERVICE) as CameraManager
+                //获取当前手机所有摄像头设备ID
+                val ids = mCameraManager.cameraIdList
+                for (id in ids) {
+                    val c = mCameraManager.getCameraCharacteristics(id)
+                    //查询该摄像头组件是否包含闪光灯
+                    val flashAvailable = c.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)
+                    val lensFacing = c.get(CameraCharacteristics.LENS_FACING)
+                    if (flashAvailable != null && flashAvailable
+                        && lensFacing != null && lensFacing == CameraCharacteristics.LENS_FACING_BACK) {
+                        //打开或关闭手电筒
+                        mCameraManager.setTorchMode(id, openOrClose)
+                        ret = true
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        } else {
+            try {
+                camera = Camera.open()
+                val parameters = camera?.parameters
+                //打开闪光灯
+                parameters?.flashMode =
+                        if (openOrClose) Camera.Parameters.FLASH_MODE_TORCH else Camera.Parameters.FLASH_MODE_OFF//开启//关闭
+                camera?.parameters = parameters
+                if (!openOrClose) camera?.release()
+                ret = true
+            } catch (e: Exception) {
+
+            }
+        }
+        return ret
     }
 }

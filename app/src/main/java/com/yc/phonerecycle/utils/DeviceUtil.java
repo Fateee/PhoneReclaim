@@ -1,11 +1,16 @@
 package com.yc.phonerecycle.utils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.Camera;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.*;
@@ -13,6 +18,7 @@ import android.os.Process;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.Formatter;
+import android.view.WindowManager;
 import com.yc.phonerecycle.app.BaseApplication;
 
 import java.io.File;
@@ -372,4 +378,20 @@ public final class DeviceUtil {
                     intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
         }
     }
+
+    public static void setIsFullScreen(Activity activity, boolean isFullScreen) {
+        if (isFullScreen) {
+            //设置为全屏
+            activity.getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            //设置为非全屏
+            final WindowManager.LayoutParams attrs = activity.getWindow().getAttributes();
+            attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            activity.getWindow().setAttributes(attrs);
+            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+    }
+
 }

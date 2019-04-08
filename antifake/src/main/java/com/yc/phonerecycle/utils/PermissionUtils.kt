@@ -77,4 +77,8 @@ object PermissionUtils {
         checkPermission(context, callback, Manifest.permission.USE_FINGERPRINT)
     }
 
+    @JvmStatic
+    fun checkRecordPermission(context: Context, callback: Callback?) {
+        checkPermission(context, callback, Manifest.permission.RECORD_AUDIO)
+    }
 }
