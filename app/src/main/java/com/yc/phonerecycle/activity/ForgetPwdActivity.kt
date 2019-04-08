@@ -99,6 +99,8 @@ class ForgetPwdActivity : BaseActivity<CommonPresenter>(),  CommonBaseIV.SignUpI
         if ((data as BaseRep).code == 0) {
             ToastUtil.showShortToastCenter("短信验证码已发送")
             timer.start()
+        } else {
+            ToastUtil.showShortToastCenter(data.info)
         }
     }
 
