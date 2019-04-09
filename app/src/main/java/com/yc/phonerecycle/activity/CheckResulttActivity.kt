@@ -192,6 +192,13 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
                 "1" -> {
                     submit.text="立即回收"
                     custom_phone.visibility = View.VISIBLE
+                    back_home.visibility = View.VISIBLE
+                    back_home.setOnClickListener {
+                        val intent = Intent(this@CheckResulttActivity, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        startActivity(intent)
+                        finish()
+                    }
                 }
                 "4" -> {
                     submit.text="返回主页"

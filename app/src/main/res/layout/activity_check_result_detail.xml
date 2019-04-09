@@ -149,7 +149,19 @@
                     android:textColor="@color/white"
                     android:visibility="gone"
                     android:gravity="center"/>
-
+            <com.yc.phonerecycle.widget.SimpleCornerTextView
+                    android:id="@+id/back_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    app:bgColor="@color/c0168b7"
+                    app:radius="2.5dp"
+                    android:text="返回主页"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    android:gravity="center"/>
             <TextView
                     android:id="@+id/custom_phone"
                     android:layout_width="match_parent"
