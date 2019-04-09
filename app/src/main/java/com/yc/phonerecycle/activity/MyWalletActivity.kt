@@ -22,7 +22,9 @@ class MyWalletActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonIV{
             if (rep.data > 0) {
                 submit.setBackgroundColor(resources.getColor(R.color.c0168b7))
                 submit.isEnabled = true
-//                submit.isClickable = true
+            } else {
+                submit.setBackgroundColor(resources.getColor(R.color.c8e8e8e))
+                submit.isEnabled = false
             }
         } else if (rep is ExistDrawPasswordRep) {
             if (rep.data) {
@@ -54,7 +56,10 @@ class MyWalletActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonIV{
                 presenter.existDrawPassword()
             }
         })
-        presenter.getUserMoney()
     }
 
+    override fun onResume() {
+        presenter.getUserMoney()
+        super.onResume()
+    }
 }
