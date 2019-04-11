@@ -58,7 +58,7 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
                     order_waitcash.visibility = View.GONE
 
                     order_ems_tip.text = "退回物流信息"
-                    order_price_tip.text = "最终回收价："
+//                    order_price_tip.text = "最终回收价："
                 }
                 4->{
                 }
@@ -68,6 +68,14 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
                     order_getby.visibility = View.GONE
                     order_return.visibility = View.GONE
                     order_waitcash.visibility = View.VISIBLE
+                }
+                6->{
+                    order_done.visibility = View.VISIBLE
+                    order_done.text = "待验机"
+                    order_sendby.visibility = View.GONE
+                    order_getby.visibility = View.GONE
+                    order_return.visibility = View.GONE
+                    order_waitcash.visibility = View.GONE
                 }
             }
             order_userinfo_name.text = rep.data.consigneeName

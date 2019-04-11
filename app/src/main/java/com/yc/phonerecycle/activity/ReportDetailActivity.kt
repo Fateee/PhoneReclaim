@@ -85,6 +85,12 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
             tip.append("  "+mCheckReqBody?.regionalName)
         }
         name.text = tip.toString()
+        if (mCheckReqBody?.price != 0) {
+            price.text = getString(R.string.order_price_value,mCheckReqBody?.price.toString())
+            price_tip.text = "(最终回收价)"
+        } else {
+            price.text = getString(R.string.order_price_value,mCheckReqBody?.estimatePrice.toString())
+        }
         //1 有 0无
         addRowView("无线网络",mCheckReqBody?.wifi == 0,"","距离感应器",mCheckReqBody?.proximitySenso ==0,"")
         addRowView("蓝牙",mCheckReqBody?.bluetooth == 0,"","光线感应器",mCheckReqBody?.lightSensor==0,"")

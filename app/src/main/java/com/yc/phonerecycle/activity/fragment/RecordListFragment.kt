@@ -82,11 +82,11 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
 
     override fun lazyLoad() {
         if (context == null) return
-        swipe_refresh_list.setOnRefreshListener(mReefreshListener)
-        rv_list.useDefaultLoadMore()
-        rv_list.setLoadMoreListener(mLoadMoreListener)
+        swipe_refresh_list?.setOnRefreshListener(mReefreshListener)
+        rv_list?.useDefaultLoadMore()
+        rv_list?.setLoadMoreListener(mLoadMoreListener)
         val mGridLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        rv_list.layoutManager = mGridLayoutManager
+        rv_list?.layoutManager = mGridLayoutManager
 
         mRecordListAdapter = RecordListAdapter(context!!)
 
@@ -106,7 +106,7 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
     private fun requestData() {
         var userId = UserInfoUtils.getUserId()
         when (type) {
-            "1" -> {//-1 查询全部 0、已完成 1、待寄出 2、待收货 3、已退回 4、验机 5、待打款
+            "1" -> {//-1 查询全部 0、已完成 1、待寄出 2、待收货 3、已退回 4、验机 5、待打款 6待验机
                 title_view.visibility = View.GONE
                 presenter.getMyOrderList(userId,mStatus)
             }
@@ -122,11 +122,11 @@ class RecordListFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonI
     }
 
     override fun getDataOK(rep: Any?) {
-        swipe_refresh_list.isRefreshing = false
+        swipe_refresh_list?.isRefreshing = false
         if (rep is MyOrderListlRep) {
-            mRecordListAdapter.refreshUI(rep.data,true)
+            mRecordListAdapter?.refreshUI(rep?.data,true)
         } else if (rep is DetectionRep) {
-            mRecordListAdapter.refreshUI(rep.data,true)
+            mRecordListAdapter?.refreshUI(rep?.data,true)
         }else if (rep is BaseRep) {
             if (rep.code == 0) {
                 orderId=""

@@ -87,6 +87,9 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                     5 -> {
                         holder.status.text = "待打款"
                     }
+                    6 -> {
+                        holder.status.text = "待验机"
+                    }
                 }
                 showLogo(temp.logo,holder.icon)
                 var tip = StringBuilder()
@@ -172,6 +175,9 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                     }
                     5 -> {
                         holder.status.text = "待打款"
+                    }
+                    6 -> {
+                        holder.status.text = "待验机"
                     }
                 }
                 showLogo(temp.logo,holder.icon)

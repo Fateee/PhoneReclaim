@@ -176,7 +176,9 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onResponse(Response<LoginRep> value) {
-                        getView().dismissLoading();
+                        if (getView() != null) {
+                            getView().dismissLoading();
+                        }
                         if (value.code() == 200 && value.body() != null) {
                             ((CommonBaseIV.LoginViewIV) getView()).loginResponse(value.body());
                         }
@@ -184,12 +186,16 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
-                        getView().dismissLoading();
+                        if (getView() != null) {
+                            getView().dismissLoading();
+                        }
                     }
 
                     @Override
                     public void onComplete() {
-                        getView().dismissLoading();
+                        if (getView() != null) {
+                            getView().dismissLoading();
+                        }
                     }
                 });
     }
@@ -695,7 +701,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onResponse(Response<StringDataRep> value) {
-                        getView().dismissLoading();
+                        if (getView() != null) getView().dismissLoading();
                         Log.i(TAG, "value.code() == " + value.code());
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.ResetPwdByPhoneIv) getView()).resetPwdByPhoneOK(value.body());
@@ -705,7 +711,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onError(Throwable e) {
                         Log.w(TAG, "onError : " + e.getMessage());
-                        getView().dismissLoading();
+                        if (getView() != null) getView().dismissLoading();
                     }
 
                     
@@ -930,6 +936,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.FeedbakcIV) getView()).addFeedbackOK(value.body());
@@ -938,6 +945,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -958,6 +966,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<AboutUsRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.AboutUsIV) getView()).getAboutUsOK(value.body());
@@ -966,6 +975,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -988,6 +998,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<SaveRecordRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.saveOrUpdateIV) getView()).saveOrUpdate(value.body());
                         }
@@ -1015,6 +1026,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.saveBankCardIV) getView()).saveBankCardOK(value.body());
@@ -1023,6 +1035,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1057,6 +1070,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1093,6 +1107,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1144,6 +1159,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<UserMoneyRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
@@ -1152,6 +1168,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1172,6 +1189,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.MoneyIV) getView()).cashPwdOK(value.body());
@@ -1180,6 +1198,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1200,6 +1219,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.MoneyIV) getView()).saveMoneyBankOK(value.body());
@@ -1208,6 +1228,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1228,6 +1249,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.MoneyIV) getView()).saveMoneyWXOK(value.body());
@@ -1236,6 +1258,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1257,6 +1280,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<NearByShopRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
@@ -1265,6 +1289,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1286,6 +1311,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<ShopDetailRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
@@ -1294,6 +1320,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1314,6 +1341,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<ShopDetailRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
@@ -1322,6 +1350,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1380,6 +1409,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1425,6 +1455,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<OrderDetailRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
@@ -1433,6 +1464,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1453,6 +1485,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<MyOrderListlRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
@@ -1461,6 +1494,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1482,6 +1516,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<MyOrderListlRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
@@ -1490,6 +1525,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1510,6 +1546,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<DetectionRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
@@ -1518,6 +1555,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1538,6 +1576,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<PhoneReportRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
@@ -1546,6 +1585,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1566,6 +1606,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<DetectionRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
@@ -1574,6 +1615,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1594,6 +1636,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<MyOrderDetailRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
@@ -1602,6 +1645,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1623,6 +1667,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
                     @Override
                     public void onResponse(Response<BaseRep> value) {
                         Log.i(TAG, "value.code() == " + value.code());
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         if (value.code() == 200 && value.body() != null ) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
@@ -1631,6 +1676,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) return;
                         getView().dismissLoading();
                         Log.w(TAG, "onError : " + e.getMessage());
                     }
@@ -1794,7 +1840,7 @@ public class CommonPresenter extends BasePresenter<CommonBaseIV> {
 //                            getView().dismissLoading();
 //                        }
                         Log.i(TAG, "value.code() == " + value.code());
-                        if (value.code() == 200 && value.body() != null ) {
+                        if (value.code() == 200 && value.body() != null&&getView() != null) {
                             ((CommonBaseIV.CommonIV) getView()).getDataOK(value.body());
                         }
                     }
