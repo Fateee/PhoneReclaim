@@ -55,6 +55,7 @@ public abstract class RequestObserver<P> implements Observer<P> {
         UserInfoUtils.cleanUserWxTokenRep();
         UserInfoUtils.cleanUserQQTokenRep();
         Intent intent = new Intent(BaseApplication.getAppContext(),LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         BaseApplication.getAppContext().startActivity(intent);
     }
