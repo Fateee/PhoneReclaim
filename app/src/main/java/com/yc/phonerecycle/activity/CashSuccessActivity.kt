@@ -25,11 +25,11 @@ class CashSuccessActivity : BaseActivity<EmptyPresenter>(){
     override fun initView() {
         money_value.text = mMoneyStr
         cash_account.text = getString(R.string.cash_account,mAccount)
-        when(mCashType) {
-            "0"-> {
-                tip.text = "请在我的钱包零钱中查看余额"
-            }
-        }
+//        when(mCashType) {
+//            "0"-> {
+//                tip.text = "请在我的钱包零钱中查看余额"
+//            }
+//        }
     }
 
     override fun initDatas() {

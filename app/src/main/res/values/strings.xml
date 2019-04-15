@@ -202,5 +202,6 @@
     <string name="contact_custom">联系客服</string>
     <string name="custom_phone">客服电话： %s</string>
     <string name="check_time">检测时间 %s</string>
+    <string name="yanji_time">验机时间 %s</string>
     <string name="sure">确定</string>
 </resources>
