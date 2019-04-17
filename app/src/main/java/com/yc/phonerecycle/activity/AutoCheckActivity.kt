@@ -1,54 +1,41 @@
 package com.yc.phonerecycle.activity
 
 import android.Manifest
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothAdapter.*
-import android.content.BroadcastReceiver
+import android.annotation.TargetApi
+import android.app.KeyguardManager
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.hardware.*
-import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
 import android.hardware.fingerprint.FingerprintManager
-import android.net.wifi.WifiManager
-import android.net.wifi.WifiManager.*
 import android.os.Build
 import android.support.v4.app.ActivityCompat
 import com.yc.phonerecycle.R
-import com.yc.phonerecycle.mvp.view.BaseActivity
 import com.yc.phonerecycle.mvp.presenter.biz.CommonPresenter
 import kotlinx.android.synthetic.main.activity_auto_check.*
 import android.location.LocationManager
 import android.location.Location
 import android.location.LocationListener
-import android.media.AudioManager
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
-import android.view.MotionEvent
+import android.security.keystore.KeyGenParameterSpec
+import android.security.keystore.KeyProperties
 import android.view.View
 import android.view.WindowManager
-import com.google.gson.Gson
 import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
-import com.yc.phonecheck.item.CallTest
-import com.yc.phonecheck.item.LCDTest
-import com.yc.phonecheck.item.TouchTest
 import com.yc.phonerecycle.BaseCheckActivity
-import com.yc.phonerecycle.activity.fragment.CallTestFragment
-import com.yc.phonerecycle.activity.fragment.HandCheckThirdFragment
-import com.yc.phonerecycle.activity.fragment.LcdTestFragment
-import com.yc.phonerecycle.activity.fragment.TouchTestFragment
+import com.yc.phonerecycle.activity.fragment.*
 import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.model.bean.biz.BrandGoodsRep
 import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
 import com.yc.phonerecycle.model.bean.biz.ConfigPriceTempRep
 import com.yc.phonerecycle.model.bean.request.CheckReqBody
 import com.yc.phonerecycle.utils.*
+import java.security.KeyStore
+import javax.crypto.Cipher
+import javax.crypto.KeyGenerator
+import javax.crypto.SecretKey
 
 
 class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListener {
@@ -159,7 +146,11 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     override fun initView() {
         index++
         auto_index.text = index.toString()+"/"+check_array.size.toString()
-        auto_tip.text = getString(R.string.auto_check_text,check_array[index-1])
+        var i = index - 1
+        if (i >= check_array.size) {
+            i = check_array.size-1
+        }
+        auto_tip.text = getString(R.string.auto_check_text,check_array[i])
     }
 
     private lateinit var mSensorManager: SensorManager
@@ -324,39 +315,62 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
         locationManager.requestLocationUpdates(provider, 1000, 1f, locationListener)
 
     }
+    var recordTestRunnable = object : Runnable{
+        override fun run() {
+            initView()
+            doMicroTest()
+        }
+    }
     private fun doFingerTest() {
-        mHandler.postDelayed({ initView()
-            doMicroTest()},3000)
         val hasFINGERPRINT = pm.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
-        if (!hasFINGERPRINT) checkResult.fingerprint = 1
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            fingerprintManager = getSystemService(Context.FINGERPRINT_SERVICE) as FingerprintManager
-            if (fingerprintManager == null) {
+        if (!supportFingerprint() || !hasFINGERPRINT) {
+            checkResult.fingerprint = 1
+            mHandler.postDelayed(recordTestRunnable,2000)
+            return
+        }
+        PermissionUtils.checkFingerPermission(this@AutoCheckActivity, object : PermissionUtils.Callback() {
+            override fun onGranted() {
+                var ret1 = initKey()
+                var ret2 = initCipher()
+            }
+            override fun onRationale() {
+                ToastUtil.showShortToast("请开启指纹权限才能正常使用")
                 checkResult.fingerprint = 1
             }
-            PermissionUtils.checkFingerPermission(this@AutoCheckActivity, object : PermissionUtils.Callback() {
-                override fun onGranted() {
-                    if (fingerprintManager == null || !fingerprintManager.isHardwareDetected()) {
-                        checkResult.fingerprint = 1
-                    } else {
-                        checkResult.fingerprint = 0
-                    }
-                }
-                override fun onRationale() {
-                    ToastUtil.showShortToast("请开启指纹权限才能正常使用")
-                    checkResult.fingerprint = 1
-                }
-                override fun onDenied(context: Context) {
-                    showPermissionDialog("开启指纹权限","你还没有开启指纹权限，开启之后才可读取指纹信息")
-                    checkResult.fingerprint = 1
-                }
-            })
-        } else {
-            checkResult.fingerprint = 1
-        }
+            override fun onDenied(context: Context) {
+                showPermissionDialog("开启指纹权限","你还没有开启指纹权限，开启之后才可读取指纹信息")
+                checkResult.fingerprint = 1
+            }
+        })
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            fingerprintManager = getSystemService(Context.FINGERPRINT_SERVICE) as FingerprintManager
+//            if (fingerprintManager == null) {
+//                checkResult.fingerprint = 1
+//            }
+//            PermissionUtils.checkFingerPermission(this@AutoCheckActivity, object : PermissionUtils.Callback() {
+//                override fun onGranted() {
+//                    if (fingerprintManager == null || !fingerprintManager.isHardwareDetected()) {
+//                        checkResult.fingerprint = 1
+//                    } else {
+//                        checkResult.fingerprint = 0
+//                    }
+//                }
+//                override fun onRationale() {
+//                    ToastUtil.showShortToast("请开启指纹权限才能正常使用")
+//                    checkResult.fingerprint = 1
+//                }
+//                override fun onDenied(context: Context) {
+//                    showPermissionDialog("开启指纹权限","你还没有开启指纹权限，开启之后才可读取指纹信息")
+//                    checkResult.fingerprint = 1
+//                }
+//            })
+//        } else {
+//            checkResult.fingerprint = 1
+//        }
     }
     var mAudioRecoderUtils = AudioRecoderUtils()
     private fun doMicroTest() {
+        mHandler.removeCallbacks(recordTestRunnable)
         mHandler.postDelayed({ initView()
             mAudioRecoderUtils.stopRecord()
             doSpeakerTest()},5000)
@@ -564,5 +578,82 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
             }
         }
         return ret
+    }
+
+    private fun supportFingerprint() : Boolean {
+        if (Build.VERSION.SDK_INT < 23) {
+            ToastUtil.showShortToast("您的系统版本过低，不支持指纹功能")
+            return false
+        } else {
+            var keyguardManager = getSystemService(KeyguardManager::class.java) as KeyguardManager
+            var fingerprintManager = getSystemService(FingerprintManager::class.java) as FingerprintManager
+            if (!fingerprintManager.isHardwareDetected()) {
+                ToastUtil.showShortToast("您的手机不支持指纹功能")
+                return false
+            } else if (!keyguardManager.isKeyguardSecure()) {
+                ToastUtil.showShortToast("您还未设置锁屏，请先设置锁屏并添加一个指纹")
+                return false
+            } else if (!fingerprintManager.hasEnrolledFingerprints()) {
+                ToastUtil.showShortToast("您至少需要在系统设置中添加一个指纹")
+                return false
+            }
+        }
+        return true
+    }
+    private val DEFAULT_KEY_NAME = "default_key";
+    var keyStore :KeyStore? = null
+
+    @TargetApi(23)
+    private fun initKey() : Boolean {
+        try {
+            keyStore = KeyStore.getInstance("AndroidKeyStore")
+            keyStore?.load(null)
+            var keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore") as KeyGenerator
+            var builder = KeyGenParameterSpec.Builder(DEFAULT_KEY_NAME, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+            .setBlockModes(KeyProperties.BLOCK_MODE_CBC).setUserAuthenticationRequired(true).setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+
+            keyGenerator.init(builder.build());
+            keyGenerator.generateKey();
+            return true
+        } catch (e :Exception) {
+            throw RuntimeException(e);
+            return false
+        }
+    }
+
+    @TargetApi(23)
+    private fun initCipher() : Boolean{
+        try {
+            var key =  keyStore?.getKey(DEFAULT_KEY_NAME, null) as SecretKey;
+            var cipher = Cipher.getInstance(
+                KeyProperties.KEY_ALGORITHM_AES + "/"
+                    + KeyProperties.BLOCK_MODE_CBC + "/"
+                    + KeyProperties.ENCRYPTION_PADDING_PKCS7);
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            showFingerPrintDialog(cipher);
+            return true
+        } catch (e:Exception) {
+            throw RuntimeException(e);
+            return false
+        }
+    }
+
+    private var fingerFragment: FingerprintDialogFragment? = null
+
+    private fun showFingerPrintDialog(cipher :Cipher) {
+        fingerFragment = FingerprintDialogFragment();
+        fingerFragment?.setCipher(cipher);
+        fingerFragment?.show(supportFragmentManager, "fingerprint");
+    }
+
+    fun onAuthenticated(success: Boolean) {
+        fingerFragment?.dismiss()
+        if (success) {
+            ToastUtil.showShortToast("指纹认证成功")
+        } else {
+            ToastUtil.showShortToast("指纹认证失败")
+        }
+        checkResult.fingerprint = if (success) 0 else 1
+        mHandler.postDelayed(recordTestRunnable,100)
     }
 }
