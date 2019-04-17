@@ -91,6 +91,11 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
         } else {
             price.text = getString(R.string.order_price_value,mCheckReqBody?.estimatePrice.toString())
         }
+        addRowView("网络制式",false,mCheckReqBody?.wirelessNetworkName?:"无","颜色",false,mCheckReqBody?.colourName?:"无")
+        addRowView("保修情况",false,mCheckReqBody?.warrantyName?:"无","区域版本",false,mCheckReqBody?.regionalName?:"无")
+        addRowView("进水",false,mCheckReqBody?.waterName?:"无","外观情况",false,mCheckReqBody?.facadeName?:"无")
+        addRowView("有无拆修",false,mCheckReqBody?.overhaulName?:"无","屏幕问题",false,mCheckReqBody?.screenProblemName?:"无")
+        addRowView("账户锁",false,mCheckReqBody?.lockAccountName?:"无","开机",false,mCheckReqBody?.startingStateName?:"无")
         //1 有 0无
         addRowView("无线网络",mCheckReqBody?.wifi == 0,"","距离感应器",mCheckReqBody?.proximitySenso ==0,"")
         addRowView("蓝牙",mCheckReqBody?.bluetooth == 0,"","光线感应器",mCheckReqBody?.lightSensor==0,"")
@@ -102,6 +107,9 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
         addRowView("摄像头",mCheckReqBody?.camera == 0,"","指纹",mCheckReqBody?.fingerprint==0,"")
         addRowView("屏幕触控",mCheckReqBody?.multiTouch == 0,"","拨打电话",mCheckReqBody?.call==0,"")
         addRowView("屏幕坏点",mCheckReqBody?.screen == 0,"","语音助手",mCheckReqBody?.comprehensionAids==0,"")
+        addRowView("系统类型",false,mCheckReqBody?.system?:"无","IMEI",false,mCheckReqBody?.imei?:"无")
+        var other = if (TextUtils.isEmpty(mCheckReqBody?.other)) "无" else mCheckReqBody?.other?:"无"
+        addRowView("其他问题",false,other,"",true,"")
 //        addRowView("电池状态",false,"83%","",true,"")
         custom_phone.visibility = View.VISIBLE
         custom_phone.text = getString(R.string.yanji_time,mCheckReqBody?.checkTime)
