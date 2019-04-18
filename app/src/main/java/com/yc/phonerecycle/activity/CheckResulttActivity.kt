@@ -181,7 +181,7 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
         else {
             var ret = mCheckReqBody?.cloneToOrderDetailRepDataBean()
             submit.visibility = View.VISIBLE
-            submit.text="自动检测"
+            submit.text="检测完成"
             refreshView(ret)
             price.visibility = View.GONE
             price_tip.visibility = View.GONE
