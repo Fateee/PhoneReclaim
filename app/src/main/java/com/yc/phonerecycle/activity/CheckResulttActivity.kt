@@ -188,6 +188,9 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
             content.text = DeviceUtil.getTotalRamSize()+"+"+ DeviceUtil.getTotalRomSize()
             submit.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(p0: View?) {
+                    val intent = Intent(this@CheckResulttActivity, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
                     finish()
                 }
             })
