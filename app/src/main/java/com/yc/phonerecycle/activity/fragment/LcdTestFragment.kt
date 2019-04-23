@@ -124,19 +124,19 @@ class LcdTestFragment : BaseFragment<EmptyPresenter>(), View.OnTouchListener {
                 shadow.setOnClickListener {
                     shadow.toggle()
                     if (shadow.isChecked()) {
-                        (activity as AutoCheckActivity).checkResult.screenProblem = "1105"
+                        (activity as AutoCheckActivity).checkResult.screen = 1
                     }
                 }
                 broken.setOnClickListener {
                     broken.toggle()
                     if (broken.isChecked()) {
-                        (activity as AutoCheckActivity).checkResult.screenProblem = "1106"
+                        (activity as AutoCheckActivity).checkResult.screen = 1
                     }
                 }
                 light.setOnClickListener {
                     light.toggle()
                     if (light.isChecked()) {
-                        (activity as AutoCheckActivity).checkResult.screenProblem = "1104"
+                        (activity as AutoCheckActivity).checkResult.screen = 1
                     }
                 }
                 next.setOnClickListener({ (activity as AutoCheckActivity).doCallTest() })
