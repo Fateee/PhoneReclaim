@@ -86,7 +86,7 @@ public class OrderDetailRep extends BaseRep implements Serializable {
         public String colourName;
         public int compass;
         public int comprehensionAids;
-        public int estimatePrice;
+        public float estimatePrice;
         public String facade;
         public String facadeName;
         public int fingerprint;
@@ -242,7 +242,7 @@ public class OrderDetailRep extends BaseRep implements Serializable {
 //
         public DataBean(){}
 
-        public DataBean(int battery, int bluetooth, String brandId, String brandName, int call, int camera, String capacity, String checkTime, String colour, int compass, int comprehensionAids, int estimatePrice, String facade, int fingerprint, int flashlight, String goodsId, int gravitySensor, int gyroscope, String id, String imei, int lightSensor, int location, String lockAccount, int loudspeaker, String memory, int microphone, String model, int multiTouch, String orderId, String other, String overhaul, int proximitySenso, String regional, int screen, String screenProblem, int spiritLevel, String startingState, int status, String system, String type, int vibrator, String warranty, String water, int wifi, String wirelessNetwork) {
+        public DataBean(int battery, int bluetooth, String brandId, String brandName, int call, int camera, String capacity, String checkTime, String colour, int compass, int comprehensionAids, float estimatePrice, String facade, int fingerprint, int flashlight, String goodsId, int gravitySensor, int gyroscope, String id, String imei, int lightSensor, int location, String lockAccount, int loudspeaker, String memory, int microphone, String model, int multiTouch, String orderId, String other, String overhaul, int proximitySenso, String regional, int screen, String screenProblem, int spiritLevel, String startingState, int status, String system, String type, int vibrator, String warranty, String water, int wifi, String wirelessNetwork) {
             this.battery = battery;
             this.bluetooth = bluetooth;
             this.brandId = brandId;

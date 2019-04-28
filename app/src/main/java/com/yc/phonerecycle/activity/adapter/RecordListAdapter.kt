@@ -110,7 +110,11 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                 }
                 holder.name.text = tip.toString()
                 holder.content.setTextColor(ContextCompat.getColor(BaseApplication.getAppContext(),R.color.ce84b2d))
-                holder.content.text = mContext.getString(R.string.order_price_value,temp.estimatePrice)
+                if (temp.status == 0 || temp.status == 5) {
+                    holder.content.text = mContext.getString(R.string.order_price_value,temp.price)
+                } else {
+                    holder.content.text = mContext.getString(R.string.order_price_value,temp.estimatePrice)
+                }
                 holder.detail.visibility = View.GONE
 
                 holder.itemView.tag = temp

@@ -85,12 +85,6 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
             tip.append("  "+mCheckReqBody?.regionalName)
         }
         name.text = tip.toString()
-        if (mCheckReqBody?.price != 0) {
-            price.text = getString(R.string.order_price_value,mCheckReqBody?.price.toString())
-            price_tip.text = "(最终回收价)"
-        } else {
-            price.text = getString(R.string.order_price_value,mCheckReqBody?.estimatePrice.toString())
-        }
         addRowView("网络制式",false,mCheckReqBody?.wirelessNetworkName?:"无","颜色",false,mCheckReqBody?.colourName?:"无")
         addRowView("保修情况",false,mCheckReqBody?.warrantyName?:"无","区域版本",false,mCheckReqBody?.regionalName?:"无")
         addRowView("进水",false,mCheckReqBody?.waterName?:"无","外观情况",false,mCheckReqBody?.facadeName?:"无")
@@ -113,6 +107,12 @@ class ReportDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.Common
 //        addRowView("电池状态",false,"83%","",true,"")
         custom_phone.visibility = View.VISIBLE
         custom_phone.text = getString(R.string.yanji_time,mCheckReqBody?.checkTime)
+        if (mCheckReqBody?.price != 0f) {
+            price.text = getString(R.string.order_price_value,mCheckReqBody?.price.toString())
+            price_tip.text = "(最终回收价)"
+        } else {
+            price.text = getString(R.string.order_price_value,mCheckReqBody?.estimatePrice.toString())
+        }
     }
 
     private fun addRowView(leftTitle: String, leftOk: Boolean, leftValue: String,rightTitle: String, rightOk: Boolean, rightValue: String) {

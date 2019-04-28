@@ -87,7 +87,7 @@ public class PhoneReportRep extends BaseRep {
         public String colourName;
         public int compass;
         public int comprehensionAids;
-        public int estimatePrice;
+        public float estimatePrice;
         public String facade;
         public String facadeName;
         public int fingerprint;
@@ -113,7 +113,7 @@ public class PhoneReportRep extends BaseRep {
         public String other;
         public String overhaul;
         public String overhaulName;
-        public int price;
+        public float price;
         public int proximitySenso;
         public String regional;
         public String regionalName;

@@ -40,6 +40,7 @@ public class MyOrderDetailRep extends BaseRep {
         public String courierCompany;
         public String dealTime;
         public String dealUser;
+        public String price;
         public String estimatePrice;
         public String goodsInstance;
         public GoodsInstanceVOBean goodsInstanceVO;
@@ -113,7 +114,7 @@ public class MyOrderDetailRep extends BaseRep {
             public String colour;
             public int compass;
             public int comprehensionAids;
-            public int estimatePrice;
+            public float estimatePrice;
             public String facade;
             public int fingerprint;
             public int flashlight;

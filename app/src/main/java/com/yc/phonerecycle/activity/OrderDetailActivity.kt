@@ -68,6 +68,7 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
                     order_getby.visibility = View.GONE
                     order_return.visibility = View.GONE
                     order_waitcash.visibility = View.VISIBLE
+                    order_price_tip.text = "最终回收价："
                 }
                 6->{
                     order_done.visibility = View.VISIBLE
@@ -154,7 +155,7 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
                 var map = HashMap<String,Any?>()
                 map["recordid"] = tag.goodsInstanceVO?.id
                 map["order_bean"] = order_bean
-                if (tag.status == 3 || tag.status == 5) {
+                if (tag.status == 0 || tag.status == 5) {
                     ActivityToActivity.toActivity(
                         this@OrderDetailActivity, ReportDetailActivity::class.java,map)
                 } else {
@@ -162,7 +163,15 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
                         this@OrderDetailActivity, CheckResulttActivity::class.java,map)
                 }
             }
-            order_price_value.text = getString(R.string.order_price_value,rep.data.estimatePrice)
+            if (rep.data.status == 0 || rep.data.status == 5) {
+                if (TextUtils.isEmpty(rep.data.price)) {
+                    order_price_value.text = getString(R.string.order_price_value,order_bean?.price)
+                } else {
+                    order_price_value.text = getString(R.string.order_price_value,rep.data.price)
+                }
+            } else {
+                order_price_value.text = getString(R.string.order_price_value,rep.data.estimatePrice)
+            }
         } else if (rep is BaseRep) {
             if (rep.code == 0) {
                 presenter.getOrderDetailbyId(ord_id)

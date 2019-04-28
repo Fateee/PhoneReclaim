@@ -450,6 +450,7 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
 //    private var mTouchTest = TouchTest()
     private var mTouchTest = TouchTestFragment()
     fun touchTest() {
+        DeviceUtil.setIsFullScreen(this@AutoCheckActivity,true)
         ic_rorato.visibility = View.GONE
         checkResult.multiTouch = 1
         mHandler.postDelayed(lcdTestRunnable,75*1000)
@@ -467,7 +468,6 @@ class AutoCheckActivity : BaseCheckActivity<CommonPresenter>(), SensorEventListe
     private var mLCDTest = LcdTestFragment()
 
     fun doLCDTest() {
-        DeviceUtil.setIsFullScreen(this@AutoCheckActivity,true)
         mHandler.removeCallbacks(lcdTestRunnable)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.screen_check_layout,mLCDTest)

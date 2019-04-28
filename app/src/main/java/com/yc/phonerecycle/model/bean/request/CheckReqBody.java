@@ -62,7 +62,7 @@ public class CheckReqBody extends BaseBean {
     public String colour;
     public int compass;
     public int comprehensionAids;
-    public int estimatePrice;
+    public float estimatePrice;
     public String facade;
     public int fingerprint;
     public int flashlight;

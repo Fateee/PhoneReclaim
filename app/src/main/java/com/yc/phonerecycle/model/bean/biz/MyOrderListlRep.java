@@ -33,6 +33,7 @@ public class MyOrderListlRep extends BaseRep implements Serializable {
         public String type;
         public String capacity;
         public String capacityValue;
+        public String price;
         public String estimatePrice;
         public String dealTime;
         public String createTime;
