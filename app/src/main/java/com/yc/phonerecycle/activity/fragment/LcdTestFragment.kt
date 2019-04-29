@@ -109,7 +109,7 @@ class LcdTestFragment : BaseFragment<EmptyPresenter>(), View.OnTouchListener {
 
         when (index) {
             0 -> {
-                mHandler.sendEmptyMessageDelayed(0, 1500)
+                mHandler.sendEmptyMessageDelayed(0, 3000)
                 //            setButtonVisibility(false);
                 vc.visibility = View.VISIBLE
                 vc.setBackgroundResource(COLORS[index])
@@ -142,7 +142,7 @@ class LcdTestFragment : BaseFragment<EmptyPresenter>(), View.OnTouchListener {
                 next.setOnClickListener({ (activity as AutoCheckActivity).doCallTest() })
             }
             else -> {
-                mHandler.sendEmptyMessageDelayed(0, 1500)
+                mHandler.sendEmptyMessageDelayed(0, 3000)
                 vc.setBackgroundResource(COLORS[index])
             }
         }

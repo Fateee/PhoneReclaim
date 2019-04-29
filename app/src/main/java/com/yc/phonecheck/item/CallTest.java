@@ -76,7 +76,7 @@ public class CallTest extends BaseTest implements View.OnClickListener {
                 ((AutoCheckActivity)getActivity()).doHandCheck();
                 break;
             case R.id.grant:
-                callPhone("10086");
+                callPhone("112");
                 break;
         }
     }
