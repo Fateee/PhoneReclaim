@@ -13,6 +13,7 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.*;
 import android.os.Process;
 import android.telephony.TelephonyManager;
@@ -242,10 +243,18 @@ public final class DeviceUtil {
     public static boolean isWifiAvailable() {
         ConnectivityManager mConnectivityManager = (ConnectivityManager) BaseApplication.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWiFiNetworkInfo = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        boolean ret = false;
         if (mWiFiNetworkInfo != null) {
-            return mWiFiNetworkInfo.isAvailable();
+            ret = mWiFiNetworkInfo.isAvailable();
         }
-        return false;
+        if (!ret) {
+            WifiManager wifiManager = (WifiManager) BaseApplication.getAppContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            ret = wifiManager.isWifiEnabled();
+            if (!ret) {
+                ret = wifiManager.setWifiEnabled(true);
+            }
+        }
+        return ret;
     }
 
     public static boolean isWifiConect() {

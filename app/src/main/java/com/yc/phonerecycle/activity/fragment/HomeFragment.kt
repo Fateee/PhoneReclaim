@@ -80,7 +80,7 @@ class HomeFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV{
         bluetooth_mac.text = macAddress
         wifi_mac.text = MacAddressUtils.getMacAddress(context).toUpperCase()
         os_version.text = Build.VERSION.RELEASE
-        Log.e("wifi",DeviceUtil.isWifiAvailable().toString()+" wifi "+DeviceUtil.isWifiConect())
+//        Log.e("wifi",DeviceUtil.isWifiAvailable().toString()+" wifi "+DeviceUtil.isWifiConect())
 //        Log.e("ble",DeviceUtil.isBleAvailable().toString()+" wifi "+DeviceUtil.isBleConect())
         PermissionUtils.checkPhoneStatePermission(activity as Context, object : PermissionUtils.Callback() {
             override fun onGranted() {
