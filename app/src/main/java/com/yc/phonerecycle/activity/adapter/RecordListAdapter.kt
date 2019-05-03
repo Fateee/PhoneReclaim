@@ -55,7 +55,7 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
         val temp = mDataList[position]
         when (temp) {
             is MyOrderListlRep.DataBean -> {
-                holder.date.text = temp.dealTime?: temp.createTime
+                holder.date.text = temp.createTime?: temp.dealTime
                 holder.status.visibility = View.VISIBLE
                 holder.divider.visibility = View.GONE
                 holder.wait_ems.visibility = View.GONE
@@ -131,7 +131,7 @@ class RecordListAdapter(private val mContext: Context) : RecyclerView.Adapter<Re
                 })
             }
             is DetectionRep.DataBean -> {
-                holder.date.text = temp.dealTime?: temp.createTime
+                holder.date.text = temp.createTime?: temp.dealTime
                 holder.status.visibility = View.VISIBLE
                 holder.divider.visibility = View.GONE
                 holder.wait_ems.visibility = View.GONE

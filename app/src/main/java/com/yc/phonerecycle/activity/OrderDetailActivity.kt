@@ -103,12 +103,14 @@ class OrderDetailActivity : BaseActivity<CommonPresenter>(),CommonBaseIV.CommonI
                     mEmsDialog?.show()
                 }
             }
-            if (TextUtils.isEmpty(rep.data.dealTime)) {
+            if (TextUtils.isEmpty(rep.data.createTime)) {
                 if (order_bean != null) {
-                    date.text = order_bean?.dealTime
+                    date.text = order_bean?.createTime?:order_bean?.dealTime
+                } else {
+                    date.text = rep.data.dealTime
                 }
             } else {
-                date.text = rep.data.dealTime
+                date.text = rep.data.createTime
             }
             var tip = StringBuilder()
             if (order_bean != null) {

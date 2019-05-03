@@ -38,6 +38,7 @@ public class MyOrderDetailRep extends BaseRep {
         public String consigneeName;
         public String consigneePhone;
         public String courierCompany;
+        public String createTime;
         public String dealTime;
         public String dealUser;
         public String price;
