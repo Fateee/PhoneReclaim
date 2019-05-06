@@ -32,7 +32,7 @@ class CallTestFragment : BaseFragment<EmptyPresenter>(),View.OnClickListener {
                     (activity as AutoCheckActivity).doHandCheck()
                 }
             }
-            R.id.grant -> callPhone("112")
+            R.id.grant -> callPhone("10000")
         }
     }
 
