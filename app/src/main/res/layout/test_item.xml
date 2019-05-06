@@ -44,7 +44,7 @@
                 <CheckedTextView
                         android:id="@+id/shadow"
                         android:checked="false"
-                        android:text="有阴影"
+                        android:text="有分层"
                         android:gravity="center"
                         android:textColor="@color/c333333"
                         android:textSize="15sp"
@@ -60,7 +60,7 @@
                 <CheckedTextView
                         android:id="@+id/broken"
                         android:checked="false"
-                        android:text="有坏点"
+                        android:text="有黑斑"
                         android:gravity="center"
                         android:textColor="@color/c333333"
                         android:textSize="15sp"
