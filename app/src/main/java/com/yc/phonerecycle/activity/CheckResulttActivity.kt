@@ -106,11 +106,13 @@ class CheckResulttActivity : BaseActivity<CommonPresenter>(), CommonBaseIV.Commo
         name.text = tip.toString()
         content.text = mCheckReqBody?.memoryName+"+"+mCheckReqBody?.capacityName
         price.text = getString(R.string.order_price_value,mCheckReqBody?.estimatePrice.toString())
-        addRowView("网络制式",false,mCheckReqBody?.wirelessNetworkName?:"无","颜色",false,mCheckReqBody?.colourName?:"无")
-        addRowView("保修情况",false,mCheckReqBody?.warrantyName?:"无","区域版本",false,mCheckReqBody?.regionalName?:"无")
-        addRowView("进水",false,mCheckReqBody?.waterName?:"无","外观情况",false,mCheckReqBody?.facadeName?:"无")
-        addRowView("有无拆修",false,mCheckReqBody?.overhaulName?:"无","屏幕问题",false,mCheckReqBody?.screenProblemName?:"无")
-        addRowView("账户锁",false,mCheckReqBody?.lockAccountName?:"无","开机",false,mCheckReqBody?.startingStateName?:"无")
+        if (!TextUtils.isEmpty(recordid)) {
+            addRowView("网络制式",false,mCheckReqBody?.wirelessNetworkName?:"无","颜色",false,mCheckReqBody?.colourName?:"无")
+            addRowView("保修情况",false,mCheckReqBody?.warrantyName?:"无","区域版本",false,mCheckReqBody?.regionalName?:"无")
+            addRowView("进水",false,mCheckReqBody?.waterName?:"无","外观情况",false,mCheckReqBody?.facadeName?:"无")
+            addRowView("有无拆修",false,mCheckReqBody?.overhaulName?:"无","屏幕问题",false,mCheckReqBody?.screenProblemName?:"无")
+            addRowView("账户锁",false,mCheckReqBody?.lockAccountName?:"无","开机",false,mCheckReqBody?.startingStateName?:"无")
+        }
         //1 有 0无
         addRowView("无线网络",mCheckReqBody?.wifi == 0,"","距离感应器",mCheckReqBody?.proximitySenso ==0,"")
         addRowView("蓝牙",mCheckReqBody?.bluetooth == 0,"","光线感应器",mCheckReqBody?.lightSensor==0,"")
