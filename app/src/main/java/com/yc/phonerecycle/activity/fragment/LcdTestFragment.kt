@@ -8,7 +8,9 @@ import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.CheckedTextView
 import android.widget.ImageSwitcher
+import android.widget.TextView
 import com.yc.phonecheck.views.BorderTouchView
 import com.yc.phonecheck.views.OnTouchChangedListener
 import com.yc.phonerecycle.R
@@ -19,7 +21,6 @@ import com.yc.phonerecycle.model.bean.biz.DictMapRep
 import com.yc.phonerecycle.mvp.presenter.biz.EmptyPresenter
 import com.yc.phonerecycle.mvp.view.BaseFragment
 import com.yc.phonerecycle.utils.ToastUtil
-import kotlinx.android.synthetic.main.test_item.*
 
 
 class LcdTestFragment : BaseFragment<EmptyPresenter>(), View.OnTouchListener {
@@ -41,7 +42,7 @@ class LcdTestFragment : BaseFragment<EmptyPresenter>(), View.OnTouchListener {
 //                        mImageSwitcher.setInAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.left_in));
 //                        mImageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.right_out));
                         mColorIndex --
-                        screen_container.setVisibility(View.GONE)
+                        screen_contain.setVisibility(View.GONE)
                         vc.setBackgroundResource(COLORS[mColorIndex])
                     }else{
                         ToastUtil.showShortToastCenter("已经是第一张");
@@ -54,7 +55,7 @@ class LcdTestFragment : BaseFragment<EmptyPresenter>(), View.OnTouchListener {
 //                        mImageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.lift_out));
                         mColorIndex ++ ;
                         if(mColorIndex == COLORS.size - 1) {
-                            screen_container.setVisibility(View.VISIBLE)
+                            screen_contain.setVisibility(View.VISIBLE)
                         }
                         vc.setBackgroundResource(COLORS[mColorIndex])
                     }else{
@@ -93,10 +94,22 @@ class LcdTestFragment : BaseFragment<EmptyPresenter>(), View.OnTouchListener {
     private lateinit var vt: View
     var showLast : Boolean = false
 
+    private lateinit var screen_contain: View
+
+    private lateinit var shadow: CheckedTextView
+    private lateinit var broken: CheckedTextView
+    private lateinit var light: CheckedTextView
+    private lateinit var next: TextView
+
     override fun initViews(view: View?) {
         if(view == null) return
         vc = view?.findViewById(R.id.lcd_color)
         vt = view?.findViewById(R.id.lcd_text)
+        screen_contain = view?.findViewById(R.id.screen_container)
+        shadow = view?.findViewById(R.id.shadow)
+        broken = view?.findViewById(R.id.broken)
+        light = view?.findViewById(R.id.light)
+        next = view?.findViewById(R.id.next)
         vc.setOnTouchListener(this@LcdTestFragment)
     }
 
@@ -120,7 +133,7 @@ class LcdTestFragment : BaseFragment<EmptyPresenter>(), View.OnTouchListener {
 //                vc.visibility = View.GONE
                 mColorIndex = COLORS.size - 1
                 showLast = true
-                screen_container.setVisibility(View.VISIBLE)
+                screen_contain.visibility = View.VISIBLE
                 shadow.setOnClickListener {
                     shadow.toggle()
                     if (shadow.isChecked()) {

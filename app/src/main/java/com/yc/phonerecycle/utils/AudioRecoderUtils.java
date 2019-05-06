@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
@@ -28,6 +29,12 @@ public class AudioRecoderUtils {
     private String mUploadfilePath;
 
     public AudioRecoderUtils() {
+        if (DeviceUtil.checkSDCardAvailable()) {
+            mUploadfilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + IMAGE_DIR;
+            FileUtils.makeDirs(mUploadfilePath, true);
+        }
+        //开始录音创建新文件路径
+        this.filePath = mUploadfilePath + "/" + fileName;
     }
 
     private long startTime;
@@ -46,12 +53,12 @@ public class AudioRecoderUtils {
                 Log.e(TAG, "SD is error!");
                 return ret;
             }
-            if (DeviceUtil.checkSDCardAvailable()) {
-                mUploadfilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + IMAGE_DIR;
-                FileUtils.makeDirs(mUploadfilePath, true);
-            }
-            //开始录音创建新文件路径
-            this.filePath = mUploadfilePath + "/" + fileName;
+//            if (DeviceUtil.checkSDCardAvailable()) {
+//                mUploadfilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + IMAGE_DIR;
+//                FileUtils.makeDirs(mUploadfilePath, true);
+//            }
+//            //开始录音创建新文件路径
+//            this.filePath = mUploadfilePath + "/" + fileName;
             File file = new File(this.filePath);
             //文件若存在删除，防止录音覆盖问题
             if (!file.exists()) {
@@ -179,6 +186,9 @@ public class AudioRecoderUtils {
 
     public boolean startPlay() {
         boolean ret = false;
+        if (TextUtils.isEmpty(filePath)) {
+            return false;
+        }
         try {
             //初始化播放器
             mMediaPlayer = new MediaPlayer();
