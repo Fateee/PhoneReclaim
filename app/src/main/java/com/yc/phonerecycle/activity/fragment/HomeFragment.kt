@@ -18,6 +18,7 @@ import com.snail.antifake.deviceid.deviceid.DeviceIdUtil
 import com.snail.antifake.deviceid.macaddress.MacAddressUtils
 import com.yc.phonerecycle.R
 import com.yc.phonerecycle.activity.*
+import com.yc.phonerecycle.app.BaseApplication
 import com.yc.phonerecycle.constant.UrlConst
 import com.yc.phonerecycle.model.bean.biz.ConfigPriceRep
 import com.yc.phonerecycle.model.bean.biz.StringDataRep
@@ -54,7 +55,10 @@ class HomeFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV{
         } else if(rep is StringDataRep) {
             if (!TextUtils.isEmpty(rep.data)) {
                 var url = UrlConst.FILE_DOWNLOAD_URL+rep.data
-                Glide.with(activity as Context).load(url).into(home_header_logo)
+                if (TextUtils.isEmpty(BaseApplication.BRAND_LOGO_URL)) {
+                    Glide.with(activity as Context).load(url).into(home_header_logo)
+                }
+                BaseApplication.BRAND_LOGO_URL = url
             }
         }
     }
@@ -69,6 +73,9 @@ class HomeFragment : BaseFragment<CommonPresenter>(), CommonBaseIV.CommonIV{
     }
 
     override fun initData() {
+        if (!TextUtils.isEmpty(BaseApplication.BRAND_LOGO_URL)) {
+            Glide.with(activity as Context).load(BaseApplication.BRAND_LOGO_URL).into(home_header_logo)
+        }
         presenter.getGoodsByName(Build.MODEL)
         phone_model.text = Build.MODEL
         phone_storage.text = DeviceUtil.getTotalRomSize()

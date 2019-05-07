@@ -32,6 +32,8 @@ public class BaseApplication extends MultiDexApplication {
     public static List<DictTypeRep.DataBean> mRootItems;
     public static HashMap<String, List<DictMapRep.DataBean>> mOptionMap = new HashMap<>();
 
+    public static String BRAND_LOGO_URL;
+
     //全局唯一的context
     private static BaseApplication application;
     /**系统上下文*/
